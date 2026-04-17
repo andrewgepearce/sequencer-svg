@@ -1,7 +1,31 @@
 const path = require("path");
+
+//////////////////////////////////////////////////////////////////////////////
+/**
+ * Resolve the local directory that contains the bundled TTF assets used by the
+ * fallback font manager.
+ *
+ * @type {string}
+ */
 const fontsDir = path.join(__dirname, "fonts");
 
-module.exports = {
+//////////////////////////////////////////////////////////////////////////////
+/**
+ * Describe the bundled font files and the SVG font-family strings used when
+ * emitting text. Imported by `FontManager.loadDefaults` and
+ * `FontManager.getSvgFontFamily`.
+ *
+ * @type {{
+ *   families: Record<string, {
+ *     normal: string,
+ *     bold: string,
+ *     italic: string,
+ *     boldItalic: string
+ *   }>,
+ *   svgFamilyNames: Record<string, string>
+ * }}
+ */
+const fontsConfig = {
 	families: {
 		"sans-serif": {
 			normal: path.join(fontsDir, "LiberationSans-Regular.ttf"),
@@ -28,3 +52,5 @@ module.exports = {
 		monospace: "Liberation Mono, Courier New, Courier, monospace",
 	},
 };
+
+module.exports = fontsConfig;

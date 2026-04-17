@@ -28,6 +28,16 @@ let ErrorLine = require("./ErrorLine.js");
 const InputDocumentError = require("./InputDocumentError.js");
 
 module.exports = class Fragment {
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Initialise the Fragment instance.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} line Parameter derived from line.
+	 * @returns {void} Nothing.
+	 * @example
+	 * const instance = new Fragment(ctx, line);
+	 */
 	constructor(ctx, line) {
 		this._ctx = ctx;
 		this._line = line;
@@ -41,25 +51,78 @@ module.exports = class Fragment {
 		this._borderColour = null;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return colour.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.colour;
+	 */
 	get colour() {
 		return this._colour;
 	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return border dash.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.borderDash;
+	 */
 	get borderDash() {
 		return this._borderDash;
 	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return border width.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.borderWidth;
+	 */
 	get borderWidth() {
 		return this._borderWidth;
 	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return border colour.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.borderColour;
+	 */
 	get borderColour() {
 		return this._borderColour;
 	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return fragment start x.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.fragmentStartX;
+	 */
 	get fragmentStartX() {
 		return this._fragmentStartX;
 	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return fragment end x.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.fragmentEndX;
+	 */
 	get fragmentEndX() {
 		return this._fragmentEndX;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw the fragment element.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.draw(working, starty, mimic);
+	 */
 	draw(working, starty, mimic) {
 		if (!Utilities.isObject(this._line)) {
 			throw new InputDocumentError("'fragment' line must be an object", this._line);
@@ -86,7 +149,7 @@ module.exports = class Fragment {
 			working.postdata.params.fragment = [];
 		}
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the fragment colour
 		this._colour = Utilities.validColour(this._line.bgColour)
 			? this._line.bgColour
@@ -97,7 +160,7 @@ module.exports = class Fragment {
 			? working.postdata.params.fragment.bgColours[currentActiveAboveThisFragment]
 			: "rgb(255, 255, 255)";
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the title bar colour
 		let titleBgColour =
 			Utilities.isObject(this._line.title) && this._line.title.bgColour && Utilities.validColour(this._line.title.bgColour)
@@ -110,7 +173,7 @@ module.exports = class Fragment {
 				? working.postdata.params.fragment.title.bgColour
 				: "rgba(200,200,0,0.8)";
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the title bar  fg colour
 		let titleFgColour =
 			Utilities.isObject(this._line.title) && this._line.title.fgColour && Utilities.validColour(this._line.title.fgColour)
@@ -123,7 +186,7 @@ module.exports = class Fragment {
 				? working.postdata.params.fragment.title.fgColour
 				: "rgb(0,0,0)";
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the border colour
 		this._borderColour = Utilities.validColour(this._line.borderColour)
 			? this._line.borderColour
@@ -131,7 +194,7 @@ module.exports = class Fragment {
 			? working.postdata.params.fragment.borderColour
 			: "rgb(0, 0, 0)";
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the border dash
 		this._borderDash =
 			Array.isArray(this._line.borderDash) && Utilities.isAllNumber(this._line.borderDash)
@@ -143,7 +206,7 @@ module.exports = class Fragment {
 				? working.postdata.params.fragment.borderDash
 				: [];
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the border width
 		this._borderWidth =
 			Utilities.isNumber(this._line.borderWidth) && this._line.borderWidth >= 0
@@ -155,11 +218,11 @@ module.exports = class Fragment {
 				? working.postdata.params.fragment.borderWidth
 				: 1;
 
-		/////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get fragment type
 		let type = Utilities.isString(this._line.fragmentType) ? this._line.fragmentType : "";
 
-		/////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get fragment title
 		let title = Utilities.isString(this._line.title)
 			? this._line.title
@@ -167,7 +230,7 @@ module.exports = class Fragment {
 			? this._line.title.text
 			: "";
 
-		/////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get fragment condition
 		let condition = Utilities.isString(this._line.condition)
 			? this._line.condition
@@ -175,7 +238,7 @@ module.exports = class Fragment {
 			? this._line.condition.text
 			: "";
 
-		///////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Create text metadata objects
 		const titleTmd = Utilities.isObject(this._line.title)
 			? TextMetadata.getTextMetadataFromObject(
@@ -202,7 +265,7 @@ module.exports = class Fragment {
 			  );
 		conditionTmd.bgColour = "rgba(255,255,255,0)";
 
-		/////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Calculate height of fragment start line
 		let ctx = this._ctx;
 		let fragmentStartX = working.windowPadding + currentActiveAboveThisFragment * working.fragmentSpacing;
@@ -251,21 +314,28 @@ module.exports = class Fragment {
 		let finalHeightOfFragmentRectangle = finalHeightOfAllLine - finalHeightAboveFragmentInLine;
 		let blankWidth = conditionxy.x > textxy.x ? conditionxy.x : textxy.x;
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Height now calculated .. now draw the items in order
+		//////////////////////////////////////////////////////////////////////////////
 		// 1. Backgorund fragments
+		//////////////////////////////////////////////////////////////////////////////
 		// 2. Current Fragment rectangle
+		//////////////////////////////////////////////////////////////////////////////
 		// 3. Time lines
+		//////////////////////////////////////////////////////////////////////////////
 		// 4. Type and Title rectangle
+		//////////////////////////////////////////////////////////////////////////////
 		// 5. Type and title text
+		//////////////////////////////////////////////////////////////////////////////
 		// 6. Condition text
+		//////////////////////////////////////////////////////////////////////////////
 		// 7. Comment
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
 		Utilities.drawActiveFragments(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 2. Current Fragment rectangle
 		xy = Utilities.drawRectangle(
 			this._ctx,
@@ -285,11 +355,11 @@ module.exports = class Fragment {
 			false
 		);
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 3. Time lines
 		xy = Actor.drawTimelines(working, ctx, starty, finalHeightOfAllLine, mimic);
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 4. Type and Title rectangle
 		let offset = (textxy.y - fragmentTop) / 2;
 		if (offset > 10) offset = 10;
@@ -308,7 +378,7 @@ module.exports = class Fragment {
 		ctx.strokeStyle = this._borderColour;
 		ctx.stroke();
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 5. Type and title text
 		textxy = Utilities.drawTextRectangleNoBorderOrBg(
 			this._ctx,
@@ -321,11 +391,11 @@ module.exports = class Fragment {
 			mimic
 		);
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 6. Condition text
 		conditionxy = Utilities.drawTextRectangleNoBorderOrBg(this._ctx, condition, conditionTmd, textxy.y, fragmentStartX, null, null, mimic);
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 7. Comment
 		if (comment != null) {
 			commentxy = comment.draw(
@@ -338,19 +408,20 @@ module.exports = class Fragment {
 			);
 		}
 
-		///////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Make this an active fragment
 		working.activeFragments.push(this);
 
-		//////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw the lines of the fragment
 		xy = Fragment.drawLines(working, ctx, xy.y, this._line.lines);
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw a final blank line to make sure we have width
 		let blank = new Blank(ctx, { type: "blank", width: blankWidth, height: 0 });
 		xy = blank.draw(working, xy.y, false);
 
-		///////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Remove this active fragment
 		working.activeFragments.pop();
 
@@ -362,16 +433,17 @@ module.exports = class Fragment {
 		ctx.moveTo(0, endLineTop);
 		ctx.lineTo(working.canvasWidth, endLineTop);
 
-		/////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// DEBUG End Line
 		if (working.debug) {
 			ctx.stroke();
 			let dbgtext = new TextMetadata("monospace", 8, 5, 1, "rgb(0,0,0)", "rgba(0,0,0,1)", "left");
 			Utilities.drawTextRectangleNoBorderOrBg(ctx, "" + endLineTop, dbgtext, endLineTop + 5, 10, null, null, false);
+			/////////////////////////////////////////////////////////////////////////////
 			//dbgtext.writeLines(ctx, "" + endLineTop, 10, endLineTop + 5, null, null);
 		}
 
-		///////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Calculate the end line dimensions
 		const heightOfEndRectangle = working.globalSpacing;
 		const heightOfEndLine = heightOfEndRectangle + working.globalSpacing;
@@ -379,11 +451,11 @@ module.exports = class Fragment {
 		const finalHeightOfEndLine = xyend.y - endLineTop;
 		const finalHeightOfEndRectangle = finalHeightOfEndLine - working.globalSpacing;
 
-		///////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw any active fragments
 		Utilities.drawActiveFragments(working, this._ctx, endLineTop, finalHeightOfEndLine, mimic);
 
-		//////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw this end part of the fragment
 		xy = Utilities.drawRectangle(
 			this._ctx,
@@ -403,17 +475,29 @@ module.exports = class Fragment {
 			false
 		);
 
-		//////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw the timelines for this fragment
 		xy = Actor.drawTimelines(working, ctx, endLineTop, finalHeightOfEndLine, mimic);
 
-		/////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Do not manage max width HERE!!
+		//////////////////////////////////////////////////////////////////////////////
 		// max width should only consider no fragment drawings
 		working.manageMaxWidth(0, xy.y);
 		return xy;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle calculate fragment depth.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} lines Parameter derived from lines.
+	 * @param {*} reset Parameter derived from reset.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.calculateFragmentDepth(working, lines, reset);
+	 */
 	calculateFragmentDepth(working, lines, reset) {
 		if (typeof working.scratchPad.maxFragmentDepth != "number") {
 			working.scratchPad.maxFragmentDepth = 0;
@@ -441,6 +525,13 @@ module.exports = class Fragment {
 		return working.scratchPad.maxFragmentDepth;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return the default title tmd configuration.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.getDefaultTitleTmd();
+	 */
 	static getDefaultTitleTmd() {
 		const defaultFragTitleTmd = {
 			fontFamily: "sans-serif",
@@ -457,6 +548,13 @@ module.exports = class Fragment {
 		return defaultFragTitleTmd;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return the default condition tmd configuration.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.getDefaultConditionTmd();
+	 */
 	static getDefaultConditionTmd() {
 		const defaultFragConditionTmd = {
 			fontFamily: "sans-serif",
@@ -473,6 +571,18 @@ module.exports = class Fragment {
 		return defaultFragConditionTmd;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle draw lines.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} lines Parameter derived from lines.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.drawLines(working, ctx, starty, lines);
+	 */
 	static drawLines(working, ctx, starty, lines) {
 		let xy = {
 			x: 0,

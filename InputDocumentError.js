@@ -13,7 +13,28 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+//////////////////////////////////////////////////////////////////////////////
+/**
+ * Represent a semantic or structural input-document problem that should be
+ * rendered back into the generated SVG rather than treated as a process-level
+ * crash. Instantiated in `SvgStart._render`.
+ *
+ * @extends Error
+ * @example
+ * const error = new InputDocumentError("Unknown line type", { type: "oops" });
+ */
 module.exports = class InputDocumentError extends Error {
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Create an input-document error and retain the offending object for later
+	 * rendering and logging. Called from `SvgStart._render`.
+	 *
+	 * @param {string} reason Human-readable description of the problem.
+	 * @param {*} offendingObject Parsed source object that caused the error.
+	 * @returns {void} Nothing.
+	 * @example
+	 * throw new InputDocumentError("Missing actor alias", actorObject);
+	 */
 	constructor(reason, offendingObject) {
 		super(reason);
 		this.name = "InputDocumentError";

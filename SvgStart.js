@@ -27,6 +27,13 @@ const MARGIN = 10;
 const MAX_ITERATIONS = 5;
 
 module.exports = class SvgStart {
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Initialise the SvgStart instance.
+	 * @returns {void} Nothing.
+	 * @example
+	 * const instance = new SvgStart();
+	 */
 	constructor() {
 		this._className = "SvgStart";
 		this._fontManager = new FontManager();
@@ -34,18 +41,54 @@ module.exports = class SvgStart {
 		this._working = new Working(this._fontManager);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return working.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.working;
+	 */
 	get working() {
 		return this._working;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return font manager.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.fontManager;
+	 */
 	get fontManager() {
 		return this._fontManager;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update or expose debug behaviour for the current instance.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.debug(value);
+	 */
 	debug(value) {
 		console.log(this._className + ": " + value);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw the svg start element.
+	 *
+	 * @param {*} postdata Parameter derived from postdata.
+	 * @param {*} stringpostdata Parameter derived from stringpostdata.
+	 * @param {*} debug Parameter derived from debug.
+	 * @param {*} id Parameter derived from id.
+	 * @param {*} nocovertext Parameter derived from nocovertext.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.draw(postdata, stringpostdata, debug, id, nocovertext);
+	 */
 	draw(postdata, stringpostdata, debug, id, nocovertext) {
 		this.working.resetSeenWarnings();
 		this.working.debug = debug;
@@ -85,7 +128,19 @@ module.exports = class SvgStart {
 		return ctx.toBuffer(finalWidth, finalHeight);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle the internal render step.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} stringpostdata Parameter derived from stringpostdata.
+	 * @param {*} nocovertext Parameter derived from nocovertext.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance._render(ctx, stringpostdata, nocovertext);
+	 */
 	_render(ctx, stringpostdata, nocovertext) {
+		//////////////////////////////////////////////////////////////////////////////
 		// White background
 		Utilities.drawRectangle(
 			ctx,
@@ -109,6 +164,7 @@ module.exports = class SvgStart {
 		this.working.logDebug("Drawing started, y:" + starty);
 		let xy = null;
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Title
 		let titleArr = [];
 		if (Utilities.isObject(this.working.postdata.title) && Utilities.isString(this.working.postdata.title.text)) {
@@ -155,6 +211,7 @@ module.exports = class SvgStart {
 			starty = xy.y;
 		}
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Version
 		let versionArr = [];
 		if (Utilities.isObject(this.working.postdata.version) && Utilities.isString(this.working.postdata.version.text)) {
@@ -201,6 +258,7 @@ module.exports = class SvgStart {
 			starty = xy.y;
 		}
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Description
 		let descriptionArr = [];
 		if (Utilities.isObject(this.working.postdata.description) && Utilities.isString(this.working.postdata.description.text)) {
@@ -247,11 +305,13 @@ module.exports = class SvgStart {
 			starty = xy.y;
 		}
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Spacing if any cover text was drawn
 		if (starty != this.working.startY) {
 			starty += this.working.globalSpacing;
 		}
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Actors, lines, timelines
 		try {
 			xy = Actor.drawAllActors(this.working, ctx, starty);
@@ -266,6 +326,7 @@ module.exports = class SvgStart {
 			}
 		}
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Optional pretty-printed source dump
 		if (Utilities.isString(stringpostdata)) {
 			let tmd = TextMetadata.getDefaultTmd();
@@ -293,6 +354,18 @@ module.exports = class SvgStart {
 		}
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle the internal draw input document error step.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} xy Parameter derived from xy.
+	 * @param {*} error Parameter derived from error.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance._drawInputDocumentError(ctx, starty, xy, error);
+	 */
 	_drawInputDocumentError(ctx, starty, xy, error) {
 		const errorTop = xy && Utilities.isNumber(xy.y) ? xy.y : starty;
 		const offendingObject = error.offendingObject != null ? error.offendingObject : this.working.postdata;

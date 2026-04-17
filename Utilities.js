@@ -14,6 +14,17 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 module.exports = class Utilities {
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle reduce string to fit width.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} str Parameter derived from str.
+	 * @param {*} plannedWidth Parameter derived from plannedWidth.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.reduceStringToFitWidth(ctx, str, plannedWidth);
+	 */
 	static reduceStringToFitWidth(ctx, str, plannedWidth) {
 		if (!Utilities.isString(str) || !Utilities.isNumberGt0(plannedWidth)) return null;
 		let linew = ctx.measureText(str).width;
@@ -24,6 +35,16 @@ module.exports = class Utilities {
 		return str;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle replace tags.
+	 *
+	 * @param {*} tags Parameter derived from tags.
+	 * @param {*} lines Parameter derived from lines.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.replaceTags(tags, lines);
+	 */
 	static replaceTags(tags, lines) {
 		if (tags != undefined && Utilities.isAllStrings(tags) && lines != undefined && Utilities.isAllStrings(lines)) {
 			for (let i = 0; i < tags.length; i++) {
@@ -42,6 +63,24 @@ module.exports = class Utilities {
 		return lines;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle draw text rectangle no border or bg.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} lines Parameter derived from lines.
+	 * @param {*} textMetaData Parameter derived from textMetaData.
+	 * @param {*} top Parameter derived from top.
+	 * @param {*} left Parameter derived from left.
+	 * @param {*} width Parameter derived from width.
+	 * @param {*} height Parameter derived from height.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @param {*} previousWH Parameter derived from previousWH.
+	 * @param {*} tags Parameter derived from tags.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.drawTextRectangleNoBorderOrBg(ctx, lines, textMetaData, top, left, width, height, mimic, previousWH, tags);
+	 */
 	static drawTextRectangleNoBorderOrBg(ctx, lines, textMetaData, top, left, width, height, mimic, previousWH, tags) {
 		let bgCol = textMetaData.bgColour;
 		textMetaData.bgColour = "rgb(0,0,0,0)";
@@ -83,6 +122,7 @@ module.exports = class Utilities {
 		previousWH,
 		tags
 	) {
+		//////////////////////////////////////////////////////////////////////////////
 		// Validate parameters
 		if (!Utilities.isObject(textMetaData)) throw new Error("drawTextRectangle: no textMetadata object");
 		if (!Utilities.validColour(textMetaData.fgColour)) throw new Error("drawTextRectangle: no valid FG colour");
@@ -93,7 +133,9 @@ module.exports = class Utilities {
 		if (!Utilities.isNumberGtEq0(top)) throw new Error("drawTextRectangle: value for top not a number >= 0");
 		if (!Utilities.isNumberGtEq0(textMetaData.spacing)) throw new Error("drawTextRectangle: value for spacing not a number >= 0");
 		if (!Utilities.isNumberGtEq0(textMetaData.padding)) throw new Error("drawTextRectangle: value for padding not a number >= 0");
+		//////////////////////////////////////////////////////////////////////////////
 		// We are allowed a value with a negative LEFT
+		//////////////////////////////////////////////////////////////////////////////
 		//if (!Utilities.isNumberGtEq0(left)) throw new Error('drawTextRectangle: value for left not a number > 0');
 		if (width != null && width != undefined && !Utilities.isNumberGtEq0(width))
 			throw new Error("drawTextRectangle: value for width not a number > 0 AND not undefined");
@@ -107,9 +149,11 @@ module.exports = class Utilities {
 		if (!Utilities.isBoolean(drawLeftBorder)) throw new Error("drawTextRectangle: drawLeftBorder not a boolean");
 		if (!Utilities.isBoolean(mimic)) throw new Error("drawTextRectangle: mimic not a boolean");
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Update the lines from the defined tags
 		lines = this.replaceTags(tags, lines);
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the lines to write into an array
 		let wh = undefined;
 		if (
@@ -132,6 +176,7 @@ module.exports = class Utilities {
 		let boxw = Utilities.isNumber(width) ? width : calcw;
 		let boxh = Utilities.isNumber(height) ? height : calch;
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw the surrounding rectangle
 		let xy = Utilities.drawRectangle(
 			ctx,
@@ -152,6 +197,7 @@ module.exports = class Utilities {
 		);
 		if (mimic) return xy;
 
+		//////////////////////////////////////////////////////////////////////////////
 		// We have now drawn the surrounding rectangle. Now draw the text...
 		let vpadding = textMetaData.vpadding == undefined ? textMetaData.padding : textMetaData.vpadding;
 
@@ -168,18 +214,23 @@ module.exports = class Utilities {
 			let heightOfLine = lineToWriteMd.height;
 			let textleft = undefined;
 			if ((textMetaData.align == "center" || textMetaData.align == "centre") && lineToWriteMd.width < boxw) {
+				////////////////////////////////////////////////////////////////////////////
 				// Align is CENTER
 				textleft = left + boxw / 2 - lineToWriteMd.width / 2;
 				textBase += heightOfLine;
 				if (i > 0) textBase += spaceBetweenLines;
 			} else if (textMetaData.align == "right" && lineToWriteMd.width + textMetaData.padding < boxw) {
+				////////////////////////////////////////////////////////////////////////////
 				// Align is RIGHT
 				textleft = left + boxw - lineToWriteMd.width - textMetaData.padding / 2;
 				textBase += heightOfLine;
 				if (i > 0) textBase += spaceBetweenLines;
 			} else {
+				////////////////////////////////////////////////////////////////////////////
 				// Align is LEFT
+				////////////////////////////////////////////////////////////////////////////
 				// This line is hanging, but is the first after a non hanging line
+				////////////////////////////////////////////////////////////////////////////
 				// So place to the right and not underneath the previous line
 				if (
 					lineToWriteMd.hang &&
@@ -190,8 +241,11 @@ module.exports = class Utilities {
 					textleft = previousLineRightPosition;
 					textBase = previousLineTextBase;
 				}
+				////////////////////////////////////////////////////////////////////////////
 				// This line is hanging, and is NOT the first after a non hanging line
+				////////////////////////////////////////////////////////////////////////////
 				// So place underneath but at the hanging position (i.e. text left of the
+				////////////////////////////////////////////////////////////////////////////
 				// previous hanging line)
 				else if (
 					lineToWriteMd.hang &&
@@ -203,6 +257,7 @@ module.exports = class Utilities {
 					textBase += heightOfLine;
 					if (i > 0) textBase += spaceBetweenLines;
 				}
+				////////////////////////////////////////////////////////////////////////////
 				// This line is not hanging. Place underneath at the standard left position
 				else {
 					textleft = left + textMetaData.padding / 2;
@@ -256,6 +311,18 @@ module.exports = class Utilities {
 		};
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle get text width and height.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} textMetaData Parameter derived from textMetaData.
+	 * @param {*} lines Parameter derived from lines.
+	 * @param {*} tags Parameter derived from tags.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.getTextWidthAndHeight(ctx, textMetaData, lines, tags);
+	 */
 	static getTextWidthAndHeight(ctx, textMetaData, lines, tags) {
 		let localFont = textMetaData.fontFamily;
 		let localSize = textMetaData.fontSizePx;
@@ -270,9 +337,11 @@ module.exports = class Utilities {
 			linesToWrite = lines;
 		}
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Update the lines from the defined tags
 		if (tags != undefined) linesToWrite = this.replaceTags(tags, linesToWrite);
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the array of metadata objects for each line
 		let linesToWriteMd = [];
 		for (let i = 0; i < linesToWrite.length; i++) {
@@ -310,6 +379,7 @@ module.exports = class Utilities {
 				linesToWriteMd.push(Utilities.getTextMetadata(ctx, line, localSize, localFont, localBold, localItalic, localColour));
 			}
 		}
+		//////////////////////////////////////////////////////////////////////////////
 		// Calculate width and height of box
 		let calcw = 0;
 		let calch = 0;
@@ -349,6 +419,20 @@ module.exports = class Utilities {
 		};
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle get text part width.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} textPart Parameter derived from textPart.
+	 * @param {*} fontSizePx Parameter derived from fontSizePx.
+	 * @param {*} fontFamily Parameter derived from fontFamily.
+	 * @param {*} bold Parameter derived from bold.
+	 * @param {*} italic Parameter derived from italic.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.getTextPartWidth(ctx, textPart, fontSizePx, fontFamily, bold, italic);
+	 */
 	static getTextPartWidth(ctx, textPart, fontSizePx, fontFamily, bold, italic) {
 		if (!Utilities.isString(textPart)) return 0;
 		if (bold && italic) {
@@ -363,6 +447,21 @@ module.exports = class Utilities {
 		return ctx.measureText(textPart).width;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle get text metadata.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} line Parameter derived from line.
+	 * @param {*} fontSizePx Parameter derived from fontSizePx.
+	 * @param {*} fontFamily Parameter derived from fontFamily.
+	 * @param {*} bold Parameter derived from bold.
+	 * @param {*} italic Parameter derived from italic.
+	 * @param {*} colour Parameter derived from colour.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.getTextMetadata(ctx, line, fontSizePx, fontFamily, bold, italic, colour);
+	 */
 	static getTextMetadata(ctx, line, fontSizePx, fontFamily, bold, italic, colour) {
 		if (!Utilities.isString(line)) return 0;
 		const regexp = /(\<[a-zA-Z0-9\(\)\+\,\-\_\/\=\ ]*\>)/;
@@ -519,15 +618,21 @@ module.exports = class Utilities {
 			return "undefined";
 		}
 
+		//////////////////////////////////////////////////////////////////////////////
 		// if (top < 0) {
+		//////////////////////////////////////////////////////////////////////////////
 		//    top = 1;
+		//////////////////////////////////////////////////////////////////////////////
 		// }
 
+		//////////////////////////////////////////////////////////////////////////////
 		// if (left < 0) {
+		//////////////////////////////////////////////////////////////////////////////
 		//    left = 0;
+		//////////////////////////////////////////////////////////////////////////////
 		// }
 
-		/////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw the rectangle anticlockwise from the top left (not including the corner)
 		if (Utilities.isNumber(cornerRadius) && cornerRadius > 0) {
 			ctx.beginPath();
@@ -594,20 +699,35 @@ module.exports = class Utilities {
 				}
 			}
 		}
+		//////////////////////////////////////////////////////////////////////////////
 		// Utilities.drawRectangeSvg(
+		//////////////////////////////////////////////////////////////////////////////
 		// 	borderWidth,
+		//////////////////////////////////////////////////////////////////////////////
 		// 	borderColour,
+		//////////////////////////////////////////////////////////////////////////////
 		// 	borderDash,
+		//////////////////////////////////////////////////////////////////////////////
 		// 	fillColour,
+		//////////////////////////////////////////////////////////////////////////////
 		// 	top,
+		//////////////////////////////////////////////////////////////////////////////
 		// 	left,
+		//////////////////////////////////////////////////////////////////////////////
 		// 	width,
+		//////////////////////////////////////////////////////////////////////////////
 		// 	height,
+		//////////////////////////////////////////////////////////////////////////////
 		// 	cornerRadius,
+		//////////////////////////////////////////////////////////////////////////////
 		// 	drawTopBorder,
+		//////////////////////////////////////////////////////////////////////////////
 		// 	drawRightBorder,
+		//////////////////////////////////////////////////////////////////////////////
 		// 	drawBottomBorder,
+		//////////////////////////////////////////////////////////////////////////////
 		// 	drawLeftBorder
+		//////////////////////////////////////////////////////////////////////////////
 		// );
 
 		return {
@@ -616,76 +736,157 @@ module.exports = class Utilities {
 		};
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
 	// static drawRectangeSvg({
+	///////////////////////////////////////////////////////////////////////////////
 	// 	borderWidth = 1,
+	///////////////////////////////////////////////////////////////////////////////
 	// 	borderColor = "black",
+	///////////////////////////////////////////////////////////////////////////////
 	// 	borderDash = [],
+	///////////////////////////////////////////////////////////////////////////////
 	// 	fillColor = "none",
+	///////////////////////////////////////////////////////////////////////////////
 	// 	top = 0,
+	///////////////////////////////////////////////////////////////////////////////
 	// 	left = 0,
+	///////////////////////////////////////////////////////////////////////////////
 	// 	width = 100,
+	///////////////////////////////////////////////////////////////////////////////
 	// 	height = 100,
+	///////////////////////////////////////////////////////////////////////////////
 	// 	cornerRadius = 0,
+	///////////////////////////////////////////////////////////////////////////////
 	// 	drawTopBorder = true,
+	///////////////////////////////////////////////////////////////////////////////
 	// 	drawRightBorder = true,
+	///////////////////////////////////////////////////////////////////////////////
 	// 	drawBottomBorder = true,
+	///////////////////////////////////////////////////////////////////////////////
 	// 	drawLeftBorder = true,
+	///////////////////////////////////////////////////////////////////////////////
 	// } = {}) {
+	///////////////////////////////////////////////////////////////////////////////
 	// 	////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
 	// 	// Ensure cornerRadius does not exceed half of width or height
+	///////////////////////////////////////////////////////////////////////////////
 	// 	const radius = Math.min(cornerRadius, width / 2, height / 2);
+	///////////////////////////////////////////////////////////////////////////////
 	// 	////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
 	// 	// Starting point
+	///////////////////////////////////////////////////////////////////////////////
 	// 	let d = `M ${left + radius}, ${top}`;
+	///////////////////////////////////////////////////////////////////////////////
 	// 	////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
 	// 	// Top border
+	///////////////////////////////////////////////////////////////////////////////
 	// 	if (drawTopBorder) {
+	///////////////////////////////////////////////////////////////////////////////
 	// 		d += ` H ${left + width - radius}`;
+	///////////////////////////////////////////////////////////////////////////////
 	// 		if (radius > 0) {
+	///////////////////////////////////////////////////////////////////////////////
 	// 			d += ` A ${radius},${radius} 0 0 1 ${left + width},${top + radius}`;
+	///////////////////////////////////////////////////////////////////////////////
 	// 		}
+	///////////////////////////////////////////////////////////////////////////////
 	// 	} else {
+	///////////////////////////////////////////////////////////////////////////////
 	// 		d += ` M ${left + width}, ${top}`;
+	///////////////////////////////////////////////////////////////////////////////
 	// 	}
+	///////////////////////////////////////////////////////////////////////////////
 	// 	////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
 	// 	// Right border
+	///////////////////////////////////////////////////////////////////////////////
 	// 	if (drawRightBorder) {
+	///////////////////////////////////////////////////////////////////////////////
 	// 		d += ` V ${top + height - radius}`;
+	///////////////////////////////////////////////////////////////////////////////
 	// 		if (radius > 0) {
+	///////////////////////////////////////////////////////////////////////////////
 	// 			d += ` A ${radius},${radius} 0 0 1 ${left + width - radius},${top + height}`;
+	///////////////////////////////////////////////////////////////////////////////
 	// 		}
+	///////////////////////////////////////////////////////////////////////////////
 	// 	} else {
+	///////////////////////////////////////////////////////////////////////////////
 	// 		d += ` M ${left + width}, ${top + height}`;
+	///////////////////////////////////////////////////////////////////////////////
 	// 	}
+	///////////////////////////////////////////////////////////////////////////////
 	// 	////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
 	// 	// Bottom border
+	///////////////////////////////////////////////////////////////////////////////
 	// 	if (drawBottomBorder) {
+	///////////////////////////////////////////////////////////////////////////////
 	// 		d += ` H ${left + radius}`;
+	///////////////////////////////////////////////////////////////////////////////
 	// 		if (radius > 0) {
+	///////////////////////////////////////////////////////////////////////////////
 	// 			d += ` A ${radius},${radius} 0 0 1 ${left},${top + height - radius}`;
+	///////////////////////////////////////////////////////////////////////////////
 	// 		}
+	///////////////////////////////////////////////////////////////////////////////
 	// 	} else {
+	///////////////////////////////////////////////////////////////////////////////
 	// 		d += ` M ${left}, ${top + height}`;
+	///////////////////////////////////////////////////////////////////////////////
 	// 	}
+	///////////////////////////////////////////////////////////////////////////////
 	// 	////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
 	// 	// Left border
+	///////////////////////////////////////////////////////////////////////////////
 	// 	if (drawLeftBorder) {
+	///////////////////////////////////////////////////////////////////////////////
 	// 		d += ` V ${top + radius}`;
+	///////////////////////////////////////////////////////////////////////////////
 	// 		if (radius > 0) {
+	///////////////////////////////////////////////////////////////////////////////
 	// 			d += ` A ${radius},${radius} 0 0 1 ${left + radius},${top}`;
+	///////////////////////////////////////////////////////////////////////////////
 	// 		}
+	///////////////////////////////////////////////////////////////////////////////
 	// 	} else {
+	///////////////////////////////////////////////////////////////////////////////
 	// 		d += ` M ${left}, ${top}`;
+	///////////////////////////////////////////////////////////////////////////////
 	// 	}
+	///////////////////////////////////////////////////////////////////////////////
 	// 	////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
 	// 	d += " Z"; // Close path
+	///////////////////////////////////////////////////////////////////////////////
 	// 	////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
 	// 	// Create the SVG path element as a string
+	///////////////////////////////////////////////////////////////////////////////
 	// 	const pathObject = { d, className: null, fill: "none", stroke: borderColor, strokeWidth: borderWidth, strokeDashArray: borderDash };
+	///////////////////////////////////////////////////////////////////////////////
 	// 	svg.addPath(`${process.hrtime.bigint()}`, pathObject);
+	///////////////////////////////////////////////////////////////////////////////
 	// 	svg.toSVG(`./test3.svg`);
+	///////////////////////////////////////////////////////////////////////////////
 	// }
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle draw or move path.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} x Parameter derived from x.
+	 * @param {*} y Parameter derived from y.
+	 * @param {*} move Parameter derived from move.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.drawOrMovePath(ctx, x, y, move);
+	 */
 	static drawOrMovePath(ctx, x, y, move) {
 		if (typeof move === "boolean" && move) {
 			ctx.moveTo(x, y);
@@ -694,6 +895,21 @@ module.exports = class Utilities {
 		}
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle draw or move arc to.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} x1 Parameter derived from x1.
+	 * @param {*} y1 Parameter derived from y1.
+	 * @param {*} x2 Parameter derived from x2.
+	 * @param {*} y2 Parameter derived from y2.
+	 * @param {*} radius Parameter derived from radius.
+	 * @param {*} move Parameter derived from move.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.drawOrMoveArcTo(ctx, x1, y1, x2, y2, radius, move);
+	 */
 	static drawOrMoveArcTo(ctx, x1, y1, x2, y2, radius, move) {
 		if (typeof move === "boolean" && move) {
 			ctx.moveTo(x1, y1);
@@ -703,35 +919,98 @@ module.exports = class Utilities {
 		}
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle json copy.
+	 *
+	 * @param {*} src Parameter derived from src.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.jsonCopy(src);
+	 */
 	static jsonCopy(src) {
 		return JSON.parse(JSON.stringify(src));
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle is string.
+	 *
+	 * @param {*} variableToCheck Parameter derived from variableToCheck.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.isString(variableToCheck);
+	 */
 	static isString(variableToCheck) {
 		if (typeof variableToCheck == "string" && variableToCheck != null) return true;
 		return false;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle is boolean.
+	 *
+	 * @param {*} variableToCheck Parameter derived from variableToCheck.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.isBoolean(variableToCheck);
+	 */
 	static isBoolean(variableToCheck) {
 		if (typeof variableToCheck == "boolean" && variableToCheck != null) return true;
 		return false;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle is number.
+	 *
+	 * @param {*} variableToCheck Parameter derived from variableToCheck.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.isNumber(variableToCheck);
+	 */
 	static isNumber(variableToCheck) {
 		if (typeof variableToCheck == "number") return true;
 		return false;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle is number gt0.
+	 *
+	 * @param {*} variableToCheck Parameter derived from variableToCheck.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.isNumberGt0(variableToCheck);
+	 */
 	static isNumberGt0(variableToCheck) {
 		if (Utilities.isNumber(variableToCheck) && variableToCheck > 0) return true;
 		return false;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle is number gt eq0.
+	 *
+	 * @param {*} variableToCheck Parameter derived from variableToCheck.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.isNumberGtEq0(variableToCheck);
+	 */
 	static isNumberGtEq0(variableToCheck) {
 		if (Utilities.isNumber(variableToCheck) && variableToCheck >= 0) return true;
 		return false;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle is all number.
+	 *
+	 * @param {*} arr Parameter derived from arr.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.isAllNumber(arr);
+	 */
 	static isAllNumber(arr) {
 		if (!Array.isArray(arr)) return false;
 		let allNum = true;
@@ -741,6 +1020,15 @@ module.exports = class Utilities {
 		return allNum;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle is all strings.
+	 *
+	 * @param {*} arr Parameter derived from arr.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.isAllStrings(arr);
+	 */
 	static isAllStrings(arr) {
 		if (!Array.isArray(arr)) return false;
 		let allStr = true;
@@ -750,53 +1038,88 @@ module.exports = class Utilities {
 		return allStr;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle is object.
+	 *
+	 * @param {*} variableToCheck Parameter derived from variableToCheck.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.isObject(variableToCheck);
+	 */
 	static isObject(variableToCheck) {
 		if (typeof variableToCheck == "object" && variableToCheck != null) return true;
 		return false;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle valid rgbcolour.
+	 *
+	 * @param {*} stringColour Parameter derived from stringColour.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.validRGBColour(stringColour);
+	 */
 	static validRGBColour(stringColour) {
 		if (typeof stringColour != "string") return false;
 		stringColour = stringColour.replace(/\s/g, "");
 		var n = stringColour.search(/rgb\([0-9]{1,3},[0-9]{1,3},[0-9]{1,3}\)/);
 		if (n != 0) return false;
+		//////////////////////////////////////////////////////////////////////////////
 		// Val 1
 		var val1start = stringColour.search(/[0-9]{1,3}/);
 		var val1end = stringColour.search(/,/);
 		var v1 = parseInt(stringColour.substring(val1start, val1end));
+		//////////////////////////////////////////////////////////////////////////////
 		// Val 2
 		var val2start = val1end + 1;
 		stringColour = stringColour.substring(val2start);
 		var val2end = stringColour.search(/,/);
 		var v2 = parseInt(stringColour.substring(0, val2end));
+		//////////////////////////////////////////////////////////////////////////////
 		// Val 3
 		var val3start = val2end + 1;
 		stringColour = stringColour.substring(val3start);
 		var val3end = stringColour.search(/\)/);
 		var v3 = parseInt(stringColour.substring(0, val3end));
+		//////////////////////////////////////////////////////////////////////////////
 		// Check values
 		if (v1 >= 0 && v1 <= 255 && v2 >= 0 && v2 <= 255 && v3 >= 0 && v3 <= 255) return true;
 		else return false;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle valid rgbacolour.
+	 *
+	 * @param {*} stringColour Parameter derived from stringColour.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.validRGBAColour(stringColour);
+	 */
 	static validRGBAColour(stringColour) {
 		if (typeof stringColour != "string") return false;
 		var n = stringColour.search(/rgba\([0-9]{1,3},[0-9]{1,3},[0-9]{1,3},(0|1|(0.[0-9]+)|(.[0-9]+))\)/);
 		if (n != 0) return false;
+		//////////////////////////////////////////////////////////////////////////////
 		// Val 1
 		var val1start = stringColour.search(/[0-9]{1,3}/);
 		var val1end = stringColour.search(/,/);
 		var v1 = parseInt(stringColour.substring(val1start, val1end));
+		//////////////////////////////////////////////////////////////////////////////
 		// Val 2
 		var val2start = val1end + 1;
 		stringColour = stringColour.substring(val2start);
 		var val2end = stringColour.search(/,/);
 		var v2 = parseInt(stringColour.substring(0, val2end));
+		//////////////////////////////////////////////////////////////////////////////
 		// Val 3
 		var val3start = val2end + 1;
 		stringColour = stringColour.substring(val3start);
 		var val3end = stringColour.search(/,/);
 		var v3 = parseInt(stringColour.substring(0, val3end));
+		//////////////////////////////////////////////////////////////////////////////
 		// Val 4
 		var val4start = val3end + 1;
 		stringColour = stringColour.substring(val4start);
@@ -806,17 +1129,47 @@ module.exports = class Utilities {
 		else return false;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle valid colour.
+	 *
+	 * @param {*} stringColour Parameter derived from stringColour.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.validColour(stringColour);
+	 */
 	static validColour(stringColour) {
 		return Utilities.validRGBColour(stringColour) || Utilities.validRGBAColour(stringColour);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle get random colour.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.getRandomColour();
+	 */
 	static getRandomColour() {
+		//////////////////////////////////////////////////////////////////////////////
 		//var letters = '0123456789';
 		var colour =
 			"rgb(" + Math.floor(Math.random() * 255) + ", " + Math.floor(Math.random() * 255) + ", " + Math.floor(Math.random() * 255) + ")";
 		return colour;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle draw active fragments.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} height Parameter derived from height.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.drawActiveFragments(working, ctx, starty, height, mimic);
+	 */
 	static drawActiveFragments(working, ctx, starty, height, mimic) {
 		if (Array.isArray(working.activeFragments)) {
 			working.activeFragments.forEach((frag) => {
@@ -841,6 +1194,15 @@ module.exports = class Utilities {
 		}
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle obj to string.
+	 *
+	 * @param {*} obj Parameter derived from obj.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.objToString(obj);
+	 */
 	static objToString(obj) {
 		if (typeof obj != "object") return "";
 		let res = "";

@@ -113,10 +113,26 @@ if (options.inputFile != undefined && options.inputFile != null) {
 	});
 }
 
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle assign id.
+ * @returns {*} Result value.
+ * @example
+ * instance.assignId();
+ */
 function assignId() {
 	return uuid.v4();
 }
 
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle process json description.
+ *
+ * @param {*} jsondescription Parameter derived from jsondescription.
+ * @returns {*} Result value.
+ * @example
+ * instance.processJsonDescription(jsondescription);
+ */
 function processJsonDescription(jsondescription) {
 	const title = getTitle(jsondescription);
 	let ofile = sanitize(title.split(" ").join("_")) + ".svg";
@@ -167,6 +183,15 @@ function processJsonDescription(jsondescription) {
 	}
 }
 
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle get title.
+ *
+ * @param {*} obj Parameter derived from obj.
+ * @returns {*} Result value.
+ * @example
+ * instance.getTitle(obj);
+ */
 function getTitle(obj) {
 	let title = "";
 	if (typeof obj != "object") obj = {};
@@ -204,6 +229,15 @@ function getTitle(obj) {
 	return title;
 }
 
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle is all strings.
+ *
+ * @param {*} arr Parameter derived from arr.
+ * @returns {*} Result value.
+ * @example
+ * instance.isAllStrings(arr);
+ */
 function isAllStrings(arr) {
 	if (!Array.isArray(arr)) return false;
 	let allStr = true;
@@ -213,6 +247,16 @@ function isAllStrings(arr) {
 	return allStr;
 }
 
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle get object from data.
+ *
+ * @param {*} data Parameter derived from data.
+ * @param {*} isYaml Parameter derived from isYaml.
+ * @returns {*} Result value.
+ * @example
+ * instance.getObjectFromData(data, isYaml);
+ */
 function getObjectFromData(data, isYaml) {
 	if (isYaml) {
 		try {
@@ -237,6 +281,16 @@ function getObjectFromData(data, isYaml) {
 	}
 }
 
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle load with source lines.
+ *
+ * @param {*} data Parameter derived from data.
+ * @param {*} onWarning Parameter derived from onWarning.
+ * @returns {*} Result value.
+ * @example
+ * instance.loadWithSourceLines(data, onWarning);
+ */
 function loadWithSourceLines(data, onWarning) {
 	const opens = [];
 	const jsono = yaml.safeLoad(data, {
@@ -256,6 +310,7 @@ function loadWithSourceLines(data, onWarning) {
 							writable: true,
 						});
 					} catch (e) {
+						//////////////////////////////////////////////////////////////////////////
 						// Ignore; source-line annotation is best-effort.
 					}
 				}
@@ -265,10 +320,24 @@ function loadWithSourceLines(data, onWarning) {
 	return jsono;
 }
 
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle annotate json with source lines.
+ *
+ * @param {*} parsed Parameter derived from parsed.
+ * @param {*} rawData Parameter derived from rawData.
+ * @returns {*} Result value.
+ * @example
+ * instance.annotateJsonWithSourceLines(parsed, rawData);
+ */
 function annotateJsonWithSourceLines(parsed, rawData) {
+	///////////////////////////////////////////////////////////////////////////////
 	// Use js-yaml with the source-line listener (JSON is valid YAML) to build a parallel
+	///////////////////////////////////////////////////////////////////////////////
 	// object tree whose mapping/sequence nodes carry __sourceLine. Then walk the two
+	///////////////////////////////////////////////////////////////////////////////
 	// trees in parallel and copy __sourceLine from the yaml-parsed tree onto the
+	///////////////////////////////////////////////////////////////////////////////
 	// JSON.parse tree by structural position (array index, object key).
 	let annotated;
 	try {
@@ -279,6 +348,16 @@ function annotateJsonWithSourceLines(parsed, rawData) {
 	copySourceLines(parsed, annotated);
 }
 
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle copy source lines.
+ *
+ * @param {*} target Parameter derived from target.
+ * @param {*} source Parameter derived from source.
+ * @returns {*} Result value.
+ * @example
+ * instance.copySourceLines(target, source);
+ */
 function copySourceLines(target, source) {
 	if (target == null || source == null) return;
 	if (typeof target !== "object" || typeof source !== "object") return;

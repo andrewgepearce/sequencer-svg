@@ -1,12 +1,29 @@
 const { create } = require("xmlbuilder2");
 
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Manage svg context behaviour for the sequencer renderer.
+ *
+ * @example
+ * const instance = new SvgContext();
+ */
 class SvgContext {
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Initialise the SvgContext instance.
+	 *
+	 * @param {*} fontManager Parameter derived from fontManager.
+	 * @returns {void} Nothing.
+	 * @example
+	 * const instance = new SvgContext(fontManager);
+	 */
 	constructor(fontManager) {
 		this._fontManager = fontManager;
 		this._elements = [];
 		this._currentPath = [];
 		this._currentPoint = { x: 0, y: 0 };
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Canvas 2D state
 		this._fillStyle = "rgb(0,0,0)";
 		this._strokeStyle = "rgb(0,0,0)";
@@ -16,15 +33,39 @@ class SvgContext {
 		this._textBaseline = "alphabetic";
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
 	// ─── Property: font ────────────────────────────────────────────
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return font.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.font;
+	 */
 	get font() {
 		return this._fontString;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update font.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.font = value;
+	 */
 	set font(value) {
 		this._fontString = value;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle the internal parse font step.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance._parseFont();
+	 */
 	_parseFont() {
 		const str = this._fontString || "14px sans-serif";
 		let bold = false;
@@ -32,6 +73,7 @@ class SvgContext {
 		let sizePx = 14;
 		let family = "sans-serif";
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Match patterns like "bold italic 14px sans-serif" or "14px monospace"
 		const parts = str.trim().split(/\s+/);
 		const remaining = [];
@@ -41,6 +83,7 @@ class SvgContext {
 			else remaining.push(part);
 		}
 
+		//////////////////////////////////////////////////////////////////////////////
 		// First remaining part with "px" is the size
 		for (let i = 0; i < remaining.length; i++) {
 			const match = remaining[i].match(/^(\d+(?:\.\d+)?)px$/);
@@ -51,6 +94,7 @@ class SvgContext {
 			}
 		}
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Everything left is the font family
 		if (remaining.length > 0) {
 			family = remaining.join(" ").replace(/['"]/g, "");
@@ -59,59 +103,169 @@ class SvgContext {
 		return { bold, italic, sizePx, family };
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
 	// ─── Property: fillStyle ───────────────────────────────────────
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return fill style.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.fillStyle;
+	 */
 	get fillStyle() {
 		return this._fillStyle;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update fill style.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.fillStyle = value;
+	 */
 	set fillStyle(value) {
 		this._fillStyle = value;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
 	// ─── Property: strokeStyle ─────────────────────────────────────
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return stroke style.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.strokeStyle;
+	 */
 	get strokeStyle() {
 		return this._strokeStyle;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update stroke style.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.strokeStyle = value;
+	 */
 	set strokeStyle(value) {
 		this._strokeStyle = value;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
 	// ─── Property: lineWidth ───────────────────────────────────────
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return line width.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.lineWidth;
+	 */
 	get lineWidth() {
 		return this._lineWidth;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update line width.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.lineWidth = value;
+	 */
 	set lineWidth(value) {
 		this._lineWidth = value;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
 	// ─── Property: textBaseline ────────────────────────────────────
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return text baseline.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.textBaseline;
+	 */
 	get textBaseline() {
 		return this._textBaseline;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update text baseline.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.textBaseline = value;
+	 */
 	set textBaseline(value) {
 		this._textBaseline = value;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
 	// ─── Path methods ──────────────────────────────────────────────
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle begin path.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.beginPath();
+	 */
 	beginPath() {
 		this._currentPath = [];
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle move to.
+	 *
+	 * @param {*} x Parameter derived from x.
+	 * @param {*} y Parameter derived from y.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.moveTo(x, y);
+	 */
 	moveTo(x, y) {
 		this._currentPath.push({ cmd: "M", x, y });
 		this._currentPoint = { x, y };
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle line to.
+	 *
+	 * @param {*} x Parameter derived from x.
+	 * @param {*} y Parameter derived from y.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.lineTo(x, y);
+	 */
 	lineTo(x, y) {
 		this._currentPath.push({ cmd: "L", x, y });
 		this._currentPoint = { x, y };
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle arc to.
+	 *
+	 * @param {*} x1 Parameter derived from x1.
+	 * @param {*} y1 Parameter derived from y1.
+	 * @param {*} x2 Parameter derived from x2.
+	 * @param {*} y2 Parameter derived from y2.
+	 * @param {*} radius Parameter derived from radius.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.arcTo(x1, y1, x2, y2, radius);
+	 */
 	arcTo(x1, y1, x2, y2, radius) {
 		if (radius <= 0) {
+			/////////////////////////////////////////////////////////////////////////////
 			// radius 0 means just go to the control point
 			this.lineTo(x1, y1);
 			return;
@@ -123,9 +277,11 @@ class SvgContext {
 			return;
 		}
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Vector from current point to (x1,y1)
 		const dx0 = cp.x - x1;
 		const dy0 = cp.y - y1;
+		//////////////////////////////////////////////////////////////////////////////
 		// Vector from (x1,y1) to (x2,y2)
 		const dx1 = x2 - x1;
 		const dy1 = y2 - y1;
@@ -138,35 +294,42 @@ class SvgContext {
 			return;
 		}
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Unit vectors
 		const ux0 = dx0 / len0;
 		const uy0 = dy0 / len0;
 		const ux1 = dx1 / len1;
 		const uy1 = dy1 / len1;
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Half-angle between the two lines
 		const cross = ux0 * uy1 - uy0 * ux1;
 		const dot = ux0 * ux1 + uy0 * uy1;
 		const halfAngle = Math.atan2(Math.abs(cross), 1 + dot);
 
 		if (Math.abs(halfAngle) < 1e-6) {
+			/////////////////////////////////////////////////////////////////////////////
 			// Lines are parallel, just draw to control point
 			this.lineTo(x1, y1);
 			return;
 		}
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Distance from corner to tangent points
 		const tangentDist = radius / Math.tan(halfAngle);
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Tangent points
 		const t1x = x1 + ux0 * tangentDist;
 		const t1y = y1 + uy0 * tangentDist;
 		const t2x = x1 + ux1 * tangentDist;
 		const t2y = y1 + uy1 * tangentDist;
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Line to first tangent point
 		this._currentPath.push({ cmd: "L", x: t1x, y: t1y });
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Determine sweep flag (clockwise vs counter-clockwise)
 		const sweepFlag = cross < 0 ? 1 : 0;
 
@@ -184,18 +347,35 @@ class SvgContext {
 		this._currentPoint = { x: t2x, y: t2y };
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle arc.
+	 *
+	 * @param {*} x Parameter derived from x.
+	 * @param {*} y Parameter derived from y.
+	 * @param {*} radius Parameter derived from radius.
+	 * @param {*} startAngle Parameter derived from startAngle.
+	 * @param {*} endAngle Parameter derived from endAngle.
+	 * @param {*} counterclockwise Parameter derived from counterclockwise.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.arc(x, y, radius, startAngle, endAngle, counterclockwise);
+	 */
 	arc(x, y, radius, startAngle, endAngle, counterclockwise) {
+		//////////////////////////////////////////////////////////////////////////////
 		// Used by Terminate.js for drawing circles
 		const startX = x + radius * Math.cos(startAngle);
 		const startY = y + radius * Math.sin(startAngle);
 		const endX = x + radius * Math.cos(endAngle);
 		const endY = y + radius * Math.sin(endAngle);
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Determine if it's a full circle (or nearly)
 		const angleDiff = Math.abs(endAngle - startAngle);
 		const isFullCircle = angleDiff >= 2 * Math.PI - 1e-6;
 
 		if (isFullCircle) {
+			/////////////////////////////////////////////////////////////////////////////
 			// SVG can't draw a full circle with a single arc, use two semicircles
 			const midX = x + radius * Math.cos(startAngle + Math.PI);
 			const midY = y + radius * Math.sin(startAngle + Math.PI);
@@ -238,7 +418,15 @@ class SvgContext {
 		this._currentPoint = { x: endX, y: endY };
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
 	// ─── Path to SVG d-attribute ───────────────────────────────────
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle the internal path to d step.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance._pathToD();
+	 */
 	_pathToD() {
 		let d = "";
 		for (const seg of this._currentPath) {
@@ -257,7 +445,15 @@ class SvgContext {
 		return d.trim();
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
 	// ─── Stroke / Fill ─────────────────────────────────────────────
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle stroke.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.stroke();
+	 */
 	stroke() {
 		const d = this._pathToD();
 		if (!d) return;
@@ -273,6 +469,13 @@ class SvgContext {
 		this._elements.push({ tag: "path", attrs });
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle fill.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.fill();
+	 */
 	fill() {
 		const d = this._pathToD();
 		if (!d) return;
@@ -286,7 +489,19 @@ class SvgContext {
 		});
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
 	// ─── Text ──────────────────────────────────────────────────────
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle fill text.
+	 *
+	 * @param {*} text Parameter derived from text.
+	 * @param {*} x Parameter derived from x.
+	 * @param {*} y Parameter derived from y.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.fillText(text, x, y);
+	 */
 	fillText(text, x, y) {
 		if (!text || text.length === 0) return;
 		const { bold, italic, sizePx, family } = this._parseFont();
@@ -301,6 +516,7 @@ class SvgContext {
 		};
 		if (bold) attrs["font-weight"] = "bold";
 		if (italic) attrs["font-style"] = "italic";
+		//////////////////////////////////////////////////////////////////////////////
 		// Map textBaseline to SVG dominant-baseline
 		if (this._textBaseline === "alphabetic") {
 			attrs["dominant-baseline"] = "auto";
@@ -310,26 +526,69 @@ class SvgContext {
 		this._elements.push({ tag: "text", attrs, content: text });
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle measure text.
+	 *
+	 * @param {*} text Parameter derived from text.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.measureText(text);
+	 */
 	measureText(text) {
 		const { bold, italic, sizePx, family } = this._parseFont();
 		return this._fontManager.measureText(text, sizePx, family, bold, italic);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
 	// ─── Dash ──────────────────────────────────────────────────────
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle set line dash.
+	 *
+	 * @param {*} segments Parameter derived from segments.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.setLineDash(segments);
+	 */
 	setLineDash(segments) {
 		this._lineDash = Array.isArray(segments) ? segments.slice() : [];
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle get line dash.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.getLineDash();
+	 */
 	getLineDash() {
 		return this._lineDash.slice();
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
 	// ─── clearRect (no-op for SVG) ─────────────────────────────────
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle clear rect.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.clearRect();
+	 */
 	clearRect() {
+		//////////////////////////////////////////////////////////////////////////////
 		// No-op: SVG doesn't need clearing
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
 	// ─── Reset for redraw ──────────────────────────────────────────
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle reset.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.reset();
+	 */
 	reset() {
 		this._elements = [];
 		this._currentPath = [];
@@ -342,7 +601,18 @@ class SvgContext {
 		this._textBaseline = "alphabetic";
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
 	// ─── SVG Generation ────────────────────────────────────────────
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle to svg.
+	 *
+	 * @param {*} width Parameter derived from width.
+	 * @param {*} height Parameter derived from height.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.toSVG(width, height);
+	 */
 	toSVG(width, height) {
 		const svg = create({ version: "1.0" }).ele("svg", {
 			xmlns: "http://www.w3.org/2000/svg",
@@ -351,6 +621,7 @@ class SvgContext {
 			viewBox: `0 0 ${Math.ceil(width)} ${Math.ceil(height)}`,
 		});
 
+		//////////////////////////////////////////////////////////////////////////////
 		// White background
 		svg.ele("rect", {
 			width: "100%",
@@ -371,12 +642,31 @@ class SvgContext {
 		return svg.end({ prettyPrint: true });
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle to buffer.
+	 *
+	 * @param {*} width Parameter derived from width.
+	 * @param {*} height Parameter derived from height.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.toBuffer(width, height);
+	 */
 	toBuffer(width, height) {
 		return Buffer.from(this.toSVG(width, height), "utf-8");
 	}
 }
 
 // Round to 2 decimal places for clean SVG output
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle r.
+ *
+ * @param {*} n Parameter derived from n.
+ * @returns {*} Result value.
+ * @example
+ * instance.r(n);
+ */
 function r(n) {
 	return Math.round(n * 100) / 100;
 }

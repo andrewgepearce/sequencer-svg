@@ -24,11 +24,32 @@ const InputDocumentError = require("./InputDocumentError.js");
 
 
 module.exports = class FragmentCondition {
+   /////////////////////////////////////////////////////////////////////////////
+   /**
+    * Initialise the FragmentCondition instance.
+    *
+    * @param {*} ctx Parameter derived from ctx.
+    * @param {*} line Parameter derived from line.
+    * @returns {void} Nothing.
+    * @example
+    * const instance = new FragmentCondition(ctx, line);
+    */
    constructor(ctx, line) {
       this._ctx = ctx;
       this._line = line;
    }
 
+	   ////////////////////////////////////////////////////////////////////////////
+	   /**
+	    * Draw the fragment condition element.
+	    *
+	    * @param {*} working Parameter derived from working.
+	    * @param {*} starty Parameter derived from starty.
+	    * @param {*} mimic Parameter derived from mimic.
+	    * @returns {*} Result value.
+	    * @example
+	    * instance.draw(working, starty, mimic);
+	    */
 	   draw(working, starty, mimic) {
 	      if (!Utilities.isObject(this._line)) {
 	         throw new InputDocumentError("'condition' line must be an object", this._line);
@@ -58,7 +79,7 @@ module.exports = class FragmentCondition {
       conditionTmd.bgColour = 'rgba(0,0,0,0)';
 
 
-      ///////////////////////
+      //////////////////////////////////////////////////////////////////////////
       // Get the line dash
       let lineDash = Array.isArray(this._line.lineDash) && Utilities.isAllNumber(this._line.lineDash) ?
          this._line.lineDash :
@@ -67,7 +88,7 @@ module.exports = class FragmentCondition {
          Utilities.isAllNumber(working.postdata.params.fragment.lineDash) ?
          working.postdata.params.fragment.lineDash : [4, 3];
 
-      ///////////////////////
+      //////////////////////////////////////////////////////////////////////////
       // Get the line width
       let lineWidth = Utilities.isNumber(this._line.lineWidth) && this._line.lineWidth >= 0 ?
          this._line.lineWidth :
@@ -77,7 +98,7 @@ module.exports = class FragmentCondition {
          working.postdata.params.fragment.lineWidth :
          1;
 
-      ///////////////////////
+      //////////////////////////////////////////////////////////////////////////
       // Get the line colour
       let lineColour =
          Utilities.validColour(this._line.lineColour) ?
@@ -87,7 +108,7 @@ module.exports = class FragmentCondition {
          working.postdata.params.fragment.lineColour :
          'rgb(0,0,0)';
 
-      /////////////
+      //////////////////////////////////////////////////////////////////////////
       // Calculate height of fragment condition line
       let commentxy = null;
       let comment = null;
@@ -99,7 +120,7 @@ module.exports = class FragmentCondition {
       }
       let conditionLineY = (commentxy != null && Utilities.isObject(commentxy) && Utilities.isNumber(commentxy.y)) ? commentxy.y : starty + working.globalSpacing;
 
-      /////////////////////////
+      //////////////////////////////////////////////////////////////////////////
       // Get the condition text
       let ctext = Array.isArray(this._line.condition) && Utilities.isString(this._line.condition[0]) ?
          this._line.condition[0] :
@@ -111,32 +132,39 @@ module.exports = class FragmentCondition {
       let finalHeightOfAllLine = xy.y - starty;
 
 
-      ///////////////////////////////////
+      //////////////////////////////////////////////////////////////////////////
       // Height now calculated .. now draw the items in order
+      //////////////////////////////////////////////////////////////////////////
       // 1. Background fragments
+      //////////////////////////////////////////////////////////////////////////
       // 2. Current Fragment rectangle
+      //////////////////////////////////////////////////////////////////////////
       // 3. Type and Title rectangle
+      //////////////////////////////////////////////////////////////////////////
       // 4. Type and title text
+      //////////////////////////////////////////////////////////////////////////
       // 5. Condition text
+      //////////////////////////////////////////////////////////////////////////
       // 6. Time lines
+      //////////////////////////////////////////////////////////////////////////
       // 7. Comment  
 
-      ///////////////////////////////////
+      //////////////////////////////////////////////////////////////////////////
       // 1. Background fragments
 
       Utilities.drawActiveFragments(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
-      ///////////////////////////////////
+      //////////////////////////////////////////////////////////////////////////
       // 2. Time lines
       xy = Actor.drawTimelines(working, ctx, starty, finalHeightOfAllLine, mimic);
 
-      ///////////////////////////////////
+      //////////////////////////////////////////////////////////////////////////
       // 3. Comment
       if (comment != null) {
          commentxy = comment.draw(working, fragStartX + working.globalSpacing, starty + working.globalSpacing, working.globalSpacing, working.globalSpacing, mimic);
       }
 
-      ///////////////////////////////////
+      //////////////////////////////////////////////////////////////////////////
       // 4. Condition break
       ctx.lineWidth = lineWidth;
       ctx.setLineDash(lineDash);
@@ -145,9 +173,10 @@ module.exports = class FragmentCondition {
       ctx.moveTo(fragStartX, conditionLineY);
       mimic ? ctx.moveTo(fragEndX, conditionLineY) : ctx.lineTo(fragEndX, conditionLineY);
       ctx.stroke();
+      //////////////////////////////////////////////////////////////////////////
       // Do not manage maxwidth on fragments
 
-      ///////////////////////////////////
+      //////////////////////////////////////////////////////////////////////////
       // 5. Draw condition text
       conditionxy = Utilities.drawTextRectangleNoBorderOrBg(ctx, ctext, conditionTmd, conditionLineY + lineWidth, fragStartX,
          null, null, false);
@@ -155,6 +184,13 @@ module.exports = class FragmentCondition {
       return working.manageMaxWidth(conditionxy.x, conditionxy.y);
    }
 
+   /////////////////////////////////////////////////////////////////////////////
+   /**
+    * Return the default condition tmd configuration.
+    * @returns {*} Result value.
+    * @example
+    * instance.getDefaultConditionTmd();
+    */
    static getDefaultConditionTmd() {
       const defaultFragConditionTmd = {
          fontFamily: "sans-serif",

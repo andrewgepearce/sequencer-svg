@@ -20,6 +20,17 @@ let Comment = require("./Comment.js");
 const InputDocumentError = require("./InputDocumentError.js");
 
 module.exports = class Terminate {
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Initialise the Terminate instance.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} line Parameter derived from line.
+	 * @param {*} working Parameter derived from working.
+	 * @returns {void} Nothing.
+	 * @example
+	 * const instance = new Terminate(ctx, line, working);
+	 */
 	constructor(ctx, line, working) {
 		this._ctx = ctx;
 		this._line = line;
@@ -29,8 +40,19 @@ module.exports = class Terminate {
 		this._callCount = ++working.callCount;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw the terminate element.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.draw(working, starty, mimic);
+	 */
 	draw(working, starty, mimic) {
-		////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw blank line (without timelines) if there is no line object
 		if (this._line == null || typeof this._line != "object" || typeof this._line.from != "string") {
 			throw new InputDocumentError("'terminate' line must be an object with a string 'from' actor alias", this._line);
@@ -48,7 +70,7 @@ module.exports = class Terminate {
 
 		let ctx = this._ctx;
 
-		//////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the terminate TMD
 		let terminatetmd = TextMetadata.getTextMetadataFromObject(
 			working,
@@ -59,7 +81,7 @@ module.exports = class Terminate {
 		let calltmd = TextMetadata.getTextMetadataFromObject(working, this._line, working.postdata.params.call, Terminate.getDefaultCallTmd());
 		calltmd.bgColour = "rgba(0,0,0,0)";
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the line dash
 		let lineDash =
 			Array.isArray(this._line.lineDash) && Utilities.isAllNumber(this._line.lineDash)
@@ -73,7 +95,7 @@ module.exports = class Terminate {
 				? working.postdata.params.terminate.lineDash
 				: [];
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the line width
 		let lineWidth =
 			Utilities.isNumber(this._line.lineWidth) && this._line.lineWidth > 0
@@ -85,7 +107,7 @@ module.exports = class Terminate {
 				? working.postdata.params.terminate.lineWidth
 				: 1;
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the line colour
 		let lineColour = Utilities.validColour(this._line.lineColour)
 			? this._line.lineColour
@@ -93,7 +115,7 @@ module.exports = class Terminate {
 			? working.postdata.params.terminate.lineColour
 			: "rgb(0, 0, 0)";
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the arrow size - default zero size for terminate
 		let arrowSizeY =
 			Utilities.isNumber(this._line.arrowSize) && this._line.arrowSize > 0
@@ -105,11 +127,11 @@ module.exports = class Terminate {
 				? working.postdata.params.terminate.arrowSize
 				: 0;
 
-		////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Should we break the to or from flows
 		const breakFromFlow = this._line.breakFromFlow === false ? false : true;
 
-		//////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Calculate text size
 		let gapToText = this._line.comment != null ? 2 * working.globalSpacing : working.globalSpacing;
 		let textToPrint = null;
@@ -137,7 +159,7 @@ module.exports = class Terminate {
 		}
 		const extraLines = [""];
 
-		////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get startx and endx for the call
 		working.postdata.actors.forEach((actor) => {
 			if (actor.alias === this._line.from) {
@@ -150,7 +172,7 @@ module.exports = class Terminate {
 		}
 		this._endx = this._startx + gapToText + textlen + 3 * arrowSizeY;
 
-		/////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Calculate height of terminate line
 		let startxAfterFlow, endxAfterFlow;
 		let commentxy = null;
@@ -181,20 +203,26 @@ module.exports = class Terminate {
 		let xy = Actor.drawTimelines(working, ctx, starty, topOfRefBox + refBoxHeight - starty + 1, true);
 		let finalHeightOfAllLine = xy.y - starty;
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Height now calculated .. not draw the items in order
+		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
+		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
+		//////////////////////////////////////////////////////////////////////////////
 		// 3. Comment
+		//////////////////////////////////////////////////////////////////////////////
 		// 4. Call text
+		//////////////////////////////////////////////////////////////////////////////
 		// 5a. Call line
+		//////////////////////////////////////////////////////////////////////////////
 		// 5b. Call line arrow
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
 		Utilities.drawActiveFragments(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
 		let virtualArrowSize = arrowSizeY;
 		if (virtualArrowSize == 0) virtualArrowSize = 5;
@@ -207,7 +235,7 @@ module.exports = class Terminate {
 		}
 		xy = Actor.drawTimelines(working, ctx, starty, finalHeightOfAllLine, mimic);
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 3. Comment
 		if (comment != null) {
 			commentxy = comment.draw(
@@ -220,7 +248,7 @@ module.exports = class Terminate {
 			);
 		}
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 4. Draw the call line text
 		let calltextxy = Utilities.drawTextRectangleNoBorderOrBg(
 			ctx,
@@ -234,7 +262,7 @@ module.exports = class Terminate {
 		);
 		working.manageMaxWidthXy(calltextxy);
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 5a. Draw the call line
 		ctx.lineWidth = lineWidth;
 		ctx.strokeStyle = lineColour;
@@ -244,7 +272,7 @@ module.exports = class Terminate {
 		Utilities.drawOrMovePath(ctx, endxAfterFlow, callLineY, mimic);
 		ctx.stroke();
 
-		//////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 5a. Draw the call arrow
 		ctx.beginPath();
 		ctx.moveTo(endxAfterFlow, callLineY);
@@ -262,7 +290,7 @@ module.exports = class Terminate {
 			ctx.stroke();
 		}
 
-		//////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw the terminate box
 		if (terminatetxt.length == 0) {
 			let diameter = Terminate.getDefaultTerminateTmd().fontSizePx;
@@ -293,6 +321,13 @@ module.exports = class Terminate {
 		return working.manageMaxWidth(0, starty + finalHeightOfAllLine);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return the default call tmd configuration.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.getDefaultCallTmd();
+	 */
 	static getDefaultCallTmd() {
 		const defaultCallTmd = {
 			fontFamily: "sans-serif",
@@ -309,6 +344,13 @@ module.exports = class Terminate {
 		return defaultCallTmd;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return the default terminate tmd configuration.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.getDefaultTerminateTmd();
+	 */
 	static getDefaultTerminateTmd() {
 		const defaultTermTmd = {
 			fontFamily: "sans-serif",

@@ -19,6 +19,16 @@ const schema = require("./schema.js");
 const InputDocumentError = require("./InputDocumentError.js");
 
 module.exports = class Actor {
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Initialise the Actor instance.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} actorObj Parameter derived from actorObj.
+	 * @returns {void} Nothing.
+	 * @example
+	 * const instance = new Actor(ctx, actorObj);
+	 */
 	constructor(ctx, actorObj) {
 		this._ctx = ctx;
 		this._actorObj = actorObj;
@@ -45,105 +55,310 @@ module.exports = class Actor {
 		this._timelineWidth = null;
 		this._actorTmd = null;
 
+		//////////////////////////////////////////////////////////////////////////////
 		// this._height = this._tmd.getBoxHeight(this._lines);
+		//////////////////////////////////////////////////////////////////////////////
 		// this._width = this._tmd.getBoxWidth(this._ctx, this._lines);
+		//////////////////////////////////////////////////////////////////////////////
 		// this._middle = this._startx + (this._width / 2);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return actor tmd.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.actorTmd;
+	 */
 	get actorTmd() {
 		return this._actorTmd;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return timeline width.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.timelineWidth;
+	 */
 	get timelineWidth() {
 		return this._timelineWidth;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return timeline dash.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.timelineDash;
+	 */
 	get timelineDash() {
 		return this._timelineDash;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return flow width.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.flowWidth;
+	 */
 	get flowWidth() {
 		return this._flowWidth;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return ctx.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.ctx;
+	 */
 	get ctx() {
 		return this._ctx;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return radius.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.radius;
+	 */
 	get radius() {
 		return this._radius;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return actor obj.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.actorObj;
+	 */
 	get actorObj() {
 		return this._actorObj;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return gap to next.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.gapToNext;
+	 */
 	get gapToNext() {
 		return this._gapToNext;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle set flow state continue.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.setFlowStateContinue();
+	 */
 	setFlowStateContinue() {
 		this._flowStateContinue = true;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle clear flow state continue.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.clearFlowStateContinue();
+	 */
 	clearFlowStateContinue() {
 		this._flowStateContinue = false;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle is flow state continue.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.isFlowStateContinue();
+	 */
 	isFlowStateContinue() {
 		return this._flowStateContinue;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return flow start ypos.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.flowStartYPos;
+	 */
 	get flowStartYPos() {
 		return this._flowStartYPos;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return flow end ypos.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.flowEndYPos;
+	 */
 	get flowEndYPos() {
 		return this._flowEndYPos;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update flow start ypos.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.flowStartYPos = value;
+	 */
 	set flowStartYPos(value) {
 		this._flowStartYPos = value;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update flow end ypos.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.flowEndYPos = value;
+	 */
 	set flowEndYPos(value) {
 		this._flowEndYPos = value;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return colour.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.colour;
+	 */
 	get colour() {
 		return this._colour;
 	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return name.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.name;
+	 */
 	get name() {
 		return this._name;
 	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return alias.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.alias;
+	 */
 	get alias() {
 		return this._alias;
 	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return middle.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.middle;
+	 */
 	get middle() {
 		return this._middle;
 	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return left.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.left;
+	 */
 	get left() {
 		return this._left;
 	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return right.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.right;
+	 */
 	get right() {
 		return this._right;
 	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return x.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.x;
+	 */
 	get x() {
 		return this._startx;
 	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return y.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.y;
+	 */
 	get y() {
 		return this._starty;
 	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return tmd.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.tmd;
+	 */
 	get tmd() {
 		return this._tmd;
 	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update startx.
+	 *
+	 * @param {*} x Parameter derived from x.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.startx = value;
+	 */
 	set startx(x) {
 		this._startx = x;
 	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update starty.
+	 *
+	 * @param {*} y Parameter derived from y.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.starty = value;
+	 */
 	set starty(y) {
 		this._starty = y;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw the actor element.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} startx Parameter derived from startx.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.draw(working, startx, starty, mimic);
+	 */
 	draw(working, startx, starty, mimic) {
 		if (!Utilities.isObject(this._actorObj)) {
 			throw new InputDocumentError("actor entry is not a valid object", this._actorObj);
@@ -167,7 +382,7 @@ module.exports = class Actor {
 		if (!working.postdata.params.actor) {
 			working.postdata.params.actor = {};
 		}
-		////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Initialise drawing parameters
 		let actortmd = TextMetadata.getTextMetadataFromObject(working, this.actorObj, working.postdata.params.actor, Actor.getDefaultTmd());
 		this._actorTmd = actortmd;
@@ -198,7 +413,7 @@ module.exports = class Actor {
 			? working.postdata.params.actor.timelineDash
 			: schema.actor.properties.timelineDash.default;
 
-		///////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw the actor, obeying the mimic request
 		this._startx = startx;
 		this._starty = starty;
@@ -216,7 +431,7 @@ module.exports = class Actor {
 			this._height = working.scratchPad.maxActorHeight;
 		}
 
-		///////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw drop shadow
 		let xy = Utilities.drawRectangle(
 			this._ctx,
@@ -237,7 +452,7 @@ module.exports = class Actor {
 		);
 		working.manageMaxWidthXy(xy);
 
-		//////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// draw actual rectangle
 		xy = Utilities.drawTextRectangle(
 			this._ctx,
@@ -257,11 +472,22 @@ module.exports = class Actor {
 			working.tags
 		);
 
-		///////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Return
 		return working.manageMaxWidthXy(xy);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle draw all actors.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} starty Parameter derived from starty.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.drawAllActors(working, ctx, starty);
+	 */
 	static drawAllActors(working, ctx, starty) {
 		let actorStartY = starty;
 		let nextActorX = working.startX;
@@ -272,7 +498,7 @@ module.exports = class Actor {
 			throw new InputDocumentError("document must define at least one actor in the top-level 'actors' array", working.postdata);
 		}
 
-		/////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Initialise the actors with mimic=true, primarily to get the same height across all of them
 		working.postdata.actors.forEach((actor) => {
 			actor.clinstance = new Actor(ctx, actor);
@@ -282,7 +508,7 @@ module.exports = class Actor {
 			maxy = xy.y > maxy ? xy.y : maxy;
 		});
 
-		////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Now actually draw the actors
 		nextActorX = working.startX;
 		working.postdata.actors.forEach((actor) => {
@@ -294,6 +520,16 @@ module.exports = class Actor {
 		return working.manageMaxWidth(maxx, maxy);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle clear all flows.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} starty Parameter derived from starty.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.clearAllFlows(working, starty);
+	 */
 	static clearAllFlows(working, starty) {
 		if (!Array.isArray(working.postdata && working.postdata.actors)) {
 			return;
@@ -303,10 +539,39 @@ module.exports = class Actor {
 		});
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle draw timelines.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} minimumHeight Parameter derived from minimumHeight.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.drawTimelines(working, ctx, starty, minimumHeight, mimic);
+	 */
 	static drawTimelines(working, ctx, starty, minimumHeight, mimic) {
 		return Actor.drawTimelinesWithBreak(working, ctx, starty, minimumHeight, null, null, null, mimic);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle draw timelines with break.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} minimumHeight Parameter derived from minimumHeight.
+	 * @param {*} breakAtYPos Parameter derived from breakAtYPos.
+	 * @param {*} breakAtYPosForActor Parameter derived from breakAtYPosForActor.
+	 * @param {*} gapForBreak Parameter derived from gapForBreak.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.drawTimelinesWithBreak(working, ctx, starty, minimumHeight, breakAtYPos, breakAtYPosForActor, gapForBreak, mimic);
+	 */
 	static drawTimelinesWithBreak(working, ctx, starty, minimumHeight, breakAtYPos, breakAtYPosForActor, gapForBreak, mimic) {
 		let maxx = 0;
 		let maxy = 0;
@@ -331,6 +596,7 @@ module.exports = class Actor {
 			if (actorcl.middle > maxx) maxx = actorcl.middle;
 			if (starty + actualHeight > maxy) maxy = starty + actualHeight;
 
+			/////////////////////////////////////////////////////////////////////////////
 			// Check if we need to break the flow on the calling actor
 			let breakAtYPosStart = null;
 			let breakAtYPosEnd = null;
@@ -346,7 +612,7 @@ module.exports = class Actor {
 				breakAtYPosEnd = breakAtYPos + gapForBreak / 2;
 			}
 
-			//////////////////////////
+			/////////////////////////////////////////////////////////////////////////////
 			// We have a start and an end and we have a break
 			if (
 				Utilities.isNumber(actorcl.flowStartYPos) &&
@@ -428,7 +694,7 @@ module.exports = class Actor {
 					actorcl.clearFlowStateContinue();
 				}
 			}
-			//////////////////////////
+			/////////////////////////////////////////////////////////////////////////////
 			// We have a start and an end but we have no break
 			else if (Utilities.isNumber(actorcl.flowStartYPos) && Utilities.isNumber(actorcl.flowEndYPos)) {
 				let leftBlock = actorcl.middle - actorcl.flowWidth / 2;
@@ -457,10 +723,11 @@ module.exports = class Actor {
 					leftBorder,
 					mimic
 				);
+				////////////////////////////////////////////////////////////////////////////
 				// Clear the continue state
 				actorcl.clearFlowStateContinue();
 			}
-			//////////////////////////
+			/////////////////////////////////////////////////////////////////////////////
 			// We have a start but no end, and we have a break
 			else if (
 				Utilities.isNumber(actorcl.flowStartYPos) &&
@@ -541,7 +808,7 @@ module.exports = class Actor {
 					actorcl.setFlowStateContinue();
 				}
 			}
-			//////////////////////////
+			/////////////////////////////////////////////////////////////////////////////
 			// We have a start but no end, and we DO NOT have a break
 			else if (Utilities.isNumber(actorcl.flowStartYPos) && !Utilities.isNumber(actorcl.flowEndYPos)) {
 				let leftBlock = actorcl.middle - actorcl.flowWidth / 2;
@@ -572,7 +839,7 @@ module.exports = class Actor {
 				);
 				actorcl.setFlowStateContinue();
 			}
-			/////////////////////////////////////////
+			/////////////////////////////////////////////////////////////////////////////
 			// We have no start but we do have an end and we have a break
 			else if (
 				!Utilities.isNumber(actorcl.flowStartYPos) &&
@@ -653,7 +920,7 @@ module.exports = class Actor {
 					actorcl.clearFlowStateContinue();
 				}
 			}
-			/////////////////////////////////////////
+			/////////////////////////////////////////////////////////////////////////////
 			// We have no start but we do have an end and we DO NOT have a break
 			else if (!Utilities.isNumber(actorcl.flowStartYPos) && Utilities.isNumber(actorcl.flowEndYPos)) {
 				let leftBlock = actorcl.middle - actorcl.flowWidth / 2;
@@ -684,7 +951,7 @@ module.exports = class Actor {
 				);
 				actorcl.clearFlowStateContinue();
 			}
-			////////////////////////////////////////////
+			/////////////////////////////////////////////////////////////////////////////
 			// We are marked to continue and have no number for either flowStartYPos or flowEndYPos
 			else if (actorcl.isFlowStateContinue()) {
 				Utilities.drawRectangle(
@@ -711,6 +978,15 @@ module.exports = class Actor {
 		return working.manageMaxWidth(maxx, maxy);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle get extra yto meet time line dash.
+	 *
+	 * @param {*} minimumHeight Parameter derived from minimumHeight.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.getExtraYToMeetTimeLineDash(minimumHeight);
+	 */
 	getExtraYToMeetTimeLineDash(minimumHeight) {
 		let count = 0;
 		this._timelineDash.forEach((space) => {
@@ -722,6 +998,13 @@ module.exports = class Actor {
 		else return count - (minimumHeight % count);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return the default tmd configuration.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.getDefaultTmd();
+	 */
 	static getDefaultTmd() {
 		const defaultTmd = {
 			fontFamily: schema.actor.properties.fontFamily.default,

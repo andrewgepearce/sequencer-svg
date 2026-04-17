@@ -1,31 +1,37 @@
 // Copyright (C) 2019 Mark The Page
-
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
 // published by the Free Software Foundation, either version 3 of the
 // License, or (at your option) any later version.
-
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Affero General Public License for more details.
-
+//
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 const _schemaUtils = require("./schemaUtils.js");
+
+//////////////////////////////////////////////////////////////////////////////
+/**
+ * Export the JSON schema fragment that validates comment definitions.
+ *
+ * @type {object}
+ */
 module.exports._comment = {
 	title: "Comment Schema",
 	decription: "Definition of an comment JSON object withing a Sequencer document",
 	oneOf: [
 		{
 			description: "Multi-line text representation",
-			oneOf: [{type: "string"}, {type: "array", items: {type: "string"}}]
+			oneOf: [{ type: "string" }, { type: "array", items: { type: "string" } }],
 		},
 		{
 			type: "object",
 			description: "Multi-line text representation with specifics for comment look and feel",
-			type: "object",
 			properties: {
 				fontFamily: _schemaUtils._fontFamily("sans-serif"),
 				fontSizePx: _schemaUtils._fontSizePx(14),
@@ -45,11 +51,11 @@ module.exports._comment = {
 					type: "number",
 					description: "The size in pixels of the fold on the comment",
 					minimum: 0,
-					default: 10
+					default: 10,
 				},
-				text: _schemaUtils._multiLineText
+				text: _schemaUtils._multiLineText,
 			},
-			required: ["text"]
-		}
-	]
+			required: ["text"],
+		},
+	],
 };

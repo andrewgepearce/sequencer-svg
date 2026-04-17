@@ -18,6 +18,16 @@ let TextMetadata = require("./TextMetadata.js");
 const InputDocumentError = require("./InputDocumentError.js");
 
 module.exports = class Comment {
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Initialise the Comment instance.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} line Parameter derived from line.
+	 * @returns {void} Nothing.
+	 * @example
+	 * const instance = new Comment(ctx, line);
+	 */
 	constructor(ctx, line) {
 		this._ctx = ctx;
 		this._line = line;
@@ -37,6 +47,21 @@ module.exports = class Comment {
 		this._lineRadius = null;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw the comment element.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} startx Parameter derived from startx.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} gapBelow Parameter derived from gapBelow.
+	 * @param {*} gapRight Parameter derived from gapRight.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @param {*} returnWidth Parameter derived from returnWidth.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.draw(working, startx, starty, gapBelow, gapRight, mimic, returnWidth);
+	 */
 	draw(working, startx, starty, gapBelow, gapRight, mimic, returnWidth) {
 		if (!working.postdata) {
 			working.postdata = {};
@@ -60,7 +85,7 @@ module.exports = class Comment {
 			};
 		}
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get Comment Code Indicator
 		let commentIsCode = Utilities.isBoolean(this._line.commentIsCode) ? this._line.commentIsCode : false;
 		if (commentIsCode && Array.isArray(this._line.text)) {
@@ -82,7 +107,7 @@ module.exports = class Comment {
 			throw new InputDocumentError("comment must be a string or an object with 'text' as a string or array of strings", this._line);
 		}
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the fg colour
 		this._fgColour = Utilities.validColour(this._line.fgColour)
 			? this._line.fgColour
@@ -90,7 +115,7 @@ module.exports = class Comment {
 			? working.postdata.params.comment.fgColour
 			: "rgb(0, 0, 0)";
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the bg colour
 		this._bgColour = Utilities.validColour(this._line.bgColour)
 			? this._line.bgColour
@@ -98,7 +123,7 @@ module.exports = class Comment {
 			? working.postdata.params.comment.bgColour
 			: "rgb(0, 255, 50)";
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the border colour
 		this._borderColour = Utilities.validColour(this._line.borderColour)
 			? this._line.borderColour
@@ -106,7 +131,7 @@ module.exports = class Comment {
 			? working.postdata.params.comment.borderColour
 			: "rgb(0, 0, 0)";
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the connecting line colour
 		this._lineColour = Utilities.validColour(this._line.lineColour)
 			? this._line.lineColour
@@ -114,7 +139,7 @@ module.exports = class Comment {
 			? working.postdata.params.comment.lineColour
 			: "rgb(0, 0, 0)";
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the border dash
 		this._borderDash =
 			Array.isArray(this._line.borderDash) && Utilities.isAllNumber(this._line.borderDash)
@@ -126,7 +151,7 @@ module.exports = class Comment {
 				? working.postdata.params.comment.borderDash
 				: [];
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the line dash
 		this._lineDash =
 			Array.isArray(this._line.lineDash) && Utilities.isAllNumber(this._line.lineDash)
@@ -138,7 +163,7 @@ module.exports = class Comment {
 				? working.postdata.params.comment.lineDash
 				: [4, 2];
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the border width
 		this._borderWidth =
 			Utilities.isNumber(this._line.borderWidth) && this._line.borderWidth >= 0
@@ -150,7 +175,7 @@ module.exports = class Comment {
 				? working.postdata.params.comment.borderWidth
 				: 1;
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the line width
 		this._lineWidth =
 			Utilities.isNumber(this._line.lineWidth) && this._line.lineWidth >= 0
@@ -162,7 +187,7 @@ module.exports = class Comment {
 				? working.postdata.params.comment.lineWidth
 				: 1;
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the font family
 		this._fontFamily = working.isValidFont(this._line.fontFamily)
 			? this._line.fontFamily + ",sans-serif"
@@ -170,7 +195,7 @@ module.exports = class Comment {
 			? working.postdata.params.comment.fontFamily + ",sans-serif"
 			: "sans-serif";
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the font size
 		this._fontSizePx =
 			Utilities.isNumber(this._line.fontSizePx) && this._line.fontSizePx >= 6
@@ -182,7 +207,7 @@ module.exports = class Comment {
 				? working.postdata.params.comment.fontSizePx
 				: 14;
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the padding
 		this._padding = Utilities.isNumberGtEq0(this._line.padding)
 			? this._line.padding
@@ -190,7 +215,7 @@ module.exports = class Comment {
 			? working.postdata.params.comment.padding
 			: 15;
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the spacing
 		this._spacing =
 			Utilities.isNumber(this._line.spacing) && this._line.spacing >= 1
@@ -202,7 +227,7 @@ module.exports = class Comment {
 				? working.postdata.params.comment.spacing
 				: 1;
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the fold size
 		this._foldSizePx =
 			Utilities.isNumber(this._line.foldSizePx) && this._line.foldSizePx >= 1
@@ -214,7 +239,7 @@ module.exports = class Comment {
 				? working.postdata.params.comment.foldSizePx
 				: 10;
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the line radius
 		this._lineRadius =
 			Utilities.isNumber(this._line.radius) && this._line.radius >= 1
@@ -237,7 +262,7 @@ module.exports = class Comment {
 				y: starty,
 			};
 
-		//////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Create comment metadata
 		let commenttmd = new TextMetadata(
 			this._fontFamily,
@@ -252,7 +277,7 @@ module.exports = class Comment {
 			this._borderDash
 		);
 
-		////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get comment box starting parameters
 		const wh = Utilities.getTextWidthAndHeight(this._ctx, commenttmd, this._line.text, working.tags);
 		let width = wh.w; //commenttmd.getBoxWidth(this._ctx, this._line.text);
@@ -263,7 +288,7 @@ module.exports = class Comment {
 		let commentx = startx + gapRight;
 		let commenty = starty;
 
-		///////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw drop shadow
 		let commentx_drop = commentx + 3;
 		let commenty_drop = commenty + 3;
@@ -284,7 +309,7 @@ module.exports = class Comment {
 		this._ctx.fill();
 		working.manageMaxWidth(commentx_drop + width, commenty_drop + height);
 
-		//////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw comment background and border
 		this._ctx.beginPath();
 		this._ctx.moveTo(commentx, commenty);
@@ -329,7 +354,7 @@ module.exports = class Comment {
 		}
 		working.manageMaxWidth(commentx + width, commenty + height);
 
-		/////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw the connecting line
 		let destinationX = startx;
 		let destinationY = commenty + height + gapBelow;
@@ -354,6 +379,13 @@ module.exports = class Comment {
 		else return working.manageMaxWidth(commentx + width, destinationY);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return the default tmd configuration.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.getDefaultTmd();
+	 */
 	static getDefaultTmd() {
 		const defaultCommentTmd = {
 			fontFamily: "sans-serif",

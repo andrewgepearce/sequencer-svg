@@ -20,6 +20,17 @@ let Comment = require("./Comment.js");
 const InputDocumentError = require("./InputDocumentError.js");
 
 module.exports = class ReturnCall {
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Initialise the ReturnCall instance.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} line Parameter derived from line.
+	 * @param {*} working Parameter derived from working.
+	 * @returns {void} Nothing.
+	 * @example
+	 * const instance = new ReturnCall(ctx, line, working);
+	 */
 	constructor(ctx, line, working) {
 		this._ctx = ctx;
 		this._line = line;
@@ -30,8 +41,19 @@ module.exports = class ReturnCall {
 		this._callCount = ++working.callCount;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw the return call element.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.draw(working, starty, mimic);
+	 */
 	draw(working, starty, mimic) {
-		////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw blank line (without timelines) if there is no line object
 		if (this._line == null || typeof this._line != "object") {
 			throw new InputDocumentError("'return' line must be an object", this._line);
@@ -53,12 +75,12 @@ module.exports = class ReturnCall {
 			working.postdata.params.return = {};
 		}
 
-		//////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the call TMD
 		let returntmd = TextMetadata.getTextMetadataFromObject(working, this._line, working.postdata.params.return, ReturnCall.getDefaultTmd());
 		returntmd.bgColour = "rgba(0,0,0,0)";
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the line dash
 		let lineDash =
 			Array.isArray(this._line.lineDash) && Utilities.isAllNumber(this._line.lineDash)
@@ -70,7 +92,7 @@ module.exports = class ReturnCall {
 				? working.postdata.params.return.lineDash
 				: [6, 3];
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the line width
 		let lineWidth =
 			Utilities.isNumber(this._line.lineWidth) && this._line.lineWidth > 0
@@ -82,7 +104,7 @@ module.exports = class ReturnCall {
 				? working.postdata.params.return.lineWidth
 				: 1;
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the line colour
 		let lineColour = Utilities.validColour(this._line.lineColour)
 			? this._line.lineColour
@@ -90,7 +112,7 @@ module.exports = class ReturnCall {
 			? working.postdata.params.return.lineColour
 			: "rgb(0, 0, 0)";
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the arrow size
 		let arrowSizeY =
 			Utilities.isNumber(this._line.arrowSize) && this._line.arrowSize > 0
@@ -102,7 +124,7 @@ module.exports = class ReturnCall {
 				? working.postdata.params.return.arrowSize
 				: 5;
 
-		////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get startx and endx for the call
 		working.postdata.actors.forEach((actor) => {
 			if (actor.alias === this._line.from) {
@@ -121,12 +143,12 @@ module.exports = class ReturnCall {
 			throw new InputDocumentError(`'return' line 'to' alias "${this._line.to}" does not match any actor`, this._line);
 		}
 
-		////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Should we break the to or from flows
 		const continueFromFlow = this._line.continueFromFlow === true ? true : false;
 		const breakToFlow = this._line.breakToFlow === true ? true : false;
 
-		////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Ignore line if start and enx are not numbers
 		if (typeof this._startx != "number" || typeof this._endx != "number") {
 			return {
@@ -135,13 +157,13 @@ module.exports = class ReturnCall {
 			};
 		}
 
-		////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Ignore line if the return is to the same actor
 		if (this._endx == this._startx) {
 			throw new InputDocumentError("'return' line cannot target the same actor as its source", this._line);
 		}
 
-		/////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Calculate height of fragment condition line
 		let startxAfterFlow, endxAfterFlow;
 		const ctx = this._ctx;
@@ -206,21 +228,27 @@ module.exports = class ReturnCall {
 		let xy = Actor.drawTimelines(working, ctx, starty, callliney + arrowSizeY - starty + 1, true);
 		let finalHeightOfAllLine = xy.y - starty;
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Height now calculated .. not draw the items in order
+		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
+		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
+		//////////////////////////////////////////////////////////////////////////////
 		// 3. Comment
+		//////////////////////////////////////////////////////////////////////////////
 		// 4. Call text
+		//////////////////////////////////////////////////////////////////////////////
 		// 5a. Call line
+		//////////////////////////////////////////////////////////////////////////////
 		// 5b. Call line arrow
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
 
 		Utilities.drawActiveFragments(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
 		if (continueFromFlow) {
 			this._actorFromClass.flowStartYPos = callliney - arrowSizeY;
@@ -238,7 +266,7 @@ module.exports = class ReturnCall {
 		}
 		xy = Actor.drawTimelines(working, ctx, starty, finalHeightOfAllLine, mimic);
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 3. Comment
 		if (comment != null) {
 			if (commentOnStartx) {
@@ -262,7 +290,7 @@ module.exports = class ReturnCall {
 			}
 		}
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 4. Draw the call line text
 		let gapToText = comment != null ? 2 * working.globalSpacing : working.globalSpacing;
 		if (commentOnStartx) {
@@ -293,7 +321,7 @@ module.exports = class ReturnCall {
 			working.manageMaxWidth(calltextxy.x, calltextxy.y);
 		}
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 5a. Draw the call line
 		ctx.lineWidth = lineWidth;
 		ctx.strokeStyle = lineColour;
@@ -303,7 +331,7 @@ module.exports = class ReturnCall {
 		Utilities.drawOrMovePath(ctx, endxAfterFlow, callliney, mimic);
 		ctx.stroke();
 
-		//////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 5a. Draw the call arrow
 		ctx.beginPath();
 		if (Utilities.isString(this._line.arrow)) this._line.arrow = this._line.arrow.toLowerCase();
@@ -324,7 +352,7 @@ module.exports = class ReturnCall {
 		const x = endxAfterFlow;
 		const y = callliney;
 
-		////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Going right with a cross
 		if (goingRight && arrowType === "cross") {
 			ctx.moveTo(x, y);
@@ -337,7 +365,7 @@ module.exports = class ReturnCall {
 			ctx.stroke();
 			ctx.lineWidth = lineWidth;
 		}
-		////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Going left with a cross
 		else if (goingLeft && arrowType === "cross") {
 			ctx.moveTo(x, y);
@@ -350,7 +378,7 @@ module.exports = class ReturnCall {
 			ctx.stroke();
 			ctx.lineWidth = lineWidth;
 		}
-		////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Going right with a filled arrow
 		else if (goingRight && arrowType === "fill") {
 			ctx.moveTo(x, y);
@@ -361,7 +389,7 @@ module.exports = class ReturnCall {
 			ctx.fillStyle = lineColour;
 			ctx.fill();
 		}
-		////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Going left with a filled arrow
 		else if (goingLeft && arrowType === "fill") {
 			ctx.moveTo(x, y);
@@ -372,7 +400,7 @@ module.exports = class ReturnCall {
 			ctx.fillStyle = lineColour;
 			ctx.fill();
 		}
-		////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Going right with a open arrow
 		else if (goingRight && arrowType === "open") {
 			ctx.moveTo(x, y);
@@ -384,7 +412,7 @@ module.exports = class ReturnCall {
 			ctx.lineTo(x - arrowSizeY * 2, y + arrowSizeY);
 			ctx.stroke();
 		}
-		////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Going left with a open arrow sd
 		else if (goingLeft && arrowType === "open") {
 			ctx.moveTo(x, y);
@@ -400,6 +428,13 @@ module.exports = class ReturnCall {
 		return working.manageMaxWidth(0, starty + finalHeightOfAllLine);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return the default tmd configuration.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.getDefaultTmd();
+	 */
 	static getDefaultTmd() {
 		const defaultCallTmd = {
 			fontFamily: "sans-serif",

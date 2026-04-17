@@ -18,13 +18,35 @@ let Actor = require("./Actor.js");
 let Comment = require("./Comment.js");
 
 module.exports = class Blank {
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Initialise the Blank instance.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} line Parameter derived from line.
+	 * @param {*} working Parameter derived from working.
+	 * @returns {void} Nothing.
+	 * @example
+	 * const instance = new Blank(ctx, line, working);
+	 */
 	constructor(ctx, line, working) {
 		this._ctx = ctx;
 		this._line = line;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw the blank element.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.draw(working, starty, mimic);
+	 */
 	draw(working, starty, mimic) {
-		////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw blank line (without timelines) if there is no line object
 		if (this._line == null || typeof this._line != "object") {
 			return {
@@ -82,21 +104,24 @@ module.exports = class Blank {
 		let xy = Actor.drawTimelines(working, ctx, starty, blankBottom - blankTop, true);
 		let finalHeightOfAllLine = xy.y - starty;
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Height now calculated .. not draw the items in order
+		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
+		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
+		//////////////////////////////////////////////////////////////////////////////
 		// 3. Comment
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
 		Utilities.drawActiveFragments(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
 		xy = Actor.drawTimelines(working, ctx, starty, finalHeightOfAllLine, mimic);
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 3. Comment
 		if (comment != null) {
 			commentxy = comment.draw(working, commentleft, blankTop + working.globalSpacing, 0, 0, mimic);

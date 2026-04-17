@@ -21,6 +21,17 @@ const schema = require("./schema.js");
 const InputDocumentError = require("./InputDocumentError.js");
 
 module.exports = class Call {
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Initialise the Call instance.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} line Parameter derived from line.
+	 * @param {*} working Parameter derived from working.
+	 * @returns {void} Nothing.
+	 * @example
+	 * const instance = new Call(ctx, line, working);
+	 */
 	constructor(ctx, line, working) {
 		this._ctx = ctx;
 		this._line = line;
@@ -31,8 +42,19 @@ module.exports = class Call {
 		this._callCount = ++working.callCount;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw the call element.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.draw(working, starty, mimic);
+	 */
 	draw(working, starty, mimic) {
-		////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw blank line (without timelines) if there is no line object
 		if (this._line == null || typeof this._line != "object") {
 			throw new InputDocumentError("'call' line must be an object", this._line);
@@ -53,7 +75,7 @@ module.exports = class Call {
 		if (!working.postdata.params.call) {
 			working.postdata.params.call = {};
 		}
-		////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get startx and endx for the call
 		let foundFrom = false;
 		let foundTo = false;
@@ -88,17 +110,28 @@ module.exports = class Call {
 		}
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle draw same actor.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.drawSameActor(working, starty, mimic);
+	 */
 	drawSameActor(working, starty, mimic) {
-		//////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the call TMD
 		let calltmd = TextMetadata.getTextMetadataFromObject(working, this._line, working.postdata.params.call, Call.getSelfCallDefaultTmd());
 		calltmd.bgColour = "rgba(0,0,0,0)";
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the line dash
 		let lineDash = Array.isArray(this._line.lineDash) && Utilities.isAllNumber(this._line.lineDash) ? this._line.lineDash : [];
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the line width
 		let lineWidth = Utilities.isNumberGt0(this._line.lineWidth)
 			? this._line.lineWidth
@@ -106,7 +139,7 @@ module.exports = class Call {
 			? working.postdata.params.call.lineWidth
 			: 1;
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the line colour
 		let lineColour = Utilities.validColour(this._line.lineColour)
 			? this._line.lineColour
@@ -114,7 +147,7 @@ module.exports = class Call {
 			? working.postdata.params.call.lineColour
 			: "rgb(0, 0, 0)";
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the arrow size
 		let arrowSizeY = Utilities.isNumberGt0(this._line.arrowSize)
 			? this._line.arrowSize
@@ -122,7 +155,7 @@ module.exports = class Call {
 			? working.postdata.params.call.arrowSize
 			: 5;
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the radius
 		let radius = Utilities.isNumberGtEq0(this._line.radius)
 			? this._line.radius
@@ -130,7 +163,7 @@ module.exports = class Call {
 			? working.postdata.params.call.radius
 			: 5;
 
-		/////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Calculate height of fragment condition line
 		let startxAfterFlow;
 		const ctx = this._ctx;
@@ -153,7 +186,7 @@ module.exports = class Call {
 			callliney = starty + working.globalSpacing;
 		}
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 5. Draw the call line text
 		let textToPrint = null;
 		if (Utilities.isAllStrings(this._line.text)) {
@@ -170,20 +203,26 @@ module.exports = class Call {
 		let xy = Actor.drawTimelines(working, ctx, starty, callliney + 2 * lineWidth + working.globalSpacing + arrowSizeY - starty, true);
 		let finalHeightOfAllLine = texty > xy.y ? texty - starty : xy.y - starty;
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Height now calculated .. not draw the items in order
+		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
+		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
+		//////////////////////////////////////////////////////////////////////////////
 		// 3. Comment
+		//////////////////////////////////////////////////////////////////////////////
 		// 4. Call line
+		//////////////////////////////////////////////////////////////////////////////
 		// 4a. Call line arrow
+		//////////////////////////////////////////////////////////////////////////////
 		// 5a. Call text
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
 		Utilities.drawActiveFragments(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
 		this._actorFromClass.flowStartYPos = callliney;
 		if (
@@ -205,7 +244,7 @@ module.exports = class Call {
 			xy = Actor.drawTimelinesWithBreak(working, ctx, starty, finalHeightOfAllLine, breakAtYPos, breakAtYPosForActor, gapForBreak, mimic);
 		}
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 3. Comment
 		if (comment != null) {
 			commentxy = comment.draw(
@@ -218,7 +257,7 @@ module.exports = class Call {
 			);
 		}
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 4. Draw the line
 		ctx.lineWidth = lineWidth;
 		ctx.strokeStyle = lineColour;
@@ -248,7 +287,7 @@ module.exports = class Call {
 		Utilities.drawOrMovePath(ctx, startxAfterFlow, callliney + working.globalSpacing, mimic);
 		ctx.stroke();
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 5. Draw the line arrow
 		ctx.beginPath();
 		ctx.moveTo(startxAfterFlow, callliney + working.globalSpacing);
@@ -289,10 +328,11 @@ module.exports = class Call {
 			ctx.stroke();
 			ctx.lineWidth = lineWidth;
 		} else if (arrowType === "empty") {
+			/////////////////////////////////////////////////////////////////////////////
 			// Do nothing
 		}
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 5. Draw the call line text
 		let calltextxy = Utilities.drawTextRectangleNoBorderOrBg(
 			ctx,
@@ -304,26 +344,39 @@ module.exports = class Call {
 			null,
 			mimic
 		);
+		//////////////////////////////////////////////////////////////////////////////
 		// let calltextxy = Utilities.drawTextRectangle(ctx, textToPrint,
+		//////////////////////////////////////////////////////////////////////////////
 		//    calltmd, callliney, startxAfterFlow + (2 * working.globalSpacing), null, null, 0, false, false, false, false, mimic);
 		working.manageMaxWidth(calltextxy.x, calltextxy.y);
 		return working.manageMaxWidth(0, starty + finalHeightOfAllLine);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle draw different actor.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.drawDifferentActor(working, starty, mimic);
+	 */
 	drawDifferentActor(working, starty, mimic) {
-		//////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the call TMD
 		let calltmd = TextMetadata.getTextMetadataFromObject(working, this._line, working.postdata.params.call, Call.getDefaultTmd());
 		calltmd.bgColour = "rgba(0,0,0,0)";
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the line dash
 		let lineDash = Array.isArray(this._line.lineDash) && Utilities.isAllNumber(this._line.lineDash) ? this._line.lineDash : [];
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		const cross = Utilities.isBoolean(this._line.cross) && this._line.cross === true ? true : false;
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the line width
 		let lineWidth =
 			Utilities.isNumber(this._line.lineWidth) && this._line.lineWidth > 0
@@ -335,7 +388,7 @@ module.exports = class Call {
 				? working.postdata.params.call.lineWidth
 				: 1;
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the line colour
 		let lineColour = Utilities.validColour(this._line.lineColour)
 			? this._line.lineColour
@@ -343,7 +396,7 @@ module.exports = class Call {
 			? working.postdata.params.call.lineColour
 			: "rgb(0, 0, 0)";
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the arrow size
 		let arrowSizeY =
 			Utilities.isNumber(this._line.arrowSize) && this._line.arrowSize > 0
@@ -355,7 +408,7 @@ module.exports = class Call {
 				? working.postdata.params.call.arrowSize
 				: 5;
 
-		/////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Calculate height of fragment condition line
 		let startxAfterFlow, endxAfterFlow;
 		const ctx = this._ctx;
@@ -418,20 +471,26 @@ module.exports = class Call {
 		let xy = Actor.drawTimelines(working, ctx, starty, callliney + arrowSizeY - starty + working.globalSpacing / 3, true);
 		let finalHeightOfAllLine = xy.y - starty;
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Height now calculated .. not draw the items in order
+		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
+		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
+		//////////////////////////////////////////////////////////////////////////////
 		// 3. Comment
+		//////////////////////////////////////////////////////////////////////////////
 		// 4. Call text
+		//////////////////////////////////////////////////////////////////////////////
 		// 5a. Call line
+		//////////////////////////////////////////////////////////////////////////////
 		// 5b. Call line arrow
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
 		Utilities.drawActiveFragments(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
 		this._actorFromClass.flowStartYPos = callliney;
 		this._actorToClass.flowStartYPos = callliney;
@@ -443,7 +502,7 @@ module.exports = class Call {
 		}
 		xy = Actor.drawTimelines(working, ctx, starty, finalHeightOfAllLine, mimic);
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 3. Comment
 		if (comment != null) {
 			if (commentOnStartx) {
@@ -467,7 +526,7 @@ module.exports = class Call {
 			}
 		}
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 4. Draw the call line text
 		let gapToText = comment != null ? 2 * working.globalSpacing : working.globalSpacing;
 		if (commentOnStartx) {
@@ -498,7 +557,7 @@ module.exports = class Call {
 			working.manageMaxWidth(calltextxy.x, calltextxy.y);
 		}
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 5a. Draw the call line
 		ctx.lineWidth = lineWidth;
 		ctx.strokeStyle = lineColour;
@@ -508,7 +567,7 @@ module.exports = class Call {
 		Utilities.drawOrMovePath(ctx, endxAfterFlow, callliney, mimic);
 		ctx.stroke();
 
-		//////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 5a. Draw the call arrow
 		ctx.beginPath();
 		ctx.moveTo(endxAfterFlow, callliney);
@@ -529,7 +588,7 @@ module.exports = class Call {
 				? "open"
 				: "fill";
 
-		////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Going right with a cross
 		if (goingRight && arrowType === "cross") {
 			ctx.setLineDash([]);
@@ -541,7 +600,7 @@ module.exports = class Call {
 			ctx.stroke();
 			ctx.lineWidth = lineWidth;
 		}
-		////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Going left with a cross
 		else if (goingLeft && arrowType === "cross") {
 			ctx.setLineDash([]);
@@ -553,7 +612,7 @@ module.exports = class Call {
 			ctx.stroke();
 			ctx.lineWidth = lineWidth;
 		}
-		////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Going right with a filled arrow
 		else if (goingRight && arrowType === "fill") {
 			ctx.setLineDash([]);
@@ -563,7 +622,7 @@ module.exports = class Call {
 			ctx.fillStyle = lineColour;
 			ctx.fill();
 		}
-		////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Going left with a filled arrow
 		else if (goingLeft && arrowType === "fill") {
 			ctx.setLineDash([]);
@@ -573,7 +632,7 @@ module.exports = class Call {
 			ctx.fillStyle = lineColour;
 			ctx.fill();
 		}
-		////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Going right with a empty arrow
 		else if (goingRight && arrowType === "open") {
 			ctx.setLineDash([]);
@@ -583,7 +642,7 @@ module.exports = class Call {
 			ctx.strokeStyle = lineColour;
 			ctx.stroke();
 		}
-		////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Going left with a empty arrow
 		else if (goingLeft && arrowType === "open") {
 			ctx.setLineDash([]);
@@ -593,11 +652,19 @@ module.exports = class Call {
 			ctx.strokeStyle = lineColour;
 			ctx.stroke();
 		}
+		//////////////////////////////////////////////////////////////////////////////
 		// Do nothing with empty arrow type
 
 		return working.manageMaxWidth(0, starty + finalHeightOfAllLine);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return the default tmd configuration.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.getDefaultTmd();
+	 */
 	static getDefaultTmd() {
 		const defaultCallTmd = {
 			fontFamily: schema.call.properties.fontFamily.default,
@@ -614,6 +681,13 @@ module.exports = class Call {
 		return defaultCallTmd;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle get self call default tmd.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.getSelfCallDefaultTmd();
+	 */
 	static getSelfCallDefaultTmd() {
 		const defaultCallTmd = {
 			fontFamily: schema.call.properties.fontFamily.default,

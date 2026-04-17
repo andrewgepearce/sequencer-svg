@@ -65,7 +65,16 @@ module.exports._breakToFlowTrue = {
 	description: "Should the flow be broken in the calling actor?",
 	default: true
 };
-///////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal align step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._align(defValue);
+ */
 module.exports._align = function _align(defValue) {
 	return {
 		type: "string",
@@ -74,7 +83,16 @@ module.exports._align = function _align(defValue) {
 		default: defValue == undefined ? "left" : defValue
 	};
 };
-///////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal bg colour step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._bgColour(defValue);
+ */
 module.exports._bgColour = function _bgColour(defValue) {
 	return {
 		type: "string",
@@ -90,7 +108,16 @@ module.exports._bgColour = function _bgColour(defValue) {
 		default: defValue == undefined ? "rgba(255,255,255, 0)" : defValue
 	};
 };
-/////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal fg colour step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._fgColour(defValue);
+ */
 module.exports._fgColour = function _fgColour(defValue) {
 	return {
 		type: "string",
@@ -106,7 +133,16 @@ module.exports._fgColour = function _fgColour(defValue) {
 		default: defValue == undefined ? "rgb(0,0,0)" : defValue
 	};
 };
-/////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal line colour step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._lineColour(defValue);
+ */
 module.exports._lineColour = function _lineColour(defValue) {
 	return {
 		type: "string",
@@ -122,6 +158,15 @@ module.exports._lineColour = function _lineColour(defValue) {
 		default: defValue == undefined ? "rgb(0,0,0)" : defValue
 	};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal border colour step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._borderColour(defValue);
+ */
 module.exports._borderColour = function _borderColour(defValue) {
 	return {
 		type: "string",
@@ -137,6 +182,15 @@ module.exports._borderColour = function _borderColour(defValue) {
 		default: defValue == undefined || typeof defValue != "string" ? "rgb(0,0,0)" : defValue
 	};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal radius step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._radius(defValue);
+ */
 module.exports._radius = function _radius(defValue) {
 	if (defValue != undefined && typeof defValue == "number" && defValue >= 0)
 		return {
@@ -152,6 +206,15 @@ module.exports._radius = function _radius(defValue) {
 			minimum: 0
 		};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal flow width step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._flowWidth(defValue);
+ */
 module.exports._flowWidth = function _flowWidth(defValue) {
 	return {
 		type: "number",
@@ -160,6 +223,15 @@ module.exports._flowWidth = function _flowWidth(defValue) {
 		default: defValue
 	};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal border width step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._borderWidth(defValue);
+ */
 module.exports._borderWidth = function _borderWidth(defValue) {
 	return {
 		type: "number",
@@ -168,6 +240,15 @@ module.exports._borderWidth = function _borderWidth(defValue) {
 		default: defValue == undefined ? 1 : defValue
 	};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal line width step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._lineWidth(defValue);
+ */
 module.exports._lineWidth = function _lineWidth(defValue) {
 	return {
 		type: "number",
@@ -176,6 +257,15 @@ module.exports._lineWidth = function _lineWidth(defValue) {
 		default: defValue == undefined ? 1 : defValue
 	};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal border dash step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._borderDash(defValue);
+ */
 module.exports._borderDash = function _borderDash(defValue) {
 	return {
 		type: "array",
@@ -187,6 +277,15 @@ module.exports._borderDash = function _borderDash(defValue) {
 		default: defValue == undefined ? [] : defValue
 	};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal line dash step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._lineDash(defValue);
+ */
 module.exports._lineDash = function _lineDash(defValue) {
 	return {
 		type: "array",
@@ -198,6 +297,15 @@ module.exports._lineDash = function _lineDash(defValue) {
 		default: defValue == undefined ? [4, 2] : defValue
 	};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal timeline dash step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._timelineDash(defValue);
+ */
 module.exports._timelineDash = function _timelineDash(defValue) {
 	return {
 		type: "array",
@@ -208,6 +316,15 @@ module.exports._timelineDash = function _timelineDash(defValue) {
 		default: defValue == undefined ? [3, 3] : defValue
 	};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal timeline width step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._timelineWidth(defValue);
+ */
 module.exports._timelineWidth = function _timelineWidth(defValue) {
 	return {
 		type: "number",
@@ -216,6 +333,15 @@ module.exports._timelineWidth = function _timelineWidth(defValue) {
 		default: defValue
 	};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal font family step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._fontFamily(defValue);
+ */
 module.exports._fontFamily = function _fontFamily(defValue) {
 	return {
 		type: "string",
@@ -224,6 +350,15 @@ module.exports._fontFamily = function _fontFamily(defValue) {
 		default: defValue
 	};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal font size px step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._fontSizePx(defValue);
+ */
 module.exports._fontSizePx = function _fontSizePx(defValue) {
 	return {
 		type: "number",
@@ -232,6 +367,15 @@ module.exports._fontSizePx = function _fontSizePx(defValue) {
 		default: defValue
 	};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal padding step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._padding(defValue);
+ */
 module.exports._padding = function _padding(defValue) {
 	return {
 		type: "number",
@@ -240,6 +384,15 @@ module.exports._padding = function _padding(defValue) {
 		default: defValue
 	};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal spacing step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._spacing(defValue);
+ */
 module.exports._spacing = function _spacing(defValue) {
 	return {
 		type: "number",
@@ -249,6 +402,15 @@ module.exports._spacing = function _spacing(defValue) {
 		default: defValue == undefined ? 1 : defValue
 	};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal arrow size y step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._arrowSizeY(defValue);
+ */
 module.exports._arrowSizeY = function _arrowSizeY(defValue) {
 	return {
 		type: "number",
@@ -257,6 +419,15 @@ module.exports._arrowSizeY = function _arrowSizeY(defValue) {
 		default: defValue == undefined ? 5 : defValue
 	};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal break from flow step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._breakFromFlow(defValue);
+ */
 module.exports._breakFromFlow = function _breakFromFlow(defValue) {
 	return {
 		type: "boolean",
@@ -264,6 +435,15 @@ module.exports._breakFromFlow = function _breakFromFlow(defValue) {
 		default: typeof defValue != "boolean" ? false : defValue
 	};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal break to flow step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._breakToFlow(defValue);
+ */
 module.exports._breakToFlow = function _breakToFlow(defValue) {
 	return {
 		type: "boolean",
@@ -271,6 +451,15 @@ module.exports._breakToFlow = function _breakToFlow(defValue) {
 		default: typeof defValue != "boolean" ? false : defValue
 	};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal async step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._async(defValue);
+ */
 module.exports._async = function _async(defValue) {
 	return {
 		type: "boolean",
@@ -278,6 +467,15 @@ module.exports._async = function _async(defValue) {
 		default: typeof defValue != "boolean" ? false : defValue
 	};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal tr width step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._trWidth(defValue);
+ */
 module.exports._trWidth = function _trWidth(defValue) {
 	if (defValue == undefined || typeof defValue != "number" || defValue < 0)
 		return {
@@ -291,6 +489,15 @@ module.exports._trWidth = function _trWidth(defValue) {
 			default: defValue
 		};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal tr height step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._trHeight(defValue);
+ */
 module.exports._trHeight = function _trHeight(defValue) {
 	if (defValue == undefined || typeof defValue != "number" || defValue < 0)
 		return {
@@ -304,6 +511,16 @@ module.exports._trHeight = function _trHeight(defValue) {
 			default: defValue
 		};
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal boolean step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @param {*} description Parameter derived from description.
+ * @returns {*} Result value.
+ * @example
+ * instance._boolean(defValue, description);
+ */
 module.exports._boolean = function _boolean(defValue, description) {
 	let ret = {
 		type: "boolean"
@@ -317,9 +534,20 @@ module.exports._boolean = function _boolean(defValue, description) {
 	return ret;
 };
 
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal extend properties with text metadata step.
+ *
+ * @param {*} propertiesObject Parameter derived from propertiesObject.
+ * @param {*} textMetaData Parameter derived from textMetaData.
+ * @returns {*} Result value.
+ * @example
+ * instance._extendPropertiesWithTextMetadata(propertiesObject, textMetaData);
+ */
 module.exports._extendPropertiesWithTextMetadata = function _extendPropertiesWithTextMetadata(propertiesObject, textMetaData) {
 	if (typeof propertiesObject != "object") return propertiesObject;
 	if (typeof textMetaData != "object") return propertiesObject;
+	///////////////////////////////////////////////////////////////////////////////
 	// TODO check for missing values from TMD
 	propertiesObject.fontFamily = this._fontFamily(textMetaData.fontFamily);
 	propertiesObject.fontSizePx = this._fontSizePx(textMetaData.fontSizePx);
@@ -335,6 +563,23 @@ module.exports._extendPropertiesWithTextMetadata = function _extendPropertiesWit
 	return propertiesObject;
 };
 
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Extend a properties object with the standard text-rectangle schema fields.
+ *
+ * @param {*} propertiesObject Parameter derived from propertiesObject.
+ * @param {*} textMetaData Parameter derived from textMetaData.
+ * @param {*} widthDefValue Parameter derived from widthDefValue.
+ * @param {*} heightDefValue Parameter derived from heightDefValue.
+ * @param {*} cornerRadiusDefValue Parameter derived from cornerRadiusDefValue.
+ * @param {*} borderTopDefValue Parameter derived from borderTopDefValue.
+ * @param {*} borderRightDefValue Parameter derived from borderRightDefValue.
+ * @param {*} borderBottomDefValue Parameter derived from borderBottomDefValue.
+ * @param {*} borderLeftDefValue Parameter derived from borderLeftDefValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._extendPropertiesWithTextRectangle(propertiesObject, textMetaData, widthDefValue, heightDefValue, cornerRadiusDefValue, borderTopDefValue, borderRightDefValue, borderBottomDefValue, borderLeftDefValue);
+ */
 module.exports._extendPropertiesWithTextRectangle = function _extendPropertiesWithTextRectangle(
 	propertiesObject,
 	textMetaData,

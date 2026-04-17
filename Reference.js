@@ -20,6 +20,17 @@ let Comment = require("./Comment.js");
 const InputDocumentError = require("./InputDocumentError.js");
 
 module.exports = class Reference {
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Initialise the Reference instance.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} line Parameter derived from line.
+	 * @param {*} working Parameter derived from working.
+	 * @returns {void} Nothing.
+	 * @example
+	 * const instance = new Reference(ctx, line, working);
+	 */
 	constructor(ctx, line, working) {
 		this._ctx = ctx;
 		this._line = line;
@@ -31,8 +42,19 @@ module.exports = class Reference {
 		this._callCount = ++working.callCount;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw the reference element.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.draw(working, starty, mimic);
+	 */
 	draw(working, starty, mimic) {
-		////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw blank line (without timelines) if there is no line object
 		if (this._line == null || typeof this._line != "object" || typeof this._line.from != "string") {
 			throw new InputDocumentError("'reference' line must be an object with a string 'from' actor alias", this._line);
@@ -57,7 +79,7 @@ module.exports = class Reference {
 
 		let ctx = this._ctx;
 
-		//////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the reference TMD
 		let referencetmd = TextMetadata.getTextMetadataFromObject(
 			working,
@@ -68,7 +90,7 @@ module.exports = class Reference {
 		let calltmd = TextMetadata.getTextMetadataFromObject(working, this._line, working.postdata.params.call, Reference.getDefaultCallTmd());
 		calltmd.bgColour = "rgba(0,0,0,0)";
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the line dash
 		let lineDash =
 			Array.isArray(this._line.lineDash) && Utilities.isAllNumber(this._line.lineDash)
@@ -82,7 +104,7 @@ module.exports = class Reference {
 				? working.postdata.params.reference.lineDash
 				: [];
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the line width
 		let lineWidth =
 			Utilities.isNumber(this._line.lineWidth) && this._line.lineWidth > 0
@@ -94,7 +116,7 @@ module.exports = class Reference {
 				? working.postdata.params.reference.lineWidth
 				: 1;
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the line colour
 		let lineColour = Utilities.validColour(this._line.lineColour)
 			? this._line.lineColour
@@ -102,7 +124,7 @@ module.exports = class Reference {
 			? working.postdata.params.reference.lineColour
 			: "rgb(0, 0, 0)";
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the arrow size
 		let arrowSizeY =
 			Utilities.isNumber(this._line.arrowSize) && this._line.arrowSize > 0
@@ -114,11 +136,11 @@ module.exports = class Reference {
 				? working.postdata.params.reference.arrowSize
 				: 5;
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get reverse indicator
 		let reverseFromArrow = Utilities.isBoolean(this._line.reverseFromArrow) ? this._line.reverseFromArrow : false;
 
-		////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get startx and endx for the call
 		working.postdata.actors.forEach((actor) => {
 			if (actor.alias === this._line.from) {
@@ -140,11 +162,12 @@ module.exports = class Reference {
 			throw new InputDocumentError("'reference' line uses return-flow fields but has no valid 'to' actor alias", this._line);
 		}
 
-		//////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Calculate text size
 		let gapToText = this._line.comment != null ? 2 * working.globalSpacing : working.globalSpacing;
 		let textToPrint = null;
 		let retTextToPrint = null;
+		//////////////////////////////////////////////////////////////////////////////
 		// Call text
 		if (Utilities.isAllStrings(this._line.text)) {
 			textToPrint = this._line.text.slice();
@@ -157,6 +180,7 @@ module.exports = class Reference {
 		} else {
 			textToPrint = this._callCount + ". ";
 		}
+		//////////////////////////////////////////////////////////////////////////////
 		//ret text
 		if (this._actorToClass != null) {
 			if (Utilities.isAllStrings(this._line.rettext)) {
@@ -196,13 +220,13 @@ module.exports = class Reference {
 		}
 		const extraLines = ["<b>Ref:"];
 
-		////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Where should the LHS of the ref box be?
 		let refBoxLeftCallText = this._startx + gapToText + textlen + 3 * arrowSizeY;
 		let refBoxLeftRetText = this._endretx + gapToText + rettextlen + 3 * arrowSizeY;
 		let refBoxLeft = refBoxLeftCallText > refBoxLeftRetText ? refBoxLeftCallText : refBoxLeftRetText;
 
-		/////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Calculate height of reference line
 		let startxAfterFlow;
 		let commentxy = null;
@@ -256,20 +280,26 @@ module.exports = class Reference {
 		let xy = Actor.drawTimelines(working, ctx, starty, topOfRefBox + refBoxHeight - starty + 1, true);
 		let finalHeightOfAllLine = xy.y - starty;
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Height now calculated .. not draw the items in order
+		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
+		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
+		//////////////////////////////////////////////////////////////////////////////
 		// 3. Comment
+		//////////////////////////////////////////////////////////////////////////////
 		// 4. Call text
+		//////////////////////////////////////////////////////////////////////////////
 		// 5a. Call line
+		//////////////////////////////////////////////////////////////////////////////
 		// 5b. Call line arrow
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
 		Utilities.drawActiveFragments(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
 		if (this._line.breakFromFlow === true || this._line.bff === true) {
 			this._actorFromClass.flowStartYPos = topOfRefBox + refBoxHeight / 2 - arrowSizeY;
@@ -283,9 +313,10 @@ module.exports = class Reference {
 		}
 		xy = Actor.drawTimelines(working, ctx, starty, finalHeightOfAllLine, mimic);
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 3. Comment
 		if (comment != null) {
+			/////////////////////////////////////////////////////////////////////////////
 			// callLineY
 			commentxy = comment.draw(
 				working,
@@ -297,7 +328,7 @@ module.exports = class Reference {
 			);
 		}
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 4. Draw the call line text
 		let calltextxy = Utilities.drawTextRectangleNoBorderOrBg(
 			ctx,
@@ -311,7 +342,7 @@ module.exports = class Reference {
 		);
 		working.manageMaxWidthXy(calltextxy);
 
-		////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 4a Draw the return line text
 		if (retTextPresent && retLineDrawn) {
 			let rettextxy = Utilities.drawTextRectangleNoBorderOrBg(
@@ -327,7 +358,7 @@ module.exports = class Reference {
 			working.manageMaxWidthXy(rettextxy);
 		}
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 5a. Draw the call line
 		ctx.lineWidth = lineWidth;
 		ctx.strokeStyle = lineColour;
@@ -337,7 +368,7 @@ module.exports = class Reference {
 		Utilities.drawOrMovePath(ctx, refBoxLeft, callLineY, mimic);
 		ctx.stroke();
 
-		///////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 5b Draw the return line
 		if (retLineDrawn) {
 			ctx.lineWidth = lineWidth;
@@ -347,6 +378,7 @@ module.exports = class Reference {
 			ctx.moveTo(retLineXStart, retLineY);
 			Utilities.drawOrMovePath(ctx, retLineXEnd, retLineY, mimic);
 			ctx.stroke();
+			/////////////////////////////////////////////////////////////////////////////
 			// Now the arrow at retLineXEnd
 			ctx.beginPath();
 			ctx.moveTo(retLineXEnd, retLineY);
@@ -359,7 +391,7 @@ module.exports = class Reference {
 			ctx.stroke();
 		}
 
-		//////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 5a. Draw the call arrow
 		ctx.beginPath();
 		ctx.moveTo(refBoxLeft, callLineY);
@@ -395,7 +427,7 @@ module.exports = class Reference {
 			}
 		}
 
-		//////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw the reference box
 		let refboxxy = Utilities.drawTextRectangle(
 			ctx,
@@ -418,6 +450,13 @@ module.exports = class Reference {
 		return working.manageMaxWidth(0, starty + finalHeightOfAllLine);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return the default call tmd configuration.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.getDefaultCallTmd();
+	 */
 	static getDefaultCallTmd() {
 		const defaultCallTmd = {
 			fontFamily: "sans-serif",
@@ -434,6 +473,13 @@ module.exports = class Reference {
 		return defaultCallTmd;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return the default reference tmd configuration.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.getDefaultReferenceTmd();
+	 */
 	static getDefaultReferenceTmd() {
 		const defaultRefTmd = {
 			fontFamily: "sans-serif",

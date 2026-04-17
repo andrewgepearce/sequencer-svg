@@ -21,6 +21,15 @@ let Utilities = require("./Utilities.js");
  * @class Working
  */
 module.exports = class Working {
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Initialise the Working instance.
+	 *
+	 * @param {*} fontManager Parameter derived from fontManager.
+	 * @returns {void} Nothing.
+	 * @example
+	 * const instance = new Working(fontManager);
+	 */
 	constructor(fontManager) {
 		this._postdata = null;
 		this._globalSpacing = null;
@@ -46,126 +55,366 @@ module.exports = class Working {
 		this._seenWarningMessages = new Set();
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return tags.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.tags;
+	 */
 	get tags() {
 		return this._tags;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update tags.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.tags = value;
+	 */
 	set tags(value) {
 		this._tags = value;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return id.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.id;
+	 */
 	get id() {
 		return this._id;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update id.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.id = value;
+	 */
 	set id(value) {
 		this._id = value;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return negative x.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.negativeX;
+	 */
 	get negativeX() {
 		return this._negativeX;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update negative x.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.negativeX = value;
+	 */
 	set negativeX(value) {
 		this._negativeX = value;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return debug.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.debug;
+	 */
 	get debug() {
 		return this._debug;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update debug.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.debug = value;
+	 */
 	set debug(value) {
 		this._debug = value;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return call count.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.callCount;
+	 */
 	get callCount() {
 		return this._callCount;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update call count.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.callCount = value;
+	 */
 	set callCount(value) {
 		this._callCount = value;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return active fragments.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.activeFragments;
+	 */
 	get activeFragments() {
 		return this._activeFragments;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return timeline dash.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.timelineDash;
+	 */
 	get timelineDash() {
 		return this._timelineDash;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return max width.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.maxWidth;
+	 */
 	get maxWidth() {
 		return this._maxWidth;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update max width.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.maxWidth = value;
+	 */
 	set maxWidth(value) {
 		this._maxWidth = value;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return max height.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.maxHeight;
+	 */
 	get maxHeight() {
 		return this._maxHeight;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update max height.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.maxHeight = value;
+	 */
 	set maxHeight(value) {
 		this._maxHeight = value;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return actor spacing.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.actorSpacing;
+	 */
 	get actorSpacing() {
 		return this._actorSpacing;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return start y.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.startY;
+	 */
 	get startY() {
 		return this._startY;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return start x.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.startX;
+	 */
 	get startX() {
 		return this._startX;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return fragment spacing.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.fragmentSpacing;
+	 */
 	get fragmentSpacing() {
 		return this._fragmentSpacing;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return max frag depth.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.maxFragDepth;
+	 */
 	get maxFragDepth() {
 		return this._maxFragDepth;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return scratch pad.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.scratchPad;
+	 */
 	get scratchPad() {
 		return this._scratchPad;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return postdata.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.postdata;
+	 */
 	get postdata() {
 		return this._postdata;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update postdata.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.postdata = value;
+	 */
 	set postdata(value) {
 		this._postdata = value;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return global spacing.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.globalSpacing;
+	 */
 	get globalSpacing() {
 		return this._globalSpacing;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return canvas width.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.canvasWidth;
+	 */
 	get canvasWidth() {
 		return this._canvasWidth;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update canvas width.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.canvasWidth = value;
+	 */
 	set canvasWidth(value) {
 		this._canvasWidth = value;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return canvas height.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.canvasHeight;
+	 */
 	get canvasHeight() {
 		return this._canvasHeight;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update canvas height.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.canvasHeight = value;
+	 */
 	set canvasHeight(value) {
 		this._canvasHeight = value;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return window padding.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.windowPadding;
+	 */
 	get windowPadding() {
 		return this._windowPadding;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle calculate fragment depth.
+	 *
+	 * @param {*} lines Parameter derived from lines.
+	 * @param {*} reset Parameter derived from reset.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.calculateFragmentDepth(lines, reset);
+	 */
 	calculateFragmentDepth(lines, reset) {
 		if (typeof this.scratchPad.maxFragmentDepth != "number") {
 			this.scratchPad.maxFragmentDepth = 0;
@@ -193,6 +442,13 @@ module.exports = class Working {
 		return this.scratchPad.maxFragmentDepth;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Initialise the working state for a render pass.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.init();
+	 */
 	init() {
 		if (typeof this.postdata != "object" || this.postdata == null) {
 			this.postdata = {};
@@ -236,6 +492,16 @@ module.exports = class Working {
 		}
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle manage max width.
+	 *
+	 * @param {*} maxx Parameter derived from maxx.
+	 * @param {*} maxy Parameter derived from maxy.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.manageMaxWidth(maxx, maxy);
+	 */
 	manageMaxWidth(maxx, maxy) {
 		if (Utilities.isNumber(maxx)) this._maxWidth = maxx > this._maxWidth ? maxx : this._maxWidth;
 		if (Utilities.isNumber(maxy)) this._maxHeight = maxy > this._maxHeight ? maxy : this._maxHeight;
@@ -245,18 +511,52 @@ module.exports = class Working {
 		};
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle manage max width xy.
+	 *
+	 * @param {*} xy Parameter derived from xy.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.manageMaxWidthXy(xy);
+	 */
 	manageMaxWidthXy(xy) {
 		return this.manageMaxWidth(xy.x, xy.y);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update or expose debug behaviour for the current instance.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.debug();
+	 */
 	debug() {
 		return this._debug;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle is valid font.
+	 *
+	 * @param {*} fontname Parameter derived from fontname.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.isValidFont(fontname);
+	 */
 	isValidFont(fontname) {
 		return this._fontManager.isValidFont(fontname);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle log info.
+	 *
+	 * @param {*} message Parameter derived from message.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.logInfo(message);
+	 */
 	logInfo(message) {
 		if (typeof message != "string") return;
 		message = typeof this.id == "string" ? this.id + " : " + message : message;
@@ -271,6 +571,15 @@ module.exports = class Working {
 			  );
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle log debug.
+	 *
+	 * @param {*} message Parameter derived from message.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.logDebug(message);
+	 */
 	logDebug(message) {
 		if (typeof message != "string") return;
 		if (!this.debug) return;
@@ -286,6 +595,15 @@ module.exports = class Working {
 			  );
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle log error.
+	 *
+	 * @param {*} message Parameter derived from message.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.logError(message);
+	 */
 	logError(message) {
 		if (typeof message != "string") return;
 		message = typeof this.id == "string" ? this.id + " : " + message : message;
@@ -300,6 +618,15 @@ module.exports = class Working {
 			  );
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle log warn.
+	 *
+	 * @param {*} message Parameter derived from message.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.logWarn(message);
+	 */
 	logWarn(message) {
 		if (typeof message != "string") return;
 		message = typeof this.id == "string" ? this.id + " : " + message : message;
@@ -314,10 +641,26 @@ module.exports = class Working {
 			  );
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle reset seen warnings.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.resetSeenWarnings();
+	 */
 	resetSeenWarnings() {
 		this._seenWarningMessages.clear();
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle log warn once.
+	 *
+	 * @param {*} message Parameter derived from message.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.logWarnOnce(message);
+	 */
 	logWarnOnce(message) {
 		if (typeof message != "string") return;
 		if (this._seenWarningMessages.has(message)) return;

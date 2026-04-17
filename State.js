@@ -20,11 +20,32 @@ let Comment = require("./Comment.js");
 const InputDocumentError = require("./InputDocumentError.js");
 
 module.exports = class State {
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Initialise the State instance.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} line Parameter derived from line.
+	 * @returns {void} Nothing.
+	 * @example
+	 * const instance = new State(ctx, line);
+	 */
 	constructor(ctx, line) {
 		this._ctx = ctx;
 		this._line = line;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw the state element.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.draw(working, starty, mimic);
+	 */
 	draw(working, starty, mimic) {
 		if (!Utilities.isObject(this._line)) {
 			throw new InputDocumentError("'state' line must be an object", this._line);
@@ -46,7 +67,7 @@ module.exports = class State {
 		}
 		let statetmd = TextMetadata.getTextMetadataFromObject(working, this._line, working.postdata.params.state, State.getDefaultTmd());
 
-		///////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the corner radius
 		let radius = Utilities.isNumberGtEq0(this._line.radius)
 			? this._line.radius
@@ -54,7 +75,7 @@ module.exports = class State {
 			? working.postdata.params.state.radius
 			: 5;
 
-		/////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Calculate height of state line
 		let ctx = this._ctx;
 		let stateTop = null;
@@ -114,23 +135,27 @@ module.exports = class State {
 
 		let finalHeightOfAllLine = xy.y - starty;
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// Height now calculated .. not draw the items in order
+		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
+		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
+		//////////////////////////////////////////////////////////////////////////////
 		// 3. Comment
+		//////////////////////////////////////////////////////////////////////////////
 		// 4. State
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
 
 		Utilities.drawActiveFragments(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
 		xy = Actor.drawTimelines(working, ctx, starty, finalHeightOfAllLine, mimic);
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 3. Comment
 		if (comment != null) {
 			commentxy = comment.draw(
@@ -143,7 +168,7 @@ module.exports = class State {
 			);
 		}
 
-		///////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////
 		// 4. State
 		textxy = Utilities.drawTextRectangle(
 			ctx,
@@ -165,6 +190,13 @@ module.exports = class State {
 		return working.manageMaxWidth(textxy.x, starty + finalHeightOfAllLine);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return the default tmd configuration.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.getDefaultTmd();
+	 */
 	static getDefaultTmd() {
 		const defaultCommentTmd = {
 			fontFamily: "sans-serif",

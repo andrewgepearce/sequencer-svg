@@ -6,7 +6,28 @@ const fs = require("fs");
 const { create } = require("xmlbuilder2");
 const SortedMap = require("./SortedMap"); // Assuming the SortedMap is implemented as discussed
 
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Manage svgbuilder behaviour for the sequencer renderer.
+ *
+ * @example
+ * const instance = new SVGBuilder();
+ */
 class SVGBuilder {
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Initialise the SVGBuilder instance.
+	 *
+	 * @param {*} borderMargin Parameter derived from borderMargin = -1.
+	 * @param {*} borderWidth Parameter derived from borderWidth = -1.
+	 * @param {*} borderPadding Parameter derived from borderPadding = -1.
+	 * @param {*} borderClass Parameter derived from borderClass = null.
+	 * @param {*} width Parameter derived from width = 1.
+	 * @param {*} height Parameter derived from height = 1.
+	 * @returns {void} Nothing.
+	 * @example
+	 * const instance = new SVGBuilder(borderMargin, borderWidth, borderPadding, borderClass, width, height);
+	 */
 	constructor(borderMargin = -1, borderWidth = -1, borderPadding = -1, borderClass = null, width = 1, height = 1) {
 		this.borderMargin = borderMargin;
 		this.borderWidth = borderWidth;
@@ -18,12 +39,34 @@ class SVGBuilder {
 		this.styles = {};
 	}
 
-	//////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle set style.
+	 *
+	 * @param {*} selector Parameter derived from selector.
+	 * @param {*} style Parameter derived from style.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.setStyle(selector, style);
+	 */
 	setStyle(selector, style) {
 		this.styles[selector] = { ...this.styles[selector], ...style };
 	}
 
-	//////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle add rectangle.
+	 *
+	 * @param {*} key Parameter derived from key.
+	 * @param {*} options2 Parameter derived from { x, y, width, height, fill = "none", stroke = "black", strokeWidth = 1, className = "" }.
+	 * @param {*} start Parameter derived from start = false.
+	 * @param {*} end Parameter derived from end = false.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.addRectangle(key, options2, start, end);
+	 */
 	addRectangle(key, { x, y, width, height, fill = "none", stroke = "black", strokeWidth = 1, className = "" }, start = false, end = false) {
 		const rect = {
 			name: "rect",
@@ -34,7 +77,17 @@ class SVGBuilder {
 		else if (key != null) this.primitives.set(key, rect);
 	}
 
-	//////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle add circle.
+	 *
+	 * @param {*} key Parameter derived from key.
+	 * @param {*} options2 Parameter derived from { cx, cy, r, fill = "none", stroke = "black", strokeWidth = 1, className = "" }.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.addCircle(key, options2);
+	 */
 	addCircle(key, { cx, cy, r, fill = "none", stroke = "black", strokeWidth = 1, className = "" }) {
 		const circle = {
 			name: "circle",
@@ -43,7 +96,17 @@ class SVGBuilder {
 		this.primitives.set(key, circle);
 	}
 
-	//////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle add line.
+	 *
+	 * @param {*} key Parameter derived from key.
+	 * @param {*} options2 Parameter derived from { x1, y1, x2, y2, stroke = "black", strokeWidth = 1, className = "" }.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.addLine(key, options2);
+	 */
 	addLine(key, { x1, y1, x2, y2, stroke = "black", strokeWidth = 1, className = "" }) {
 		const line = {
 			name: "line",
@@ -52,7 +115,17 @@ class SVGBuilder {
 		this.primitives.set(key, line);
 	}
 
-	////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle add polygon.
+	 *
+	 * @param {*} key Parameter derived from key.
+	 * @param {*} options2 Parameter derived from { points, fill = "none", stroke = "black", strokeWidth = 1, className = "" }.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.addPolygon(key, options2);
+	 */
 	addPolygon(key, { points, fill = "none", stroke = "black", strokeWidth = 1, className = "" }) {
 		const polygon = {
 			name: "polygon",
@@ -61,8 +134,18 @@ class SVGBuilder {
 		this.primitives.set(key, polygon);
 	}
 
-	//////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle add path.
+	 *
+	 * @param {*} key Parameter derived from key.
+	 * @param {*} options2 Parameter derived from { d, className = null, fill = "none", stroke = "black", strokeWidth = 1, strokeDashArray = [] }.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.addPath(key, options2);
+	 */
 	addPath(key, { d, className = null, fill = "none", stroke = "black", strokeWidth = 1, strokeDashArray = [] }) {
 		const path = {
 			name: "path",
@@ -71,32 +154,95 @@ class SVGBuilder {
 		this.primitives.set(key, path);
 	}
 
-	//////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle move to.
+	 *
+	 * @param {*} x Parameter derived from x.
+	 * @param {*} y Parameter derived from y.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.moveTo(x, y);
+	 */
 	moveTo(x, y) {
 		return `M ${x} ${y}`;
 	}
 
-	//////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle line to.
+	 *
+	 * @param {*} x Parameter derived from x.
+	 * @param {*} y Parameter derived from y.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.lineTo(x, y);
+	 */
 	lineTo(x, y) {
 		return `L ${x} ${y}`;
 	}
 
-	//////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle cubic bezier curve to.
+	 *
+	 * @param {*} x1 Parameter derived from x1.
+	 * @param {*} y1 Parameter derived from y1.
+	 * @param {*} x2 Parameter derived from x2.
+	 * @param {*} y2 Parameter derived from y2.
+	 * @param {*} x Parameter derived from x.
+	 * @param {*} y Parameter derived from y.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.cubicBezierCurveTo(x1, y1, x2, y2, x, y);
+	 */
 	cubicBezierCurveTo(x1, y1, x2, y2, x, y) {
 		return `C ${x1} ${y1}, ${x2} ${y2}, ${x} ${y}`;
 	}
 
-	//////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle quadratic bezier curve to.
+	 *
+	 * @param {*} x1 Parameter derived from x1.
+	 * @param {*} y1 Parameter derived from y1.
+	 * @param {*} x Parameter derived from x.
+	 * @param {*} y Parameter derived from y.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.quadraticBezierCurveTo(x1, y1, x, y);
+	 */
 	quadraticBezierCurveTo(x1, y1, x, y) {
 		return `Q ${x1} ${y1}, ${x} ${y}`;
 	}
 
-	//////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle close path.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.closePath();
+	 */
 	closePath() {
 		return `Z`;
 	}
 
-	//////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle add text.
+	 *
+	 * @param {*} key Parameter derived from key.
+	 * @param {*} options2 Parameter derived from { x, y, content, fontSize = 16, fill = "black", className = "", fontFamily = "Arial" }.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.addText(key, options2);
+	 */
 	addText(key, { x, y, content, fontSize = 16, fill = "black", className = "", fontFamily = "Arial" }) {
 		const text = {
 			name: "text",
@@ -106,13 +252,27 @@ class SVGBuilder {
 		this.primitives.set(key, text);
 	}
 
-	//////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle reset.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.reset();
+	 */
 	reset() {
 		this.primitives.clear();
 		this.styles = {};
 	}
 
-	//////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle styles to css.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.stylesToCSS();
+	 */
 	stylesToCSS() {
 		return Object.entries(this.styles)
 			.map(([selector, style]) => {
@@ -124,7 +284,14 @@ class SVGBuilder {
 			.join(" ");
 	}
 
-	//////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle calculate bounding box.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.calculateBoundingBox();
+	 */
 	calculateBoundingBox() {
 		let minX = 0,
 			minY = 0,
@@ -157,7 +324,17 @@ class SVGBuilder {
 		return { minX, minY, maxX, maxY };
 	}
 
-	//////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle shift primitives.
+	 *
+	 * @param {*} shiftX Parameter derived from shiftX.
+	 * @param {*} shiftY Parameter derived from shiftY.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.shiftPrimitives(shiftX, shiftY);
+	 */
 	shiftPrimitives(shiftX, shiftY) {
 		for (const [, primitive] of this.primitives) {
 			const attrs = primitive.attributes;
@@ -181,7 +358,14 @@ class SVGBuilder {
 		}
 	}
 
-	//////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle adjust primitives to fit canvas.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.adjustPrimitivesToFitCanvas();
+	 */
 	adjustPrimitivesToFitCanvas() {
 		const { minX, minY, maxX, maxY } = this.calculateBoundingBox();
 		const shiftX = minX < 0 ? -minX : 0;
@@ -192,7 +376,16 @@ class SVGBuilder {
 		this.height = Math.max(this.height, maxY + shiftY);
 	}
 
-	//////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle to svg.
+	 *
+	 * @param {*} outputFile Parameter derived from outputFile = null.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.toSVG(outputFile);
+	 */
 	toSVG(outputFile = null) {
 		console.error(this.calculateBoundingBox());
 		if (this.borderMargin <= 0) this.borderMargin = 0;
@@ -205,7 +398,7 @@ class SVGBuilder {
 			let totalWidthPadding = this.borderWidth + this.borderPadding;
 			let totalPadding = this.borderPadding;
 
-			//////////////////////////////////////////////////////////////////////////
+			/////////////////////////////////////////////////////////////////////////////
 			// Add Margin
 			if (this.borderMargin > 0) {
 				const marginRectangle = {
@@ -218,7 +411,7 @@ class SVGBuilder {
 				};
 				this.addRectangle("margin", marginRectangle, true);
 			}
-			//////////////////////////////////////////////////////////////////////////
+			/////////////////////////////////////////////////////////////////////////////
 			// Add border
 			if (this.borderWidth > 0) {
 				const borderRectangle = {
@@ -231,7 +424,7 @@ class SVGBuilder {
 				};
 				this.addRectangle("border", borderRectangle, true);
 			}
-			//////////////////////////////////////////////////////////////////////////
+			/////////////////////////////////////////////////////////////////////////////
 			// Add padding
 			if (this.borderPadding > 0) {
 				const paddingRectangle = {

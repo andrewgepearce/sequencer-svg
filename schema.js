@@ -53,6 +53,15 @@ let _leftAlign = {
 let _line = {
 	anyOf: [{$ref: base + "call"}, {$ref: base + "fragment"}]
 };
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal bg colour step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._bgColour(defValue);
+ */
 function _bgColour(defValue) {
 	return {
 		type: "string",
@@ -68,6 +77,15 @@ function _bgColour(defValue) {
 		default: defValue == undefined ? "rgba(255,255,255, 0)" : defValue
 	};
 }
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal fg colour step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._fgColour(defValue);
+ */
 function _fgColour(defValue) {
 	return {
 		type: "string",
@@ -83,6 +101,15 @@ function _fgColour(defValue) {
 		default: defValue == undefined ? "rgb(0,0,0)" : defValue
 	};
 }
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal line colour step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._lineColour(defValue);
+ */
 function _lineColour(defValue) {
 	return {
 		type: "string",
@@ -98,6 +125,15 @@ function _lineColour(defValue) {
 		default: defValue == undefined ? "rgb(0,0,0)" : defValue
 	};
 }
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal border colour step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._borderColour(defValue);
+ */
 function _borderColour(defValue) {
 	return {
 		type: "string",
@@ -113,6 +149,15 @@ function _borderColour(defValue) {
 		default: defValue == undefined ? "rgb(0,0,0)" : defValue
 	};
 }
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal radius step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._radius(defValue);
+ */
 function _radius(defValue) {
 	return {
 		type: "number",
@@ -121,6 +166,15 @@ function _radius(defValue) {
 		default: defValue
 	};
 }
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal flow width step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._flowWidth(defValue);
+ */
 function _flowWidth(defValue) {
 	return {
 		type: "number",
@@ -129,6 +183,15 @@ function _flowWidth(defValue) {
 		default: defValue
 	};
 }
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal border width step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._borderWidth(defValue);
+ */
 function _borderWidth(defValue) {
 	return {
 		type: "number",
@@ -137,6 +200,15 @@ function _borderWidth(defValue) {
 		default: defValue == undefined ? 1 : defValue
 	};
 }
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal line width step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._lineWidth(defValue);
+ */
 function _lineWidth(defValue) {
 	return {
 		type: "number",
@@ -145,6 +217,15 @@ function _lineWidth(defValue) {
 		default: defValue == undefined ? 1 : defValue
 	};
 }
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal border dash step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._borderDash(defValue);
+ */
 function _borderDash(defValue) {
 	return {
 		type: "array",
@@ -156,6 +237,15 @@ function _borderDash(defValue) {
 		default: defValue == undefined ? [] : defValue
 	};
 }
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal line dash step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._lineDash(defValue);
+ */
 function _lineDash(defValue) {
 	return {
 		type: "array",
@@ -167,6 +257,15 @@ function _lineDash(defValue) {
 		default: defValue == undefined ? [4, 2] : defValue
 	};
 }
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal timeline dash step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._timelineDash(defValue);
+ */
 function _timelineDash(defValue) {
 	return {
 		type: "array",
@@ -177,6 +276,15 @@ function _timelineDash(defValue) {
 		default: defValue == undefined ? [3, 3] : defValue
 	};
 }
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal timeline width step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._timelineWidth(defValue);
+ */
 function _timelineWidth(defValue) {
 	return {
 		type: "number",
@@ -185,6 +293,15 @@ function _timelineWidth(defValue) {
 		default: defValue
 	};
 }
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal font family step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._fontFamily(defValue);
+ */
 function _fontFamily(defValue) {
 	return {
 		type: "string",
@@ -193,6 +310,15 @@ function _fontFamily(defValue) {
 		default: defValue
 	};
 }
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal font size px step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._fontSizePx(defValue);
+ */
 function _fontSizePx(defValue) {
 	return {
 		type: "number",
@@ -201,6 +327,15 @@ function _fontSizePx(defValue) {
 		default: defValue
 	};
 }
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal padding step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._padding(defValue);
+ */
 function _padding(defValue) {
 	return {
 		type: "number",
@@ -209,6 +344,15 @@ function _padding(defValue) {
 		default: defValue
 	};
 }
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal spacing step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._spacing(defValue);
+ */
 function _spacing(defValue) {
 	return {
 		type: "number",
@@ -218,6 +362,15 @@ function _spacing(defValue) {
 		default: defValue == undefined ? 1 : defValue
 	};
 }
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal arrow size y step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._arrowSizeY(defValue);
+ */
 function _arrowSizeY(defValue) {
 	return {
 		type: "number",
@@ -226,6 +379,15 @@ function _arrowSizeY(defValue) {
 		default: defValue == undefined ? 5 : defValue
 	};
 }
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal break from flow step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._breakFromFlow(defValue);
+ */
 function _breakFromFlow(defValue) {
 	return {
 		type: "boolean",
@@ -233,6 +395,15 @@ function _breakFromFlow(defValue) {
 		default: typeof defValue != "boolean" ? false : defValue
 	};
 }
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal break to flow step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._breakToFlow(defValue);
+ */
 function _breakToFlow(defValue) {
 	return {
 		type: "boolean",
@@ -240,6 +411,15 @@ function _breakToFlow(defValue) {
 		default: typeof defValue != "boolean" ? false : defValue
 	};
 }
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Handle the internal async step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._async(defValue);
+ */
 function _async(defValue) {
 	return {
 		type: "boolean",
@@ -293,7 +473,7 @@ let _comment = {
 	]
 };
 
-///////////////////////
+////////////////////////////////////////////////////////////////////////////////
 let schema = {
 	actor: {
 		$schema: "http://json-schema.org/draft-07/schema#",

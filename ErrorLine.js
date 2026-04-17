@@ -1,15 +1,15 @@
 // Copyright (C) 2019 Mark The Page
-//
+////////////////////////////////////////////////////////////////////////////////
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
 // published by the Free Software Foundation, either version 3 of the
 // License, or (at your option) any later version.
-//
+////////////////////////////////////////////////////////////////////////////////
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Affero General Public License for more details.
-//
+////////////////////////////////////////////////////////////////////////////////
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -39,6 +39,20 @@ module.exports = class ErrorLine {
 	 * @param {boolean} mimic If true, compute size without drawing.
 	 * @returns {{x:number,y:number}} Position after drawing.
 	 */
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw the error line element.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} reason Parameter derived from reason.
+	 * @param {*} offendingLine Parameter derived from offendingLine.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.draw(working, ctx, starty, reason, offendingLine, mimic);
+	 */
 	static draw(working, ctx, starty, reason, offendingLine, mimic) {
 		const sourceLine = ErrorLine._extractSourceLine(offendingLine);
 		const srcLabel = sourceLine != null ? " at source line " + sourceLine : "";
@@ -52,7 +66,9 @@ module.exports = class ErrorLine {
 		const tmd = TextMetadata.getTextMetadataFromObject(working, null, null, ErrorLine._defaultTmd());
 		const top = starty + working.globalSpacing;
 
+		//////////////////////////////////////////////////////////////////////////////
 		// Layout-only pass to measure height so we can draw timelines through the
+		//////////////////////////////////////////////////////////////////////////////
 		// full vertical extent of the error line.
 		const wh = Utilities.getTextWidthAndHeight(ctx, tmd, textLines, working.tags);
 		const boxHeight = wh.h;
@@ -62,14 +78,17 @@ module.exports = class ErrorLine {
 			working.postdata.actors.some((actor) => actor && actor.clinstance && Utilities.isNumber(actor.clinstance.middle));
 		const finalHeightOfAllLine = hasActorTimelines ? Actor.drawTimelines(working, ctx, starty, errBoxBottom - starty + 1, true).y - starty : errBoxBottom - starty;
 
+		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments (if any)
 		Utilities.drawActiveFragments(working, ctx, starty, finalHeightOfAllLine, mimic);
 
+		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines through the error line's vertical span
 		if (hasActorTimelines) {
 			Actor.drawTimelines(working, ctx, starty, finalHeightOfAllLine, mimic);
 		}
 
+		//////////////////////////////////////////////////////////////////////////////
 		// 3. Error box — borders on all sides, red.
 		const textxy = Utilities.drawTextRectangle(
 			ctx,
@@ -100,6 +119,15 @@ module.exports = class ErrorLine {
 	 * @param {*} offendingLine Parsed line object or primitive.
 	 * @returns {number|null} 1-based source line number, or null if absent.
 	 */
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle the internal extract source line step.
+	 *
+	 * @param {*} offendingLine Parameter derived from offendingLine.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance._extractSourceLine(offendingLine);
+	 */
 	static _extractSourceLine(offendingLine) {
 		if (offendingLine && typeof offendingLine === "object" && Utilities.isNumber(offendingLine.__sourceLine)) {
 			return offendingLine.__sourceLine;
@@ -117,6 +145,17 @@ module.exports = class ErrorLine {
 	 * @param {number|null} sourceLine 1-based source line number if known.
 	 * @param {object} offendingLine The parsed line object that triggered the error.
 	 * @returns {string[]} Lines to pass to drawTextRectangle.
+	 */
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle the internal format lines step.
+	 *
+	 * @param {*} reason Parameter derived from reason.
+	 * @param {*} sourceLine Parameter derived from sourceLine.
+	 * @param {*} offendingLine Parameter derived from offendingLine.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance._formatLines(reason, sourceLine, offendingLine);
 	 */
 	static _formatLines(reason, sourceLine, offendingLine) {
 		const headerLabel = sourceLine != null ? "<b>ERROR at source line " + sourceLine + ":</b>" : "<b>ERROR:</b>";
@@ -159,6 +198,16 @@ module.exports = class ErrorLine {
 	 * @param {number} maxChars Target maximum characters per wrapped line.
 	 * @returns {string[]} Array of wrapped lines (never empty unless input empty).
 	 */
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle the internal soft wrap step.
+	 *
+	 * @param {*} text Parameter derived from text.
+	 * @param {*} maxChars Parameter derived from maxChars.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance._softWrap(text, maxChars);
+	 */
 	static _softWrap(text, maxChars) {
 		if (!text) return [""];
 		if (text.length <= maxChars) return [text];
@@ -198,6 +247,15 @@ module.exports = class ErrorLine {
 	 * @param {string} s Text to escape.
 	 * @returns {string} The escaped text.
 	 */
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle the internal escape step.
+	 *
+	 * @param {*} s Parameter derived from s.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance._escape(s);
+	 */
 	static _escape(s) {
 		if (typeof s !== "string") return String(s);
 		return s.replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -209,6 +267,13 @@ module.exports = class ErrorLine {
 	 * negative.
 	 *
 	 * @returns {object} Text-metadata template.
+	 */
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handle the internal default tmd step.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance._defaultTmd();
 	 */
 	static _defaultTmd() {
 		return {
