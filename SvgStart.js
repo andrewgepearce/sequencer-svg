@@ -47,6 +47,7 @@ module.exports = class SvgStart {
 	}
 
 	draw(postdata, stringpostdata, debug, id, nocovertext) {
+		this.working.resetSeenWarnings();
 		this.working.debug = debug;
 		this.working.postdata = postdata;
 		this.working.id = id;

@@ -42,7 +42,7 @@ module.exports = class ErrorLine {
 	static draw(working, ctx, starty, reason, offendingLine, mimic) {
 		const sourceLine = ErrorLine._extractSourceLine(offendingLine);
 		const srcLabel = sourceLine != null ? " at source line " + sourceLine : "";
-		working.logWarn("Error" + srcLabel + ": " + reason + " - " + Utilities.objToString(offendingLine));
+		working.logWarnOnce("Error" + srcLabel + ": " + reason + " - " + Utilities.objToString(offendingLine));
 
 		const textLines = ErrorLine._formatLines(reason, sourceLine, offendingLine);
 

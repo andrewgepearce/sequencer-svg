@@ -43,6 +43,7 @@ module.exports = class Working {
 		this._debug = false;
 		this._tags = [];
 		this._fontManager = fontManager;
+		this._seenWarningMessages = new Set();
 	}
 
 	get tags() {
@@ -311,5 +312,16 @@ module.exports = class Working {
 						message: message,
 					})
 			  );
+	}
+
+	resetSeenWarnings() {
+		this._seenWarningMessages.clear();
+	}
+
+	logWarnOnce(message) {
+		if (typeof message != "string") return;
+		if (this._seenWarningMessages.has(message)) return;
+		this._seenWarningMessages.add(message);
+		this.logWarn(message);
 	}
 };
