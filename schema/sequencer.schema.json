@@ -344,10 +344,50 @@
 				}
 			}
 		},
+		"blank": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["type", "height"],
+			"properties": {
+				"type": {
+					"const": "blank"
+				},
+				"height": {
+					"type": "number",
+					"minimum": 0
+				},
+				"width": {
+					"type": "number",
+					"minimum": 0
+				},
+				"xoffset": {
+					"type": "number",
+					"minimum": 0
+				},
+				"actor": {
+					"type": "string",
+					"minLength": 1
+				},
+				"actors": {
+					"type": "array",
+					"minItems": 2,
+					"items": {
+						"type": "string",
+						"minLength": 1
+					}
+				},
+				"comment": {
+					"$ref": "#/$defs/comment"
+				}
+			}
+		},
 		"line": {
 			"oneOf": [
 				{
 					"$ref": "#/$defs/call"
+				},
+				{
+					"$ref": "#/$defs/blank"
 				},
 				{
 					"$ref": "#/$defs/fragment"

@@ -31,8 +31,9 @@ class MermaidTransformError extends Error {
 //////////////////////////////////////////////////////////////////////////////
 /**
  * Transform Mermaid sequence-diagram source into a sequencer-svg document.
- * Slice 2 supports explicit `participant` and `actor` declarations plus basic
- * message lines and standard unidirectional arrow variants.
+ * Slice 3 supports explicit `participant` and `actor` declarations, basic
+ * message lines, standard unidirectional arrow variants, and Mermaid notes
+ * mapped onto sequencer comments hosted by synthetic blank lines.
  *
  * @example
  * const document = MermaidSequenceTransformer.transform(source, { sourceName: "sample.mmd" });
@@ -119,6 +120,16 @@ class MermaidSequenceTransformer {
 			// with per-line arrow and dash configuration.
 			if (this._looksLikeMessageLine(trimmed)) {
 				const transformedLine = this._parseMessageLine(trimmed, document.actors, lineNumber, sourceLine);
+				document.lines.push(transformedLine);
+				continue;
+			}
+
+			////////////////////////////////////////////////////////////////////////////
+			// Handle Mermaid notes by preserving their visible content as sequencer
+			// comments hosted by blank lines. Single-target notes stay anchored to
+			// one actor; span notes can anchor between two actors.
+			if (this._isNoteLine(trimmed)) {
+				const transformedLine = this._parseNoteLine(trimmed, document.actors, lineNumber, sourceLine);
 				document.lines.push(transformedLine);
 				continue;
 			}
@@ -305,7 +316,7 @@ class MermaidSequenceTransformer {
 			type: "call",
 			from: fromAlias,
 			to: toAlias,
-			text: messageText,
+			text: this._parseTextPayload(messageText),
 		};
 
 		if (arrowToken.startsWith("--")) {
@@ -321,6 +332,76 @@ class MermaidSequenceTransformer {
 			line.arrow = "fill";
 		} else if (arrowToken === "->" || arrowToken === "-->") {
 			line.arrow = "none";
+		}
+
+		return line;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Detect whether a trimmed Mermaid line is a note statement.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @returns {boolean} True when the line is a Mermaid note.
+	 * @example
+	 * const matched = MermaidSequenceTransformer._isNoteLine("Note right of API: Cache miss");
+	 */
+	static _isNoteLine(trimmed) {
+		return /^note\s+(?:right of|left of|over)\s+/i.test(trimmed);
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a Mermaid note statement into a sequencer blank line with a comment.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @param {object[]} actors Current actor array.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {{ type: string, height: number, actor?: string, actors?: string[], comment: string|string[] }} Sequencer line.
+	 * @throws {MermaidTransformError} If the note syntax is malformed.
+	 * @example
+	 * const line = MermaidSequenceTransformer._parseNoteLine("Note over A,B: Shared context", [], 6, "Note over A,B: Shared context");
+	 */
+	static _parseNoteLine(trimmed, actors, lineNumber, sourceLine) {
+		const match = trimmed.match(/^note\s+(right of|left of|over)\s+([^:]+)\s*:\s*(.+)$/i);
+		if (!match) {
+			throw new MermaidTransformError("Unsupported Mermaid note syntax", lineNumber, sourceLine);
+		}
+
+		const position = match[1].toLowerCase();
+		const targetAliases = match[2]
+			.split(",")
+			.map((alias) => alias.trim())
+			.filter((alias) => alias.length > 0);
+		const comment = this._parseTextPayload(match[3]);
+
+		if (targetAliases.length === 0 || targetAliases.length > 2) {
+			throw new MermaidTransformError("Mermaid note target syntax is not supported", lineNumber, sourceLine);
+		}
+
+		for (const alias of targetAliases) {
+			if (!/^[A-Za-z0-9_][-A-Za-z0-9_]*$/.test(alias)) {
+				throw new MermaidTransformError("Unsupported Mermaid note actor syntax", lineNumber, sourceLine);
+			}
+
+			this._ensureImplicitActor(actors, alias);
+		}
+
+		if (position !== "over" && targetAliases.length !== 1) {
+			throw new MermaidTransformError("Mermaid left/right notes support exactly one actor", lineNumber, sourceLine);
+		}
+
+		const line = {
+			type: "blank",
+			height: 0,
+			comment: comment,
+		};
+
+		if (targetAliases.length === 1) {
+			line.actor = targetAliases[0];
+		} else {
+			line.actors = targetAliases;
 		}
 
 		return line;
@@ -351,6 +432,24 @@ class MermaidSequenceTransformer {
 
 	////////////////////////////////////////////////////////////////////////////
 	/**
+	 * Convert Mermaid inline line breaks into sequencer text arrays when needed.
+	 *
+	 * @param {string} value Raw Mermaid text payload.
+	 * @returns {string|string[]} Sequencer text or comment payload.
+	 * @example
+	 * const payload = MermaidSequenceTransformer._parseTextPayload("Line 1<br/>Line 2");
+	 */
+	static _parseTextPayload(value) {
+		const parts = String(value)
+			.trim()
+			.split(/<br\s*\/?>/i)
+			.map((part) => part.trim());
+
+		return parts.length === 1 ? parts[0] : parts;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
 	 * Classify unsupported Mermaid syntax into feature-oriented errors.
 	 *
 	 * @param {string} trimmed Trimmed Mermaid source line.
@@ -365,8 +464,8 @@ class MermaidSequenceTransformer {
 			return new MermaidTransformError("Mermaid feature 'autonumber' is not supported yet", lineNumber, sourceLine);
 		}
 
-		if (/^(note|links?|link)\b/i.test(trimmed)) {
-			return new MermaidTransformError("Mermaid notes and links are not supported yet", lineNumber, sourceLine);
+		if (/^(links?|link)\b/i.test(trimmed)) {
+			return new MermaidTransformError("Mermaid links are not supported yet", lineNumber, sourceLine);
 		}
 
 		if (/^(alt|opt|loop|par|critical|break|rect|box|activate|deactivate|create|destroy|end)\b/i.test(trimmed)) {

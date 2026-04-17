@@ -85,13 +85,10 @@ module.exports = class Blank {
 		if (this._line.comment != null) {
 			comment = new Comment(ctx, this._line.comment);
 			let commentwidth = comment.draw(working, blankleft + 2 * working.globalSpacing, blankTop + working.globalSpacing, 0, 0, true, true);
-			let amiddle = null;
-			working.postdata.actors.forEach((actor) => {
-				if (this._line.actor == actor.alias) {
-					amiddle = actor.clinstance.middle;
-					commentleft = amiddle - commentwidth / 2;
-				}
-			});
+			commentleft = this._resolveCommentLeft(working, commentwidth, blankleft);
+			if (Utilities.isNumber(commentleft) && commentleft < working.negativeX) {
+				working.negativeX = commentleft - working.globalSpacing / 2;
+			}
 			if (commentleft == null) {
 				commentleft = blankleft + 2 * working.globalSpacing;
 			} else if (commentleft <= working.globalSpacing) {
@@ -129,5 +126,39 @@ module.exports = class Blank {
 
 		working.manageMaxWidth(blankRight, blankBottom);
 		return working.manageMaxWidth(0, starty + finalHeightOfAllLine);
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Resolve the preferred horizontal origin for a blank-line comment.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} commentwidth Parameter derived from commentwidth.
+	 * @param {*} blankleft Parameter derived from blankleft.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance._resolveCommentLeft(working, commentwidth, blankleft);
+	 */
+	_resolveCommentLeft(working, commentwidth, blankleft) {
+		if (Array.isArray(this._line.actors) && this._line.actors.length >= 2) {
+			let actorMiddles = working.postdata.actors
+				.filter((actor) => this._line.actors.includes(actor.alias))
+				.map((actor) => actor.clinstance.middle);
+
+			if (actorMiddles.length >= 2) {
+				let leftMiddle = Math.min.apply(null, actorMiddles);
+				let rightMiddle = Math.max.apply(null, actorMiddles);
+				return (leftMiddle + rightMiddle) / 2 - commentwidth / 2;
+			}
+		}
+
+		let amiddle = null;
+		working.postdata.actors.forEach((actor) => {
+			if (this._line.actor == actor.alias) {
+				amiddle = actor.clinstance.middle;
+			}
+		});
+
+		return amiddle == null ? null : amiddle - commentwidth / 2;
 	}
 };

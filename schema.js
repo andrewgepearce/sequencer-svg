@@ -51,7 +51,7 @@ let _leftAlign = {
 	default: "left"
 };
 let _line = {
-	anyOf: [{$ref: base + "call"}, {$ref: base + "fragment"}]
+	anyOf: [{$ref: base + "call"}, {$ref: base + "blank"}, {$ref: base + "fragment"}]
 };
 ////////////////////////////////////////////////////////////////////////////////
 /**
@@ -568,6 +568,51 @@ let schema = {
 		},
 		required: ["type", "from", "to", "text"]
 	},
+	blank: {
+		$schema: "http://json-schema.org/draft-07/schema#",
+		$id: base + "blank",
+		title: "Blank Schema",
+		decription: "Definition of a blank JSON object within a Sequencer document",
+		type: "object",
+		properties: {
+			type: {
+				type: "string",
+				description: 'The type of the object - fixed to "blank"',
+				const: "blank"
+			},
+			height: {
+				type: "number",
+				description: "The height in pixels consumed by the blank line",
+				minimum: 0
+			},
+			width: {
+				type: "number",
+				description: "The optional width in pixels of the blank line",
+				minimum: 0
+			},
+			xoffset: {
+				type: "number",
+				description: "The optional horizontal offset in pixels of the blank line",
+				minimum: 0
+			},
+			actor: {
+				type: "string",
+				description: "The alias of the actor used to centre the comment",
+				minLength: 1
+			},
+			actors: {
+				type: "array",
+				description: "The aliases of actors used to centre the comment between them",
+				items: {
+					type: "string",
+					minLength: 1
+				},
+				minItems: 2
+			},
+			comment: _comment
+		},
+		required: ["type", "height"]
+	},
 	comment: {
 		$schema: "http://json-schema.org/draft-07/schema#",
 		$id: base + "comment",
@@ -638,7 +683,7 @@ let schema = {
 			lines: {
 				type: "array",
 				items: {
-					anyOf: [{$ref: base + "call"}, {$ref: base + "fragment"}]
+					anyOf: [{$ref: base + "call"}, {$ref: base + "blank"}, {$ref: base + "fragment"}]
 				}
 			}
 		},
