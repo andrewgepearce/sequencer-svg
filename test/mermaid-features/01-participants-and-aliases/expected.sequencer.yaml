@@ -1,0 +1,13 @@
+title: Input
+version: '1.0'
+actors:
+  - name: Caller Service
+    alias: Caller
+    actorType: participant
+  - name: Database Layer
+    alias: DB
+    actorType: actor
+  - name: API
+    alias: API
+    actorType: participant
+lines: []

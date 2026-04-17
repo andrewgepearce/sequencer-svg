@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="798" height="216" viewBox="0 0 798 216">
+  <rect width="100%" height="100%" fill="white"/>
+  <path d="M 0 0 L 0 206 L 788 206 L 788 0 L 0 0" fill="rgb(255, 255, 255)" stroke="none"/>
+  <path d="M 30 30 L 30 57 L 110 57 L 110 30 L 30 30" fill="rgba(0,0,0,0)" stroke="none"/>
+  <text x="35" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Title:</text>
+  <text x="68.44" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
+  <text x="72.33" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Input</text>
+  <path d="M 30 57 L 30 84 L 120 84 L 120 57 L 30 57" fill="rgba(0,0,0,0)" stroke="none"/>
+  <text x="35" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Version:</text>
+  <text x="91.01" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
+  <text x="94.9" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1.0</text>
+  <path d="M 33 122 L 33 150 L 33 150 A 5 5 0 0 0 38 155 L 159 155 L 159 155 A 5 5 0 0 0 164 150 L 164 122 L 164 122 A 5 5 0 0 0 159 117 L 38 117 L 38 117 A 5 5 0 0 0 33 122" fill="rgb(210,210,210)" stroke="none"/>
+  <path d="M 30 119 L 30 147 L 30 147 A 5 5 0 0 0 35 152 L 156 152 L 156 152 A 5 5 0 0 0 161 147 L 161 119 L 161 119 A 5 5 0 0 0 156 114 L 35 114 L 35 114 A 5 5 0 0 0 30 119" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 30 119 L 30 147 L 30 147 A 5 5 0 0 0 35 152 L 156 152 L 156 152 A 5 5 0 0 0 161 147 L 161 119 L 161 119 A 5 5 0 0 0 156 114 L 35 114 L 35 114 A 5 5 0 0 0 30 119" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="39" y="141" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Caller Service</text>
+  <path d="M 364 122 L 364 150 L 364 150 A 5 5 0 0 0 369 155 L 505 155 L 505 155 A 5 5 0 0 0 510 150 L 510 122 L 510 122 A 5 5 0 0 0 505 117 L 369 117 L 369 117 A 5 5 0 0 0 364 122" fill="rgb(210,210,210)" stroke="none"/>
+  <path d="M 361 119 L 361 147 L 361 147 A 5 5 0 0 0 366 152 L 502 152 L 502 152 A 5 5 0 0 0 507 147 L 507 119 L 507 119 A 5 5 0 0 0 502 114 L 366 114 L 366 114 A 5 5 0 0 0 361 119" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 361 119 L 361 147 L 361 147 A 5 5 0 0 0 366 152 L 502 152 L 502 152 A 5 5 0 0 0 507 147 L 507 119 L 507 119 A 5 5 0 0 0 502 114 L 366 114 L 366 114 A 5 5 0 0 0 361 119" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="370" y="141" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Database Layer</text>
+  <path d="M 710 122 L 710 150 L 710 150 A 5 5 0 0 0 715 155 L 753 155 L 753 155 A 5 5 0 0 0 758 150 L 758 122 L 758 122 A 5 5 0 0 0 753 117 L 715 117 L 715 117 A 5 5 0 0 0 710 122" fill="rgb(210,210,210)" stroke="none"/>
+  <path d="M 707 119 L 707 147 L 707 147 A 5 5 0 0 0 712 152 L 750 152 L 750 152 A 5 5 0 0 0 755 147 L 755 119 L 755 119 A 5 5 0 0 0 750 114 L 712 114 L 712 114 A 5 5 0 0 0 707 119" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 707 119 L 707 147 L 707 147 A 5 5 0 0 0 712 152 L 750 152 L 750 152 A 5 5 0 0 0 755 147 L 755 119 L 755 119 A 5 5 0 0 0 750 114 L 712 114 L 712 114 A 5 5 0 0 0 707 119" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="716" y="141" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">API</text>
+  <path d="M 95.5 152 L 95.5 176" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 434 152 L 434 176" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 731 152 L 731 176" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+</svg>

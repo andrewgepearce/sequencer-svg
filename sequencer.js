@@ -1,30 +1,51 @@
 // Copyright (C) 2019 Mark The Page
-
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
 // published by the Free Software Foundation, either version 3 of the
 // License, or (at your option) any later version.
-
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Affero General Public License for more details.
-
+//
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-const readline = require("readline");
+const fs = require("fs");
+const path = require("path");
 const uuid = require("node-uuid");
 const sanitize = require("sanitize-filename");
 const yaml = require("js-yaml");
-const fs = require("fs");
-const SvgStart = require("./SvgStart.js");
-
-let jsonstr = undefined;
-let yamlstr = undefined;
-
 const commandLineArgs = require("command-line-args");
 const commandLineUsage = require("command-line-usage");
+
+const SvgStart = require("./SvgStart.js");
+const { MermaidSequenceTransformer, MermaidTransformError } = require("./MermaidSequenceTransformer.js");
+
+//////////////////////////////////////////////////////////////////////////////
+/**
+ * Hold the formatted JSON representation of the current input document.
+ *
+ * @type {string|undefined}
+ */
+let jsonstr = undefined;
+
+//////////////////////////////////////////////////////////////////////////////
+/**
+ * Hold the formatted YAML representation of the current input document.
+ *
+ * @type {string|undefined}
+ */
+let yamlstr = undefined;
+
+//////////////////////////////////////////////////////////////////////////////
+/**
+ * Describe the supported command-line options.
+ *
+ * @type {Array<object>}
+ */
 const optionDefinitions = [
 	{ name: "id", type: String, alias: "I", multiple: false },
 	{ name: "inputFile", type: String, alias: "i", multiple: false },
@@ -35,14 +56,23 @@ const optionDefinitions = [
 	{ name: "outjson", type: Boolean, alias: "J", multiple: false },
 	{ name: "outyaml", type: Boolean, alias: "Y", multiple: false },
 	{ name: "yaml", type: Boolean, alias: "y", multiple: false },
+	{ name: "mermaid", type: Boolean, alias: "m", multiple: false },
+	{ name: "transformOnly", type: Boolean, alias: "T", multiple: false },
 	{ name: "nocovertext", type: Boolean, alias: "c", multiple: false },
 	{ name: "help", alias: "?", type: Boolean, multiple: false },
 ];
+
+//////////////////////////////////////////////////////////////////////////////
+/**
+ * Define the usage sections shown by the CLI help output.
+ *
+ * @type {Array<object>}
+ */
 const sections = [
 	{
 		header: "sequencer-svg",
 		content:
-			"Reads JSON or YAML from <stdin> or a file that meets the sequencer specification and generates an SVG file for the sequence diagram produced.",
+			"Reads JSON, YAML, or Mermaid sequence-diagram input from <stdin> or a file and generates sequencer-svg YAML and optional SVG output.",
 	},
 	{
 		header: "Options",
@@ -50,16 +80,18 @@ const sections = [
 			{ name: "id", type: String, alias: "I", description: "ID used in <stderr> log lines if -v is provided." },
 			{ name: "verbose", type: Boolean, alias: "v", description: "Emit verbose (debug) log messages to <stderr>." },
 			{ name: "yaml", type: Boolean, alias: "y", description: "Treat input as YAML instead of JSON." },
+			{ name: "mermaid", type: Boolean, alias: "m", description: "Treat input as Mermaid sequence-diagram syntax." },
+			{ name: "transformOnly", type: Boolean, alias: "T", description: "Stop after writing the transformed sequencer YAML." },
 			{ name: "inputFile", type: String, alias: "i", description: "Read input from this file instead of <stdin>." },
 			{
 				name: "outputFile",
 				type: String,
 				alias: "o",
 				description:
-					"Write the SVG to this file. If set without a value, a name is built from the title and version. If unset, write SVG to <stdout>.",
+					"Write the primary output to this file. In Mermaid transform-only mode this is YAML. Otherwise it is SVG. If set without a value, a derived file name is used.",
 			},
 			{ name: "targetDir", type: String, alias: "t", description: "Directory to write output files to." },
-			{ name: "force", type: Boolean, alias: "f", description: "Overwrite the output file if it exists." },
+			{ name: "force", type: Boolean, alias: "f", description: "Overwrite output files if they already exist." },
 			{ name: "outjson", type: Boolean, alias: "J", description: "Also write a formatted JSON file." },
 			{ name: "outyaml", type: Boolean, alias: "Y", description: "Also write a formatted YAML file." },
 			{ name: "nocovertext", type: Boolean, alias: "c", description: "Skip rendering the title, version and description cover text." },
@@ -68,57 +100,152 @@ const sections = [
 	},
 ];
 
+//////////////////////////////////////////////////////////////////////////////
+/**
+ * Hold the normalised command-line options for the current run.
+ *
+ * @type {object|undefined}
+ */
 let options = undefined;
-try {
-	options = commandLineArgs(optionDefinitions);
-} catch (error) {
-	console.error(error.message);
-	process.exit(-1);
-}
 
-if (options == undefined || options.id == undefined || options.id == null) options.id = assignId();
-if (options.verbose == undefined || options.verbose == null) options.verbose = false;
-if (options.help == undefined || options.help == null) options.help = false;
-if (options.outjson == undefined || options.outjson == null) options.outjson = false;
-if (options.outyaml == undefined || options.outyaml == null) options.outyaml = false;
-if (options.yaml == undefined || options.yaml == null) options.yaml = false;
-if (options.force == undefined || options.force == null) options.force = false;
-if (options.nocovertext == undefined || options.nocovertext == null) options.nocovertext = false;
+runCli();
 
-if (typeof options.help == "boolean" && options.help) {
-	const usage = commandLineUsage(sections);
-	console.error(usage);
-	process.exit(0);
-}
-
-if (options.verbose === true) console.error("CLA: " + JSON.stringify(options));
-
-// Read input file or stdin
-if (options.inputFile != undefined && options.inputFile != null) {
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Run the command-line entrypoint for sequencer-svg.
+ *
+ * @returns {void} Nothing.
+ * @example
+ * runCli();
+ */
+function runCli() {
+	///////////////////////////////////////////////////////////////////////////////
+	// Parse the command-line arguments and normalise omitted booleans before
+	// reading any input.
 	try {
-		const contents = fs.readFileSync(options.inputFile, "utf8");
-		processJsonDescription(getObjectFromData(contents, options.yaml));
+		options = commandLineArgs(optionDefinitions);
 	} catch (error) {
 		console.error(error.message);
+		process.exit(-1);
+	}
+
+	options = normaliseOptions(options);
+
+	if (options.help === true) {
+		console.error(commandLineUsage(sections));
 		process.exit(0);
 	}
-} else {
-	let inputstr = "";
-	const rl = readline.createInterface({ input: process.stdin });
-	rl.on("line", (input) => {
-		inputstr += input + "\n";
-	});
-	rl.on("close", () => {
-		processJsonDescription(getObjectFromData(inputstr, options.yaml));
-	});
+
+	if (options.verbose === true) {
+		console.error("CLA: " + JSON.stringify(options));
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	// Read the input, build the sequencer document, and dispatch the requested
+	// transform and render outputs.
+	const rawInput = readInputData(options.inputFile);
+	const sourceName = typeof options.inputFile === "string" ? options.inputFile : undefined;
+	const jsondescription = buildInputDocument(rawInput, sourceName);
+	processJsonDescription(jsondescription, sourceName);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Handle assign id.
- * @returns {*} Result value.
+ * Normalise the parsed CLI options with stable defaults.
+ *
+ * @param {object} parsedOptions Parsed command-line options.
+ * @returns {object} Normalised options.
  * @example
- * instance.assignId();
+ * const options = normaliseOptions({});
+ */
+function normaliseOptions(parsedOptions) {
+	///////////////////////////////////////////////////////////////////////////////
+	// Apply the existing CLI defaults and ensure Mermaid mode does not collide
+	// with the legacy JSON versus YAML flags.
+	const normalisedOptions = typeof parsedOptions === "object" && parsedOptions != null ? parsedOptions : {};
+	if (normalisedOptions.id == undefined) normalisedOptions.id = assignId();
+	if (normalisedOptions.verbose == undefined) normalisedOptions.verbose = false;
+	if (normalisedOptions.help == undefined) normalisedOptions.help = false;
+	if (normalisedOptions.outjson == undefined) normalisedOptions.outjson = false;
+	if (normalisedOptions.outyaml == undefined) normalisedOptions.outyaml = false;
+	if (normalisedOptions.yaml == undefined) normalisedOptions.yaml = false;
+	if (normalisedOptions.mermaid == undefined) normalisedOptions.mermaid = false;
+	if (normalisedOptions.transformOnly == undefined) normalisedOptions.transformOnly = false;
+	if (normalisedOptions.force == undefined) normalisedOptions.force = false;
+	if (normalisedOptions.nocovertext == undefined) normalisedOptions.nocovertext = false;
+
+	if (normalisedOptions.mermaid === true && normalisedOptions.yaml === true) {
+		console.error("Cannot use --mermaid and --yaml together");
+		process.exit(-1);
+	}
+
+	return normalisedOptions;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Read the raw input text from a file or from stdin.
+ *
+ * @param {string|undefined} inputFile Optional input file path.
+ * @returns {string} Raw input data.
+ * @example
+ * const source = readInputData("./diagram.yaml");
+ */
+function readInputData(inputFile) {
+	///////////////////////////////////////////////////////////////////////////////
+	// Use synchronous reads so the CLI path remains linear and easy to test.
+	try {
+		if (typeof inputFile === "string" && inputFile.length > 0) {
+			return fs.readFileSync(inputFile, "utf8");
+		}
+
+		return fs.readFileSync(0, "utf8");
+	} catch (error) {
+		console.error(error.message);
+		process.exit(-1);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Build the sequencer document from the raw input text.
+ *
+ * @param {string} data Raw input data.
+ * @param {string|undefined} sourceName Optional source file name.
+ * @returns {object} Sequencer document object.
+ * @example
+ * const document = buildInputDocument(source, "diagram.mmd");
+ */
+function buildInputDocument(data, sourceName) {
+	///////////////////////////////////////////////////////////////////////////////
+	// Route Mermaid input through the dedicated transformer and keep the derived
+	// sequencer JSON and YAML strings available for later sidecar output.
+	if (options.mermaid === true) {
+		try {
+			const jsono = MermaidSequenceTransformer.transform(data, { sourceName: sourceName });
+			jsonstr = JSON.stringify(jsono, null, 3);
+			yamlstr = yaml.safeDump(jsono);
+			return jsono;
+		} catch (error) {
+			if (error instanceof MermaidTransformError) {
+				console.error("Error whilst transforming Mermaid: " + error.message);
+				process.exit(-1);
+			}
+
+			throw error;
+		}
+	}
+
+	return getObjectFromData(data, options.yaml);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Generate a correlation identifier for verbose log messages.
+ *
+ * @returns {string} Correlation identifier.
+ * @example
+ * const id = assignId();
  */
 function assignId() {
 	return uuid.v4();
@@ -126,71 +253,195 @@ function assignId() {
 
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Handle process json description.
+ * Process the sequencer document and write the requested output artefacts.
  *
- * @param {*} jsondescription Parameter derived from jsondescription.
- * @returns {*} Result value.
+ * @param {object} jsondescription Sequencer document object.
+ * @param {string|undefined} sourceName Optional source file name.
+ * @returns {void} Nothing.
  * @example
- * instance.processJsonDescription(jsondescription);
+ * processJsonDescription(document, "diagram.mmd");
  */
-function processJsonDescription(jsondescription) {
-	const title = getTitle(jsondescription);
-	let ofile = sanitize(title.split(" ").join("_")) + ".svg";
-	let jfile = sanitize(title.split(" ").join("_")) + ".json";
-	let yfile = sanitize(title.split(" ").join("_")) + ".yaml";
+function processJsonDescription(jsondescription, sourceName) {
+	///////////////////////////////////////////////////////////////////////////////
+	// Derive the output file paths once so Mermaid sidecars and rendered SVG stay
+	// aligned to the same output stem.
+	const outputStem = deriveOutputStem(jsondescription, sourceName);
+	const svgFile = buildDerivedOutputPath(outputStem + ".svg");
+	const jsonFile = buildDerivedOutputPath(outputStem + ".json");
+	const yamlFile = buildDerivedOutputPath(outputStem + (options.mermaid === true ? ".sequencer.yaml" : ".yaml"));
 
-	if (options.targetDir != undefined && options.targetDir != null) {
-		jfile = options.targetDir + "/" + jfile;
-		yfile = options.targetDir + "/" + yfile;
-		ofile = options.targetDir + "/" + ofile;
+	if (options.mermaid === true) {
+		writeTransformedYamlArtifact(yamlFile);
 	}
 
+	if (options.transformOnly === true) {
+		handleTransformOnlyOutput(yamlFile);
+		if (options.outjson === true) {
+			writeFileWithOverwrite(jsonFile, jsonstr);
+		}
+		return;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	// Render the SVG from the sequencer document and preserve the transformed
+	// YAML sidecar in Mermaid mode.
 	const ss = new SvgStart();
 	try {
-		const cb = ss.draw(jsondescription, null, options.verbose, options.id, options.nocovertext);
+		const svg = ss.draw(jsondescription, null, options.verbose, options.id, options.nocovertext);
+		writePrimaryRenderOutput(svg, svgFile);
 
-		if (options.outputFile === undefined) {
-			process.stdout.write(cb);
-		} else if (options.outputFile === null && options.force) {
-			fs.writeFileSync(ofile, cb);
-		} else if (options.outputFile === null && !options.force && fs.existsSync(ofile)) {
-			console.error(`Cannot write to file "${ofile}" as it already exists`);
-			process.exit(-1);
-		} else if (options.outputFile === null && !options.force) {
-			fs.writeFileSync(ofile, cb);
-		} else if (options.outputFile != null && options.force) {
-			fs.writeFileSync(options.outputFile, cb);
-		} else if (options.outputFile != null && !options.force && fs.existsSync(options.outputFile)) {
-			console.error(`Cannot write to file "${options.outputFile}" as it already exists`);
-			process.exit(-1);
-		} else if (options.outputFile != null && !options.force) {
-			fs.writeFileSync(options.outputFile, cb);
+		if (options.outjson === true) {
+			writeFileWithOverwrite(jsonFile, jsonstr);
 		}
 
-		if (options.outjson) {
-			console.log(`+ Writing JSON outfile to ${jfile}`);
-			fs.writeFileSync(jfile, jsonstr);
-		}
-		if (options.outyaml) {
-			yamlstr = "## https://github.com/andrewgepearce/sequencer\n" + yamlstr;
-			console.log(`+ Writing YAML outfile to ${yfile}`);
-			fs.writeFileSync(yfile, yamlstr);
+		if (options.outyaml === true && options.mermaid !== true) {
+			writeFileWithOverwrite(yamlFile, yamlstr);
 		}
 	} catch (error) {
 		console.error("Error processing: " + error.message);
-		if (options.verbose) console.error(error.stack);
+		if (options.verbose === true) console.error(error.stack);
 		process.exit(-1);
 	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Handle get title.
+ * Handle output in Mermaid transform-only mode.
  *
- * @param {*} obj Parameter derived from obj.
- * @returns {*} Result value.
+ * @param {string} yamlFile Default transformed YAML file path.
+ * @returns {void} Nothing.
  * @example
- * instance.getTitle(obj);
+ * handleTransformOnlyOutput("./diagram.sequencer.yaml");
+ */
+function handleTransformOnlyOutput(yamlFile) {
+	///////////////////////////////////////////////////////////////////////////////
+	// Print the transformed YAML to stdout when no explicit output path was
+	// requested, while still keeping the sidecar file available on disk.
+	if (options.outputFile === undefined) {
+		process.stdout.write(yamlstr);
+		return;
+	}
+
+	if (options.outputFile === null) {
+		writeFileWithOverwrite(yamlFile, yamlstr);
+		return;
+	}
+
+	writeFileWithOverwrite(options.outputFile, yamlstr);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Write the primary SVG render output according to the CLI options.
+ *
+ * @param {string|Buffer} svg SVG output payload.
+ * @param {string} svgFile Derived SVG output path.
+ * @returns {void} Nothing.
+ * @example
+ * writePrimaryRenderOutput(svg, "./diagram.svg");
+ */
+function writePrimaryRenderOutput(svg, svgFile) {
+	///////////////////////////////////////////////////////////////////////////////
+	// Preserve the historical stdout behaviour when the caller did not ask for a
+	// file-based primary output path.
+	if (options.outputFile === undefined) {
+		process.stdout.write(svg);
+		return;
+	}
+
+	if (options.outputFile === null) {
+		writeFileWithOverwrite(svgFile, svg);
+		return;
+	}
+
+	writeFileWithOverwrite(options.outputFile, svg);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Persist the transformed YAML sidecar when Mermaid input mode is active.
+ *
+ * @param {string} yamlFile Default transformed YAML file path.
+ * @returns {void} Nothing.
+ * @example
+ * writeTransformedYamlArtifact("./diagram.sequencer.yaml");
+ */
+function writeTransformedYamlArtifact(yamlFile) {
+	writeFileWithOverwrite(yamlFile, yamlstr);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Write a file while respecting the `--force` overwrite flag.
+ *
+ * @param {string} filePath Output file path.
+ * @param {string|Buffer} contents File contents.
+ * @returns {void} Nothing.
+ * @example
+ * writeFileWithOverwrite("./diagram.svg", "<svg />");
+ */
+function writeFileWithOverwrite(filePath, contents) {
+	///////////////////////////////////////////////////////////////////////////////
+	// Guard existing files unless the caller explicitly opted into overwriting.
+	if (typeof filePath !== "string" || filePath.length === 0) {
+		console.error("Cannot write output because the file path is empty");
+		process.exit(-1);
+	}
+
+	if (options.force !== true && fs.existsSync(filePath)) {
+		console.error(`Cannot write to file "${filePath}" as it already exists`);
+		process.exit(-1);
+	}
+
+	fs.writeFileSync(filePath, contents);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Derive the output stem used for SVG, JSON, and YAML artefacts.
+ *
+ * @param {object} obj Sequencer document object.
+ * @param {string|undefined} sourceName Optional source file name.
+ * @returns {string} Sanitised output stem.
+ * @example
+ * const stem = deriveOutputStem(document, "diagram.mmd");
+ */
+function deriveOutputStem(obj, sourceName) {
+	///////////////////////////////////////////////////////////////////////////////
+	// Prefer the source file stem when available so Mermaid fixtures and sidecar
+	// outputs stay predictably grouped.
+	if (typeof sourceName === "string" && sourceName.length > 0) {
+		return sanitize(path.basename(sourceName, path.extname(sourceName)));
+	}
+
+	return sanitize(getTitle(obj).split(" ").join("_"));
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Build a derived output path inside the optional target directory.
+ *
+ * @param {string} fileName Derived file name.
+ * @returns {string} Output path.
+ * @example
+ * const filePath = buildDerivedOutputPath("diagram.svg");
+ */
+function buildDerivedOutputPath(fileName) {
+	if (typeof options.targetDir === "string" && options.targetDir.length > 0) {
+		return path.join(options.targetDir, fileName);
+	}
+
+	return fileName;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Build a human-readable title from a sequencer document.
+ *
+ * @param {object} obj Sequencer document object.
+ * @returns {string} Combined title and version string.
+ * @example
+ * const title = getTitle(document);
  */
 function getTitle(obj) {
 	let title = "";
@@ -224,19 +475,19 @@ function getTitle(obj) {
 			title += str;
 		});
 	} else {
-		title += ".NoVersionSet";
+		title += "NoVersionSet";
 	}
 	return title;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Handle is all strings.
+ * Check whether every item in an array is a string.
  *
- * @param {*} arr Parameter derived from arr.
- * @returns {*} Result value.
+ * @param {*} arr Candidate array value.
+ * @returns {boolean} True when the value is an array of strings.
  * @example
- * instance.isAllStrings(arr);
+ * const ok = isAllStrings(["a", "b"]);
  */
 function isAllStrings(arr) {
 	if (!Array.isArray(arr)) return false;
@@ -249,13 +500,13 @@ function isAllStrings(arr) {
 
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Handle get object from data.
+ * Parse JSON or YAML input data into a sequencer document object.
  *
- * @param {*} data Parameter derived from data.
- * @param {*} isYaml Parameter derived from isYaml.
- * @returns {*} Result value.
+ * @param {string} data Raw input data.
+ * @param {boolean} isYaml True when the input should be parsed as YAML.
+ * @returns {object} Parsed sequencer document object.
  * @example
- * instance.getObjectFromData(data, isYaml);
+ * const document = getObjectFromData("title: Example", true);
  */
 function getObjectFromData(data, isYaml) {
 	if (isYaml) {
@@ -268,28 +519,29 @@ function getObjectFromData(data, isYaml) {
 			console.error("Error whilst parsing YAML: " + error.message);
 			process.exit(-1);
 		}
-	} else {
-		try {
-			const jsono = JSON.parse(data);
-			jsonstr = JSON.stringify(jsono, null, 3);
-			annotateJsonWithSourceLines(jsono, data);
-			return jsono;
-		} catch (error) {
-			console.error("Error whilst parsing JSON: " + error);
-			process.exit(-1);
-		}
+	}
+
+	try {
+		const jsono = JSON.parse(data);
+		jsonstr = JSON.stringify(jsono, null, 3);
+		yamlstr = yaml.safeDump(jsono);
+		annotateJsonWithSourceLines(jsono, data);
+		return jsono;
+	} catch (error) {
+		console.error("Error whilst parsing JSON: " + error);
+		process.exit(-1);
 	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Handle load with source lines.
+ * Parse YAML while attaching source-line metadata to object nodes.
  *
- * @param {*} data Parameter derived from data.
- * @param {*} onWarning Parameter derived from onWarning.
- * @returns {*} Result value.
+ * @param {string} data Raw YAML input.
+ * @param {Function} onWarning Warning callback.
+ * @returns {object} Parsed YAML object.
  * @example
- * instance.loadWithSourceLines(data, onWarning);
+ * const document = loadWithSourceLines("title: Example", console.error);
  */
 function loadWithSourceLines(data, onWarning) {
 	const opens = [];
@@ -310,7 +562,7 @@ function loadWithSourceLines(data, onWarning) {
 							writable: true,
 						});
 					} catch (e) {
-						//////////////////////////////////////////////////////////////////////////
+						////////////////////////////////////////////////////////////////////////////
 						// Ignore; source-line annotation is best-effort.
 					}
 				}
@@ -322,23 +574,18 @@ function loadWithSourceLines(data, onWarning) {
 
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Handle annotate json with source lines.
+ * Copy source-line annotations onto a JSON-parsed object tree.
  *
- * @param {*} parsed Parameter derived from parsed.
- * @param {*} rawData Parameter derived from rawData.
- * @returns {*} Result value.
+ * @param {object} parsed JSON-parsed object.
+ * @param {string} rawData Raw JSON input.
+ * @returns {void} Nothing.
  * @example
- * instance.annotateJsonWithSourceLines(parsed, rawData);
+ * annotateJsonWithSourceLines(parsed, rawData);
  */
 function annotateJsonWithSourceLines(parsed, rawData) {
 	///////////////////////////////////////////////////////////////////////////////
-	// Use js-yaml with the source-line listener (JSON is valid YAML) to build a parallel
-	///////////////////////////////////////////////////////////////////////////////
-	// object tree whose mapping/sequence nodes carry __sourceLine. Then walk the two
-	///////////////////////////////////////////////////////////////////////////////
-	// trees in parallel and copy __sourceLine from the yaml-parsed tree onto the
-	///////////////////////////////////////////////////////////////////////////////
-	// JSON.parse tree by structural position (array index, object key).
+	// Use js-yaml with the source-line listener because JSON is valid YAML and
+	// then copy the line metadata across the structurally equivalent trees.
 	let annotated;
 	try {
 		annotated = loadWithSourceLines(rawData, () => {});
@@ -350,13 +597,13 @@ function annotateJsonWithSourceLines(parsed, rawData) {
 
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Handle copy source lines.
+ * Copy `__sourceLine` properties recursively between object trees.
  *
- * @param {*} target Parameter derived from target.
- * @param {*} source Parameter derived from source.
- * @returns {*} Result value.
+ * @param {*} target Destination object tree.
+ * @param {*} source Source object tree.
+ * @returns {void} Nothing.
  * @example
- * instance.copySourceLines(target, source);
+ * copySourceLines(target, source);
  */
 function copySourceLines(target, source) {
 	if (target == null || source == null) return;

@@ -497,6 +497,11 @@ let schema = {
 				]
 			},
 			alias: _alias,
+			actorType: {
+				type: "string",
+				description: "The Mermaid-derived actor declaration type when present",
+				enum: ["participant", "actor"],
+			},
 			gapToNext: _gapToNext,
 			radius: _radius(5),
 			flowWidth: _flowWidth(5),
