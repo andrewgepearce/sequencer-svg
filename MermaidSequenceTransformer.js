@@ -31,7 +31,8 @@ class MermaidTransformError extends Error {
 //////////////////////////////////////////////////////////////////////////////
 /**
  * Transform Mermaid sequence-diagram source into a sequencer-svg document.
- * Slice 1 supports explicit `participant` and `actor` declarations only.
+ * Slice 2 supports explicit `participant` and `actor` declarations plus basic
+ * message lines and standard unidirectional arrow variants.
  *
  * @example
  * const document = MermaidSequenceTransformer.transform(source, { sourceName: "sample.mmd" });
@@ -74,8 +75,8 @@ class MermaidSequenceTransformer {
 			const trimmed = sourceLine.trim();
 
 			////////////////////////////////////////////////////////////////////////////
-			// Ignore blank lines, Mermaid comments, and directive bodies so the slice
-			// can focus on participant declarations only.
+			// Ignore blank lines, Mermaid comments, and directive bodies so the
+			// transform can focus on sequencer-relevant source lines only.
 			if (trimmed.length === 0) {
 				continue;
 			}
@@ -109,7 +110,16 @@ class MermaidSequenceTransformer {
 			// Handle explicit participant and actor declarations in source order.
 			if (this._isParticipantDeclaration(trimmed)) {
 				const actor = this._parseParticipantDeclaration(trimmed, lineNumber, sourceLine);
-				this._appendActor(document.actors, actor, lineNumber, sourceLine);
+				this._registerActor(document.actors, actor);
+				continue;
+			}
+
+			////////////////////////////////////////////////////////////////////////////
+			// Handle Mermaid message lines by mapping them onto sequencer call lines
+			// with per-line arrow and dash configuration.
+			if (this._looksLikeMessageLine(trimmed)) {
+				const transformedLine = this._parseMessageLine(trimmed, document.actors, lineNumber, sourceLine);
+				document.lines.push(transformedLine);
 				continue;
 			}
 
@@ -200,26 +210,143 @@ class MermaidSequenceTransformer {
 
 	////////////////////////////////////////////////////////////////////////////
 	/**
-	 * Append a new actor to the transformed document, rejecting duplicate aliases.
+	 * Register or update an actor in the transformed document.
 	 *
 	 * @param {object[]} actors Existing actor array.
 	 * @param {{ name: string, alias: string, actorType: string }} actor New actor definition.
-	 * @param {number} lineNumber 1-based source line number.
-	 * @param {string} sourceLine Original Mermaid source line.
 	 * @returns {void} Nothing.
-	 * @throws {MermaidTransformError} If the alias was already declared.
 	 * @example
-	 * MermaidSequenceTransformer._appendActor([], { name: "API", alias: "API", actorType: "participant" }, 2, "participant API");
+	 * MermaidSequenceTransformer._registerActor([], { name: "API", alias: "API", actorType: "participant" });
 	 */
-	static _appendActor(actors, actor, lineNumber, sourceLine) {
+	static _registerActor(actors, actor) {
 		////////////////////////////////////////////////////////////////////////////
-		// Preserve declaration order exactly because Mermaid participant order is a
-		// visible semantic in the resulting diagram.
-		if (actors.some((existingActor) => existingActor.alias === actor.alias)) {
-			throw new MermaidTransformError(`Mermaid participant alias '${actor.alias}' is declared more than once`, lineNumber, sourceLine);
+		// Preserve the first observed order for a participant while still allowing
+		// later explicit declarations to enrich an implicitly created actor.
+		const existingActor = actors.find((candidate) => candidate.alias === actor.alias);
+		if (existingActor) {
+			existingActor.name = actor.name;
+			existingActor.actorType = actor.actorType;
+			return;
 		}
 
 		actors.push(actor);
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Detect whether a trimmed Mermaid line looks like a message statement.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @returns {boolean} True when the line resembles a Mermaid message.
+	 * @example
+	 * const matched = MermaidSequenceTransformer._looksLikeMessageLine("A->>B: Ping");
+	 */
+	static _looksLikeMessageLine(trimmed) {
+		return /^[A-Za-z0-9_][-A-Za-z0-9_]*\s*[<\\/\-|x).]+/.test(trimmed);
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a Mermaid message line into a sequencer call line.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @param {object[]} actors Current actor array.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {{ type: string, from: string, to: string, text: string, lineDash?: number[], arrow?: string, async?: boolean }} Sequencer line.
+	 * @throws {MermaidTransformError} If the message line is malformed or unsupported.
+	 * @example
+	 * const line = MermaidSequenceTransformer._parseMessageLine("A->>B: Ping", [], 4, "A->>B: Ping");
+	 */
+	static _parseMessageLine(trimmed, actors, lineNumber, sourceLine) {
+		const supportedArrowTokens = ["-->>", "->>", "--)", "-)", "--x", "-x", "-->", "->"];
+		const unsupportedArrowTokens = ["<<-->>", "<<->>", "--|\\", "-|\\", "--|/", "-|/", "/|--", "/|-", "\\\\--", "\\\\-", "--\\\\", "-\\\\", "--//", "-//", "//--", "//-", "()"];
+		const arrowTokens = unsupportedArrowTokens.concat(supportedArrowTokens).sort((left, right) => right.length - left.length);
+		let matchedArrowToken = null;
+		let matchedArrowIndex = -1;
+
+		for (const arrowToken of arrowTokens) {
+			const arrowIndex = trimmed.indexOf(arrowToken);
+			if (arrowIndex !== -1) {
+				matchedArrowToken = arrowToken;
+				matchedArrowIndex = arrowIndex;
+				break;
+			}
+		}
+
+		if (matchedArrowToken == null) {
+			throw new MermaidTransformError("Unsupported Mermaid message syntax", lineNumber, sourceLine);
+		}
+
+		const leftSide = trimmed.slice(0, matchedArrowIndex).trim();
+		const rightSide = trimmed.slice(matchedArrowIndex + matchedArrowToken.length).trim();
+		const colonIndex = rightSide.indexOf(":");
+		const toAlias = (colonIndex === -1 ? rightSide : rightSide.slice(0, colonIndex)).trim();
+		const messageText = colonIndex === -1 ? "" : rightSide.slice(colonIndex + 1).trim();
+		const fromAlias = leftSide;
+		const arrowToken = matchedArrowToken;
+
+		if (!/^[A-Za-z0-9_][-A-Za-z0-9_]*$/.test(fromAlias) || !/^[A-Za-z0-9_][-A-Za-z0-9_]*$/.test(toAlias)) {
+			throw new MermaidTransformError("Unsupported Mermaid message actor syntax", lineNumber, sourceLine);
+		}
+
+		if (unsupportedArrowTokens.some((token) => arrowToken.includes(token))) {
+			throw new MermaidTransformError(`Mermaid arrow '${arrowToken}' is not supported yet`, lineNumber, sourceLine);
+		}
+
+		if (!supportedArrowTokens.includes(arrowToken)) {
+			throw new MermaidTransformError(`Mermaid arrow '${arrowToken}' is not supported in slice 2`, lineNumber, sourceLine);
+		}
+
+		this._ensureImplicitActor(actors, fromAlias);
+		this._ensureImplicitActor(actors, toAlias);
+
+		const line = {
+			type: "call",
+			from: fromAlias,
+			to: toAlias,
+			text: messageText,
+		};
+
+		if (arrowToken.startsWith("--")) {
+			line.lineDash = [4, 2];
+		}
+
+		if (arrowToken.endsWith(")")) {
+			line.arrow = "open";
+			line.async = true;
+		} else if (arrowToken.endsWith("x")) {
+			line.arrow = "cross";
+		} else if (arrowToken.endsWith(">>")) {
+			line.arrow = "fill";
+		} else if (arrowToken === "->" || arrowToken === "-->") {
+			line.arrow = "none";
+		}
+
+		return line;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Ensure that an actor exists for a Mermaid alias, creating an implicit
+	 * participant when the alias has not been declared explicitly yet.
+	 *
+	 * @param {object[]} actors Current actor array.
+	 * @param {string} alias Mermaid participant alias.
+	 * @returns {void} Nothing.
+	 * @example
+	 * MermaidSequenceTransformer._ensureImplicitActor([], "API");
+	 */
+	static _ensureImplicitActor(actors, alias) {
+		if (actors.some((candidate) => candidate.alias === alias)) {
+			return;
+		}
+
+		actors.push({
+			name: alias,
+			alias: alias,
+			actorType: "participant",
+		});
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -246,8 +373,8 @@ class MermaidSequenceTransformer {
 			return new MermaidTransformError(`Mermaid feature '${trimmed.split(/\s+/)[0]}' is not supported yet`, lineNumber, sourceLine);
 		}
 
-		if (/[<-]+[->x+o)]/.test(trimmed) || /\b-->>?\b/.test(trimmed)) {
-			return new MermaidTransformError("Mermaid message lines are not supported yet", lineNumber, sourceLine);
+		if (/[<>-][<>x)|/\\-]+/.test(trimmed)) {
+			return new MermaidTransformError("Unsupported Mermaid message syntax", lineNumber, sourceLine);
 		}
 
 		return new MermaidTransformError("Unsupported Mermaid sequence syntax", lineNumber, sourceLine);

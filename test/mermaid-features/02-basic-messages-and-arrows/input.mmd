@@ -1,0 +1,9 @@
+sequenceDiagram
+Caller->>Service: Sync request [Mermaid: Caller->>Service]
+Service-->>Caller: Dotted response [Mermaid: Service-->>Caller]
+Caller-)Service: Async signal [Mermaid: Caller-)Service]
+Service--)Caller: Async dotted signal [Mermaid: Service--)Caller]
+Caller-xService: Failure signal [Mermaid: Caller-xService]
+Service--xCaller: Dotted failure [Mermaid: Service--xCaller]
+Caller->Service: Solid no arrow [Mermaid: Caller->Service]
+Service-->Caller: Dotted no arrow [Mermaid: Service-->Caller]

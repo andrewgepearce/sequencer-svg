@@ -540,6 +540,11 @@ let schema = {
 			lineColour: _lineColour("rgb(0,0,0)"),
 			radius: _radius(5),
 			arrowSizeY: _arrowSizeY(5),
+			arrow: {
+				type: "string",
+				description: "The arrowhead style for the call line",
+				enum: ["fill", "open", "cross", "empty", "none"],
+			},
 			breakFromFlow: _breakFromFlow(false),
 			breakToFlow: _breakToFlow(false),
 			async: _async(false),

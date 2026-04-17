@@ -299,6 +299,8 @@ module.exports = class Call {
 				? "fill"
 				: this._line.arrow === "open"
 				? "open"
+				: this._line.arrow === "none"
+				? "none"
 				: this._line.arrow === "empty"
 				? "empty"
 				: this._line.async === true
@@ -327,7 +329,7 @@ module.exports = class Call {
 			ctx.lineTo(x, y - arrowSizeY);
 			ctx.stroke();
 			ctx.lineWidth = lineWidth;
-		} else if (arrowType === "empty") {
+		} else if (arrowType === "empty" || arrowType === "none") {
 			/////////////////////////////////////////////////////////////////////////////
 			// Do nothing
 		}
@@ -582,6 +584,8 @@ module.exports = class Call {
 				? "fill"
 				: this._line.arrow === "open"
 				? "open"
+				: this._line.arrow === "none"
+				? "none"
 				: this._line.arrow === "empty"
 				? "empty"
 				: this._line.async === true
@@ -653,7 +657,7 @@ module.exports = class Call {
 			ctx.stroke();
 		}
 		//////////////////////////////////////////////////////////////////////////////
-		// Do nothing with empty arrow type
+		// Do nothing with empty or no-arrow type
 
 		return working.manageMaxWidth(0, starty + finalHeightOfAllLine);
 	}
