@@ -78,11 +78,25 @@ module.exports = class Blank {
 		let blankRight = blankleft + width;
 		let blankTop = starty;
 		let blankBottom = starty + height;
+		let flowTransitionHeight = this._getFlowTransitionHeight(working);
+		const actorLookup = this._buildActorLookup(working);
+		const incomingFlowState = this._captureFlowState(actorLookup);
+		const flowTransitions = this._resolveFlowTransitions(actorLookup, incomingFlowState, blankTop, flowTransitionHeight);
 		let commentxy = null;
 		let comment = null;
 		let commentwidth = null;
 		let commentleft = null;
+		if (this._isNoOpFlowTransition(flowTransitions, width, height, xoffset) && this._line.comment == null) {
+			return {
+				x: 0,
+				y: starty,
+			};
+		}
+		if (flowTransitions.requiresVisibleHeight) {
+			blankBottom = Math.max(blankBottom, blankTop + flowTransitionHeight);
+		}
 		if (this._line.comment != null) {
+			const commentGapBelow = this._getCommentBottomGap(working);
 			comment = new Comment(ctx, this._line.comment);
 			let commentwidth = comment.draw(working, blankleft + 2 * working.globalSpacing, blankTop + working.globalSpacing, 0, 0, true, true);
 			commentleft = this._resolveCommentLeft(working, commentwidth, blankleft);
@@ -95,9 +109,10 @@ module.exports = class Blank {
 				commentleft = 1.5 * working.globalSpacing;
 			}
 			comment = new Comment(ctx, this._line.comment);
-			commentxy = comment.draw(working, commentleft, blankTop + working.globalSpacing, 0, 0, true);
+			commentxy = comment.draw(working, commentleft, blankTop + working.globalSpacing, commentGapBelow, 0, true);
 			blankBottom = commentxy.y + height + 1;
 		}
+		this._applyFlowTransitions(flowTransitions);
 		let xy = Actor.drawTimelines(working, ctx, starty, blankBottom - blankTop, true);
 		let finalHeightOfAllLine = xy.y - starty;
 
@@ -116,16 +131,230 @@ module.exports = class Blank {
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
+		this._restoreFlowState(actorLookup, incomingFlowState);
+		this._applyFlowTransitions(flowTransitions);
 		xy = Actor.drawTimelines(working, ctx, starty, finalHeightOfAllLine, mimic);
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 3. Comment
 		if (comment != null) {
-			commentxy = comment.draw(working, commentleft, blankTop + working.globalSpacing, 0, 0, mimic);
+			commentxy = comment.draw(working, commentleft, blankTop + working.globalSpacing, this._getCommentBottomGap(working), 0, mimic);
 		}
 
 		working.manageMaxWidth(blankRight, blankBottom);
 		return working.manageMaxWidth(0, starty + finalHeightOfAllLine);
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Apply blank-line flow transitions before the timeline pass.
+	 *
+	 * Resolve the effective blank-line flow transitions for this render pass.
+	 *
+	 * @param {*} actorLookup Parameter derived from actorLookup.
+	 * @param {*} incomingFlowState Parameter derived from incomingFlowState.
+	 * @param {*} topY Parameter derived from topY.
+	 * @param {*} flowTransitionHeight Parameter derived from flowTransitionHeight.
+	 * @returns {*} Result value.
+	 * @example
+	 * const flowTransitions = instance._resolveFlowTransitions(actorLookup, incomingFlowState, topY, flowTransitionHeight);
+	 */
+	_resolveFlowTransitions(actorLookup, incomingFlowState, topY, flowTransitionHeight) {
+		let transitions = [];
+		let requiresVisibleHeight = false;
+
+		this._normaliseAliasArray(this._line.deactivate).forEach((alias) => {
+			if (actorLookup[alias] && incomingFlowState[alias] && incomingFlowState[alias].flowStateContinue === true) {
+				transitions.push({
+					type: "deactivate",
+					actor: actorLookup[alias],
+					topY: topY,
+					endY: topY + flowTransitionHeight,
+				});
+				requiresVisibleHeight = true;
+			}
+		});
+
+		this._normaliseAliasArray(this._line.activate).forEach((alias) => {
+			if (actorLookup[alias] && (!incomingFlowState[alias] || incomingFlowState[alias].flowStateContinue !== true)) {
+				transitions.push({
+					type: "activate",
+					actor: actorLookup[alias],
+					topY: topY,
+				});
+				requiresVisibleHeight = true;
+			}
+		});
+
+		return {
+			transitions: transitions,
+			requiresVisibleHeight: requiresVisibleHeight,
+		};
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Apply blank-line flow transitions before a timeline render pass.
+	 *
+	 * @param {*} flowTransitions Parameter derived from flowTransitions.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance._applyFlowTransitions(flowTransitions);
+	 */
+	_applyFlowTransitions(flowTransitions) {
+		if (!flowTransitions || !Array.isArray(flowTransitions.transitions)) {
+			return;
+		}
+
+		flowTransitions.transitions.forEach((transition) => {
+			if (transition.type === "activate") {
+				transition.actor.flowStartYPos = transition.topY;
+			} else if (transition.type === "deactivate") {
+				transition.actor.flowEndYPos = transition.endY;
+			}
+		});
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Capture the incoming flow state for the actors in the current render pass.
+	 *
+	 * @param {*} actorLookup Parameter derived from actorLookup.
+	 * @returns {*} Result value.
+	 * @example
+	 * const incomingFlowState = instance._captureFlowState(actorLookup);
+	 */
+	_captureFlowState(actorLookup) {
+		let incomingFlowState = {};
+
+		Object.keys(actorLookup).forEach((alias) => {
+			incomingFlowState[alias] = {
+				flowStateContinue: actorLookup[alias].isFlowStateContinue(),
+				flowStartYPos: actorLookup[alias].flowStartYPos,
+				flowEndYPos: actorLookup[alias].flowEndYPos,
+			};
+		});
+
+		return incomingFlowState;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Restore the captured incoming flow state before the final render pass.
+	 *
+	 * @param {*} actorLookup Parameter derived from actorLookup.
+	 * @param {*} incomingFlowState Parameter derived from incomingFlowState.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance._restoreFlowState(actorLookup, incomingFlowState);
+	 */
+	_restoreFlowState(actorLookup, incomingFlowState) {
+		Object.keys(actorLookup).forEach((alias) => {
+			if (incomingFlowState[alias] && incomingFlowState[alias].flowStateContinue === true) {
+				actorLookup[alias].setFlowStateContinue();
+			} else {
+				actorLookup[alias].clearFlowStateContinue();
+			}
+
+			actorLookup[alias].flowStartYPos = incomingFlowState[alias] ? incomingFlowState[alias].flowStartYPos : null;
+			actorLookup[alias].flowEndYPos = incomingFlowState[alias] ? incomingFlowState[alias].flowEndYPos : null;
+		});
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Build a quick alias-to-actor-class lookup for the current render pass.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @returns {*} Result value.
+	 * @example
+	 * const actorLookup = instance._buildActorLookup(working);
+	 */
+	_buildActorLookup(working) {
+		let actorLookup = {};
+
+		if (!Array.isArray(working.postdata && working.postdata.actors)) {
+			return actorLookup;
+		}
+
+		working.postdata.actors.forEach((actor) => {
+			if (actor && actor.clinstance && Utilities.isString(actor.alias)) {
+				actorLookup[actor.alias] = actor.clinstance;
+			}
+		});
+
+		return actorLookup;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Normalise a blank-line activation field into an alias array.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {*} Result value.
+	 * @example
+	 * const aliases = instance._normaliseAliasArray(value);
+	 */
+	_normaliseAliasArray(value) {
+		if (Utilities.isString(value)) {
+			return [value];
+		}
+
+		if (Array.isArray(value)) {
+			return value.filter((alias) => Utilities.isString(alias));
+		}
+
+		return [];
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return the minimum height needed to show a flow transition on a blank line.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @returns {*} Result value.
+	 * @example
+	 * const height = instance._getFlowTransitionHeight(working);
+	 */
+	_getFlowTransitionHeight(working) {
+		return 5;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return the small vertical gap kept below blank-line comments.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @returns {*} Result value.
+	 * @example
+	 * const gap = instance._getCommentBottomGap(working);
+	 */
+	_getCommentBottomGap(working) {
+		return Math.max(2, Math.round(working.globalSpacing / 10));
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Detect a no-op activation/deactivation blank line with no visible payload.
+	 *
+	 * @param {*} flowTransitions Parameter derived from flowTransitions.
+	 * @param {*} width Parameter derived from width.
+	 * @param {*} height Parameter derived from height.
+	 * @param {*} xoffset Parameter derived from xoffset.
+	 * @returns {*} Result value.
+	 * @example
+	 * const isNoOp = instance._isNoOpFlowTransition(flowTransitions, width, height, xoffset);
+	 */
+	_isNoOpFlowTransition(flowTransitions, width, height, xoffset) {
+		return (
+			flowTransitions &&
+			Array.isArray(flowTransitions.transitions) &&
+			flowTransitions.transitions.length === 0 &&
+			(this._normaliseAliasArray(this._line.activate).length > 0 || this._normaliseAliasArray(this._line.deactivate).length > 0) &&
+			width === 0 &&
+			height === 0 &&
+			xoffset === 0
+		);
 	}
 
 	///////////////////////////////////////////////////////////////////////////////

@@ -22,6 +22,19 @@ function readFixture(fileName) {
 
 //////////////////////////////////////////////////////////////////////////////
 /**
+ * Return the absolute path to a basic-messages-and-arrows fixture file.
+ *
+ * @param {string} fileName Fixture file name.
+ * @returns {string} Absolute fixture path.
+ * @example
+ * const inputPath = getFixturePath("input.mmd");
+ */
+function getFixturePath(fileName) {
+	return path.join(__dirname, "02-basic-messages-and-arrows", fileName);
+}
+
+//////////////////////////////////////////////////////////////////////////////
+/**
  * Create a temporary directory for a CLI integration run.
  *
  * @returns {string} Temporary directory path.
@@ -37,18 +50,16 @@ describe("Mermaid feature slice 2: basic messages and arrow variants", () => {
 		const source = readFixture("input.mmd");
 		const expectedYaml = readFixture("expected.sequencer.yaml");
 
-		const transformed = MermaidSequenceTransformer.transform(source, { sourceName: "input.mmd" });
+		const transformed = MermaidSequenceTransformer.transform(source, { sourceName: getFixturePath("input.mmd") });
 
 		expect(yaml.safeDump(transformed)).toBe(expectedYaml);
 	});
 
 	test("renders SVG from Mermaid message input and writes the transformed sequencer YAML sidecar", () => {
 		const tempDir = createTempDir();
-		const inputFile = path.join(tempDir, "input.mmd");
+		const inputFile = getFixturePath("input.mmd");
 		const expectedYaml = readFixture("expected.sequencer.yaml");
 		const expectedSvg = readFixture("expected.svg");
-
-		fs.writeFileSync(inputFile, readFixture("input.mmd"));
 
 		execFileSync("node", ["sequencer.js", "--mermaid", "-i", inputFile, "-o", "-f", "-t", tempDir], {
 			cwd: path.join(__dirname, "..", ".."),

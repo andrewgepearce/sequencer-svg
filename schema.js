@@ -520,6 +520,35 @@ let schema = {
 		},
 		required: ["name", "alias"]
 	},
+	document: {
+		$schema: "http://json-schema.org/draft-07/schema#",
+		$id: base + "document",
+		title: "Document Schema",
+		decription: "Definition of a Sequencer document",
+		type: "object",
+		properties: {
+			title: {
+				type: "string",
+				minLength: 1
+			},
+			description: _multiLineText,
+			version: {
+				type: "string",
+				minLength: 1
+			},
+			actors: {
+				type: "array",
+				items: {
+					$ref: base + "actor"
+				}
+			},
+			lines: {
+				type: "array",
+				items: _line
+			}
+		},
+		required: ["title", "version", "actors", "lines"]
+	},
 	call: {
 		$schema: "http://json-schema.org/draft-07/schema#",
 		$id: base + "actor",
@@ -608,6 +637,22 @@ let schema = {
 					minLength: 1
 				},
 				minItems: 2
+			},
+			activate: {
+				type: "array",
+				description: "The aliases of actors whose flow should start on the blank line",
+				items: {
+					type: "string",
+					minLength: 1
+				}
+			},
+			deactivate: {
+				type: "array",
+				description: "The aliases of actors whose flow should end on the blank line",
+				items: {
+					type: "string",
+					minLength: 1
+				}
 			},
 			comment: _comment
 		},

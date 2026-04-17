@@ -31,9 +31,10 @@ class MermaidTransformError extends Error {
 //////////////////////////////////////////////////////////////////////////////
 /**
  * Transform Mermaid sequence-diagram source into a sequencer-svg document.
- * Slice 3 supports explicit `participant` and `actor` declarations, basic
- * message lines, standard unidirectional arrow variants, and Mermaid notes
- * mapped onto sequencer comments hosted by synthetic blank lines.
+ * Slice 5 supports explicit `participant` and `actor` declarations, Mermaid
+ * accessibility metadata, basic message lines, standard unidirectional arrow
+ * variants, Mermaid notes mapped onto sequencer comments hosted by synthetic
+ * blank lines, and basic Mermaid activation/deactivation control.
  *
  * @example
  * const document = MermaidSequenceTransformer.transform(source, { sourceName: "sample.mmd" });
@@ -45,7 +46,7 @@ class MermaidSequenceTransformer {
 	 *
 	 * @param {string} source Mermaid source text.
 	 * @param {{ sourceName?: string }} [options={}] Optional transform options.
-	 * @returns {{ title: string, version: string, actors: object[], lines: object[] }} Transformed sequencer document.
+	 * @returns {{ title: string, description?: string|string[], version: string, actors: object[], lines: object[] }} Transformed sequencer document.
 	 * @throws {MermaidTransformError} If the Mermaid source uses unsupported syntax for this slice.
 	 * @example
 	 * const document = MermaidSequenceTransformer.transform("sequenceDiagram\nparticipant A", {});
@@ -65,10 +66,13 @@ class MermaidSequenceTransformer {
 			actors: [],
 			lines: [],
 		};
+		const activationState = Object.create(null);
 
 		const lines = source.replace(/^\uFEFF/, "").split(/\r?\n/);
 		let seenSequenceDiagram = false;
 		let insideDirective = false;
+		let insideAccDescr = false;
+		let accDescrLines = [];
 
 		for (let index = 0; index < lines.length; index++) {
 			const sourceLine = lines[index];
@@ -96,6 +100,24 @@ class MermaidSequenceTransformer {
 				continue;
 			}
 
+			if (insideAccDescr) {
+				if (trimmed === "}") {
+					document.description = this._normaliseAccDescription(accDescrLines);
+					if (
+						(typeof document.description === "string" && document.description.length === 0) ||
+						(Array.isArray(document.description) && document.description.length === 0)
+					) {
+						throw new MermaidTransformError("Mermaid accDescr cannot be empty", lineNumber, sourceLine);
+					}
+					insideAccDescr = false;
+					accDescrLines = [];
+					continue;
+				}
+
+				accDescrLines.push(sourceLine.trim());
+				continue;
+			}
+
 			////////////////////////////////////////////////////////////////////////////
 			// Require the Mermaid sequence-diagram header before feature lines.
 			if (!seenSequenceDiagram) {
@@ -108,6 +130,25 @@ class MermaidSequenceTransformer {
 			}
 
 			////////////////////////////////////////////////////////////////////////////
+			// Map Mermaid accessibility metadata onto visible sequencer cover text
+			// while also keeping it available for SVG root metadata emission later.
+			if (this._isAccessibilityTitleLine(trimmed)) {
+				document.title = this._parseAccessibilityTitle(trimmed, lineNumber, sourceLine);
+				continue;
+			}
+
+			if (this._isAccessibilityDescriptionLine(trimmed)) {
+				document.description = this._parseAccessibilityDescription(trimmed, lineNumber, sourceLine);
+				continue;
+			}
+
+			if (this._startsAccessibilityDescriptionBlock(trimmed)) {
+				insideAccDescr = true;
+				accDescrLines = [];
+				continue;
+			}
+
+			////////////////////////////////////////////////////////////////////////////
 			// Handle explicit participant and actor declarations in source order.
 			if (this._isParticipantDeclaration(trimmed)) {
 				const actor = this._parseParticipantDeclaration(trimmed, lineNumber, sourceLine);
@@ -116,10 +157,20 @@ class MermaidSequenceTransformer {
 			}
 
 			////////////////////////////////////////////////////////////////////////////
+			// Handle explicit Mermaid activation control by mapping it onto synthetic
+			// blank lines that manipulate sequencer flow state without inventing a new
+			// top-level sequencer line type.
+			if (this._isActivationDirective(trimmed)) {
+				const transformedLine = this._parseActivationDirective(trimmed, document.actors, activationState, lineNumber, sourceLine);
+				document.lines.push(transformedLine);
+				continue;
+			}
+
+			////////////////////////////////////////////////////////////////////////////
 			// Handle Mermaid message lines by mapping them onto sequencer call lines
 			// with per-line arrow and dash configuration.
 			if (this._looksLikeMessageLine(trimmed)) {
-				const transformedLine = this._parseMessageLine(trimmed, document.actors, lineNumber, sourceLine);
+				const transformedLine = this._parseMessageLine(trimmed, document.actors, activationState, lineNumber, sourceLine);
 				document.lines.push(transformedLine);
 				continue;
 			}
@@ -144,7 +195,114 @@ class MermaidSequenceTransformer {
 			throw new MermaidTransformError("Expected Mermaid 'sequenceDiagram' header");
 		}
 
+		if (insideAccDescr) {
+			throw new MermaidTransformError("Unterminated Mermaid accDescr block");
+		}
+
 		return document;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Detect whether a trimmed Mermaid line sets the diagram accessibility title.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @returns {boolean} True when the line is an `accTitle:` declaration.
+	 * @example
+	 * const matched = MermaidSequenceTransformer._isAccessibilityTitleLine("accTitle: API flow");
+	 */
+	static _isAccessibilityTitleLine(trimmed) {
+		return /^accTitle\s*:/i.test(trimmed);
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Detect whether a trimmed Mermaid line sets a single-line accessibility description.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @returns {boolean} True when the line is an `accDescr:` declaration.
+	 * @example
+	 * const matched = MermaidSequenceTransformer._isAccessibilityDescriptionLine("accDescr: Request flow");
+	 */
+	static _isAccessibilityDescriptionLine(trimmed) {
+		return /^accDescr\s*:/i.test(trimmed);
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Detect whether a trimmed Mermaid line starts a multiline accessibility description block.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @returns {boolean} True when the line starts `accDescr {`.
+	 * @example
+	 * const matched = MermaidSequenceTransformer._startsAccessibilityDescriptionBlock("accDescr {");
+	 */
+	static _startsAccessibilityDescriptionBlock(trimmed) {
+		return /^accDescr\s*\{$/i.test(trimmed);
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a Mermaid accessibility title line into a visible sequencer title.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {string} Normalised title text.
+	 * @throws {MermaidTransformError} If the title is empty.
+	 * @example
+	 * const title = MermaidSequenceTransformer._parseAccessibilityTitle("accTitle: API flow", 2, "accTitle: API flow");
+	 */
+	static _parseAccessibilityTitle(trimmed, lineNumber, sourceLine) {
+		const title = this._cleanMetadataValue(trimmed.replace(/^accTitle\s*:/i, ""));
+		if (title.length === 0) {
+			throw new MermaidTransformError("Mermaid accTitle cannot be empty", lineNumber, sourceLine);
+		}
+
+		return title;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a single-line Mermaid accessibility description.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {string|string[]} Normalised description payload.
+	 * @throws {MermaidTransformError} If the description is empty.
+	 * @example
+	 * const description = MermaidSequenceTransformer._parseAccessibilityDescription("accDescr: First<br/>Second", 3, "accDescr: First<br/>Second");
+	 */
+	static _parseAccessibilityDescription(trimmed, lineNumber, sourceLine) {
+		const description = this._parseMetadataPayload(trimmed.replace(/^accDescr\s*:/i, ""));
+		if ((typeof description === "string" && description.length === 0) || (Array.isArray(description) && description.length === 0)) {
+			throw new MermaidTransformError("Mermaid accDescr cannot be empty", lineNumber, sourceLine);
+		}
+
+		return description;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Normalise a collected multiline Mermaid accessibility description block.
+	 *
+	 * @param {string[]} lines Raw block lines.
+	 * @returns {string|string[]} Description text payload.
+	 * @example
+	 * const description = MermaidSequenceTransformer._normaliseAccDescription(["Line 1", "Line 2"]);
+	 */
+	static _normaliseAccDescription(lines) {
+		const normalisedLines = lines.map((line) => line.trim());
+		if (normalisedLines.length === 0) {
+			return "";
+		}
+
+		if (normalisedLines.length === 1) {
+			return normalisedLines[0];
+		}
+
+		return normalisedLines;
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -262,14 +420,15 @@ class MermaidSequenceTransformer {
 	 *
 	 * @param {string} trimmed Trimmed Mermaid source line.
 	 * @param {object[]} actors Current actor array.
+	 * @param {object} activationState Current Mermaid activation counters by alias.
 	 * @param {number} lineNumber 1-based source line number.
 	 * @param {string} sourceLine Original Mermaid source line.
 	 * @returns {{ type: string, from: string, to: string, text: string, lineDash?: number[], arrow?: string, async?: boolean }} Sequencer line.
 	 * @throws {MermaidTransformError} If the message line is malformed or unsupported.
 	 * @example
-	 * const line = MermaidSequenceTransformer._parseMessageLine("A->>B: Ping", [], 4, "A->>B: Ping");
+	 * const line = MermaidSequenceTransformer._parseMessageLine("A->>B: Ping", [], {}, 4, "A->>B: Ping");
 	 */
-	static _parseMessageLine(trimmed, actors, lineNumber, sourceLine) {
+	static _parseMessageLine(trimmed, actors, activationState, lineNumber, sourceLine) {
 		const supportedArrowTokens = ["-->>", "->>", "--)", "-)", "--x", "-x", "-->", "->"];
 		const unsupportedArrowTokens = ["<<-->>", "<<->>", "--|\\", "-|\\", "--|/", "-|/", "/|--", "/|-", "\\\\--", "\\\\-", "--\\\\", "-\\\\", "--//", "-//", "//--", "//-", "()"];
 		const arrowTokens = unsupportedArrowTokens.concat(supportedArrowTokens).sort((left, right) => right.length - left.length);
@@ -292,10 +451,12 @@ class MermaidSequenceTransformer {
 		const leftSide = trimmed.slice(0, matchedArrowIndex).trim();
 		const rightSide = trimmed.slice(matchedArrowIndex + matchedArrowToken.length).trim();
 		const colonIndex = rightSide.indexOf(":");
-		const toAlias = (colonIndex === -1 ? rightSide : rightSide.slice(0, colonIndex)).trim();
+		const toToken = (colonIndex === -1 ? rightSide : rightSide.slice(0, colonIndex)).trim();
 		const messageText = colonIndex === -1 ? "" : rightSide.slice(colonIndex + 1).trim();
 		const fromAlias = leftSide;
 		const arrowToken = matchedArrowToken;
+		const activationShortcut = this._parseActivationShortcut(toToken);
+		const toAlias = activationShortcut.alias;
 
 		if (!/^[A-Za-z0-9_][-A-Za-z0-9_]*$/.test(fromAlias) || !/^[A-Za-z0-9_][-A-Za-z0-9_]*$/.test(toAlias)) {
 			throw new MermaidTransformError("Unsupported Mermaid message actor syntax", lineNumber, sourceLine);
@@ -318,6 +479,16 @@ class MermaidSequenceTransformer {
 			to: toAlias,
 			text: this._parseTextPayload(messageText),
 		};
+		const postSourceActivationCount = this._getActivationCount(activationState, fromAlias);
+		const postTargetActivationCount = this._applyActivationShortcut(activationState, toAlias, activationShortcut.operation);
+
+		if (postSourceActivationCount === 0) {
+			line.breakFromFlow = true;
+		}
+
+		if (postTargetActivationCount === 0) {
+			line.breakToFlow = true;
+		}
 
 		if (arrowToken.startsWith("--")) {
 			line.lineDash = [4, 2];
@@ -335,6 +506,60 @@ class MermaidSequenceTransformer {
 		}
 
 		return line;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Detect whether a trimmed Mermaid line is an explicit activation directive.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @returns {boolean} True when the line is an activate/deactivate directive.
+	 * @example
+	 * const matched = MermaidSequenceTransformer._isActivationDirective("activate API");
+	 */
+	static _isActivationDirective(trimmed) {
+		return /^(activate|deactivate)\s+/i.test(trimmed);
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a Mermaid activation directive into a synthetic blank line.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @param {object[]} actors Current actor array.
+	 * @param {object} activationState Current Mermaid activation counters by alias.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {{ type: string, height: number, activate?: string[], deactivate?: string[] }} Sequencer line.
+	 * @throws {MermaidTransformError} If the directive is malformed.
+	 * @example
+	 * const line = MermaidSequenceTransformer._parseActivationDirective("activate DB", [], {}, 7, "activate DB");
+	 */
+	static _parseActivationDirective(trimmed, actors, activationState, lineNumber, sourceLine) {
+		const match = trimmed.match(/^(activate|deactivate)\s+([A-Za-z0-9_][-A-Za-z0-9_]*)$/i);
+		if (!match) {
+			throw new MermaidTransformError("Unsupported Mermaid activation syntax", lineNumber, sourceLine);
+		}
+
+		const operation = match[1].toLowerCase();
+		const alias = match[2];
+		this._ensureImplicitActor(actors, alias);
+
+		if (operation === "activate") {
+			this._setActivationCount(activationState, alias, this._getActivationCount(activationState, alias) + 1);
+			return {
+				type: "blank",
+				height: 0,
+				activate: [alias],
+			};
+		}
+
+		this._setActivationCount(activationState, alias, Math.max(this._getActivationCount(activationState, alias) - 1, 0));
+		return {
+			type: "blank",
+			height: 0,
+			deactivate: [alias],
+		};
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -432,6 +657,88 @@ class MermaidSequenceTransformer {
 
 	////////////////////////////////////////////////////////////////////////////
 	/**
+	 * Parse an optional Mermaid activation shortcut attached to a message target.
+	 *
+	 * @param {string} token Raw target token extracted from a Mermaid message.
+	 * @returns {{ alias: string, operation: string|null }} Target alias and shortcut operation.
+	 * @throws {MermaidTransformError} If the target token is malformed.
+	 * @example
+	 * const parsed = MermaidSequenceTransformer._parseActivationShortcut("+Service");
+	 */
+	static _parseActivationShortcut(token) {
+		const trimmed = String(token).trim();
+		const match = trimmed.match(/^([+-]?)([A-Za-z0-9_][-A-Za-z0-9_]*)$/);
+		if (!match) {
+			throw new MermaidTransformError("Unsupported Mermaid message actor syntax");
+		}
+
+		return {
+			alias: match[2],
+			operation: match[1] === "" ? null : match[1],
+		};
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return the current activation count for an actor alias.
+	 *
+	 * @param {object} activationState Current Mermaid activation counters by alias.
+	 * @param {string} alias Actor alias.
+	 * @returns {number} Activation depth.
+	 * @example
+	 * const count = MermaidSequenceTransformer._getActivationCount({}, "API");
+	 */
+	static _getActivationCount(activationState, alias) {
+		return Number.isInteger(activationState[alias]) && activationState[alias] > 0 ? activationState[alias] : 0;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update the stored activation count for an actor alias.
+	 *
+	 * @param {object} activationState Current Mermaid activation counters by alias.
+	 * @param {string} alias Actor alias.
+	 * @param {number} count Next activation depth.
+	 * @returns {void} Nothing.
+	 * @example
+	 * MermaidSequenceTransformer._setActivationCount({}, "API", 1);
+	 */
+	static _setActivationCount(activationState, alias, count) {
+		if (!Number.isInteger(count) || count <= 0) {
+			delete activationState[alias];
+			return;
+		}
+
+		activationState[alias] = count;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Apply a Mermaid activation shortcut to the target actor state.
+	 *
+	 * @param {object} activationState Current Mermaid activation counters by alias.
+	 * @param {string} alias Target actor alias.
+	 * @param {string|null} operation Mermaid shortcut operation.
+	 * @returns {number} Post-line activation depth for the target actor.
+	 * @example
+	 * const count = MermaidSequenceTransformer._applyActivationShortcut({}, "API", "+");
+	 */
+	static _applyActivationShortcut(activationState, alias, operation) {
+		const currentCount = this._getActivationCount(activationState, alias);
+		let nextCount = currentCount;
+
+		if (operation === "+") {
+			nextCount = currentCount + 1;
+		} else if (operation === "-") {
+			nextCount = Math.max(currentCount - 1, 0);
+		}
+
+		this._setActivationCount(activationState, alias, nextCount);
+		return nextCount;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
 	 * Convert Mermaid inline line breaks into sequencer text arrays when needed.
 	 *
 	 * @param {string} value Raw Mermaid text payload.
@@ -446,6 +753,36 @@ class MermaidSequenceTransformer {
 			.map((part) => part.trim());
 
 		return parts.length === 1 ? parts[0] : parts;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Convert Mermaid metadata text into sequencer text arrays when needed.
+	 *
+	 * @param {string} value Raw Mermaid metadata payload.
+	 * @returns {string|string[]} Sequencer text payload.
+	 * @example
+	 * const payload = MermaidSequenceTransformer._parseMetadataPayload("'Line 1<br/>Line 2'");
+	 */
+	static _parseMetadataPayload(value) {
+		const parts = this._cleanMetadataValue(value)
+			.split(/<br\s*\/?>/i)
+			.map((part) => part.trim());
+
+		return parts.length === 1 ? parts[0] : parts;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Trim metadata text and remove matching outer quotes when present.
+	 *
+	 * @param {string} value Raw metadata text.
+	 * @returns {string} Cleaned text.
+	 * @example
+	 * const text = MermaidSequenceTransformer._cleanMetadataValue("'Example text'");
+	 */
+	static _cleanMetadataValue(value) {
+		return this._cleanParticipantName(String(value).trim());
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -468,7 +805,7 @@ class MermaidSequenceTransformer {
 			return new MermaidTransformError("Mermaid links are not supported yet", lineNumber, sourceLine);
 		}
 
-		if (/^(alt|opt|loop|par|critical|break|rect|box|activate|deactivate|create|destroy|end)\b/i.test(trimmed)) {
+		if (/^(alt|opt|loop|par|critical|break|rect|box|create|destroy|end)\b/i.test(trimmed)) {
 			return new MermaidTransformError(`Mermaid feature '${trimmed.split(/\s+/)[0]}' is not supported yet`, lineNumber, sourceLine);
 		}
 
@@ -512,6 +849,7 @@ class MermaidSequenceTransformer {
 			.map((part) => part.charAt(0).toUpperCase() + part.slice(1))
 			.join(" ");
 	}
+
 }
 
 module.exports = {

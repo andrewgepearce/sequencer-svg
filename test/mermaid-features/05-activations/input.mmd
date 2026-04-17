@@ -1,0 +1,25 @@
+sequenceDiagram
+accTitle: Mermaid activations
+accDescr {
+Demonstrates explicit Mermaid activation control and activation shortcuts.
+From the project root, regenerate this Mermaid transform and SVG with:
+node sequencer.js --mermaid -i test/mermaid-features/05-activations/input.mmd -o -f -t test/mermaid-features/05-activations
+}
+participant Caller
+participant Service
+participant DB
+activate DB
+deactivate DB
+Note right of Service: Note beside explicit activate [Mermaid: Note right of Service: Note beside explicit activate]
+activate Service
+
+Caller->>Service: Service already active [Mermaid context: activate Service]
+deactivate Service
+Note over Service: Note after explicit deactivate [Mermaid: Note over Service: Note after explicit deactivate]
+Caller->>+Service: Activate target via suffix [Mermaid: Caller->>+Service]
+Caller->>-Service: Deactivate target via suffix [Mermaid: Caller->>-Service]
+Note over DB: Note before explicit DB activation [Mermaid: Note over DB: Note before explicit DB activation]
+activate DB
+Service->>DB: DB remains active [Mermaid context: activate DB]
+Note left of DB: Note before explicit DB deactivation [Mermaid: Note left of DB: Note before explicit DB deactivation]
+deactivate DB

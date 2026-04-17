@@ -11,6 +11,9 @@
 			"type": "string",
 			"minLength": 1
 		},
+		"description": {
+			"$ref": "#/$defs/stringOrStringArray"
+		},
 		"version": {
 			"type": "string",
 			"pattern": "^[0-9]+(\\.[0-9]+)*$"
@@ -371,6 +374,20 @@
 				"actors": {
 					"type": "array",
 					"minItems": 2,
+					"items": {
+						"type": "string",
+						"minLength": 1
+					}
+				},
+				"activate": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"minLength": 1
+					}
+				},
+				"deactivate": {
+					"type": "array",
 					"items": {
 						"type": "string",
 						"minLength": 1

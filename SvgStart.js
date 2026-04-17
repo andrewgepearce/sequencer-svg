@@ -125,7 +125,7 @@ module.exports = class SvgStart {
 
 		const finalWidth = Math.ceil(this.working.canvasWidth) + MARGIN;
 		const finalHeight = Math.ceil(this.working.canvasHeight) + MARGIN;
-		return ctx.toBuffer(finalWidth, finalHeight);
+		return ctx.toBuffer(finalWidth, finalHeight, this._getSvgMetadata());
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -370,5 +370,71 @@ module.exports = class SvgStart {
 		const errorTop = xy && Utilities.isNumber(xy.y) ? xy.y : starty;
 		const offendingObject = error.offendingObject != null ? error.offendingObject : this.working.postdata;
 		return ErrorLine.draw(this.working, ctx, errorTop, error.reason || error.message, offendingObject, false);
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Build root SVG metadata from the current sequencer title and description.
+	 *
+	 * @returns {{ title?: string, description?: string }} SVG metadata payload.
+	 * @example
+	 * const metadata = instance._getSvgMetadata();
+	 */
+	_getSvgMetadata() {
+		const metadata = {};
+		const title = this._getMetadataText(this.working.postdata.title);
+		const description = this._getMetadataText(this.working.postdata.description);
+
+		if (title.length > 0) {
+			metadata.title = title;
+		}
+
+		if (description.length > 0) {
+			metadata.description = description;
+		}
+
+		return metadata;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Convert a sequencer text payload into plain newline-separated text.
+	 *
+	 * @param {*} value Sequencer text payload.
+	 * @returns {string} Plain text string for SVG metadata.
+	 * @example
+	 * const text = instance._getMetadataText(["Line 1", "Line 2"]);
+	 */
+	_getMetadataText(value) {
+		return this._getMetadataLines(value).join("\n").trim();
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Extract plain text lines from a sequencer title or description payload.
+	 *
+	 * @param {*} value Sequencer text payload.
+	 * @returns {string[]} Plain text lines.
+	 * @example
+	 * const lines = instance._getMetadataLines({ text: ["Line 1", "Line 2"] });
+	 */
+	_getMetadataLines(value) {
+		if (Utilities.isObject(value) && Utilities.isString(value.text)) {
+			return [value.text];
+		}
+
+		if (Utilities.isString(value)) {
+			return [value];
+		}
+
+		if (Utilities.isObject(value) && Utilities.isAllStrings(value)) {
+			return value.map((line) => line.valueOf());
+		}
+
+		if (Utilities.isObject(value) && Utilities.isAllStrings(value.text)) {
+			return value.text.map((line) => line.valueOf());
+		}
+
+		return [];
 	}
 };

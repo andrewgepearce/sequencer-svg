@@ -609,17 +609,26 @@ class SvgContext {
 	 *
 	 * @param {*} width Parameter derived from width.
 	 * @param {*} height Parameter derived from height.
+	 * @param {{ title?: string, description?: string }} [metadata] Optional SVG root metadata.
 	 * @returns {*} Result value.
 	 * @example
-	 * instance.toSVG(width, height);
+	 * instance.toSVG(width, height, { title: "Example" });
 	 */
-	toSVG(width, height) {
+	toSVG(width, height, metadata) {
 		const svg = create({ version: "1.0" }).ele("svg", {
 			xmlns: "http://www.w3.org/2000/svg",
 			width: Math.ceil(width),
 			height: Math.ceil(height),
 			viewBox: `0 0 ${Math.ceil(width)} ${Math.ceil(height)}`,
 		});
+
+		if (metadata && typeof metadata.title === "string" && metadata.title.length > 0) {
+			svg.ele("title").txt(metadata.title).up();
+		}
+
+		if (metadata && typeof metadata.description === "string" && metadata.description.length > 0) {
+			svg.ele("desc").txt(metadata.description).up();
+		}
 
 		//////////////////////////////////////////////////////////////////////////////
 		// White background
@@ -648,12 +657,13 @@ class SvgContext {
 	 *
 	 * @param {*} width Parameter derived from width.
 	 * @param {*} height Parameter derived from height.
+	 * @param {{ title?: string, description?: string }} [metadata] Optional SVG root metadata.
 	 * @returns {*} Result value.
 	 * @example
-	 * instance.toBuffer(width, height);
+	 * instance.toBuffer(width, height, { title: "Example" });
 	 */
-	toBuffer(width, height) {
-		return Buffer.from(this.toSVG(width, height), "utf-8");
+	toBuffer(width, height, metadata) {
+		return Buffer.from(this.toSVG(width, height, metadata), "utf-8");
 	}
 }
 
