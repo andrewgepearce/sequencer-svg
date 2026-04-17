@@ -1,0 +1,358 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "urn:sequencer-svg:schema:sequencer",
+	"title": "Sequencer Document Schema",
+	"description": "Canonical JSON Schema for sequencer YAML and JSON documents. This published schema starts with the Mermaid transform subset and expands incrementally.",
+	"type": "object",
+	"additionalProperties": false,
+	"required": ["title", "version", "actors", "lines"],
+	"properties": {
+		"title": {
+			"type": "string",
+			"minLength": 1
+		},
+		"version": {
+			"type": "string",
+			"pattern": "^[0-9]+(\\.[0-9]+)*$"
+		},
+		"actors": {
+			"type": "array",
+			"items": {
+				"$ref": "#/$defs/actor"
+			}
+		},
+		"lines": {
+			"type": "array",
+			"items": {
+				"$ref": "#/$defs/line"
+			}
+		}
+	},
+	"$defs": {
+		"align": {
+			"type": "string",
+			"enum": ["center", "left"]
+		},
+		"arrow": {
+			"type": "string",
+			"enum": ["fill", "open", "cross", "empty", "none"]
+		},
+		"colour": {
+			"type": "string",
+			"minLength": 1
+		},
+		"dashArray": {
+			"type": "array",
+			"items": {
+				"type": "number",
+				"minimum": 0
+			}
+		},
+		"stringOrStringArray": {
+			"oneOf": [
+				{
+					"type": "string"
+				},
+				{
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			]
+		},
+		"styledTextBlock": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["text"],
+			"properties": {
+				"fontFamily": {
+					"type": "string",
+					"minLength": 1
+				},
+				"fontSizePx": {
+					"type": "number",
+					"minimum": 1
+				},
+				"padding": {
+					"type": "number",
+					"minimum": 0
+				},
+				"spacing": {
+					"type": "number",
+					"minimum": 0
+				},
+				"align": {
+					"$ref": "#/$defs/align"
+				},
+				"fgColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"bgColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"borderColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"borderWidth": {
+					"type": "number",
+					"minimum": 0
+				},
+				"borderDash": {
+					"$ref": "#/$defs/dashArray"
+				},
+				"lineWidth": {
+					"type": "number",
+					"minimum": 0
+				},
+				"lineColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"lineDash": {
+					"$ref": "#/$defs/dashArray"
+				},
+				"radius": {
+					"type": "number",
+					"minimum": 0
+				},
+				"foldSizePx": {
+					"type": "number",
+					"minimum": 0
+				},
+				"text": {
+					"$ref": "#/$defs/stringOrStringArray"
+				}
+			}
+		},
+		"comment": {
+			"oneOf": [
+				{
+					"$ref": "#/$defs/stringOrStringArray"
+				},
+				{
+					"$ref": "#/$defs/styledTextBlock"
+				}
+			]
+		},
+		"actor": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["name", "alias"],
+			"properties": {
+				"name": {
+					"$ref": "#/$defs/stringOrStringArray"
+				},
+				"alias": {
+					"type": "string",
+					"minLength": 1
+				},
+				"actorType": {
+					"type": "string",
+					"enum": ["participant", "actor"]
+				},
+				"gapToNext": {
+					"type": "number",
+					"minimum": 0
+				},
+				"radius": {
+					"type": "number",
+					"minimum": 0
+				},
+				"flowWidth": {
+					"type": "number",
+					"minimum": 1
+				},
+				"timelineWidth": {
+					"type": "number",
+					"minimum": 1
+				},
+				"timelineDash": {
+					"$ref": "#/$defs/dashArray"
+				},
+				"fontFamily": {
+					"type": "string",
+					"minLength": 1
+				},
+				"fontSizePx": {
+					"type": "number",
+					"minimum": 1
+				},
+				"padding": {
+					"type": "number",
+					"minimum": 0
+				},
+				"spacing": {
+					"type": "number",
+					"minimum": 0
+				},
+				"align": {
+					"$ref": "#/$defs/align"
+				},
+				"fgColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"bgColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"borderColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"borderWidth": {
+					"type": "number",
+					"minimum": 0
+				},
+				"borderDash": {
+					"$ref": "#/$defs/dashArray"
+				}
+			}
+		},
+		"call": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["type", "from", "to", "text"],
+			"properties": {
+				"type": {
+					"const": "call"
+				},
+				"from": {
+					"type": "string",
+					"minLength": 1
+				},
+				"to": {
+					"type": "string",
+					"minLength": 1
+				},
+				"text": {
+					"$ref": "#/$defs/stringOrStringArray"
+				},
+				"fontFamily": {
+					"type": "string",
+					"minLength": 1
+				},
+				"fontSizePx": {
+					"type": "number",
+					"minimum": 1
+				},
+				"padding": {
+					"type": "number",
+					"minimum": 0
+				},
+				"spacing": {
+					"type": "number",
+					"minimum": 0
+				},
+				"align": {
+					"$ref": "#/$defs/align"
+				},
+				"fgColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"bgColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"borderColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"borderWidth": {
+					"type": "number",
+					"minimum": 0
+				},
+				"borderDash": {
+					"$ref": "#/$defs/dashArray"
+				},
+				"lineWidth": {
+					"type": "number",
+					"minimum": 0
+				},
+				"lineColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"lineDash": {
+					"$ref": "#/$defs/dashArray"
+				},
+				"radius": {
+					"type": "number",
+					"minimum": 0
+				},
+				"arrowSizeY": {
+					"type": "number",
+					"minimum": 0
+				},
+				"arrow": {
+					"$ref": "#/$defs/arrow"
+				},
+				"breakFromFlow": {
+					"type": "boolean"
+				},
+				"breakToFlow": {
+					"type": "boolean"
+				},
+				"async": {
+					"type": "boolean"
+				},
+				"comment": {
+					"$ref": "#/$defs/comment"
+				}
+			}
+		},
+		"fragmentLabel": {
+			"oneOf": [
+				{
+					"type": "string"
+				},
+				{
+					"$ref": "#/$defs/styledTextBlock"
+				}
+			]
+		},
+		"fragment": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["type", "fragmentType", "title", "condition", "lines"],
+			"properties": {
+				"type": {
+					"const": "fragment"
+				},
+				"fragmentType": {
+					"type": "string",
+					"minLength": 1
+				},
+				"title": {
+					"$ref": "#/$defs/fragmentLabel"
+				},
+				"condition": {
+					"$ref": "#/$defs/fragmentLabel"
+				},
+				"bgColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"borderColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"borderDash": {
+					"$ref": "#/$defs/dashArray"
+				},
+				"borderWidth": {
+					"type": "number",
+					"minimum": 0
+				},
+				"lines": {
+					"type": "array",
+					"items": {
+						"$ref": "#/$defs/line"
+					}
+				}
+			}
+		},
+		"line": {
+			"oneOf": [
+				{
+					"$ref": "#/$defs/call"
+				},
+				{
+					"$ref": "#/$defs/fragment"
+				}
+			]
+		}
+	}
+}
