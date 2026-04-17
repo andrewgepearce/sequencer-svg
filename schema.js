@@ -51,7 +51,7 @@ let _leftAlign = {
 	default: "left"
 };
 let _line = {
-	anyOf: [{$ref: base + "call"}, {$ref: base + "blank"}, {$ref: base + "fragment"}]
+	anyOf: [{$ref: base + "call"}, {$ref: base + "blank"}, {$ref: base + "conditionLine"}, {$ref: base + "fragment"}]
 };
 ////////////////////////////////////////////////////////////////////////////////
 /**
@@ -664,6 +664,46 @@ let schema = {
 		title: "Comment Schema",
 		decription: "Definition of an comment JSON object withing a Sequencer document",
 		oneOf: _comment.oneOf
+	},
+	conditionLine: {
+		$schema: "http://json-schema.org/draft-07/schema#",
+		$id: base + "conditionLine",
+		title: "Condition Line Schema",
+		decription: "Definition of a fragment condition line JSON object within a Sequencer document",
+		type: "object",
+		properties: {
+			type: {
+				type: "string",
+				description: 'The type of the object - fixed to "condition"',
+				const: "condition"
+			},
+			condition: {
+				oneOf: [
+					{
+						type: "object",
+						properties: {
+							fontFamily: _fontFamily("sans-serif"),
+							fontSizePx: _fontSizePx(14),
+							bgColour: _bgColour("rgba(200,200,0,0)"),
+							fgColour: _fgColour("rgb(0,0,0)"),
+							padding: _padding(10),
+							spacing: _spacing(1),
+							align: _leftAlign,
+							borderColour: _borderColour("rgba(255,255,255,0)"),
+							borderWidth: _borderWidth(0),
+							borderDash: _borderDash([]),
+							text: _stringEmptyByDefault
+						}
+					},
+					_stringEmptyByDefault
+				]
+			},
+			comment: _comment,
+			lineWidth: _lineWidth(1),
+			lineColour: _lineColour("rgb(0,0,0)"),
+			lineDash: _lineDash([4, 3])
+		},
+		required: ["type", "condition"]
 	},
 	fragment: {
 		$schema: "http://json-schema.org/draft-07/schema#",

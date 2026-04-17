@@ -308,6 +308,32 @@
 				}
 			]
 		},
+		"conditionLine": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["type", "condition"],
+			"properties": {
+				"type": {
+					"const": "condition"
+				},
+				"condition": {
+					"$ref": "#/$defs/fragmentLabel"
+				},
+				"comment": {
+					"$ref": "#/$defs/comment"
+				},
+				"lineWidth": {
+					"type": "number",
+					"minimum": 0
+				},
+				"lineColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"lineDash": {
+					"$ref": "#/$defs/dashArray"
+				}
+			}
+		},
 		"fragment": {
 			"type": "object",
 			"additionalProperties": false,
@@ -405,6 +431,9 @@
 				},
 				{
 					"$ref": "#/$defs/blank"
+				},
+				{
+					"$ref": "#/$defs/conditionLine"
 				},
 				{
 					"$ref": "#/$defs/fragment"

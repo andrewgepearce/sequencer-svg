@@ -31,10 +31,11 @@ class MermaidTransformError extends Error {
 //////////////////////////////////////////////////////////////////////////////
 /**
  * Transform Mermaid sequence-diagram source into a sequencer-svg document.
- * Slice 5 supports explicit `participant` and `actor` declarations, Mermaid
+ * Slice 6 supports explicit `participant` and `actor` declarations, Mermaid
  * accessibility metadata, basic message lines, standard unidirectional arrow
  * variants, Mermaid notes mapped onto sequencer comments hosted by synthetic
- * blank lines, and basic Mermaid activation/deactivation control.
+ * blank lines, Mermaid activation/deactivation control, and Mermaid `loop`,
+ * `alt`, `opt`, `else`, and `end` fragments mapped onto sequencer fragments.
  *
  * @example
  * const document = MermaidSequenceTransformer.transform(source, { sourceName: "sample.mmd" });
@@ -53,8 +54,9 @@ class MermaidSequenceTransformer {
 	 */
 	static transform(source, options = {}) {
 		////////////////////////////////////////////////////////////////////////////
-		// Prepare the destination document and iterate through the Mermaid source
-		// line by line so future slices can extend the transform incrementally.
+		// Prepare the destination document and parse the Mermaid source into a
+		// structured statement list so nested block features can be transformed
+		// incrementally without inventing a second intermediate model.
 		if (typeof source !== "string" || source.trim().length === 0) {
 			throw new MermaidTransformError("Mermaid input must be a non-empty string");
 		}
@@ -68,6 +70,34 @@ class MermaidSequenceTransformer {
 		};
 		const activationState = Object.create(null);
 
+		const statements = this._collectStatements(source, document);
+		const parsedDocument = this._parseStructuredLines(statements, 0, document.actors, activationState, null);
+		document.lines = parsedDocument.lines;
+		if (parsedDocument.nextIndex !== statements.length) {
+			const unexpectedStatement = statements[parsedDocument.nextIndex];
+			throw new MermaidTransformError(
+				`Unexpected Mermaid '${this._getControlKeyword(unexpectedStatement.trimmed)}' outside a fragment`,
+				unexpectedStatement.lineNumber,
+				unexpectedStatement.sourceLine
+			);
+		}
+
+		return document;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Collect meaningful Mermaid statements after handling document-level metadata.
+	 *
+	 * @param {string} source Mermaid source text.
+	 * @param {{ title: string, description?: string|string[] }} document Destination document metadata container.
+	 * @returns {{ trimmed: string, sourceLine: string, lineNumber: number }[]} Structured Mermaid statements.
+	 * @throws {MermaidTransformError} If the document header or metadata syntax is invalid.
+	 * @example
+	 * const statements = MermaidSequenceTransformer._collectStatements("sequenceDiagram\nparticipant A", document);
+	 */
+	static _collectStatements(source, document) {
+		const statements = [];
 		const lines = source.replace(/^\uFEFF/, "").split(/\r?\n/);
 		let seenSequenceDiagram = false;
 		let insideDirective = false;
@@ -79,20 +109,21 @@ class MermaidSequenceTransformer {
 			const lineNumber = index + 1;
 			const trimmed = sourceLine.trim();
 
-			////////////////////////////////////////////////////////////////////////////
-			// Ignore blank lines, Mermaid comments, and directive bodies so the
-			// transform can focus on sequencer-relevant source lines only.
 			if (trimmed.length === 0) {
 				continue;
 			}
 
 			if (insideDirective) {
-				if (trimmed.endsWith("}%%")) insideDirective = false;
+				if (trimmed.endsWith("}%%")) {
+					insideDirective = false;
+				}
 				continue;
 			}
 
 			if (trimmed.startsWith("%%{")) {
-				if (!trimmed.endsWith("}%%")) insideDirective = true;
+				if (!trimmed.endsWith("}%%")) {
+					insideDirective = true;
+				}
 				continue;
 			}
 
@@ -118,8 +149,6 @@ class MermaidSequenceTransformer {
 				continue;
 			}
 
-			////////////////////////////////////////////////////////////////////////////
-			// Require the Mermaid sequence-diagram header before feature lines.
 			if (!seenSequenceDiagram) {
 				if (trimmed === "sequenceDiagram") {
 					seenSequenceDiagram = true;
@@ -129,9 +158,6 @@ class MermaidSequenceTransformer {
 				throw new MermaidTransformError("Expected Mermaid 'sequenceDiagram' header", lineNumber, sourceLine);
 			}
 
-			////////////////////////////////////////////////////////////////////////////
-			// Map Mermaid accessibility metadata onto visible sequencer cover text
-			// while also keeping it available for SVG root metadata emission later.
 			if (this._isAccessibilityTitleLine(trimmed)) {
 				document.title = this._parseAccessibilityTitle(trimmed, lineNumber, sourceLine);
 				continue;
@@ -148,47 +174,11 @@ class MermaidSequenceTransformer {
 				continue;
 			}
 
-			////////////////////////////////////////////////////////////////////////////
-			// Handle explicit participant and actor declarations in source order.
-			if (this._isParticipantDeclaration(trimmed)) {
-				const actor = this._parseParticipantDeclaration(trimmed, lineNumber, sourceLine);
-				this._registerActor(document.actors, actor);
-				continue;
-			}
-
-			////////////////////////////////////////////////////////////////////////////
-			// Handle explicit Mermaid activation control by mapping it onto synthetic
-			// blank lines that manipulate sequencer flow state without inventing a new
-			// top-level sequencer line type.
-			if (this._isActivationDirective(trimmed)) {
-				const transformedLine = this._parseActivationDirective(trimmed, document.actors, activationState, lineNumber, sourceLine);
-				document.lines.push(transformedLine);
-				continue;
-			}
-
-			////////////////////////////////////////////////////////////////////////////
-			// Handle Mermaid message lines by mapping them onto sequencer call lines
-			// with per-line arrow and dash configuration.
-			if (this._looksLikeMessageLine(trimmed)) {
-				const transformedLine = this._parseMessageLine(trimmed, document.actors, activationState, lineNumber, sourceLine);
-				document.lines.push(transformedLine);
-				continue;
-			}
-
-			////////////////////////////////////////////////////////////////////////////
-			// Handle Mermaid notes by preserving their visible content as sequencer
-			// comments hosted by blank lines. Single-target notes stay anchored to
-			// one actor; span notes can anchor between two actors.
-			if (this._isNoteLine(trimmed)) {
-				const transformedLine = this._parseNoteLine(trimmed, document.actors, lineNumber, sourceLine);
-				document.lines.push(transformedLine);
-				continue;
-			}
-
-			////////////////////////////////////////////////////////////////////////////
-			// Reject the remaining Mermaid syntax for now with explicit feature names
-			// so each future slice can be added and tested incrementally.
-			throw this._unsupportedSyntax(trimmed, lineNumber, sourceLine);
+			statements.push({
+				trimmed: trimmed,
+				sourceLine: sourceLine,
+				lineNumber: lineNumber,
+			});
 		}
 
 		if (!seenSequenceDiagram) {
@@ -199,7 +189,175 @@ class MermaidSequenceTransformer {
 			throw new MermaidTransformError("Unterminated Mermaid accDescr block");
 		}
 
-		return document;
+		return statements;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a sequence of Mermaid statements, optionally stopping at fragment delimiters.
+	 *
+	 * @param {{ trimmed: string, sourceLine: string, lineNumber: number }[]} statements Structured Mermaid statements.
+	 * @param {number} startIndex Statement index to start from.
+	 * @param {object[]} actors Current actor array.
+	 * @param {object} activationState Current Mermaid activation counters by alias.
+	 * @param {string[]|null} stopKeywords Optional control keywords that stop this parse scope.
+	 * @returns {{ lines: object[], nextIndex: number }} Parsed sequencer lines and next statement index.
+	 * @example
+	 * const result = MermaidSequenceTransformer._parseStructuredLines(statements, 0, actors, activationState, ["end"]);
+	 */
+	static _parseStructuredLines(statements, startIndex, actors, activationState, stopKeywords) {
+		const lines = [];
+		let index = startIndex;
+
+		while (index < statements.length) {
+			const statement = statements[index];
+			const controlKeyword = this._getControlKeyword(statement.trimmed);
+
+			if (controlKeyword != null) {
+				if (Array.isArray(stopKeywords) && stopKeywords.includes(controlKeyword)) {
+					break;
+				}
+
+				if (controlKeyword === "loop" || controlKeyword === "alt" || controlKeyword === "opt") {
+					const parsedFragment =
+						controlKeyword === "alt"
+							? this._parseAltFragment(statements, index, actors, activationState)
+							: this._parseSimpleFragment(statements, index, actors, activationState, controlKeyword);
+					lines.push(parsedFragment.line);
+					index = parsedFragment.nextIndex;
+					continue;
+				}
+
+				throw new MermaidTransformError(
+					`Unexpected Mermaid '${controlKeyword}' outside a fragment`,
+					statement.lineNumber,
+					statement.sourceLine
+				);
+			}
+
+			if (this._isParticipantDeclaration(statement.trimmed)) {
+				this._registerActor(actors, this._parseParticipantDeclaration(statement.trimmed, statement.lineNumber, statement.sourceLine));
+				index++;
+				continue;
+			}
+
+			if (this._isActivationDirective(statement.trimmed)) {
+				lines.push(
+					this._parseActivationDirective(statement.trimmed, actors, activationState, statement.lineNumber, statement.sourceLine)
+				);
+				index++;
+				continue;
+			}
+
+			if (this._looksLikeMessageLine(statement.trimmed)) {
+				lines.push(this._parseMessageLine(statement.trimmed, actors, activationState, statement.lineNumber, statement.sourceLine));
+				index++;
+				continue;
+			}
+
+			if (this._isNoteLine(statement.trimmed)) {
+				lines.push(this._parseNoteLine(statement.trimmed, actors, statement.lineNumber, statement.sourceLine));
+				index++;
+				continue;
+			}
+
+			throw this._unsupportedSyntax(statement.trimmed, statement.lineNumber, statement.sourceLine);
+		}
+
+		return {
+			lines: lines,
+			nextIndex: index,
+		};
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a Mermaid `loop` or `opt` fragment into a sequencer fragment line.
+	 *
+	 * @param {{ trimmed: string, sourceLine: string, lineNumber: number }[]} statements Structured Mermaid statements.
+	 * @param {number} startIndex Statement index of the fragment start line.
+	 * @param {object[]} actors Current actor array.
+	 * @param {object} activationState Current Mermaid activation counters by alias.
+	 * @param {"loop"|"opt"} fragmentType Mermaid fragment type.
+	 * @returns {{ line: object, nextIndex: number }} Parsed fragment line and next index.
+	 * @throws {MermaidTransformError} If the fragment is malformed or unterminated.
+	 * @example
+	 * const parsed = MermaidSequenceTransformer._parseSimpleFragment(statements, 2, actors, activationState, "loop");
+	 */
+	static _parseSimpleFragment(statements, startIndex, actors, activationState, fragmentType) {
+		const startStatement = statements[startIndex];
+		const condition = this._parseFragmentLabel(startStatement.trimmed, fragmentType, startStatement.lineNumber, startStatement.sourceLine);
+		const parsedBody = this._parseStructuredLines(statements, startIndex + 1, actors, activationState, ["end"]);
+		const endStatement = statements[parsedBody.nextIndex];
+
+		if (!endStatement || this._getControlKeyword(endStatement.trimmed) !== "end") {
+			throw new MermaidTransformError(
+				`Mermaid feature '${fragmentType}' is missing a matching 'end'`,
+				startStatement.lineNumber,
+				startStatement.sourceLine
+			);
+		}
+
+		return {
+			line: {
+				type: "fragment",
+				fragmentType: fragmentType,
+				title: "",
+				condition: condition,
+				lines: parsedBody.lines,
+			},
+			nextIndex: parsedBody.nextIndex + 1,
+		};
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a Mermaid `alt` fragment, including nested `else` branches.
+	 *
+	 * @param {{ trimmed: string, sourceLine: string, lineNumber: number }[]} statements Structured Mermaid statements.
+	 * @param {number} startIndex Statement index of the `alt` line.
+	 * @param {object[]} actors Current actor array.
+	 * @param {object} activationState Current Mermaid activation counters by alias.
+	 * @returns {{ line: object, nextIndex: number }} Parsed fragment line and next index.
+	 * @throws {MermaidTransformError} If the fragment is malformed or unterminated.
+	 * @example
+	 * const parsed = MermaidSequenceTransformer._parseAltFragment(statements, 4, actors, activationState);
+	 */
+	static _parseAltFragment(statements, startIndex, actors, activationState) {
+		const startStatement = statements[startIndex];
+		const initialCondition = this._parseFragmentLabel(startStatement.trimmed, "alt", startStatement.lineNumber, startStatement.sourceLine);
+		const fragment = {
+			type: "fragment",
+			fragmentType: "alt",
+			title: "",
+			condition: initialCondition,
+			lines: [],
+		};
+		const firstBranch = this._parseStructuredLines(statements, startIndex + 1, actors, activationState, ["else", "end"]);
+		fragment.lines.push(...firstBranch.lines);
+
+		let index = firstBranch.nextIndex;
+		while (index < statements.length && this._getControlKeyword(statements[index].trimmed) === "else") {
+			const elseStatement = statements[index];
+			fragment.lines.push({
+				type: "condition",
+				condition: this._parseElseLabel(elseStatement.trimmed),
+			});
+
+			const nextBranch = this._parseStructuredLines(statements, index + 1, actors, activationState, ["else", "end"]);
+			fragment.lines.push(...nextBranch.lines);
+			index = nextBranch.nextIndex;
+		}
+
+		const endStatement = statements[index];
+		if (!endStatement || this._getControlKeyword(endStatement.trimmed) !== "end") {
+			throw new MermaidTransformError("Mermaid feature 'alt' is missing a matching 'end'", startStatement.lineNumber, startStatement.sourceLine);
+		}
+
+		return {
+			line: fragment,
+			nextIndex: index + 1,
+		};
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -564,6 +722,57 @@ class MermaidSequenceTransformer {
 
 	////////////////////////////////////////////////////////////////////////////
 	/**
+	 * Return the Mermaid control keyword at the start of a line when present.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @returns {"loop"|"alt"|"opt"|"else"|"end"|null} Control keyword or null.
+	 * @example
+	 * const keyword = MermaidSequenceTransformer._getControlKeyword("alt Success");
+	 */
+	static _getControlKeyword(trimmed) {
+		const match = String(trimmed).match(/^(loop|alt|opt|else|end)\b/i);
+		return match ? match[1].toLowerCase() : null;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a Mermaid fragment start line label.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @param {"loop"|"alt"|"opt"} fragmentType Mermaid fragment type.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {string} Normalised fragment condition label.
+	 * @throws {MermaidTransformError} If the fragment syntax is malformed.
+	 * @example
+	 * const label = MermaidSequenceTransformer._parseFragmentLabel("loop Retry", "loop", 8, "loop Retry");
+	 */
+	static _parseFragmentLabel(trimmed, fragmentType, lineNumber, sourceLine) {
+		const match = String(trimmed).match(new RegExp(`^${fragmentType}(?:\\s+(.*))?$`, "i"));
+		if (!match) {
+			throw new MermaidTransformError(`Unsupported Mermaid ${fragmentType} syntax`, lineNumber, sourceLine);
+		}
+
+		return this._cleanMetadataValue(match[1] != null ? match[1] : "");
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a Mermaid `else` label, defaulting to `ELSE` when omitted.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @returns {string} Normalised else-branch label.
+	 * @example
+	 * const label = MermaidSequenceTransformer._parseElseLabel("else Failure path");
+	 */
+	static _parseElseLabel(trimmed) {
+		const match = String(trimmed).match(/^else(?:\s+(.*))?$/i);
+		const label = this._cleanMetadataValue(match && match[1] != null ? match[1] : "");
+		return label.length > 0 ? label : "ELSE";
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
 	 * Detect whether a trimmed Mermaid line is a note statement.
 	 *
 	 * @param {string} trimmed Trimmed Mermaid source line.
@@ -805,7 +1014,7 @@ class MermaidSequenceTransformer {
 			return new MermaidTransformError("Mermaid links are not supported yet", lineNumber, sourceLine);
 		}
 
-		if (/^(alt|opt|loop|par|critical|break|rect|box|create|destroy|end)\b/i.test(trimmed)) {
+		if (/^(par|critical|break|rect|box|create|destroy)\b/i.test(trimmed)) {
 			return new MermaidTransformError(`Mermaid feature '${trimmed.split(/\s+/)[0]}' is not supported yet`, lineNumber, sourceLine);
 		}
 

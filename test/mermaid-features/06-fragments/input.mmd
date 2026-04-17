@@ -1,0 +1,15 @@
+sequenceDiagram
+participant Caller
+participant Service
+loop Retry while pending [Mermaid: loop Retry while pending]
+Caller->>Service: Retry request [Mermaid: Caller->>Service: Retry request]
+end
+alt Success branch [Mermaid: alt Success branch]
+Caller->>Service: Success path [Mermaid: Caller->>Service: Success path]
+else Failure branch [Mermaid: else Failure branch]
+opt Audit branch [Mermaid: opt Audit branch]
+Service->>Caller: Emit audit event [Mermaid: Service->>Caller: Emit audit event]
+end
+Note over Caller,Service: Failure branch note [Mermaid: Note over Caller,Service: Failure branch note]
+Caller->>Service: Failure path [Mermaid: Caller->>Service: Failure path]
+end

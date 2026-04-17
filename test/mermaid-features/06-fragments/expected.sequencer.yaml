@@ -1,0 +1,63 @@
+title: Input
+version: '1.0'
+actors:
+  - name: Caller
+    alias: Caller
+    actorType: participant
+  - name: Service
+    alias: Service
+    actorType: participant
+lines:
+  - type: fragment
+    fragmentType: loop
+    title: ''
+    condition: 'Retry while pending [Mermaid: loop Retry while pending]'
+    lines:
+      - type: call
+        from: Caller
+        to: Service
+        text: 'Retry request [Mermaid: Caller->>Service: Retry request]'
+        breakFromFlow: true
+        breakToFlow: true
+        arrow: fill
+  - type: fragment
+    fragmentType: alt
+    title: ''
+    condition: 'Success branch [Mermaid: alt Success branch]'
+    lines:
+      - type: call
+        from: Caller
+        to: Service
+        text: 'Success path [Mermaid: Caller->>Service: Success path]'
+        breakFromFlow: true
+        breakToFlow: true
+        arrow: fill
+      - type: condition
+        condition: 'Failure branch [Mermaid: else Failure branch]'
+      - type: fragment
+        fragmentType: opt
+        title: ''
+        condition: 'Audit branch [Mermaid: opt Audit branch]'
+        lines:
+          - type: call
+            from: Service
+            to: Caller
+            text: 'Emit audit event [Mermaid: Service->>Caller: Emit audit event]'
+            breakFromFlow: true
+            breakToFlow: true
+            arrow: fill
+      - type: blank
+        height: 0
+        comment: >-
+          Failure branch note [Mermaid: Note over Caller,Service: Failure branch
+          note]
+        actors:
+          - Caller
+          - Service
+      - type: call
+        from: Caller
+        to: Service
+        text: 'Failure path [Mermaid: Caller->>Service: Failure path]'
+        breakFromFlow: true
+        breakToFlow: true
+        arrow: fill

@@ -13,6 +13,14 @@ actors:
 lines:
   - type: blank
     height: 0
+    activate:
+      - DB
+  - type: blank
+    height: 0
+    deactivate:
+      - DB
+  - type: blank
+    height: 0
     comment: >-
       Note beside explicit activate [Mermaid: Note right of Service: Note beside
       explicit activate]
