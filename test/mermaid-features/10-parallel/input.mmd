@@ -1,0 +1,20 @@
+sequenceDiagram
+accTitle: Mermaid parallel fragments
+accDescr {
+Demonstrates Mermaid par and and fragments mapped onto sequencer fragment branches.
+From the project root, regenerate this Mermaid transform and SVG with:
+node sequencer.js --mermaid -i test/mermaid-features/10-parallel/input.mmd -o -f -t test/mermaid-features/10-parallel
+}
+participant Caller
+participant Service
+participant DB
+participant Audit
+par Primary branch [Mermaid: par Primary branch]
+  Caller->>Service: Begin primary work [Mermaid: Caller->>Service: Begin primary work]
+and Database branch [Mermaid: and Database branch]
+  Service->>DB: Persist data [Mermaid: Service->>DB: Persist data]
+and Audit branch [Mermaid: and Audit branch]
+  opt Optional audit [Mermaid: opt Optional audit]
+    Service->>Audit: Emit audit event [Mermaid: Service->>Audit: Emit audit event]
+  end
+end

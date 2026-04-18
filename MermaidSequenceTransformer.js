@@ -31,15 +31,15 @@ class MermaidTransformError extends Error {
 //////////////////////////////////////////////////////////////////////////////
 /**
  * Transform Mermaid sequence-diagram source into a sequencer-svg document.
- * Slice 9 supports explicit `participant` and `actor` declarations, Mermaid
+ * Slice 10 supports explicit `participant` and `actor` declarations, Mermaid
  * accessibility metadata, basic message lines, standard unidirectional arrow
  * variants, Mermaid notes mapped onto sequencer comments hosted by synthetic
  * blank lines, Mermaid activation/deactivation control, and Mermaid `loop`,
- * `alt`, `opt`, `else`, and `end` fragments mapped onto sequencer fragments,
- * plus Mermaid `autonumber` mapped onto a sequencer document flag, real
- * sequencer return lines for dotted Mermaid messages, bidirectional arrows,
- * and Mermaid half-arrow variants mapped onto sequencer `fromArrow` and
- * `toArrow` endpoint styles.
+ * `alt`, `opt`, `par`, `and`, `else`, and `end` fragments mapped onto
+ * sequencer fragments, plus Mermaid `autonumber` mapped onto a sequencer
+ * document flag, real sequencer return lines for dotted Mermaid messages,
+ * bidirectional arrows, and Mermaid half-arrow variants mapped onto
+ * sequencer `fromArrow` and `toArrow` endpoint styles.
  *
  * @example
  * const document = MermaidSequenceTransformer.transform(source, { sourceName: "sample.mmd" });
@@ -227,10 +227,12 @@ class MermaidSequenceTransformer {
 					break;
 				}
 
-				if (controlKeyword === "loop" || controlKeyword === "alt" || controlKeyword === "opt") {
+				if (controlKeyword === "loop" || controlKeyword === "alt" || controlKeyword === "opt" || controlKeyword === "par") {
 					const parsedFragment =
 						controlKeyword === "alt"
 							? this._parseAltFragment(statements, index, actors, activationState)
+							: controlKeyword === "par"
+							? this._parseParFragment(statements, index, actors, activationState)
 							: this._parseSimpleFragment(statements, index, actors, activationState, controlKeyword);
 					lines.push(parsedFragment.line);
 					index = parsedFragment.nextIndex;
@@ -361,6 +363,56 @@ class MermaidSequenceTransformer {
 		const endStatement = statements[index];
 		if (!endStatement || this._getControlKeyword(endStatement.trimmed) !== "end") {
 			throw new MermaidTransformError("Mermaid feature 'alt' is missing a matching 'end'", startStatement.lineNumber, startStatement.sourceLine);
+		}
+
+		return {
+			line: fragment,
+			nextIndex: index + 1,
+		};
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a Mermaid `par` fragment, including sibling `and` branches.
+	 *
+	 * @param {{ trimmed: string, sourceLine: string, lineNumber: number }[]} statements Structured Mermaid statements.
+	 * @param {number} startIndex Statement index of the `par` line.
+	 * @param {object[]} actors Current actor array.
+	 * @param {object} activationState Current Mermaid activation counters by alias.
+	 * @returns {{ line: object, nextIndex: number }} Parsed fragment line and next index.
+	 * @throws {MermaidTransformError} If the fragment is malformed or unterminated.
+	 * @example
+	 * const parsed = MermaidSequenceTransformer._parseParFragment(statements, 4, actors, activationState);
+	 */
+	static _parseParFragment(statements, startIndex, actors, activationState) {
+		const startStatement = statements[startIndex];
+		const initialCondition = this._parseFragmentLabel(startStatement.trimmed, "par", startStatement.lineNumber, startStatement.sourceLine);
+		const fragment = {
+			type: "fragment",
+			fragmentType: "par",
+			title: "",
+			condition: initialCondition,
+			lines: [],
+		};
+		const firstBranch = this._parseStructuredLines(statements, startIndex + 1, actors, activationState, ["and", "end"]);
+		fragment.lines.push(...firstBranch.lines);
+
+		let index = firstBranch.nextIndex;
+		while (index < statements.length && this._getControlKeyword(statements[index].trimmed) === "and") {
+			const andStatement = statements[index];
+			fragment.lines.push({
+				type: "condition",
+				condition: this._parseAndLabel(andStatement.trimmed),
+			});
+
+			const nextBranch = this._parseStructuredLines(statements, index + 1, actors, activationState, ["and", "end"]);
+			fragment.lines.push(...nextBranch.lines);
+			index = nextBranch.nextIndex;
+		}
+
+		const endStatement = statements[index];
+		if (!endStatement || this._getControlKeyword(endStatement.trimmed) !== "end") {
+			throw new MermaidTransformError("Mermaid feature 'par' is missing a matching 'end'", startStatement.lineNumber, startStatement.sourceLine);
 		}
 
 		return {
@@ -805,12 +857,12 @@ class MermaidSequenceTransformer {
 	 * Return the Mermaid control keyword at the start of a line when present.
 	 *
 	 * @param {string} trimmed Trimmed Mermaid source line.
-	 * @returns {"loop"|"alt"|"opt"|"else"|"end"|null} Control keyword or null.
+	 * @returns {"loop"|"alt"|"opt"|"par"|"and"|"else"|"end"|null} Control keyword or null.
 	 * @example
 	 * const keyword = MermaidSequenceTransformer._getControlKeyword("alt Success");
 	 */
 	static _getControlKeyword(trimmed) {
-		const match = String(trimmed).match(/^(loop|alt|opt|else|end)\b/i);
+		const match = String(trimmed).match(/^(loop|alt|opt|par|and|else|end)\b/i);
 		return match ? match[1].toLowerCase() : null;
 	}
 
@@ -819,7 +871,7 @@ class MermaidSequenceTransformer {
 	 * Parse a Mermaid fragment start line label.
 	 *
 	 * @param {string} trimmed Trimmed Mermaid source line.
-	 * @param {"loop"|"alt"|"opt"} fragmentType Mermaid fragment type.
+	 * @param {"loop"|"alt"|"opt"|"par"} fragmentType Mermaid fragment type.
 	 * @param {number} lineNumber 1-based source line number.
 	 * @param {string} sourceLine Original Mermaid source line.
 	 * @returns {string} Normalised fragment condition label.
@@ -849,6 +901,21 @@ class MermaidSequenceTransformer {
 		const match = String(trimmed).match(/^else(?:\s+(.*))?$/i);
 		const label = this._cleanMetadataValue(match && match[1] != null ? match[1] : "");
 		return label.length > 0 ? label : "ELSE";
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a Mermaid `and` label, defaulting to `AND` when omitted.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @returns {string} Normalised parallel-branch label.
+	 * @example
+	 * const label = MermaidSequenceTransformer._parseAndLabel("and Publish result");
+	 */
+	static _parseAndLabel(trimmed) {
+		const match = String(trimmed).match(/^and(?:\s+(.*))?$/i);
+		const label = this._cleanMetadataValue(match && match[1] != null ? match[1] : "");
+		return label.length > 0 ? label : "AND";
 	}
 
 	////////////////////////////////////////////////////////////////////////////

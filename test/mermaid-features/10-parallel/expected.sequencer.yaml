@@ -1,0 +1,62 @@
+title: Mermaid parallel fragments
+version: '1.0'
+actors:
+  - name: Caller
+    alias: Caller
+    actorType: participant
+  - name: Service
+    alias: Service
+    actorType: participant
+  - name: DB
+    alias: DB
+    actorType: participant
+  - name: Audit
+    alias: Audit
+    actorType: participant
+lines:
+  - type: fragment
+    fragmentType: par
+    title: ''
+    condition: 'Primary branch [Mermaid: par Primary branch]'
+    lines:
+      - type: call
+        from: Caller
+        to: Service
+        text: 'Begin primary work [Mermaid: Caller->>Service: Begin primary work]'
+        breakFromFlow: true
+        breakToFlow: true
+        toArrow: fill
+        arrow: fill
+      - type: condition
+        condition: 'Database branch [Mermaid: and Database branch]'
+      - type: call
+        from: Service
+        to: DB
+        text: 'Persist data [Mermaid: Service->>DB: Persist data]'
+        breakFromFlow: true
+        breakToFlow: true
+        toArrow: fill
+        arrow: fill
+      - type: condition
+        condition: 'Audit branch [Mermaid: and Audit branch]'
+      - type: fragment
+        fragmentType: opt
+        title: ''
+        condition: 'Optional audit [Mermaid: opt Optional audit]'
+        lines:
+          - type: call
+            from: Service
+            to: Audit
+            text: 'Emit audit event [Mermaid: Service->>Audit: Emit audit event]'
+            breakFromFlow: true
+            breakToFlow: true
+            toArrow: fill
+            arrow: fill
+description:
+  - >-
+    Demonstrates Mermaid par and and fragments mapped onto sequencer fragment
+    branches.
+  - 'From the project root, regenerate this Mermaid transform and SVG with:'
+  - >-
+    node sequencer.js --mermaid -i test/mermaid-features/10-parallel/input.mmd
+    -o -f -t test/mermaid-features/10-parallel
