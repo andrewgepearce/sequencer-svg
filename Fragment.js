@@ -89,6 +89,105 @@ function resolveFragmentSpan(working, line, depthIndex) {
 	};
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * Return whether a fragment definition or instance represents a rect highlight.
+ *
+ * @param {*} fragment Candidate fragment line or Fragment instance.
+ * @returns {boolean} True when the fragment type is `rect`.
+ * @example
+ * const isRect = isRectFragment({ fragmentType: "rect" });
+ */
+function isRectFragment(fragment) {
+	if (Utilities.isObject(fragment) && Utilities.isString(fragment.fragmentType)) {
+		return fragment.fragmentType === "rect";
+	}
+
+	return false;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * Count the currently active structural fragments.
+ *
+ * @param {*} working Current working render state.
+ * @returns {number} Number of active non-rect fragments.
+ * @example
+ * const depth = countActiveStructuralFragments(working);
+ */
+function countActiveStructuralFragments(working) {
+	if (!Array.isArray(working.activeFragments)) {
+		return 0;
+	}
+
+	return working.activeFragments.filter((fragment) => isRectFragment(fragment) === false).length;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * Return the nearest active structural fragment, if any.
+ *
+ * @param {*} working Current working render state.
+ * @returns {*} Active structural fragment instance or null.
+ * @example
+ * const parent = getLastActiveStructuralFragment(working);
+ */
+function getLastActiveStructuralFragment(working) {
+	if (!Array.isArray(working.activeFragments)) {
+		return null;
+	}
+
+	for (let index = working.activeFragments.length - 1; index >= 0; index--) {
+		if (isRectFragment(working.activeFragments[index]) === false) {
+			return working.activeFragments[index];
+		}
+	}
+
+	return null;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * Return the nearest active rect highlight, if any.
+ *
+ * @param {*} working Current working render state.
+ * @returns {*} Active rect fragment instance or null.
+ * @example
+ * const rectParent = getLastActiveRectHighlight(working);
+ */
+function getLastActiveRectHighlight(working) {
+	if (!Array.isArray(working.activeRectHighlights)) {
+		return null;
+	}
+
+	for (let index = working.activeRectHighlights.length - 1; index >= 0; index--) {
+		if (isRectFragment(working.activeRectHighlights[index]) === true) {
+			return working.activeRectHighlights[index];
+		}
+	}
+
+	return null;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * Resolve the configured nested rect inset distance in pixels.
+ *
+ * @param {*} working Current working render state.
+ * @returns {number} Non-negative inset amount.
+ * @example
+ * const inset = getRectNestedInsetPx(working);
+ */
+function getRectNestedInsetPx(working) {
+	return working.postdata &&
+		working.postdata.params &&
+		working.postdata.params.fragment &&
+		Utilities.isNumber(working.postdata.params.fragment.rectNestedInsetPx) &&
+		working.postdata.params.fragment.rectNestedInsetPx >= 0
+		? working.postdata.params.fragment.rectNestedInsetPx
+		: 10;
+}
+
 module.exports = class Fragment {
 	///////////////////////////////////////////////////////////////////////////////
 	/**
@@ -173,6 +272,36 @@ module.exports = class Fragment {
 	get fragmentEndX() {
 		return this._fragmentEndX;
 	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return fragment type.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.fragmentType;
+	 */
+	get fragmentType() {
+		return Utilities.isObject(this._line) && Utilities.isString(this._line.fragmentType) ? this._line.fragmentType : "";
+	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return configured start actor alias.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.startActor;
+	 */
+	get startActor() {
+		return Utilities.isObject(this._line) && Utilities.isString(this._line.startActor) ? this._line.startActor : undefined;
+	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return configured end actor alias.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.endActor;
+	 */
+	get endActor() {
+		return Utilities.isObject(this._line) && Utilities.isString(this._line.endActor) ? this._line.endActor : undefined;
+	}
 
 	///////////////////////////////////////////////////////////////////////////////
 	/**
@@ -196,11 +325,13 @@ module.exports = class Fragment {
 			throw new InputDocumentError("'fragment' line must define 'lines' as an array", this._line);
 		}
 		let currentActiveAboveThisFragment = 0;
-		if (Array.isArray(working.activeFragments)) {
-			currentActiveAboveThisFragment = working.activeFragments.length;
-		} else {
+		if (!Array.isArray(working.activeFragments)) {
 			working.activeFragments = [];
 		}
+		if (!Array.isArray(working.activeRectHighlights)) {
+			working.activeRectHighlights = [];
+		}
+		currentActiveAboveThisFragment = countActiveStructuralFragments(working);
 		if (!working.postdata) {
 			working.postdata = [];
 		}
@@ -284,6 +415,9 @@ module.exports = class Fragment {
 		// Get fragment type
 		let type = Utilities.isString(this._line.fragmentType) ? this._line.fragmentType : "";
 		const isRectHighlight = type === "rect";
+		if (!isRectHighlight && !Utilities.validColour(this._line.bgColour) && getLastActiveRectHighlight(working) != null) {
+			this._colour = "rgba(255,255,255,0)";
+		}
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Get fragment title
@@ -332,7 +466,38 @@ module.exports = class Fragment {
 		//////////////////////////////////////////////////////////////////////////////
 		// Calculate height of fragment start line
 		let ctx = this._ctx;
-		const fragmentSpan = resolveFragmentSpan(working, this._line, currentActiveAboveThisFragment);
+		const structuralParentFragment = getLastActiveStructuralFragment(working);
+		let fragmentSpan = resolveFragmentSpan(working, this._line, currentActiveAboveThisFragment);
+		if (isRectHighlight && !Utilities.isString(this._line.startActor) && !Utilities.isString(this._line.endActor)) {
+			if (structuralParentFragment != null) {
+				fragmentSpan = {
+					startX: structuralParentFragment.fragmentStartX,
+					endX: structuralParentFragment.fragmentEndX,
+				};
+			} else {
+				fragmentSpan = {
+					startX: working.windowPadding,
+					endX: working.canvasWidth - working.windowPadding,
+				};
+			}
+		}
+		const activeRectParent = getLastActiveRectHighlight(working);
+		if (
+			isRectHighlight &&
+			activeRectParent != null &&
+			Utilities.isString(this._line.startActor) &&
+			Utilities.isString(activeRectParent.startActor) &&
+			this._line.startActor === activeRectParent.startActor
+		) {
+			const rectNestedInsetPx = getRectNestedInsetPx(working);
+			fragmentSpan = {
+				startX: fragmentSpan.startX + rectNestedInsetPx,
+				endX: fragmentSpan.endX - rectNestedInsetPx,
+			};
+		}
+		if (fragmentSpan.endX - fragmentSpan.startX < working.globalSpacing) {
+			fragmentSpan.endX = fragmentSpan.startX + working.globalSpacing;
+		}
 		let fragmentStartX = fragmentSpan.startX;
 		let fragmentEndX = fragmentSpan.endX;
 		this._fragmentStartX = fragmentStartX;
@@ -402,14 +567,14 @@ module.exports = class Fragment {
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
-		Utilities.drawActiveFragments(working, this._ctx, starty, finalHeightOfAllLine, mimic);
+		Utilities.drawActiveStructuralFragmentBackgrounds(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 2. Current Fragment rectangle
 		if (!isRectHighlight || showRectHeader) {
 			xy = Utilities.drawRectangle(
 				this._ctx,
-				this._borderWidth,
+				0,
 				this._borderColour,
 				this._borderDash,
 				this._colour,
@@ -425,10 +590,50 @@ module.exports = class Fragment {
 				false
 			);
 		}
+		Utilities.drawActiveRectHighlights(working, this._ctx, starty, finalHeightOfAllLine, mimic);
+		if (isRectHighlight) {
+			xy = Utilities.drawRectangle(
+				this._ctx,
+				this._borderWidth,
+				this._borderColour,
+				this._borderDash,
+				this._colour,
+				fragmentTop,
+				fragmentStartX,
+				fragmentEndX - fragmentStartX > 0 ? fragmentEndX - fragmentStartX : working.globalSpacing,
+				finalHeightOfFragmentRectangle,
+				0,
+				true,
+				true,
+				false,
+				true,
+				mimic
+			);
+		}
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 3. Time lines
 		xy = Actor.drawTimelines(working, ctx, starty, finalHeightOfAllLine, mimic);
+		Utilities.drawActiveStructuralFragmentBorders(working, this._ctx, starty, finalHeightOfAllLine, mimic);
+		if (!isRectHighlight || showRectHeader) {
+			xy = Utilities.drawRectangle(
+				this._ctx,
+				this._borderWidth,
+				this._borderColour,
+				this._borderDash,
+				"rgba(255,255,255,0)",
+				fragmentTop,
+				fragmentStartX,
+				fragmentEndX - fragmentStartX > 0 ? fragmentEndX - fragmentStartX : working.globalSpacing,
+				finalHeightOfFragmentRectangle,
+				0,
+				true,
+				true,
+				false,
+				true,
+				mimic
+			);
+		}
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 4. Type and Title rectangle
@@ -496,7 +701,11 @@ module.exports = class Fragment {
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Make this an active fragment
-		working.activeFragments.push(this);
+		if (isRectHighlight) {
+			working.activeRectHighlights.push(this);
+		} else {
+			working.activeFragments.push(this);
+		}
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Draw the lines of the fragment
@@ -519,7 +728,11 @@ module.exports = class Fragment {
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Remove this active fragment
-		working.activeFragments.pop();
+		if (isRectHighlight) {
+			working.activeRectHighlights.pop();
+		} else {
+			working.activeFragments.pop();
+		}
 
 		if (isRectHighlight) {
 			working.manageMaxWidth(0, xy.y);
@@ -554,13 +767,13 @@ module.exports = class Fragment {
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Draw any active fragments
-		Utilities.drawActiveFragments(working, this._ctx, endLineTop, finalHeightOfEndLine, mimic);
+		Utilities.drawActiveStructuralFragmentBackgrounds(working, this._ctx, endLineTop, finalHeightOfEndLine, mimic);
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Draw this end part of the fragment
 		xy = Utilities.drawRectangle(
 			this._ctx,
-			this._borderWidth,
+			0,
 			this._borderColour,
 			this._borderDash,
 			this._colour,
@@ -575,10 +788,29 @@ module.exports = class Fragment {
 			true,
 			false
 		);
+		Utilities.drawActiveRectHighlights(working, this._ctx, endLineTop, finalHeightOfEndLine, mimic);
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Draw the timelines for this fragment
 		xy = Actor.drawTimelines(working, ctx, endLineTop, finalHeightOfEndLine, mimic);
+		Utilities.drawActiveStructuralFragmentBorders(working, this._ctx, endLineTop, finalHeightOfEndLine, mimic);
+		xy = Utilities.drawRectangle(
+			this._ctx,
+			this._borderWidth,
+			this._borderColour,
+			this._borderDash,
+			"rgba(255,255,255,0)",
+			endLineTop,
+			this._fragmentStartX,
+			fragmentEndX - fragmentStartX > 0 ? fragmentEndX - fragmentStartX : working.globalSpacing,
+			finalHeightOfEndRectangle,
+			0,
+			false,
+			true,
+			true,
+			true,
+			mimic
+		);
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Do not manage max width HERE!!
@@ -614,7 +846,7 @@ module.exports = class Fragment {
 			working.scratchPad.curFragmentDepth = 0;
 		}
 		lines.forEach((line) => {
-			if (line.type == "fragment") {
+			if (line.type == "fragment" && line.fragmentType !== "rect") {
 				working.scratchPad.curFragmentDepth++;
 				if (working.scratchPad.curFragmentDepth > working.scratchPad.maxFragmentDepth) {
 					working.scratchPad.maxFragmentDepth = working.scratchPad.curFragmentDepth;

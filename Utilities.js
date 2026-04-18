@@ -1173,27 +1173,126 @@ module.exports = class Utilities {
 	 * instance.drawActiveFragments(working, ctx, starty, height, mimic);
 	 */
 	static drawActiveFragments(working, ctx, starty, height, mimic) {
-		if (Array.isArray(working.activeFragments)) {
-			working.activeFragments.forEach((frag) => {
-				Utilities.drawRectangle(
-					ctx,
-					frag.borderWidth,
-					frag.borderColour,
-					frag.borderDash,
-					frag.colour,
-					starty,
-					frag.fragmentStartX,
-					frag.fragmentEndX - frag.fragmentStartX,
-					height,
-					0,
-					false,
-					true,
-					false,
-					true,
-					mimic
-				);
-			});
+		Utilities.drawActiveStructuralFragmentBackgrounds(working, ctx, starty, height, mimic);
+		Utilities.drawActiveRectHighlights(working, ctx, starty, height, mimic);
+		Utilities.drawActiveStructuralFragmentBorders(working, ctx, starty, height, mimic);
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw active structural fragment body fills behind the current line.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} height Parameter derived from height.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.drawActiveStructuralFragmentBackgrounds(working, ctx, starty, height, mimic);
+	 */
+	static drawActiveStructuralFragmentBackgrounds(working, ctx, starty, height, mimic) {
+		if (!Array.isArray(working.activeFragments) || !Utilities.isNumber(height) || height <= 0) {
+			return;
 		}
+
+		working.activeFragments.forEach((frag) => {
+			Utilities.drawRectangle(
+				ctx,
+				0,
+				frag.borderColour,
+				frag.borderDash,
+				frag.colour,
+				starty,
+				frag.fragmentStartX,
+				frag.fragmentEndX - frag.fragmentStartX,
+				height,
+				0,
+				false,
+				true,
+				false,
+				true,
+				mimic
+			);
+		});
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw active rect highlight fills behind the current line.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} height Parameter derived from height.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.drawActiveRectHighlights(working, ctx, starty, height, mimic);
+	 */
+	static drawActiveRectHighlights(working, ctx, starty, height, mimic) {
+		if (!Array.isArray(working.activeRectHighlights) || !Utilities.isNumber(height) || height <= 0) {
+			return;
+		}
+
+		working.activeRectHighlights.forEach((frag) => {
+			Utilities.drawRectangle(
+				ctx,
+				frag.borderWidth,
+				frag.borderColour,
+				frag.borderDash,
+				frag.colour,
+				starty,
+				frag.fragmentStartX,
+				frag.fragmentEndX - frag.fragmentStartX,
+				height,
+				0,
+				false,
+				true,
+				false,
+				true,
+				mimic
+			);
+		});
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw active structural fragment borders above the current line content.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} starty Parameter derived from starty.
+	 * @param {*} height Parameter derived from height.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.drawActiveStructuralFragmentBorders(working, ctx, starty, height, mimic);
+	 */
+	static drawActiveStructuralFragmentBorders(working, ctx, starty, height, mimic) {
+		if (!Array.isArray(working.activeFragments) || !Utilities.isNumber(height) || height <= 0) {
+			return;
+		}
+
+		working.activeFragments.forEach((frag) => {
+			Utilities.drawRectangle(
+				ctx,
+				frag.borderWidth,
+				frag.borderColour,
+				frag.borderDash,
+				"rgba(255,255,255,0)",
+				starty,
+				frag.fragmentStartX,
+				frag.fragmentEndX - frag.fragmentStartX,
+				height,
+				0,
+				false,
+				true,
+				false,
+				true,
+				mimic
+			);
+		});
 	}
 
 	///////////////////////////////////////////////////////////////////////////////

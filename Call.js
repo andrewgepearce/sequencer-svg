@@ -354,7 +354,8 @@ module.exports = class Call {
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
-		Utilities.drawActiveFragments(working, this._ctx, starty, finalHeightOfAllLine, mimic);
+		Utilities.drawActiveStructuralFragmentBackgrounds(working, this._ctx, starty, finalHeightOfAllLine, mimic);
+		Utilities.drawActiveRectHighlights(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
@@ -447,6 +448,7 @@ module.exports = class Call {
 			null,
 			mimic
 		);
+		Utilities.drawActiveStructuralFragmentBorders(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 		//////////////////////////////////////////////////////////////////////////////
 		// let calltextxy = Utilities.drawTextRectangle(ctx, textToPrint,
 		//////////////////////////////////////////////////////////////////////////////
@@ -593,7 +595,8 @@ module.exports = class Call {
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
-		Utilities.drawActiveFragments(working, this._ctx, starty, finalHeightOfAllLine, mimic);
+		Utilities.drawActiveStructuralFragmentBackgrounds(working, this._ctx, starty, finalHeightOfAllLine, mimic);
+		Utilities.drawActiveRectHighlights(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
@@ -698,6 +701,7 @@ module.exports = class Call {
 			lineColour,
 			false
 		);
+		Utilities.drawActiveStructuralFragmentBorders(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
 		return working.manageMaxWidth(0, starty + finalHeightOfAllLine);
 	}

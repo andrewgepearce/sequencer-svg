@@ -152,7 +152,8 @@ module.exports = class FragmentCondition {
       //////////////////////////////////////////////////////////////////////////
       // 1. Background fragments
 
-      Utilities.drawActiveFragments(working, this._ctx, starty, finalHeightOfAllLine, mimic);
+      Utilities.drawActiveStructuralFragmentBackgrounds(working, this._ctx, starty, finalHeightOfAllLine, mimic);
+      Utilities.drawActiveRectHighlights(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
       //////////////////////////////////////////////////////////////////////////
       // 2. Time lines
@@ -180,6 +181,7 @@ module.exports = class FragmentCondition {
       // 5. Draw condition text
       conditionxy = Utilities.drawTextRectangleNoBorderOrBg(ctx, ctext, conditionTmd, conditionLineY + lineWidth, fragStartX,
          null, null, false);
+      Utilities.drawActiveStructuralFragmentBorders(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
       return working.manageMaxWidth(conditionxy.x, conditionxy.y);
    }

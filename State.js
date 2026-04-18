@@ -149,7 +149,8 @@ module.exports = class State {
 		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
 
-		Utilities.drawActiveFragments(working, this._ctx, starty, finalHeightOfAllLine, mimic);
+		Utilities.drawActiveStructuralFragmentBackgrounds(working, this._ctx, starty, finalHeightOfAllLine, mimic);
+		Utilities.drawActiveRectHighlights(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
@@ -187,6 +188,7 @@ module.exports = class State {
 			wh,
 			working.tags
 		);
+		Utilities.drawActiveStructuralFragmentBorders(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 		return working.manageMaxWidth(textxy.x, starty + finalHeightOfAllLine);
 	}
 

@@ -80,7 +80,8 @@ module.exports = class ErrorLine {
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments (if any)
-		Utilities.drawActiveFragments(working, ctx, starty, finalHeightOfAllLine, mimic);
+		Utilities.drawActiveStructuralFragmentBackgrounds(working, ctx, starty, finalHeightOfAllLine, mimic);
+		Utilities.drawActiveRectHighlights(working, ctx, starty, finalHeightOfAllLine, mimic);
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines through the error line's vertical span
@@ -107,6 +108,7 @@ module.exports = class ErrorLine {
 			wh,
 			working.tags
 		);
+		Utilities.drawActiveStructuralFragmentBorders(working, ctx, starty, finalHeightOfAllLine, mimic);
 
 		working.manageMaxWidth(left + boxWidth, textxy.y);
 		return working.manageMaxWidth(0, starty + finalHeightOfAllLine);

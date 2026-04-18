@@ -46,13 +46,10 @@ lines:
     endActor: DB
   - type: fragment
     fragmentType: rect
-    title: 'TEST'
+    title: ''
     condition: ''
     bgColour: 'rgb(210, 240, 255)'
     borderWidth: 0
-    comment: >-
-      Highlighted cache phase [Mermaid: Note over Service,Cache: Highlighted
-      cache phase]
     lines:
       - type: call
         from: Service

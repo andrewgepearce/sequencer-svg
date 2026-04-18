@@ -301,7 +301,8 @@ module.exports = class Reference {
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
-		Utilities.drawActiveFragments(working, this._ctx, starty, finalHeightOfAllLine, mimic);
+		Utilities.drawActiveStructuralFragmentBackgrounds(working, this._ctx, starty, finalHeightOfAllLine, mimic);
+		Utilities.drawActiveRectHighlights(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
@@ -451,6 +452,7 @@ module.exports = class Reference {
 			working.tags
 		);
 		working.manageMaxWidthXy(refboxxy);
+		Utilities.drawActiveStructuralFragmentBorders(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 		return working.manageMaxWidth(0, starty + finalHeightOfAllLine);
 	}
 

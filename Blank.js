@@ -127,7 +127,8 @@ module.exports = class Blank {
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 1. Background fragments
-		Utilities.drawActiveFragments(working, this._ctx, starty, finalHeightOfAllLine, mimic);
+		Utilities.drawActiveStructuralFragmentBackgrounds(working, this._ctx, starty, finalHeightOfAllLine, mimic);
+		Utilities.drawActiveRectHighlights(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
@@ -140,6 +141,7 @@ module.exports = class Blank {
 		if (comment != null) {
 			commentxy = comment.draw(working, commentleft, blankTop + working.globalSpacing, this._getCommentBottomGap(working), 0, mimic);
 		}
+		Utilities.drawActiveStructuralFragmentBorders(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
 		working.manageMaxWidth(blankRight, blankBottom);
 		return working.manageMaxWidth(0, starty + finalHeightOfAllLine);

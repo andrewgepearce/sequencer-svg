@@ -1,0 +1,125 @@
+title: Mermaid rect nesting and fragments
+version: '1.0'
+actors:
+  - name: Caller
+    alias: Caller
+    actorType: participant
+  - name: Service
+    alias: Service
+    actorType: participant
+  - name: DB
+    alias: DB
+    actorType: participant
+  - name: Cache
+    alias: Cache
+    actorType: participant
+  - name: Audit
+    alias: Audit
+    actorType: participant
+lines:
+  - type: fragment
+    fragmentType: rect
+    title: ''
+    condition: ''
+    bgColour: 'rgba(255, 230, 200, 0.5)'
+    borderWidth: 0
+    lines:
+      - type: call
+        from: Service
+        to: DB
+        text: 'Outer same-start write [Mermaid: Service->>DB: Outer same-start write]'
+        toArrow: fill
+        arrow: fill
+      - type: fragment
+        fragmentType: rect
+        title: ''
+        condition: ''
+        bgColour: 'rgba(255, 190, 190, 0.5)'
+        borderWidth: 0
+        lines:
+          - type: call
+            from: Service
+            to: Cache
+            text: >-
+              Inner same-start warm [Mermaid: Service->>Cache: Inner same-start
+              warm]
+            toArrow: fill
+            arrow: fill
+        startActor: Service
+        endActor: Cache
+      - type: fragment
+        fragmentType: opt
+        title: ''
+        condition: 'Optional audit branch rgb(220, 240, 0)'
+        lines:
+          - type: call
+            from: Service
+            to: Audit
+            text: 'Audit within rect [Mermaid: Service->>Audit: Audit within rect]'
+            toArrow: fill
+            arrow: fill
+    startActor: Service
+    endActor: Audit
+  - type: fragment
+    fragmentType: opt
+    title: ''
+    condition: Outer optional branch
+    lines:
+      - type: fragment
+        fragmentType: rect
+        title: ''
+        condition: ''
+        bgColour: 'rgb(220, 240, 255)'
+        borderWidth: 0
+        lines:
+          - type: call
+            from: DB
+            to: Audit
+            text: 'Rect inside fragment [Mermaid: DB->>Audit: Rect inside fragment]'
+            toArrow: fill
+            arrow: fill
+        startActor: DB
+        endActor: Audit
+  - type: fragment
+    fragmentType: rect
+    title: ''
+    condition: ''
+    bgColour: 'rgba(220, 255, 220, 0.6)'
+    borderWidth: 0
+    lines:
+      - type: call
+        from: Service
+        to: Audit
+        text: >-
+          Outer different-start anchor [Mermaid: Service->>Audit: Outer
+          different-start anchor]
+        toArrow: fill
+        arrow: fill
+      - type: fragment
+        fragmentType: rect
+        title: ''
+        condition: ''
+        bgColour: 'rgba(200, 235, 255, 0.6)'
+        borderWidth: 0
+        lines:
+          - type: call
+            from: DB
+            to: Audit
+            text: >-
+              Inner different-start anchor [Mermaid: DB->>Audit: Inner
+              different-start anchor]
+            toArrow: fill
+            arrow: fill
+        startActor: DB
+        endActor: Audit
+    startActor: Service
+    endActor: Audit
+description:
+  - >-
+    Demonstrates nested Mermaid rect highlights and their interaction with
+    structural fragments.
+  - 'From the project root, regenerate this Mermaid transform and SVG with:'
+  - >-
+    node sequencer.js --mermaid -i
+    test/mermaid-features/15-rect-nesting-and-fragments/input.mmd -o -f -t
+    test/mermaid-features/15-rect-nesting-and-fragments

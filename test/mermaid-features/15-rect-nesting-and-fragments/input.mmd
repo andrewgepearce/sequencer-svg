@@ -1,0 +1,32 @@
+sequenceDiagram
+accTitle: Mermaid rect nesting and fragments
+accDescr {
+Demonstrates nested Mermaid rect highlights and their interaction with structural fragments.
+From the project root, regenerate this Mermaid transform and SVG with:
+node sequencer.js --mermaid -i test/mermaid-features/15-rect-nesting-and-fragments/input.mmd -o -f -t test/mermaid-features/15-rect-nesting-and-fragments
+}
+participant Caller
+participant Service
+participant DB
+participant Cache
+participant Audit
+rect rgba(255, 230, 200, 0.5)
+  Service->>DB: Outer same-start write [Mermaid: Service->>DB: Outer same-start write]
+  rect rgba(255, 190, 190, 0.5)
+    Service->>Cache: Inner same-start warm [Mermaid: Service->>Cache: Inner same-start warm]
+  end
+  opt Optional audit branch rgb(220, 240, 0)
+    Service->>Audit: Audit within rect [Mermaid: Service->>Audit: Audit within rect]
+  end
+end
+opt Outer optional branch
+  rect rgb(220, 240, 255)
+    DB->>Audit: Rect inside fragment [Mermaid: DB->>Audit: Rect inside fragment]
+  end
+end
+rect rgba(220, 255, 220, 0.6)
+  Service->>Audit: Outer different-start anchor [Mermaid: Service->>Audit: Outer different-start anchor]
+  rect rgba(200, 235, 255, 0.6)
+    DB->>Audit: Inner different-start anchor [Mermaid: DB->>Audit: Inner different-start anchor]
+  end
+end

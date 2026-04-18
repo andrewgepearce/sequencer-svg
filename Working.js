@@ -46,6 +46,7 @@ module.exports = class Working {
 		this._actorSpacing = 0;
 		this._timelineDash = [3, 3];
 		this._activeFragments = [];
+		this._activeRectHighlights = [];
 		this._callCount = 0;
 		this._autonumber = true;
 		this._negativeX = 0;
@@ -209,6 +210,17 @@ module.exports = class Working {
 	 */
 	get activeFragments() {
 		return this._activeFragments;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return active rect highlights.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.activeRectHighlights;
+	 */
+	get activeRectHighlights() {
+		return this._activeRectHighlights;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -455,7 +467,7 @@ module.exports = class Working {
 			this.scratchPad.curFragmentDepth = 0;
 		}
 		lines.forEach((line) => {
-			if (Utilities.isObject(line) && line.type == "fragment") {
+			if (Utilities.isObject(line) && line.type == "fragment" && line.fragmentType !== "rect") {
 				this.scratchPad.curFragmentDepth++;
 				if (this.scratchPad.curFragmentDepth > this.scratchPad.maxFragmentDepth) {
 					this.scratchPad.maxFragmentDepth = this.scratchPad.curFragmentDepth;
@@ -511,6 +523,8 @@ module.exports = class Working {
 			Utilities.isNumber(this.postdata.params.actorSpacing) && this.postdata.params.actorSpacing >= 0
 				? this.postdata.params.actorSpacing
 				: 150;
+		this._activeFragments = [];
+		this._activeRectHighlights = [];
 		this._autonumber = this.postdata.autonumber === false ? false : true;
 		this._tags = Utilities.isAllStrings(this.postdata.params.tags) ? this.postdata.params.tags : [];
 		if (this.tags.length > 0) {
