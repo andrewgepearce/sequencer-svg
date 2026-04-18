@@ -45,6 +45,8 @@ module.exports = class Actor {
 		this._flowStateContinue = false;
 		this._flowStartYPos = null;
 		this._flowEndYPos = null;
+		this._lifecycleStartYPos = null;
+		this._lifecycleEndYPos = null;
 		this._height = null;
 		this._width = null;
 		this._middle = null;
@@ -230,6 +232,54 @@ module.exports = class Actor {
 	 */
 	set flowEndYPos(value) {
 		this._flowEndYPos = value;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return lifecycle start ypos.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.lifecycleStartYPos;
+	 */
+	get lifecycleStartYPos() {
+		return this._lifecycleStartYPos;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return lifecycle end ypos.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.lifecycleEndYPos;
+	 */
+	get lifecycleEndYPos() {
+		return this._lifecycleEndYPos;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update lifecycle start ypos.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.lifecycleStartYPos = value;
+	 */
+	set lifecycleStartYPos(value) {
+		this._lifecycleStartYPos = value;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update lifecycle end ypos.
+	 *
+	 * @param {*} value Parameter derived from value.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.lifecycleEndYPos = value;
+	 */
+	set lifecycleEndYPos(value) {
+		this._lifecycleEndYPos = value;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -596,13 +646,30 @@ module.exports = class Actor {
 			const actorcl = actor.clinstance;
 			let extra = actorcl.getExtraYToMeetTimeLineDash(minimumHeight);
 			let actualHeight = minimumHeight + extra;
-			ctx.lineWidth = actorcl.timelineWidth;
-			ctx.setLineDash(actorcl.timelineDash);
-			ctx.strokeStyle = "rgb(0,0,0)";
-			ctx.beginPath();
-			ctx.moveTo(actorcl.middle, starty);
-			mimic ? ctx.moveTo(actorcl.middle, starty + actualHeight) : ctx.lineTo(actorcl.middle, starty + actualHeight);
-			ctx.stroke();
+			const lifecycleState =
+				working.actorLifecycleState && Utilities.isObject(working.actorLifecycleState[actorcl.alias])
+					? working.actorLifecycleState[actorcl.alias]
+					: { active: true };
+			const lifecycleStartYPos = Utilities.isNumber(actorcl.lifecycleStartYPos) ? actorcl.lifecycleStartYPos : null;
+			const lifecycleEndYPos = Utilities.isNumber(actorcl.lifecycleEndYPos) ? actorcl.lifecycleEndYPos : null;
+			let timelineStart = null;
+			let timelineEnd = null;
+			if (lifecycleState.active === true) {
+				timelineStart = starty;
+				timelineEnd = lifecycleEndYPos != null ? Math.min(starty + actualHeight, lifecycleEndYPos) : starty + actualHeight;
+			} else if (lifecycleStartYPos != null) {
+				timelineStart = Math.max(starty, lifecycleStartYPos);
+				timelineEnd = lifecycleEndYPos != null ? Math.min(starty + actualHeight, lifecycleEndYPos) : starty + actualHeight;
+			}
+			if (timelineStart != null && timelineEnd != null && timelineEnd > timelineStart) {
+				ctx.lineWidth = actorcl.timelineWidth;
+				ctx.setLineDash(actorcl.timelineDash);
+				ctx.strokeStyle = "rgb(0,0,0)";
+				ctx.beginPath();
+				ctx.moveTo(actorcl.middle, timelineStart);
+				mimic ? ctx.moveTo(actorcl.middle, timelineEnd) : ctx.lineTo(actorcl.middle, timelineEnd);
+				ctx.stroke();
+			}
 			if (actorcl.middle > maxx) maxx = actorcl.middle;
 			if (starty + actualHeight > maxy) maxy = starty + actualHeight;
 
@@ -984,6 +1051,8 @@ module.exports = class Actor {
 			}
 			actorcl.flowStartYPos = null;
 			actorcl.flowEndYPos = null;
+			actorcl.lifecycleStartYPos = null;
+			actorcl.lifecycleEndYPos = null;
 		});
 		return working.manageMaxWidth(maxx, maxy);
 	}

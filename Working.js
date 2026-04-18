@@ -49,6 +49,7 @@ module.exports = class Working {
 		this._activeRectHighlights = [];
 		this._callCount = 0;
 		this._autonumber = true;
+		this._actorLifecycleState = Object.create(null);
 		this._negativeX = 0;
 		this._id = undefined;
 		this._debug = false;
@@ -221,6 +222,17 @@ module.exports = class Working {
 	 */
 	get activeRectHighlights() {
 		return this._activeRectHighlights;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return actor lifecycle state keyed by actor alias.
+	 * @returns {object} Lifecycle state map.
+	 * @example
+	 * const value = instance.actorLifecycleState;
+	 */
+	get actorLifecycleState() {
+		return this._actorLifecycleState;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -526,10 +538,84 @@ module.exports = class Working {
 		this._activeFragments = [];
 		this._activeRectHighlights = [];
 		this._autonumber = this.postdata.autonumber === false ? false : true;
+		this._actorLifecycleState = this._buildActorLifecycleState();
 		this._tags = Utilities.isAllStrings(this.postdata.params.tags) ? this.postdata.params.tags : [];
 		if (this.tags.length > 0) {
 			this.logDebug("Using tags array of " + this.tags);
 		}
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Build the initial lifecycle state for every actor in the document. Actors
+	 * start active by default unless their first lifecycle event is an explicit
+	 * `create` line, in which case they start inactive until that line renders.
+	 *
+	 * @returns {object} Lifecycle state map keyed by actor alias.
+	 * @example
+	 * const lifecycleState = instance._buildActorLifecycleState();
+	 */
+	_buildActorLifecycleState() {
+		const firstEvents = Object.create(null);
+		const lifecycleState = Object.create(null);
+		const actors = Array.isArray(this.postdata && this.postdata.actors) ? this.postdata.actors : [];
+
+		this._collectFirstLifecycleEvents(this.postdata.lines, firstEvents);
+
+		actors.forEach((actor) => {
+			if (!actor || !Utilities.isString(actor.alias)) {
+				return;
+			}
+			lifecycleState[actor.alias] = {
+				active: firstEvents[actor.alias] === "create" ? false : true,
+			};
+		});
+
+		return lifecycleState;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Recursively collect the first lifecycle event for each actor.
+	 *
+	 * @param {Array<object>} lines Document lines in render order.
+	 * @param {object} firstEvents Output map keyed by actor alias.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance._collectFirstLifecycleEvents(lines, firstEvents);
+	 */
+	_collectFirstLifecycleEvents(lines, firstEvents) {
+		if (!Array.isArray(lines)) {
+			return;
+		}
+
+		lines.forEach((line) => {
+			if (!Utilities.isObject(line) || !Utilities.isString(line.type)) {
+				return;
+			}
+
+			const lineType = line.type.toLowerCase();
+			if (lineType === "fragment") {
+				this._collectFirstLifecycleEvents(line.lines, firstEvents);
+				return;
+			}
+
+			if (lineType === "create" && Utilities.isString(line.to) && firstEvents[line.to] == null) {
+				firstEvents[line.to] = "create";
+			}
+
+			if (lineType === "terminate" && Utilities.isString(line.from) && firstEvents[line.from] == null) {
+				firstEvents[line.from] = "destroy";
+			}
+
+			if ((lineType === "call" || lineType === "return") && line.destroyFrom === true && Utilities.isString(line.from) && firstEvents[line.from] == null) {
+				firstEvents[line.from] = "destroy";
+			}
+
+			if ((lineType === "call" || lineType === "return") && line.destroyTo === true && Utilities.isString(line.to) && firstEvents[line.to] == null) {
+				firstEvents[line.to] = "destroy";
+			}
+		});
 	}
 
 	///////////////////////////////////////////////////////////////////////////////

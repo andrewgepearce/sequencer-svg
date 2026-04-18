@@ -51,7 +51,14 @@ let _leftAlign = {
 	default: "left"
 };
 let _line = {
-	anyOf: [{$ref: base + "call"}, {$ref: base + "returnLine"}, {$ref: base + "blank"}, {$ref: base + "conditionLine"}, {$ref: base + "fragment"}]
+	anyOf: [
+		{$ref: base + "call"},
+		{$ref: base + "createLine"},
+		{$ref: base + "returnLine"},
+		{$ref: base + "blank"},
+		{$ref: base + "conditionLine"},
+		{$ref: base + "fragment"}
+	]
 };
 ////////////////////////////////////////////////////////////////////////////////
 /**
@@ -609,6 +616,16 @@ let schema = {
 			breakFromFlow: _breakFromFlow(false),
 			breakToFlow: _breakToFlow(false),
 			async: _async(false),
+			destroyFrom: {
+				type: "boolean",
+				description: "Whether this line ends the source actor lifecycle",
+				default: false
+			},
+			destroyTo: {
+				type: "boolean",
+				description: "Whether this line ends the target actor lifecycle",
+				default: false
+			},
 			text: _multiLineText,
 			comment: _comment,
 			type: {
@@ -624,6 +641,66 @@ let schema = {
 			to: {
 				type: "string",
 				description: "The alias of the actor from which this call is made",
+				minLength: 1
+			}
+		},
+		required: ["type", "from", "to", "text"]
+	},
+	createLine: {
+		$schema: "http://json-schema.org/draft-07/schema#",
+		$id: base + "createLine",
+		title: "Create Schema",
+		decription: "Definition of a create JSON object within a Sequencer document",
+		type: "object",
+		properties: {
+			fontFamily: _fontFamily("sans-serif"),
+			fontSizePx: _fontSizePx(14),
+			fgColour: _fgColour("rgb(0,0,0)"),
+			padding: _padding(20),
+			spacing: _spacing(1),
+			align: _leftAlign,
+			borderColour: _borderColour("rgba(255,255,255,0)"),
+			borderWidth: _borderWidth(0),
+			borderDash: _borderDash([]),
+			lineWidth: _lineWidth(1),
+			lineColour: _lineColour("rgb(0,0,0)"),
+			radius: _radius(5),
+			arrowSizeY: _arrowSizeY(5),
+			arrow: {
+				type: "string",
+				description: "The arrowhead style for the create line",
+				enum: ["fill", "open", "cross", "empty", "none", "halfTop", "halfBottom", "stickTop", "stickBottom"],
+			},
+			fromArrow: {
+				type: "string",
+				description: "The arrowhead style for the start of the create line",
+				enum: ["fill", "open", "cross", "empty", "none", "halfTop", "halfBottom", "stickTop", "stickBottom"],
+			},
+			fromAnchor: _lineAnchor("edge"),
+			toArrow: {
+				type: "string",
+				description: "The arrowhead style for the end of the create line",
+				enum: ["fill", "open", "cross", "empty", "none", "halfTop", "halfBottom", "stickTop", "stickBottom"],
+			},
+			toAnchor: _lineAnchor("edge"),
+			breakFromFlow: _breakFromFlow(false),
+			breakToFlow: _breakToFlow(false),
+			async: _async(false),
+			text: _multiLineText,
+			comment: _comment,
+			type: {
+				type: "string",
+				description: 'The type of the object - fixed to "create"',
+				const: "create"
+			},
+			from: {
+				type: "string",
+				description: "The alias of the actor from which this create message is made",
+				minLength: 1
+			},
+			to: {
+				type: "string",
+				description: "The alias of the actor created by this message",
 				minLength: 1
 			}
 		},
@@ -668,6 +745,16 @@ let schema = {
 			toAnchor: _lineAnchor("edge"),
 			continueFromFlow: _breakFromFlow(false),
 			breakToFlow: _breakToFlow(false),
+			destroyFrom: {
+				type: "boolean",
+				description: "Whether this line ends the source actor lifecycle",
+				default: false
+			},
+			destroyTo: {
+				type: "boolean",
+				description: "Whether this line ends the target actor lifecycle",
+				default: false
+			},
 			text: _multiLineText,
 			comment: _comment,
 			type: {

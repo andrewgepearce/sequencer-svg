@@ -955,6 +955,12 @@ module.exports = class Fragment {
 					working.logDebug("Processing Call line at y:" + xy.y + " - " + Utilities.objToString(line));
 					let call = new Call(ctx, line, working);
 					xy = call.draw(working, xy.y, false);
+				} else if (line.type.toLowerCase() == "create") {
+					working.logDebug("Processing Create line at y:" + xy.y + " - " + Utilities.objToString(line));
+					let createLine = Utilities.jsonCopy(line);
+					createLine.type = "create";
+					let call = new Call(ctx, createLine, working);
+					xy = call.draw(working, xy.y, false);
 				} else if (line.type.toLowerCase() == "return") {
 					working.logDebug("Processing Return line at y:" + xy.y + " - " + Utilities.objToString(line));
 					let rcall = new ReturnCall(ctx, line, working);
@@ -972,7 +978,7 @@ module.exports = class Fragment {
 						working,
 						ctx,
 						xy.y,
-						"unrecognised line type '" + line.type + "' (expected blank, fragment, state, condition, call, return, reference or terminate)",
+						"unrecognised line type '" + line.type + "' (expected blank, fragment, state, condition, call, create, return, reference or terminate)",
 						line,
 						false
 					);

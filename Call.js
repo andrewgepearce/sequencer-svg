@@ -113,6 +113,40 @@ function resolveCallEndpointX(actorMiddleX, actorClass, anchorType, direction, c
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
+ * Return whether an actor is currently lifecycle-active for the render pass.
+ *
+ * @param {object} working Shared working state.
+ * @param {string} alias Actor alias.
+ * @returns {boolean} True when the actor is currently active.
+ * @example
+ * const active = isActorLifecycleActive(working, "API");
+ */
+function isActorLifecycleActive(working, alias) {
+	return !Utilities.isObject(working.actorLifecycleState) || !Utilities.isObject(working.actorLifecycleState[alias])
+		? true
+		: working.actorLifecycleState[alias].active === true;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * Update an actor's lifecycle-active state for the current render pass.
+ *
+ * @param {object} working Shared working state.
+ * @param {string} alias Actor alias.
+ * @param {boolean} active New active state.
+ * @returns {void} Nothing.
+ * @example
+ * setActorLifecycleActive(working, "API", false);
+ */
+function setActorLifecycleActive(working, alias, active) {
+	if (!Utilities.isObject(working.actorLifecycleState) || !Utilities.isObject(working.actorLifecycleState[alias])) {
+		return;
+	}
+	working.actorLifecycleState[alias].active = active === true;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
  * Draw a central-connection marker on a call line.
  *
  * @param {*} ctx Rendering context.
@@ -314,6 +348,19 @@ module.exports = class Call {
 				y: starty,
 			};
 		}
+		const isCreateLine = Utilities.isString(this._line.type) && this._line.type.toLowerCase() === "create";
+		const fromActive = isActorLifecycleActive(working, this._line.from);
+		const toActive = isActorLifecycleActive(working, this._line.to);
+		if (!fromActive) {
+			throw new InputDocumentError(`'${this._line.type}' line 'from' actor "${this._line.from}" is not currently active`, this._line);
+		}
+		if (isCreateLine) {
+			if (toActive) {
+				throw new InputDocumentError(`'create' line 'to' actor "${this._line.to}" is already active`, this._line);
+			}
+		} else if (!toActive) {
+			throw new InputDocumentError(`'${this._line.type}' line 'to' actor "${this._line.to}" is not currently active`, this._line);
+		}
 		if (this._endx != this._startx) {
 			return this.drawDifferentActor(working, starty, mimic);
 		} else if (this._endx == this._startx) {
@@ -333,6 +380,9 @@ module.exports = class Call {
 	 * instance.drawSameActor(working, starty, mimic);
 	 */
 	drawSameActor(working, starty, mimic) {
+		if (Utilities.isString(this._line.type) && this._line.type.toLowerCase() === "create") {
+			throw new InputDocumentError("'create' line cannot target the same actor as its source", this._line);
+		}
 		//////////////////////////////////////////////////////////////////////////////
 		// Get the call TMD
 		let calltmd = TextMetadata.getTextMetadataFromObject(working, this._line, working.postdata.params.call, Call.getSelfCallDefaultTmd());
@@ -442,6 +492,12 @@ module.exports = class Call {
 		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
 		this._actorFromClass.flowStartYPos = callliney;
+		if (this._line.destroyFrom === true) {
+			this._actorFromClass.lifecycleEndYPos = callliney + working.globalSpacing;
+		}
+		if (this._line.destroyTo === true && this._actorToClass != null) {
+			this._actorToClass.lifecycleEndYPos = callliney + working.globalSpacing;
+		}
 		if (
 			this._line.breakFromFlow === true ||
 			this._line.breakFlow === true ||
@@ -459,6 +515,12 @@ module.exports = class Call {
 			let breakAtYPos = callliney + working.globalSpacing / 2;
 			let breakAtYPosForActor = this._actorFromClass.alias;
 			xy = Actor.drawTimelinesWithBreak(working, ctx, starty, finalHeightOfAllLine, breakAtYPos, breakAtYPosForActor, gapForBreak, mimic);
+		}
+		if (this._line.destroyFrom === true) {
+			setActorLifecycleActive(working, this._line.from, false);
+		}
+		if (this._line.destroyTo === true) {
+			setActorLifecycleActive(working, this._line.to, false);
 		}
 
 		//////////////////////////////////////////////////////////////////////////////
@@ -702,6 +764,15 @@ module.exports = class Call {
 		// 2. Time lines
 		this._actorFromClass.flowStartYPos = callliney;
 		this._actorToClass.flowStartYPos = callliney;
+		if (Utilities.isString(this._line.type) && this._line.type.toLowerCase() === "create") {
+			this._actorToClass.lifecycleStartYPos = callliney;
+		}
+		if (this._line.destroyFrom === true) {
+			this._actorFromClass.lifecycleEndYPos = callliney;
+		}
+		if (this._line.destroyTo === true) {
+			this._actorToClass.lifecycleEndYPos = callliney;
+		}
 		if (this._line.breakFromFlow === true || this._line.bff === true) {
 			this._actorFromClass.flowEndYPos = callliney + working.globalSpacing / 3;
 		}
@@ -709,6 +780,15 @@ module.exports = class Call {
 			this._actorToClass.flowEndYPos = callliney + working.globalSpacing / 3;
 		}
 		xy = Actor.drawTimelines(working, ctx, starty, finalHeightOfAllLine, mimic);
+		if (Utilities.isString(this._line.type) && this._line.type.toLowerCase() === "create") {
+			setActorLifecycleActive(working, this._line.to, true);
+		}
+		if (this._line.destroyFrom === true) {
+			setActorLifecycleActive(working, this._line.from, false);
+		}
+		if (this._line.destroyTo === true) {
+			setActorLifecycleActive(working, this._line.to, false);
+		}
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 3. Comment

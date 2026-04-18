@@ -112,6 +112,40 @@ function resolveReturnEndpointX(actorMiddleX, actorClass, anchorType, direction,
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
+ * Return whether an actor is currently lifecycle-active for the render pass.
+ *
+ * @param {object} working Shared working state.
+ * @param {string} alias Actor alias.
+ * @returns {boolean} True when the actor is currently active.
+ * @example
+ * const active = isActorLifecycleActive(working, "DB");
+ */
+function isActorLifecycleActive(working, alias) {
+	return !Utilities.isObject(working.actorLifecycleState) || !Utilities.isObject(working.actorLifecycleState[alias])
+		? true
+		: working.actorLifecycleState[alias].active === true;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * Update an actor's lifecycle-active state for the current render pass.
+ *
+ * @param {object} working Shared working state.
+ * @param {string} alias Actor alias.
+ * @param {boolean} active New active state.
+ * @returns {void} Nothing.
+ * @example
+ * setActorLifecycleActive(working, "DB", false);
+ */
+function setActorLifecycleActive(working, alias, active) {
+	if (!Utilities.isObject(working.actorLifecycleState) || !Utilities.isObject(working.actorLifecycleState[alias])) {
+		return;
+	}
+	working.actorLifecycleState[alias].active = active === true;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
  * Draw a central-connection marker on a return line.
  *
  * @param {*} ctx Rendering context.
@@ -351,6 +385,12 @@ module.exports = class ReturnCall {
 		if (typeof this._endx != "number") {
 			throw new InputDocumentError(`'return' line 'to' alias "${this._line.to}" does not match any actor`, this._line);
 		}
+		if (!isActorLifecycleActive(working, this._line.from)) {
+			throw new InputDocumentError(`'return' line 'from' actor "${this._line.from}" is not currently active`, this._line);
+		}
+		if (!isActorLifecycleActive(working, this._line.to)) {
+			throw new InputDocumentError(`'return' line 'to' actor "${this._line.to}" is not currently active`, this._line);
+		}
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Should we break the to or from flows
@@ -465,6 +505,12 @@ module.exports = class ReturnCall {
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
+		if (this._line.destroyFrom === true) {
+			this._actorFromClass.lifecycleEndYPos = callliney;
+		}
+		if (this._line.destroyTo === true) {
+			this._actorToClass.lifecycleEndYPos = callliney;
+		}
 		if (continueFromFlow) {
 			this._actorFromClass.flowStartYPos = callliney - arrowSizeY;
 			this._actorFromClass.flowEndYPos = null;
@@ -480,6 +526,12 @@ module.exports = class ReturnCall {
 			this._actorToClass.flowEndYPos = null;
 		}
 		xy = Actor.drawTimelines(working, ctx, starty, finalHeightOfAllLine, mimic);
+		if (this._line.destroyFrom === true) {
+			setActorLifecycleActive(working, this._line.from, false);
+		}
+		if (this._line.destroyTo === true) {
+			setActorLifecycleActive(working, this._line.to, false);
+		}
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 3. Comment

@@ -328,6 +328,113 @@
 				"async": {
 					"type": "boolean"
 				},
+				"destroyFrom": {
+					"type": "boolean"
+				},
+				"destroyTo": {
+					"type": "boolean"
+				},
+				"comment": {
+					"$ref": "#/$defs/comment"
+				}
+			}
+		},
+		"createLine": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["type", "from", "to", "text"],
+			"properties": {
+				"type": {
+					"const": "create"
+				},
+				"from": {
+					"type": "string",
+					"minLength": 1
+				},
+				"to": {
+					"type": "string",
+					"minLength": 1
+				},
+				"text": {
+					"$ref": "#/$defs/stringOrStringArray"
+				},
+				"fontFamily": {
+					"type": "string",
+					"minLength": 1
+				},
+				"fontSizePx": {
+					"type": "number",
+					"minimum": 1
+				},
+				"padding": {
+					"type": "number",
+					"minimum": 0
+				},
+				"spacing": {
+					"type": "number",
+					"minimum": 0
+				},
+				"align": {
+					"$ref": "#/$defs/align"
+				},
+				"fgColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"bgColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"borderColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"borderWidth": {
+					"type": "number",
+					"minimum": 0
+				},
+				"borderDash": {
+					"$ref": "#/$defs/dashArray"
+				},
+				"lineWidth": {
+					"type": "number",
+					"minimum": 0
+				},
+				"lineColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"lineDash": {
+					"$ref": "#/$defs/dashArray"
+				},
+				"radius": {
+					"type": "number",
+					"minimum": 0
+				},
+				"arrowSizeY": {
+					"type": "number",
+					"minimum": 0
+				},
+				"arrow": {
+					"$ref": "#/$defs/arrow"
+				},
+				"fromArrow": {
+					"$ref": "#/$defs/arrow"
+				},
+				"fromAnchor": {
+					"$ref": "#/$defs/lineAnchor"
+				},
+				"toArrow": {
+					"$ref": "#/$defs/arrow"
+				},
+				"toAnchor": {
+					"$ref": "#/$defs/lineAnchor"
+				},
+				"breakFromFlow": {
+					"type": "boolean"
+				},
+				"breakToFlow": {
+					"type": "boolean"
+				},
+				"async": {
+					"type": "boolean"
+				},
 				"comment": {
 					"$ref": "#/$defs/comment"
 				}
@@ -424,6 +531,12 @@
 					"type": "boolean"
 				},
 				"breakToFlow": {
+					"type": "boolean"
+				},
+				"destroyFrom": {
+					"type": "boolean"
+				},
+				"destroyTo": {
 					"type": "boolean"
 				},
 				"comment": {
@@ -569,6 +682,9 @@
 			"oneOf": [
 				{
 					"$ref": "#/$defs/call"
+				},
+				{
+					"$ref": "#/$defs/createLine"
 				},
 				{
 					"$ref": "#/$defs/returnLine"

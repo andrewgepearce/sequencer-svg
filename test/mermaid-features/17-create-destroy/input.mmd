@@ -1,0 +1,20 @@
+sequenceDiagram
+accTitle: Mermaid create and destroy
+accDescr {
+Demonstrates Mermaid actor lifecycle control, including destroy-before-create and recreate.
+From the project root, regenerate this Mermaid transform and SVG with:
+node sequencer.js --mermaid -i test/mermaid-features/17-create-destroy/input.mmd -o -f -t test/mermaid-features/17-create-destroy
+}
+participant Orchestrator
+participant Worker
+destroy Worker
+Orchestrator-xWorker: Stop inherited worker [Mermaid: Orchestrator-xWorker: Stop inherited worker]
+create participant Worker
+Orchestrator->>Worker: Create worker [Mermaid: Orchestrator->>Worker: Create worker]
+Worker-->>Orchestrator: Ready [Mermaid: Worker-->>Orchestrator: Ready]
+destroy Worker
+Orchestrator-xWorker: Stop worker [Mermaid: Orchestrator-xWorker: Stop worker]
+create participant Worker
+Orchestrator->>Worker: Recreate worker [Mermaid: Orchestrator->>Worker: Recreate worker]
+destroy Worker
+Orchestrator-xWorker: Stop recreated worker [Mermaid: Orchestrator-xWorker: Stop recreated worker]
