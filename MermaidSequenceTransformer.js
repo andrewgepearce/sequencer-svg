@@ -763,7 +763,7 @@ class MermaidSequenceTransformer {
 	 * const matched = MermaidSequenceTransformer._looksLikeMessageLine("A->>B: Ping");
 	 */
 	static _looksLikeMessageLine(trimmed) {
-		return /^[A-Za-z0-9_][-A-Za-z0-9_]*\s*[<\\/\-|x).]+/.test(trimmed);
+		return /^[A-Za-z0-9_][-A-Za-z0-9_]*\s*[()<\\/\-|x).]+/.test(trimmed);
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -806,9 +806,11 @@ class MermaidSequenceTransformer {
 		const colonIndex = rightSide.indexOf(":");
 		const toToken = (colonIndex === -1 ? rightSide : rightSide.slice(0, colonIndex)).trim();
 		const messageText = colonIndex === -1 ? "" : rightSide.slice(colonIndex + 1).trim();
-		const fromAlias = leftSide;
+		const fromEndpoint = this._parseMessageSourceEndpoint(leftSide, lineNumber, sourceLine);
+		const toEndpoint = this._parseMessageTargetEndpoint(toToken, lineNumber, sourceLine);
+		const fromAlias = fromEndpoint.alias;
 		const arrowToken = matchedArrowToken;
-		const activationShortcut = this._parseActivationShortcut(toToken);
+		const activationShortcut = this._parseActivationShortcut(toEndpoint.aliasToken);
 		const toAlias = activationShortcut.alias;
 
 		if (!/^[A-Za-z0-9_][-A-Za-z0-9_]*$/.test(fromAlias) || !/^[A-Za-z0-9_][-A-Za-z0-9_]*$/.test(toAlias)) {
@@ -836,6 +838,12 @@ class MermaidSequenceTransformer {
 					to: toAlias,
 					text: this._parseTextPayload(messageText),
 			  };
+		if (fromEndpoint.anchor === "central") {
+			line.fromAnchor = "central";
+		}
+		if (toEndpoint.anchor === "central") {
+			line.toAnchor = "central";
+		}
 		const preSourceActivationCount = this._getActivationCount(activationState, fromAlias);
 		const activationOutcome = isReturnMessage
 			? this._applyReturnActivationPolicy(activationState, fromAlias, toAlias, activationShortcut.operation)
@@ -883,6 +891,70 @@ class MermaidSequenceTransformer {
 		}
 
 		return line;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse the source actor token for a Mermaid message, including an optional
+	 * trailing central-connection marker.
+	 *
+	 * @param {string} token Trimmed source-side token before the arrow.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {{ alias: string, anchor: "edge"|"central" }} Parsed source endpoint.
+	 * @throws {MermaidTransformError} If the token is malformed.
+	 * @example
+	 * const endpoint = MermaidSequenceTransformer._parseMessageSourceEndpoint("API()", 4, "API()->>DB: Save");
+	 */
+	static _parseMessageSourceEndpoint(token, lineNumber, sourceLine) {
+		let alias = String(token).trim();
+		let anchor = "edge";
+		if (/\(\)\s*$/.test(alias)) {
+			anchor = "central";
+			alias = alias.replace(/\(\)\s*$/, "").trim();
+		}
+		if (!/^[A-Za-z0-9_][-A-Za-z0-9_]*$/.test(alias)) {
+			throw new MermaidTransformError("Unsupported Mermaid message actor syntax", lineNumber, sourceLine);
+		}
+		return {
+			alias: alias,
+			anchor: anchor,
+		};
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse the target actor token for a Mermaid message, including an optional
+	 * leading central-connection marker before the actor alias.
+	 *
+	 * @param {string} token Trimmed target-side token after the arrow.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {{ aliasToken: string, anchor: "edge"|"central" }} Parsed target endpoint token.
+	 * @throws {MermaidTransformError} If the token is malformed.
+	 * @example
+	 * const endpoint = MermaidSequenceTransformer._parseMessageTargetEndpoint("()DB", 4, "API->>()DB: Ack");
+	 */
+	static _parseMessageTargetEndpoint(token, lineNumber, sourceLine) {
+		let aliasToken = String(token).trim();
+		let anchor = "edge";
+
+		if (/^\(\)/.test(aliasToken)) {
+			anchor = "central";
+			aliasToken = aliasToken.replace(/^\(\)/, "").trim();
+		} else if (/^[+-]\(\)/.test(aliasToken)) {
+			anchor = "central";
+			aliasToken = aliasToken.charAt(0) + aliasToken.slice(3).trim();
+		}
+
+		if (!/^[+-]?[A-Za-z0-9_][-A-Za-z0-9_]*$/.test(aliasToken)) {
+			throw new MermaidTransformError("Unsupported Mermaid message actor syntax", lineNumber, sourceLine);
+		}
+
+		return {
+			aliasToken: aliasToken,
+			anchor: anchor,
+		};
 	}
 
 	////////////////////////////////////////////////////////////////////////////

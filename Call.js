@@ -63,6 +63,85 @@ function getCallArrowType(line, endpoint) {
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
+ * Resolve the endpoint-anchor style for one end of a call line.
+ *
+ * @param {object} line Call-line definition.
+ * @param {"from"|"to"} endpoint Endpoint being resolved.
+ * @returns {"edge"|"central"} Normalised endpoint-anchor style.
+ * @example
+ * const anchorType = getCallAnchorType({ toAnchor: "central" }, "to");
+ */
+function getCallAnchorType(line, endpoint) {
+	const propertyName = endpoint === "from" ? "fromAnchor" : "toAnchor";
+	const anchorType = Utilities.isString(line[propertyName]) ? line[propertyName].toLowerCase() : "edge";
+	return anchorType === "central" ? "central" : "edge";
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * Return the marker radius used for a central call connection.
+ *
+ * @param {number} arrowSizeY Arrow half-height for the call line.
+ * @returns {number} Marker radius in pixels.
+ * @example
+ * const radius = getCentralConnectionRadius(5);
+ */
+function getCentralConnectionRadius(arrowSizeY) {
+	return Math.max(3, Math.round(arrowSizeY * 0.8));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * Resolve the rendered x coordinate for a call endpoint after flow and anchor
+ * adjustments have been applied.
+ *
+ * @param {number} actorMiddleX Actor lifeline centre x coordinate.
+ * @param {object} actorClass Actor renderer instance.
+ * @param {"edge"|"central"} anchorType Endpoint-anchor style.
+ * @param {number} direction Horizontal sign towards the line body.
+ * @param {number} centralRadius Marker radius for central anchors.
+ * @returns {number} Endpoint x coordinate.
+ * @example
+ * const x = resolveCallEndpointX(100, actorClass, "central", 1, 4);
+ */
+function resolveCallEndpointX(actorMiddleX, actorClass, anchorType, direction, centralRadius) {
+	if (anchorType === "central") {
+		return actorMiddleX + direction * centralRadius;
+	}
+	return actorMiddleX + direction * actorClass.flowWidth / 2;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * Draw a central-connection marker on a call line.
+ *
+ * @param {*} ctx Rendering context.
+ * @param {number} x Marker-centre x coordinate.
+ * @param {number} y Marker-centre y coordinate.
+ * @param {number} radius Marker radius.
+ * @param {number} lineWidth Stroke width.
+ * @param {string} lineColour Stroke colour.
+ * @param {boolean} mimic Whether this is a measurement pass.
+ * @returns {void} Nothing.
+ * @example
+ * drawCentralConnectionMarker(ctx, 40, 20, 4, 1, "rgb(0,0,0)", false);
+ */
+function drawCentralConnectionMarker(ctx, x, y, radius, lineWidth, lineColour, mimic) {
+	if (mimic) {
+		return;
+	}
+	ctx.beginPath();
+	ctx.setLineDash([]);
+	ctx.lineWidth = lineWidth;
+	ctx.strokeStyle = lineColour;
+	ctx.fillStyle = "rgb(255,255,255)";
+	ctx.arc(x, y, radius, 0, 2 * Math.PI);
+	ctx.fill();
+	ctx.stroke();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
  * Draw one arrowhead for a call line.
  *
  * @param {*} ctx Rendering context.
@@ -302,7 +381,10 @@ module.exports = class Call {
 		let commentxy = null;
 		let comment = null;
 		let callliney = null;
-		startxAfterFlow = this._startx + this._actorFromClass.flowWidth / 2;
+		const fromAnchorType = getCallAnchorType(this._line, "from");
+		const toAnchorType = getCallAnchorType(this._line, "to");
+		const centralRadius = getCentralConnectionRadius(arrowSizeY);
+		startxAfterFlow = resolveCallEndpointX(this._startx, this._actorFromClass, fromAnchorType, 1, centralRadius);
 		if (this._line.comment != null) {
 			comment = new Comment(ctx, this._line.comment);
 			commentxy = comment.draw(
@@ -419,14 +501,15 @@ module.exports = class Call {
 			radius,
 			mimic
 		);
-		Utilities.drawOrMovePath(ctx, startxAfterFlow, callliney + working.globalSpacing, mimic);
+		const endxAfterFlow = resolveCallEndpointX(this._startx, this._actorFromClass, toAnchorType, 1, centralRadius);
+		Utilities.drawOrMovePath(ctx, endxAfterFlow, callliney + working.globalSpacing, mimic);
 		ctx.stroke();
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 5. Draw the line arrow
 		drawCallArrowhead(
 			ctx,
-			startxAfterFlow,
+			endxAfterFlow,
 			callliney + working.globalSpacing,
 			"left",
 			getCallArrowType(this._line, "to"),
@@ -435,6 +518,20 @@ module.exports = class Call {
 			lineColour,
 			false
 		);
+		if (fromAnchorType === "central") {
+			drawCentralConnectionMarker(ctx, this._startx, callliney, centralRadius, lineWidth, lineColour, mimic);
+		}
+		if (toAnchorType === "central") {
+			drawCentralConnectionMarker(
+				ctx,
+				this._startx,
+				callliney + working.globalSpacing,
+				centralRadius,
+				lineWidth,
+				lineColour,
+				mimic
+			);
+		}
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 5. Draw the call line text
@@ -538,12 +635,15 @@ module.exports = class Call {
 		}
 		let wh = Utilities.getTextWidthAndHeight(ctx, calltmd, textToPrint, working.tags);
 		const textheight = wh.h;
+		const fromAnchorType = getCallAnchorType(this._line, "from");
+		const toAnchorType = getCallAnchorType(this._line, "to");
+		const centralRadius = getCentralConnectionRadius(arrowSizeY);
 		if (this._startx < this._endx) {
-			startxAfterFlow = this._startx + this._actorFromClass.flowWidth / 2;
-			endxAfterFlow = this._endx - this._actorToClass.flowWidth / 2;
+			startxAfterFlow = resolveCallEndpointX(this._startx, this._actorFromClass, fromAnchorType, 1, centralRadius);
+			endxAfterFlow = resolveCallEndpointX(this._endx, this._actorToClass, toAnchorType, -1, centralRadius);
 		} else {
-			startxAfterFlow = this._startx - this._actorFromClass.flowWidth / 2;
-			endxAfterFlow = this._endx + this._actorToClass.flowWidth / 2;
+			startxAfterFlow = resolveCallEndpointX(this._startx, this._actorFromClass, fromAnchorType, -1, centralRadius);
+			endxAfterFlow = resolveCallEndpointX(this._endx, this._actorToClass, toAnchorType, 1, centralRadius);
 			commentOnStartx = false;
 		}
 
@@ -701,6 +801,12 @@ module.exports = class Call {
 			lineColour,
 			false
 		);
+		if (fromAnchorType === "central") {
+			drawCentralConnectionMarker(ctx, this._startx, callliney, centralRadius, lineWidth, lineColour, mimic);
+		}
+		if (toAnchorType === "central") {
+			drawCentralConnectionMarker(ctx, this._endx, callliney, centralRadius, lineWidth, lineColour, mimic);
+		}
 		Utilities.drawActiveStructuralFragmentBorders(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
 		return working.manageMaxWidth(0, starty + finalHeightOfAllLine);

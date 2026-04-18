@@ -127,6 +127,23 @@ function _lineColour(defValue) {
 }
 ////////////////////////////////////////////////////////////////////////////////
 /**
+ * Handle the internal line-anchor step.
+ *
+ * @param {*} defValue Parameter derived from defValue.
+ * @returns {*} Result value.
+ * @example
+ * instance._lineAnchor(defValue);
+ */
+function _lineAnchor(defValue) {
+	return {
+		type: "string",
+		description: "How the line endpoint attaches to the actor",
+		enum: ["edge", "central"],
+		default: defValue == undefined ? "edge" : defValue
+	};
+}
+////////////////////////////////////////////////////////////////////////////////
+/**
  * Handle the internal border colour step.
  *
  * @param {*} defValue Parameter derived from defValue.
@@ -582,11 +599,13 @@ let schema = {
 				description: "The arrowhead style for the start of the call line",
 				enum: ["fill", "open", "cross", "empty", "none", "halfTop", "halfBottom", "stickTop", "stickBottom"],
 			},
+			fromAnchor: _lineAnchor("edge"),
 			toArrow: {
 				type: "string",
 				description: "The arrowhead style for the end of the call line",
 				enum: ["fill", "open", "cross", "empty", "none", "halfTop", "halfBottom", "stickTop", "stickBottom"],
 			},
+			toAnchor: _lineAnchor("edge"),
 			breakFromFlow: _breakFromFlow(false),
 			breakToFlow: _breakToFlow(false),
 			async: _async(false),
@@ -640,11 +659,13 @@ let schema = {
 				description: "The arrowhead style for the start of the return line",
 				enum: ["fill", "open", "cross", "empty", "none", "halfTop", "halfBottom", "stickTop", "stickBottom"],
 			},
+			fromAnchor: _lineAnchor("edge"),
 			toArrow: {
 				type: "string",
 				description: "The arrowhead style for the end of the return line",
 				enum: ["fill", "open", "cross", "empty", "none", "halfTop", "halfBottom", "stickTop", "stickBottom"],
 			},
+			toAnchor: _lineAnchor("edge"),
 			continueFromFlow: _breakFromFlow(false),
 			breakToFlow: _breakToFlow(false),
 			text: _multiLineText,

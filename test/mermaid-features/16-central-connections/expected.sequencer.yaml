@@ -1,0 +1,55 @@
+title: Mermaid central connections
+version: '1.0'
+actors:
+  - name: Caller
+    alias: Caller
+    actorType: participant
+  - name: Service
+    alias: Service
+    actorType: participant
+  - name: DB
+    alias: DB
+    actorType: participant
+lines:
+  - type: call
+    from: Caller
+    to: Service
+    text: 'Source central sync [Mermaid: Caller()->>Service: Source central sync]'
+    fromAnchor: central
+    toArrow: fill
+    arrow: fill
+  - type: return
+    from: Service
+    to: Caller
+    text: 'Target central return [Mermaid: Service-->()Caller: Target central return]'
+    toAnchor: central
+    lineDash:
+      - 4
+      - 2
+    toArrow: fill
+    arrow: fill
+  - type: call
+    from: Caller
+    to: DB
+    text: 'Both central sync [Mermaid: Caller()->>()DB: Both central sync]'
+    fromAnchor: central
+    toAnchor: central
+    toArrow: fill
+    arrow: fill
+  - type: call
+    from: DB
+    to: Service
+    text: 'Source central async [Mermaid: DB()-)Service: Source central async]'
+    fromAnchor: central
+    toArrow: open
+    arrow: open
+    async: true
+description:
+  - >-
+    Demonstrates Mermaid central connections mapped onto sequencer endpoint
+    anchors.
+  - 'From the project root, regenerate this Mermaid transform and SVG with:'
+  - >-
+    node sequencer.js --mermaid -i
+    test/mermaid-features/16-central-connections/input.mmd -o -f -t
+    test/mermaid-features/16-central-connections

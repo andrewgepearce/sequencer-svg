@@ -43,6 +43,10 @@
 			"type": "string",
 			"enum": ["fill", "open", "cross", "empty", "none", "halfTop", "halfBottom", "stickTop", "stickBottom"]
 		},
+		"lineAnchor": {
+			"type": "string",
+			"enum": ["edge", "central"]
+		},
 		"colour": {
 			"type": "string",
 			"minLength": 1
@@ -306,8 +310,14 @@
 				"fromArrow": {
 					"$ref": "#/$defs/arrow"
 				},
+				"fromAnchor": {
+					"$ref": "#/$defs/lineAnchor"
+				},
 				"toArrow": {
 					"$ref": "#/$defs/arrow"
+				},
+				"toAnchor": {
+					"$ref": "#/$defs/lineAnchor"
 				},
 				"breakFromFlow": {
 					"type": "boolean"
@@ -401,8 +411,14 @@
 				"fromArrow": {
 					"$ref": "#/$defs/arrow"
 				},
+				"fromAnchor": {
+					"$ref": "#/$defs/lineAnchor"
+				},
 				"toArrow": {
 					"$ref": "#/$defs/arrow"
+				},
+				"toAnchor": {
+					"$ref": "#/$defs/lineAnchor"
 				},
 				"continueFromFlow": {
 					"type": "boolean"
