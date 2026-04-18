@@ -4,3 +4,4 @@ npm-debug.log*
 .claude/settings.local.json
 .claude/session.md
 agent.md
+scratch
