@@ -14,6 +14,9 @@
 		"description": {
 			"$ref": "#/$defs/stringOrStringArray"
 		},
+		"autonumber": {
+			"type": "boolean"
+		},
 		"version": {
 			"type": "string",
 			"pattern": "^[0-9]+(\\.[0-9]+)*$"
@@ -298,6 +301,92 @@
 				}
 			}
 		},
+		"returnLine": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["type", "from", "to", "text"],
+			"properties": {
+				"type": {
+					"const": "return"
+				},
+				"from": {
+					"type": "string",
+					"minLength": 1
+				},
+				"to": {
+					"type": "string",
+					"minLength": 1
+				},
+				"text": {
+					"$ref": "#/$defs/stringOrStringArray"
+				},
+				"fontFamily": {
+					"type": "string",
+					"minLength": 1
+				},
+				"fontSizePx": {
+					"type": "number",
+					"minimum": 1
+				},
+				"padding": {
+					"type": "number",
+					"minimum": 0
+				},
+				"spacing": {
+					"type": "number",
+					"minimum": 0
+				},
+				"align": {
+					"$ref": "#/$defs/align"
+				},
+				"fgColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"bgColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"borderColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"borderWidth": {
+					"type": "number",
+					"minimum": 0
+				},
+				"borderDash": {
+					"$ref": "#/$defs/dashArray"
+				},
+				"lineWidth": {
+					"type": "number",
+					"minimum": 0
+				},
+				"lineColour": {
+					"$ref": "#/$defs/colour"
+				},
+				"lineDash": {
+					"$ref": "#/$defs/dashArray"
+				},
+				"radius": {
+					"type": "number",
+					"minimum": 0
+				},
+				"arrowSizeY": {
+					"type": "number",
+					"minimum": 0
+				},
+				"arrow": {
+					"$ref": "#/$defs/arrow"
+				},
+				"continueFromFlow": {
+					"type": "boolean"
+				},
+				"breakToFlow": {
+					"type": "boolean"
+				},
+				"comment": {
+					"$ref": "#/$defs/comment"
+				}
+			}
+		},
 		"fragmentLabel": {
 			"oneOf": [
 				{
@@ -428,6 +517,9 @@
 			"oneOf": [
 				{
 					"$ref": "#/$defs/call"
+				},
+				{
+					"$ref": "#/$defs/returnLine"
 				},
 				{
 					"$ref": "#/$defs/blank"

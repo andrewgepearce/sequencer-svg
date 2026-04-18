@@ -174,11 +174,13 @@ module.exports = class Reference {
 			for (let i = 0; i < textToPrint.length; i++) {
 				textToPrint[i] = "<hang>" + textToPrint[i];
 			}
-			textToPrint.unshift("" + this._callCount + ". ");
+			if (working.autonumber !== false) {
+				textToPrint.unshift("" + this._callCount + ". ");
+			}
 		} else if (Utilities.isString(this._line.text)) {
-			textToPrint = this._callCount + ". " + this._line.text;
+			textToPrint = working.autonumber !== false ? this._callCount + ". " + this._line.text : this._line.text;
 		} else {
-			textToPrint = this._callCount + ". ";
+			textToPrint = working.autonumber !== false ? this._callCount + ". " : "";
 		}
 		//////////////////////////////////////////////////////////////////////////////
 		//ret text
@@ -188,11 +190,13 @@ module.exports = class Reference {
 				for (let i = 0; i < retTextToPrint.length; i++) {
 					retTextToPrint[i] = "<hang>" + retTextToPrint[i];
 				}
-				retTextToPrint.unshift("" + ++working.callCount + ". ");
+				if (working.autonumber !== false) {
+					retTextToPrint.unshift("" + ++working.callCount + ". ");
+				}
 			} else if (Utilities.isString(this._line.rettext)) {
-				retTextToPrint = ++working.callCount + ". " + this._line.rettext;
+				retTextToPrint = working.autonumber !== false ? ++working.callCount + ". " + this._line.rettext : this._line.rettext;
 			} else {
-				retTextToPrint = ++working.callCount + ". ";
+				retTextToPrint = working.autonumber !== false ? ++working.callCount + ". " : "";
 			}
 		}
 

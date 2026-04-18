@@ -179,11 +179,13 @@ module.exports = class ReturnCall {
 			for (let i = 0; i < textToPrint.length; i++) {
 				textToPrint[i] = "<hang>" + textToPrint[i];
 			}
-			textToPrint.unshift("" + this._callCount + ". ");
+			if (working.autonumber !== false) {
+				textToPrint.unshift("" + this._callCount + ". ");
+			}
 		} else if (Utilities.isString(this._line.text)) {
-			textToPrint = this._callCount + ". " + this._line.text;
+			textToPrint = working.autonumber !== false ? this._callCount + ". " + this._line.text : this._line.text;
 		} else {
-			textToPrint = this._callCount + ". ";
+			textToPrint = working.autonumber !== false ? this._callCount + ". " : "";
 		}
 
 		let wh = Utilities.getTextWidthAndHeight(ctx, returntmd, textToPrint, working.tags);
@@ -344,6 +346,8 @@ module.exports = class ReturnCall {
 				? "open"
 				: this._line.arrow === "empty"
 				? "empty"
+				: this._line.arrow === "none"
+				? "none"
 				: this._line.async === true
 				? "open"
 				: "open";
@@ -424,6 +428,8 @@ module.exports = class ReturnCall {
 			ctx.lineTo(x + arrowSizeY * 2, y + arrowSizeY);
 			ctx.stroke();
 		}
+		//////////////////////////////////////////////////////////////////////////////
+		// Going left or right with no arrow requires no additional drawing.
 
 		return working.manageMaxWidth(0, starty + finalHeightOfAllLine);
 	}

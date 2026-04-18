@@ -47,6 +47,7 @@ module.exports = class Working {
 		this._timelineDash = [3, 3];
 		this._activeFragments = [];
 		this._callCount = 0;
+		this._autonumber = true;
 		this._negativeX = 0;
 		this._id = undefined;
 		this._debug = false;
@@ -173,6 +174,30 @@ module.exports = class Working {
 	 */
 	set callCount(value) {
 		this._callCount = value;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return whether call numbering is enabled for this render pass.
+	 * @returns {boolean} True when autonumbering is enabled.
+	 * @example
+	 * const value = instance.autonumber;
+	 */
+	get autonumber() {
+		return this._autonumber;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Update whether call numbering is enabled for this render pass.
+	 *
+	 * @param {boolean} value True to enable numbering.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.autonumber = false;
+	 */
+	set autonumber(value) {
+		this._autonumber = value === false ? false : true;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -486,6 +511,7 @@ module.exports = class Working {
 			Utilities.isNumber(this.postdata.params.actorSpacing) && this.postdata.params.actorSpacing >= 0
 				? this.postdata.params.actorSpacing
 				: 150;
+		this._autonumber = this.postdata.autonumber === false ? false : true;
 		this._tags = Utilities.isAllStrings(this.postdata.params.tags) ? this.postdata.params.tags : [];
 		if (this.tags.length > 0) {
 			this.logDebug("Using tags array of " + this.tags);

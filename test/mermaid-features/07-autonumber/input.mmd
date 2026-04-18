@@ -1,0 +1,12 @@
+sequenceDiagram
+accTitle: Mermaid autonumber
+accDescr {
+Demonstrates Mermaid autonumber mapped onto the sequencer autonumber document flag.
+From the project root, regenerate this Mermaid transform and SVG with:
+<code>node sequencer.js --mermaid -i test/mermaid-features/07-autonumber/input.mmd -o -f -t test/mermaid-features/07-autonumber
+}
+autonumber
+participant Caller
+participant Service
+Caller->>Service: Ping
+Service->>Caller: Pong

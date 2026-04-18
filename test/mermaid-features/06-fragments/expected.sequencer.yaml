@@ -1,4 +1,4 @@
-title: Input
+title: Mermaid fragments
 version: '1.0'
 actors:
   - name: Caller
@@ -61,3 +61,9 @@ lines:
         breakFromFlow: true
         breakToFlow: true
         arrow: fill
+description:
+  - 'Demonstrates Mermaid loop, alt, else, and opt fragment transforms.'
+  - 'From the project root, regenerate this Mermaid transform and SVG with:'
+  - >-
+    node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd
+    -o -f -t test/mermaid-features/06-fragments

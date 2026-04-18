@@ -191,12 +191,14 @@ module.exports = class Call {
 		let textToPrint = null;
 		if (Utilities.isAllStrings(this._line.text)) {
 			textToPrint = this._line.text.slice();
-			let s = textToPrint[0];
-			textToPrint[0] = this._callCount + ". " + s;
+			if (working.autonumber !== false) {
+				let s = textToPrint[0];
+				textToPrint[0] = this._callCount + ". " + s;
+			}
 		} else if (Utilities.isString(this._line.text)) {
-			textToPrint = this._callCount + ". " + this._line.text;
+			textToPrint = working.autonumber !== false ? this._callCount + ". " + this._line.text : this._line.text;
 		} else {
-			textToPrint = this._callCount + ". ";
+			textToPrint = working.autonumber !== false ? this._callCount + ". " : "";
 		}
 		let wh = Utilities.getTextWidthAndHeight(ctx, calltmd, textToPrint, working.tags);
 		const texty = callliney + wh.h;
@@ -425,11 +427,13 @@ module.exports = class Call {
 			for (let i = 0; i < textToPrint.length; i++) {
 				textToPrint[i] = "<hang>" + textToPrint[i];
 			}
-			textToPrint.unshift("" + this._callCount + ". ");
+			if (working.autonumber !== false) {
+				textToPrint.unshift("" + this._callCount + ". ");
+			}
 		} else if (Utilities.isString(this._line.text)) {
-			textToPrint = this._callCount + ". " + this._line.text;
+			textToPrint = working.autonumber !== false ? this._callCount + ". " + this._line.text : this._line.text;
 		} else {
-			textToPrint = this._callCount + ". ";
+			textToPrint = working.autonumber !== false ? this._callCount + ". " : "";
 		}
 		let wh = Utilities.getTextWidthAndHeight(ctx, calltmd, textToPrint, working.tags);
 		const textheight = wh.h;

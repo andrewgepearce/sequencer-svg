@@ -15,11 +15,10 @@ lines:
     breakFromFlow: true
     breakToFlow: true
     arrow: fill
-  - type: call
+  - type: return
     from: Service
     to: Caller
     text: 'Dotted response [Mermaid: Service-->>Caller]'
-    breakFromFlow: true
     breakToFlow: true
     lineDash:
       - 4
@@ -33,17 +32,15 @@ lines:
     breakToFlow: true
     arrow: open
     async: true
-  - type: call
+  - type: return
     from: Service
     to: Caller
     text: 'Async dotted signal [Mermaid: Service--)Caller]'
-    breakFromFlow: true
     breakToFlow: true
     lineDash:
       - 4
       - 2
     arrow: open
-    async: true
   - type: call
     from: Caller
     to: Service
@@ -51,11 +48,10 @@ lines:
     breakFromFlow: true
     breakToFlow: true
     arrow: cross
-  - type: call
+  - type: return
     from: Service
     to: Caller
     text: 'Dotted failure [Mermaid: Service--xCaller]'
-    breakFromFlow: true
     breakToFlow: true
     lineDash:
       - 4
@@ -68,11 +64,10 @@ lines:
     breakFromFlow: true
     breakToFlow: true
     arrow: none
-  - type: call
+  - type: return
     from: Service
     to: Caller
     text: 'Dotted no arrow [Mermaid: Service-->Caller]'
-    breakFromFlow: true
     breakToFlow: true
     lineDash:
       - 4

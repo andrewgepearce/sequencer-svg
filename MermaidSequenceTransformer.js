@@ -31,11 +31,12 @@ class MermaidTransformError extends Error {
 //////////////////////////////////////////////////////////////////////////////
 /**
  * Transform Mermaid sequence-diagram source into a sequencer-svg document.
- * Slice 6 supports explicit `participant` and `actor` declarations, Mermaid
+ * Slice 7 supports explicit `participant` and `actor` declarations, Mermaid
  * accessibility metadata, basic message lines, standard unidirectional arrow
  * variants, Mermaid notes mapped onto sequencer comments hosted by synthetic
  * blank lines, Mermaid activation/deactivation control, and Mermaid `loop`,
- * `alt`, `opt`, `else`, and `end` fragments mapped onto sequencer fragments.
+ * `alt`, `opt`, `else`, and `end` fragments mapped onto sequencer fragments,
+ * plus Mermaid `autonumber` mapped onto a sequencer document flag.
  *
  * @example
  * const document = MermaidSequenceTransformer.transform(source, { sourceName: "sample.mmd" });
@@ -47,7 +48,7 @@ class MermaidSequenceTransformer {
 	 *
 	 * @param {string} source Mermaid source text.
 	 * @param {{ sourceName?: string }} [options={}] Optional transform options.
-	 * @returns {{ title: string, description?: string|string[], version: string, actors: object[], lines: object[] }} Transformed sequencer document.
+	 * @returns {{ title: string, description?: string|string[], autonumber?: boolean, version: string, actors: object[], lines: object[] }} Transformed sequencer document.
 	 * @throws {MermaidTransformError} If the Mermaid source uses unsupported syntax for this slice.
 	 * @example
 	 * const document = MermaidSequenceTransformer.transform("sequenceDiagram\nparticipant A", {});
@@ -171,6 +172,11 @@ class MermaidSequenceTransformer {
 			if (this._startsAccessibilityDescriptionBlock(trimmed)) {
 				insideAccDescr = true;
 				accDescrLines = [];
+				continue;
+			}
+
+			if (this._isAutonumberLine(trimmed)) {
+				document.autonumber = true;
 				continue;
 			}
 
@@ -401,6 +407,19 @@ class MermaidSequenceTransformer {
 
 	////////////////////////////////////////////////////////////////////////////
 	/**
+	 * Detect whether a trimmed Mermaid line enables sequence numbering.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @returns {boolean} True when the line is Mermaid `autonumber`.
+	 * @example
+	 * const matched = MermaidSequenceTransformer._isAutonumberLine("autonumber");
+	 */
+	static _isAutonumberLine(trimmed) {
+		return /^autonumber$/i.test(trimmed);
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
 	 * Parse a Mermaid accessibility title line into a visible sequencer title.
 	 *
 	 * @param {string} trimmed Trimmed Mermaid source line.
@@ -581,7 +600,7 @@ class MermaidSequenceTransformer {
 	 * @param {object} activationState Current Mermaid activation counters by alias.
 	 * @param {number} lineNumber 1-based source line number.
 	 * @param {string} sourceLine Original Mermaid source line.
-	 * @returns {{ type: string, from: string, to: string, text: string, lineDash?: number[], arrow?: string, async?: boolean }} Sequencer line.
+	 * @returns {{ type: string, from: string, to: string, text: string, lineDash?: number[], arrow?: string, async?: boolean, breakFromFlow?: boolean, breakToFlow?: boolean, continueFromFlow?: boolean }} Sequencer line.
 	 * @throws {MermaidTransformError} If the message line is malformed or unsupported.
 	 * @example
 	 * const line = MermaidSequenceTransformer._parseMessageLine("A->>B: Ping", [], {}, 4, "A->>B: Ping");
@@ -631,30 +650,48 @@ class MermaidSequenceTransformer {
 		this._ensureImplicitActor(actors, fromAlias);
 		this._ensureImplicitActor(actors, toAlias);
 
-		const line = {
-			type: "call",
-			from: fromAlias,
-			to: toAlias,
-			text: this._parseTextPayload(messageText),
-		};
+		const isReturnMessage = arrowToken.startsWith("--");
+		const line = isReturnMessage
+			? {
+					type: "return",
+					from: fromAlias,
+					to: toAlias,
+					text: this._parseTextPayload(messageText),
+			  }
+			: {
+					type: "call",
+					from: fromAlias,
+					to: toAlias,
+					text: this._parseTextPayload(messageText),
+			  };
 		const postSourceActivationCount = this._getActivationCount(activationState, fromAlias);
 		const postTargetActivationCount = this._applyActivationShortcut(activationState, toAlias, activationShortcut.operation);
 
-		if (postSourceActivationCount === 0) {
-			line.breakFromFlow = true;
+		if (isReturnMessage) {
+			if (postSourceActivationCount > 0) {
+				line.continueFromFlow = true;
+			}
+			if (postTargetActivationCount === 0) {
+				line.breakToFlow = true;
+			}
+		} else {
+			if (postSourceActivationCount === 0) {
+				line.breakFromFlow = true;
+			}
+			if (postTargetActivationCount === 0) {
+				line.breakToFlow = true;
+			}
 		}
 
-		if (postTargetActivationCount === 0) {
-			line.breakToFlow = true;
-		}
-
-		if (arrowToken.startsWith("--")) {
+		if (isReturnMessage) {
 			line.lineDash = [4, 2];
 		}
 
 		if (arrowToken.endsWith(")")) {
 			line.arrow = "open";
-			line.async = true;
+			if (!isReturnMessage) {
+				line.async = true;
+			}
 		} else if (arrowToken.endsWith("x")) {
 			line.arrow = "cross";
 		} else if (arrowToken.endsWith(">>")) {
@@ -1006,10 +1043,6 @@ class MermaidSequenceTransformer {
 	 * throw MermaidSequenceTransformer._unsupportedSyntax("autonumber", 5, "autonumber");
 	 */
 	static _unsupportedSyntax(trimmed, lineNumber, sourceLine) {
-		if (/^autonumber\b/i.test(trimmed)) {
-			return new MermaidTransformError("Mermaid feature 'autonumber' is not supported yet", lineNumber, sourceLine);
-		}
-
 		if (/^(links?|link)\b/i.test(trimmed)) {
 			return new MermaidTransformError("Mermaid links are not supported yet", lineNumber, sourceLine);
 		}

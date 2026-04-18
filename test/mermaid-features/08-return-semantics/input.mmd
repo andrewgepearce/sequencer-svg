@@ -1,0 +1,14 @@
+sequenceDiagram
+accTitle: Mermaid return semantics
+accDescr {
+Demonstrates solid Mermaid messages mapping to sequencer calls and dotted Mermaid messages mapping to sequencer returns.
+From the project root, regenerate this Mermaid transform and SVG with:
+node sequencer.js --mermaid -i test/mermaid-features/08-return-semantics/input.mmd -o -f -t test/mermaid-features/08-return-semantics
+}
+participant Caller
+participant Service
+Caller->>Service: Request [Mermaid: Caller->>Service: Request]
+Service-->>Caller: Response [Mermaid: Service-->>Caller: Response]
+Service--)Caller: Async-style open return [Mermaid: Service--)Caller: Async-style open return]
+Service--xCaller: Failure return [Mermaid: Service--xCaller: Failure return]
+Service-->Caller: Completion without arrow [Mermaid: Service-->Caller: Completion without arrow]

@@ -51,7 +51,7 @@ let _leftAlign = {
 	default: "left"
 };
 let _line = {
-	anyOf: [{$ref: base + "call"}, {$ref: base + "blank"}, {$ref: base + "conditionLine"}, {$ref: base + "fragment"}]
+	anyOf: [{$ref: base + "call"}, {$ref: base + "returnLine"}, {$ref: base + "blank"}, {$ref: base + "conditionLine"}, {$ref: base + "fragment"}]
 };
 ////////////////////////////////////////////////////////////////////////////////
 /**
@@ -532,6 +532,9 @@ let schema = {
 				minLength: 1
 			},
 			description: _multiLineText,
+			autonumber: {
+				type: "boolean"
+			},
 			version: {
 				type: "string",
 				minLength: 1
@@ -592,6 +595,53 @@ let schema = {
 			to: {
 				type: "string",
 				description: "The alias of the actor from which this call is made",
+				minLength: 1
+			}
+		},
+		required: ["type", "from", "to", "text"]
+	},
+	returnLine: {
+		$schema: "http://json-schema.org/draft-07/schema#",
+		$id: base + "returnLine",
+		title: "Return Schema",
+		decription: "Definition of a return JSON object within a Sequencer document",
+		type: "object",
+		properties: {
+			fontFamily: _fontFamily("sans-serif"),
+			fontSizePx: _fontSizePx(14),
+			fgColour: _fgColour("rgb(0,0,0)"),
+			padding: _padding(15),
+			spacing: _spacing(1),
+			align: _leftAlign,
+			borderColour: _borderColour("rgba(255,255,255,0)"),
+			borderWidth: _borderWidth(0),
+			borderDash: _borderDash([6, 3]),
+			lineWidth: _lineWidth(1),
+			lineColour: _lineColour("rgb(0,0,0)"),
+			radius: _radius(5),
+			arrowSizeY: _arrowSizeY(5),
+			arrow: {
+				type: "string",
+				description: "The arrowhead style for the return line",
+				enum: ["fill", "open", "cross", "empty", "none"],
+			},
+			continueFromFlow: _breakFromFlow(false),
+			breakToFlow: _breakToFlow(false),
+			text: _multiLineText,
+			comment: _comment,
+			type: {
+				type: "string",
+				description: 'The type of the object - fixed to "return"',
+				const: "return"
+			},
+			from: {
+				type: "string",
+				description: "The alias of the actor from which this return is made",
+				minLength: 1
+			},
+			to: {
+				type: "string",
+				description: "The alias of the actor to which this return is made",
 				minLength: 1
 			}
 		},
