@@ -1,0 +1,73 @@
+title: Mermaid critical regions
+version: '1.0'
+actors:
+  - name: Caller
+    alias: Caller
+    actorType: participant
+  - name: Service
+    alias: Service
+    actorType: participant
+  - name: DB
+    alias: DB
+    actorType: participant
+  - name: Cache
+    alias: Cache
+    actorType: participant
+lines:
+  - type: fragment
+    fragmentType: critical
+    title: ''
+    condition: 'Required update [Mermaid: critical Required update]'
+    lines:
+      - type: call
+        from: Caller
+        to: Service
+        text: 'Start update [Mermaid: Caller->>Service: Start update]'
+        breakFromFlow: true
+        breakToFlow: true
+        toArrow: fill
+        arrow: fill
+      - type: call
+        from: Service
+        to: DB
+        text: 'Persist record [Mermaid: Service->>DB: Persist record]'
+        breakFromFlow: true
+        breakToFlow: true
+        toArrow: fill
+        arrow: fill
+      - type: condition
+        condition: 'Cache unavailable [Mermaid: option Cache unavailable]'
+      - type: call
+        from: Service
+        to: Caller
+        text: >-
+          Continue without cache [Mermaid: Service->>Caller: Continue without
+          cache]
+        breakFromFlow: true
+        breakToFlow: true
+        toArrow: fill
+        arrow: fill
+      - type: condition
+        condition: 'Cache warmed [Mermaid: option Cache warmed]'
+      - type: fragment
+        fragmentType: opt
+        title: ''
+        condition: 'Warm cache [Mermaid: opt Warm cache]'
+        lines:
+          - type: call
+            from: Service
+            to: Cache
+            text: 'Refresh cache [Mermaid: Service->>Cache: Refresh cache]'
+            breakFromFlow: true
+            breakToFlow: true
+            toArrow: fill
+            arrow: fill
+description:
+  - >-
+    Demonstrates Mermaid critical and option fragments mapped onto sequencer
+    fragment branches.
+  - 'From the project root, regenerate this Mermaid transform and SVG with:'
+  - >-
+    node sequencer.js --mermaid -i
+    test/mermaid-features/11-critical-regions/input.mmd -o -f -t
+    test/mermaid-features/11-critical-regions

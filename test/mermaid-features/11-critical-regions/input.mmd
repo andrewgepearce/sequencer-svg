@@ -1,0 +1,21 @@
+sequenceDiagram
+accTitle: Mermaid critical regions
+accDescr {
+Demonstrates Mermaid critical and option fragments mapped onto sequencer fragment branches.
+From the project root, regenerate this Mermaid transform and SVG with:
+node sequencer.js --mermaid -i test/mermaid-features/11-critical-regions/input.mmd -o -f -t test/mermaid-features/11-critical-regions
+}
+participant Caller
+participant Service
+participant DB
+participant Cache
+critical Required update [Mermaid: critical Required update]
+  Caller->>Service: Start update [Mermaid: Caller->>Service: Start update]
+  Service->>DB: Persist record [Mermaid: Service->>DB: Persist record]
+  option Cache unavailable [Mermaid: option Cache unavailable]
+    Service->>Caller: Continue without cache [Mermaid: Service->>Caller: Continue without cache]
+  option Cache warmed [Mermaid: option Cache warmed]
+    opt Warm cache [Mermaid: opt Warm cache]
+      Service->>Cache: Refresh cache [Mermaid: Service->>Cache: Refresh cache]
+    end
+end
