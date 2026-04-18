@@ -12,16 +12,12 @@ lines:
     from: Caller
     to: Service
     text: Ping
-    breakFromFlow: true
-    breakToFlow: true
     toArrow: fill
     arrow: fill
   - type: call
     from: Service
     to: Caller
     text: Pong
-    breakFromFlow: true
-    breakToFlow: true
     toArrow: fill
     arrow: fill
 description:

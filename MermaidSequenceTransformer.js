@@ -35,11 +35,12 @@ class MermaidTransformError extends Error {
  * accessibility metadata, basic message lines, standard unidirectional arrow
  * variants, Mermaid notes mapped onto sequencer comments hosted by synthetic
  * blank lines, Mermaid activation/deactivation control, and Mermaid `loop`,
- * `alt`, `opt`, `par`, `critical`, `and`, `else`, `option`, and `end`
- * fragments mapped onto sequencer fragments, plus Mermaid `autonumber`
- * mapped onto a sequencer document flag, real sequencer return lines for
- * dotted Mermaid messages, bidirectional arrows, and Mermaid half-arrow
- * variants mapped onto sequencer `fromArrow` and `toArrow` endpoint styles.
+ * `alt`, `opt`, `par`, `critical`, `break`, `and`, `else`, `option`, and
+ * `end` fragments mapped onto sequencer fragments, plus Mermaid
+ * `autonumber` mapped onto a sequencer document flag, real sequencer return
+ * lines for dotted Mermaid messages, bidirectional arrows, and Mermaid
+ * half-arrow variants mapped onto sequencer `fromArrow` and `toArrow`
+ * endpoint styles.
  *
  * @example
  * const document = MermaidSequenceTransformer.transform(source, { sourceName: "sample.mmd" });
@@ -232,7 +233,8 @@ class MermaidSequenceTransformer {
 					controlKeyword === "alt" ||
 					controlKeyword === "opt" ||
 					controlKeyword === "par" ||
-					controlKeyword === "critical"
+					controlKeyword === "critical" ||
+					controlKeyword === "break"
 				) {
 					const parsedFragment =
 						controlKeyword === "alt"
@@ -241,6 +243,8 @@ class MermaidSequenceTransformer {
 							? this._parseParFragment(statements, index, actors, activationState)
 							: controlKeyword === "critical"
 							? this._parseCriticalFragment(statements, index, actors, activationState)
+							: controlKeyword === "break"
+							? this._parseSimpleFragment(statements, index, actors, activationState, "break")
 							: this._parseSimpleFragment(statements, index, actors, activationState, controlKeyword);
 					lines.push(parsedFragment.line);
 					index = parsedFragment.nextIndex;
@@ -783,8 +787,18 @@ class MermaidSequenceTransformer {
 					to: toAlias,
 					text: this._parseTextPayload(messageText),
 			  };
-		const postSourceActivationCount = this._getActivationCount(activationState, fromAlias);
-		const postTargetActivationCount = this._applyActivationShortcut(activationState, toAlias, activationShortcut.operation);
+		const preSourceActivationCount = this._getActivationCount(activationState, fromAlias);
+		const activationOutcome = isReturnMessage
+			? this._applyReturnActivationPolicy(activationState, fromAlias, toAlias, activationShortcut.operation)
+			: this._applyCallActivationPolicy(
+					activationState,
+					fromAlias,
+					toAlias,
+					activationShortcut.operation,
+					arrowDefinition.async !== true
+			  );
+		const postSourceActivationCount = activationOutcome.sourceCount;
+		const postTargetActivationCount = activationOutcome.targetCount;
 
 		if (isReturnMessage) {
 			if (postSourceActivationCount > 0) {
@@ -924,12 +938,12 @@ class MermaidSequenceTransformer {
 	 * Return the Mermaid control keyword at the start of a line when present.
 	 *
 	 * @param {string} trimmed Trimmed Mermaid source line.
-	 * @returns {"loop"|"alt"|"opt"|"par"|"critical"|"and"|"else"|"option"|"end"|null} Control keyword or null.
+	 * @returns {"loop"|"alt"|"opt"|"par"|"critical"|"break"|"and"|"else"|"option"|"end"|null} Control keyword or null.
 	 * @example
 	 * const keyword = MermaidSequenceTransformer._getControlKeyword("alt Success");
 	 */
 	static _getControlKeyword(trimmed) {
-		const match = String(trimmed).match(/^(loop|alt|opt|par|critical|and|else|option|end)\b/i);
+		const match = String(trimmed).match(/^(loop|alt|opt|par|critical|break|and|else|option|end)\b/i);
 		return match ? match[1].toLowerCase() : null;
 	}
 
@@ -938,7 +952,7 @@ class MermaidSequenceTransformer {
 	 * Parse a Mermaid fragment start line label.
 	 *
 	 * @param {string} trimmed Trimmed Mermaid source line.
-	 * @param {"loop"|"alt"|"opt"|"par"|"critical"} fragmentType Mermaid fragment type.
+	 * @param {"loop"|"alt"|"opt"|"par"|"critical"|"break"} fragmentType Mermaid fragment type.
 	 * @param {number} lineNumber 1-based source line number.
 	 * @param {string} sourceLine Original Mermaid source line.
 	 * @returns {string} Normalised fragment condition label.
@@ -1152,17 +1166,15 @@ class MermaidSequenceTransformer {
 
 	////////////////////////////////////////////////////////////////////////////
 	/**
-	 * Apply a Mermaid activation shortcut to the target actor state.
+	 * Apply a Mermaid activation shortcut to an activation count.
 	 *
-	 * @param {object} activationState Current Mermaid activation counters by alias.
-	 * @param {string} alias Target actor alias.
+	 * @param {number} currentCount Current activation depth.
 	 * @param {string|null} operation Mermaid shortcut operation.
-	 * @returns {number} Post-line activation depth for the target actor.
+	 * @returns {number} Post-operation activation depth.
 	 * @example
-	 * const count = MermaidSequenceTransformer._applyActivationShortcut({}, "API", "+");
+	 * const count = MermaidSequenceTransformer._applyActivationOperation(1, "+");
 	 */
-	static _applyActivationShortcut(activationState, alias, operation) {
-		const currentCount = this._getActivationCount(activationState, alias);
+	static _applyActivationOperation(currentCount, operation) {
 		let nextCount = currentCount;
 
 		if (operation === "+") {
@@ -1171,8 +1183,58 @@ class MermaidSequenceTransformer {
 			nextCount = Math.max(currentCount - 1, 0);
 		}
 
-		this._setActivationCount(activationState, alias, nextCount);
 		return nextCount;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Apply the default Mermaid call-activation policy to the transform state.
+	 *
+	 * @param {object} activationState Current Mermaid activation counters by alias.
+	 * @param {string} fromAlias Source actor alias.
+	 * @param {string} toAlias Target actor alias.
+	 * @param {string|null} operation Optional Mermaid shortcut on the target actor.
+	 * @param {boolean} keepSourceActive Whether the source actor should remain active by default.
+	 * @returns {{ sourceCount: number, targetCount: number }} Post-line activation depths.
+	 * @example
+	 * const outcome = MermaidSequenceTransformer._applyCallActivationPolicy({}, "Caller", "Service", null, true);
+	 */
+	static _applyCallActivationPolicy(activationState, fromAlias, toAlias, operation, keepSourceActive) {
+		const implicitSourceCount = keepSourceActive ? Math.max(this._getActivationCount(activationState, fromAlias), 1) : this._getActivationCount(activationState, fromAlias);
+		const sourceCount = implicitSourceCount;
+		const implicitTargetCount = this._getActivationCount(activationState, toAlias) + 1;
+		const targetCount = this._applyActivationOperation(implicitTargetCount, operation);
+		this._setActivationCount(activationState, fromAlias, sourceCount);
+		this._setActivationCount(activationState, toAlias, targetCount);
+
+		return {
+			sourceCount: sourceCount,
+			targetCount: targetCount,
+		};
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Apply the default Mermaid return-activation policy to the transform state.
+	 *
+	 * @param {object} activationState Current Mermaid activation counters by alias.
+	 * @param {string} fromAlias Source actor alias.
+	 * @param {string} toAlias Target actor alias.
+	 * @param {string|null} operation Optional Mermaid shortcut on the target actor.
+	 * @returns {{ sourceCount: number, targetCount: number }} Post-line activation depths.
+	 * @example
+	 * const outcome = MermaidSequenceTransformer._applyReturnActivationPolicy({}, "Service", "Caller", null);
+	 */
+	static _applyReturnActivationPolicy(activationState, fromAlias, toAlias, operation) {
+		const sourceCount = Math.max(this._getActivationCount(activationState, fromAlias) - 1, 0);
+		const targetCount = this._applyActivationOperation(this._getActivationCount(activationState, toAlias), operation);
+		this._setActivationCount(activationState, fromAlias, sourceCount);
+		this._setActivationCount(activationState, toAlias, targetCount);
+
+		return {
+			sourceCount: sourceCount,
+			targetCount: targetCount,
+		};
 	}
 
 	////////////////////////////////////////////////////////////////////////////

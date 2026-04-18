@@ -1,0 +1,16 @@
+sequenceDiagram
+accTitle: Mermaid break fragments
+accDescr {
+Demonstrates Mermaid break fragments mapped onto sequencer fragment regions.
+From the project root, regenerate this Mermaid transform and SVG with:
+node sequencer.js --mermaid -i test/mermaid-features/12-break/input.mmd -o -f -t test/mermaid-features/12-break
+}
+participant Caller
+participant Service
+participant DB
+Caller->>Service: Submit request [Mermaid: Caller->>Service: Submit request]
+break Validation failed [Mermaid: break Validation failed]
+  Service->>Caller: Return validation error [Mermaid: Service->>Caller: Return validation error]
+  Service->>DB: Record failed attempt [Mermaid: Service->>DB: Record failed attempt]
+end
+Caller->>Service: Continue outer narrative [Mermaid: Caller->>Service: Continue outer narrative]

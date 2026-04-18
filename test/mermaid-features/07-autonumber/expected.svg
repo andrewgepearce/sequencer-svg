@@ -32,25 +32,29 @@ From the project root, regenerate this Mermaid transform and SVG with:
   <path d="M 63 213 M 63 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 335.5 213 M 335.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 213 L 63 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 60.5 277 L 60.5 287 L 65.5 287 L 65.5 277 L 60.5 277" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 60.5 277 L 60.5 287 L 65.5 287 L 65.5 277 L 60.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 60.5 277 L 60.5 297 L 65.5 297 L 65.5 277 L 60.5 277" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 60.5 277 L 60.5 297 M 65.5 297 L 65.5 277 L 60.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 335.5 213 L 335.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 333 277 L 333 287 L 338 287 L 338 277 L 333 277" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 333 277 L 333 287 L 338 287 L 338 277 L 333 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 333 277 L 333 297 L 338 297 L 338 277 L 333 277" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 333 277 L 333 297 M 338 297 L 338 277 L 333 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="105.5" y="267" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Ping</text>
   <path d="M 65.5 277 L 333 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 323 272 L 323 282 L 333 277" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 63 297 M 63 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 335.5 297 M 335.5 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 297 L 63 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 60.5 361 L 60.5 371 L 65.5 371 L 65.5 361 L 60.5 361" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 60.5 361 L 60.5 371 L 65.5 371 L 65.5 361 L 60.5 361" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 60.5 297 L 60.5 381 L 65.5 381 L 65.5 297 L 60.5 297" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 60.5 297 L 60.5 381 M 65.5 381 L 65.5 297 M 60.5 297" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 335.5 297 L 335.5 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 333 361 L 333 371 L 338 371 L 338 361 L 333 361" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 333 361 L 333 371 L 338 371 L 338 361 L 333 361" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 333 297 L 333 381 L 338 381 L 338 297 L 333 297" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 333 297 L 333 381 M 338 381 L 338 297 M 333 297" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="115.5" y="351" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Pong</text>
   <path d="M 333 361 L 65.5 361" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 75.5 356 L 75.5 366 L 65.5 361" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 63 381 L 63 405" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 60.5 381 L 60.5 381 L 65.5 381 L 65.5 381 L 60.5 381" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 60.5 381 L 60.5 381 L 65.5 381 L 65.5 381 M 60.5 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 335.5 381 L 335.5 405" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 333 381 L 333 381 L 338 381 L 338 381 L 333 381" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 333 381 L 333 381 L 338 381 L 338 381 M 333 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
 </svg>

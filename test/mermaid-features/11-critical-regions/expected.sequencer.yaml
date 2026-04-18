@@ -23,16 +23,12 @@ lines:
         from: Caller
         to: Service
         text: 'Start update [Mermaid: Caller->>Service: Start update]'
-        breakFromFlow: true
-        breakToFlow: true
         toArrow: fill
         arrow: fill
       - type: call
         from: Service
         to: DB
         text: 'Persist record [Mermaid: Service->>DB: Persist record]'
-        breakFromFlow: true
-        breakToFlow: true
         toArrow: fill
         arrow: fill
       - type: condition
@@ -43,8 +39,6 @@ lines:
         text: >-
           Continue without cache [Mermaid: Service->>Caller: Continue without
           cache]
-        breakFromFlow: true
-        breakToFlow: true
         toArrow: fill
         arrow: fill
       - type: condition
@@ -58,8 +52,6 @@ lines:
             from: Service
             to: Cache
             text: 'Refresh cache [Mermaid: Service->>Cache: Refresh cache]'
-            breakFromFlow: true
-            breakToFlow: true
             toArrow: fill
             arrow: fill
 description:

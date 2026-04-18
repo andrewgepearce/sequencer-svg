@@ -33,7 +33,6 @@ lines:
     from: Caller
     to: Service
     text: 'Service already active [Mermaid context: activate Service]'
-    breakFromFlow: true
     toArrow: fill
     arrow: fill
   - type: blank
@@ -50,15 +49,12 @@ lines:
     from: Caller
     to: Service
     text: 'Activate target via suffix [Mermaid: Caller->>+Service]'
-    breakFromFlow: true
     toArrow: fill
     arrow: fill
   - type: call
     from: Caller
     to: Service
     text: 'Deactivate target via suffix [Mermaid: Caller->>-Service]'
-    breakFromFlow: true
-    breakToFlow: true
     toArrow: fill
     arrow: fill
   - type: blank
@@ -75,7 +71,6 @@ lines:
     from: Service
     to: DB
     text: 'DB remains active [Mermaid context: activate DB]'
-    breakFromFlow: true
     toArrow: fill
     arrow: fill
   - type: blank

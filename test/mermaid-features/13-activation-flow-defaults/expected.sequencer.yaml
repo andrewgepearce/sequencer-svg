@@ -1,0 +1,52 @@
+title: Mermaid activation flow defaults
+version: '1.0'
+actors:
+  - name: Caller
+    alias: Caller
+    actorType: participant
+  - name: Service
+    alias: Service
+    actorType: participant
+  - name: DB
+    alias: DB
+    actorType: participant
+lines:
+  - type: call
+    from: Caller
+    to: Service
+    text: 'Submit request [Mermaid: Caller->>Service: Submit request]'
+    toArrow: fill
+    arrow: fill
+  - type: call
+    from: Service
+    to: DB
+    text: 'Persist data [Mermaid: Service->>DB: Persist data]'
+    toArrow: fill
+    arrow: fill
+  - type: return
+    from: DB
+    to: Service
+    text: 'Persistence complete [Mermaid: DB-->>Service: Persistence complete]'
+    lineDash:
+      - 4
+      - 2
+    toArrow: fill
+    arrow: fill
+  - type: return
+    from: Service
+    to: Caller
+    text: 'Reply to caller [Mermaid: Service-->>Caller: Reply to caller]'
+    lineDash:
+      - 4
+      - 2
+    toArrow: fill
+    arrow: fill
+description:
+  - >-
+    Demonstrates the default Mermaid-to-sequencer activation policy where calls
+    keep the callee active until a return.
+  - 'From the project root, regenerate this Mermaid transform and SVG with:'
+  - >-
+    node sequencer.js --mermaid -i
+    test/mermaid-features/13-activation-flow-defaults/input.mmd -o -f -t
+    test/mermaid-features/13-activation-flow-defaults

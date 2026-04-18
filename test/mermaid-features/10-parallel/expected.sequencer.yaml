@@ -23,8 +23,6 @@ lines:
         from: Caller
         to: Service
         text: 'Begin primary work [Mermaid: Caller->>Service: Begin primary work]'
-        breakFromFlow: true
-        breakToFlow: true
         toArrow: fill
         arrow: fill
       - type: condition
@@ -33,8 +31,6 @@ lines:
         from: Service
         to: DB
         text: 'Persist data [Mermaid: Service->>DB: Persist data]'
-        breakFromFlow: true
-        breakToFlow: true
         toArrow: fill
         arrow: fill
       - type: condition
@@ -48,8 +44,6 @@ lines:
             from: Service
             to: Audit
             text: 'Emit audit event [Mermaid: Service->>Audit: Emit audit event]'
-            breakFromFlow: true
-            breakToFlow: true
             toArrow: fill
             arrow: fill
 description:

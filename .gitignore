@@ -5,3 +5,5 @@ npm-debug.log*
 .claude/session.md
 agent.md
 scratch
+test/mermaid-features/**/input.sequencer.yaml
+test/mermaid-features/**/input.svg

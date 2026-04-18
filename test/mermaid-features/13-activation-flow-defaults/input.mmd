@@ -1,0 +1,14 @@
+sequenceDiagram
+accTitle: Mermaid activation flow defaults
+accDescr {
+Demonstrates the default Mermaid-to-sequencer activation policy where calls keep the callee active until a return.
+From the project root, regenerate this Mermaid transform and SVG with:
+node sequencer.js --mermaid -i test/mermaid-features/13-activation-flow-defaults/input.mmd -o -f -t test/mermaid-features/13-activation-flow-defaults
+}
+participant Caller
+participant Service
+participant DB
+Caller->>Service: Submit request [Mermaid: Caller->>Service: Submit request]
+Service->>DB: Persist data [Mermaid: Service->>DB: Persist data]
+DB-->>Service: Persistence complete [Mermaid: DB-->>Service: Persistence complete]
+Service-->>Caller: Reply to caller [Mermaid: Service-->>Caller: Reply to caller]

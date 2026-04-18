@@ -17,8 +17,6 @@ lines:
         from: Caller
         to: Service
         text: 'Retry request [Mermaid: Caller->>Service: Retry request]'
-        breakFromFlow: true
-        breakToFlow: true
         toArrow: fill
         arrow: fill
   - type: fragment
@@ -30,8 +28,6 @@ lines:
         from: Caller
         to: Service
         text: 'Success path [Mermaid: Caller->>Service: Success path]'
-        breakFromFlow: true
-        breakToFlow: true
         toArrow: fill
         arrow: fill
       - type: condition
@@ -45,8 +41,6 @@ lines:
             from: Service
             to: Caller
             text: 'Emit audit event [Mermaid: Service->>Caller: Emit audit event]'
-            breakFromFlow: true
-            breakToFlow: true
             toArrow: fill
             arrow: fill
       - type: blank
@@ -61,8 +55,6 @@ lines:
         from: Caller
         to: Service
         text: 'Failure path [Mermaid: Caller->>Service: Failure path]'
-        breakFromFlow: true
-        breakToFlow: true
         toArrow: fill
         arrow: fill
 description:

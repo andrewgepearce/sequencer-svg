@@ -12,15 +12,12 @@ lines:
     from: Caller
     to: Service
     text: 'Request [Mermaid: Caller->>Service: Request]'
-    breakFromFlow: true
-    breakToFlow: true
     toArrow: fill
     arrow: fill
   - type: return
     from: Service
     to: Caller
     text: 'Response [Mermaid: Service-->>Caller: Response]'
-    breakToFlow: true
     lineDash:
       - 4
       - 2
@@ -32,7 +29,6 @@ lines:
     text: >-
       Async-style open return [Mermaid: Service--)Caller: Async-style open
       return]
-    breakToFlow: true
     lineDash:
       - 4
       - 2
@@ -42,7 +38,6 @@ lines:
     from: Service
     to: Caller
     text: 'Failure return [Mermaid: Service--xCaller: Failure return]'
-    breakToFlow: true
     lineDash:
       - 4
       - 2
@@ -54,7 +49,6 @@ lines:
     text: >-
       Completion without arrow [Mermaid: Service-->Caller: Completion without
       arrow]
-    breakToFlow: true
     lineDash:
       - 4
       - 2
