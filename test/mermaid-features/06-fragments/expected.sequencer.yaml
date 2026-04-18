@@ -19,6 +19,7 @@ lines:
         text: 'Retry request [Mermaid: Caller->>Service: Retry request]'
         breakFromFlow: true
         breakToFlow: true
+        toArrow: fill
         arrow: fill
   - type: fragment
     fragmentType: alt
@@ -31,6 +32,7 @@ lines:
         text: 'Success path [Mermaid: Caller->>Service: Success path]'
         breakFromFlow: true
         breakToFlow: true
+        toArrow: fill
         arrow: fill
       - type: condition
         condition: 'Failure branch [Mermaid: else Failure branch]'
@@ -45,6 +47,7 @@ lines:
             text: 'Emit audit event [Mermaid: Service->>Caller: Emit audit event]'
             breakFromFlow: true
             breakToFlow: true
+            toArrow: fill
             arrow: fill
       - type: blank
         height: 0
@@ -60,6 +63,7 @@ lines:
         text: 'Failure path [Mermaid: Caller->>Service: Failure path]'
         breakFromFlow: true
         breakToFlow: true
+        toArrow: fill
         arrow: fill
 description:
   - 'Demonstrates Mermaid loop, alt, else, and opt fragment transforms.'

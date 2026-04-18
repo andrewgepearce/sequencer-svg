@@ -1,0 +1,19 @@
+sequenceDiagram
+accTitle: Mermaid advanced arrows
+accDescr {
+Demonstrates Mermaid bidirectional arrows and half-arrow variants mapped onto sequencer endpoint arrows.
+From the project root, regenerate this Mermaid transform and SVG with:
+node sequencer.js --mermaid -i test/mermaid-features/09-advanced-arrows/input.mmd -o -f -t test/mermaid-features/09-advanced-arrows
+}
+participant Caller
+participant Service
+Caller<<->>Service: Bidirectional filled [Mermaid: Caller<<->>Service]
+Service<<-->>Caller: Bidirectional dotted filled [Mermaid: Service<<-->>Caller]
+Caller-|\Service: Top half end [Mermaid: Caller-|\Service]
+Service--|/Caller: Dotted bottom half end [Mermaid: Service--|/Caller]
+Caller/|-Service: Reverse top half [Mermaid: Caller/|-Service]
+Service\|--Caller: Dotted reverse bottom half [Mermaid: Service\|--Caller]
+Caller-\Service: Top stick end [Mermaid: Caller-\Service]
+Service--//Caller: Dotted bottom stick end [Mermaid: Service--//Caller]
+Caller//-Service: Reverse top stick [Mermaid: Caller//-Service]
+Service\\--Caller: Dotted reverse bottom stick [Mermaid: Service\\--Caller]

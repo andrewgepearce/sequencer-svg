@@ -575,7 +575,17 @@ let schema = {
 			arrow: {
 				type: "string",
 				description: "The arrowhead style for the call line",
-				enum: ["fill", "open", "cross", "empty", "none"],
+				enum: ["fill", "open", "cross", "empty", "none", "halfTop", "halfBottom", "stickTop", "stickBottom"],
+			},
+			fromArrow: {
+				type: "string",
+				description: "The arrowhead style for the start of the call line",
+				enum: ["fill", "open", "cross", "empty", "none", "halfTop", "halfBottom", "stickTop", "stickBottom"],
+			},
+			toArrow: {
+				type: "string",
+				description: "The arrowhead style for the end of the call line",
+				enum: ["fill", "open", "cross", "empty", "none", "halfTop", "halfBottom", "stickTop", "stickBottom"],
 			},
 			breakFromFlow: _breakFromFlow(false),
 			breakToFlow: _breakToFlow(false),
@@ -623,7 +633,17 @@ let schema = {
 			arrow: {
 				type: "string",
 				description: "The arrowhead style for the return line",
-				enum: ["fill", "open", "cross", "empty", "none"],
+				enum: ["fill", "open", "cross", "empty", "none", "halfTop", "halfBottom", "stickTop", "stickBottom"],
+			},
+			fromArrow: {
+				type: "string",
+				description: "The arrowhead style for the start of the return line",
+				enum: ["fill", "open", "cross", "empty", "none", "halfTop", "halfBottom", "stickTop", "stickBottom"],
+			},
+			toArrow: {
+				type: "string",
+				description: "The arrowhead style for the end of the return line",
+				enum: ["fill", "open", "cross", "empty", "none", "halfTop", "halfBottom", "stickTop", "stickBottom"],
 			},
 			continueFromFlow: _breakFromFlow(false),
 			breakToFlow: _breakToFlow(false),

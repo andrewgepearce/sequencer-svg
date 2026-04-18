@@ -22,6 +22,7 @@ lines:
     text: 'Metadata call [Mermaid: Caller->>Service: Metadata call]'
     breakFromFlow: true
     breakToFlow: true
+    toArrow: fill
     arrow: fill
 description:
   - First description line from Mermaid accessibility metadata.

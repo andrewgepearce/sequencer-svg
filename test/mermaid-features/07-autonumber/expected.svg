@@ -39,7 +39,7 @@ From the project root, regenerate this Mermaid transform and SVG with:
   <path d="M 333 277 L 333 287 L 338 287 L 338 277 L 333 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="105.5" y="267" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Ping</text>
   <path d="M 65.5 277 L 333 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 333 277 L 323 272 L 323 282 L 333 277" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 323 272 L 323 282 L 333 277" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 63 297 M 63 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 335.5 297 M 335.5 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 297 L 63 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
@@ -50,7 +50,7 @@ From the project root, regenerate this Mermaid transform and SVG with:
   <path d="M 333 361 L 333 371 L 338 371 L 338 361 L 333 361" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="115.5" y="351" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Pong</text>
   <path d="M 333 361 L 65.5 361" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 65.5 361 L 75.5 356 L 75.5 366 L 65.5 361" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 75.5 356 L 75.5 366 L 65.5 361" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 63 381 L 63 405" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 335.5 381 L 335.5 405" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
 </svg>

@@ -51,7 +51,7 @@ Second description line remains multiline in sequencer.</desc>
   <path d="M 480.75 326 L 480.75 336 L 485.75 336 L 485.75 326 L 480.75 326" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="253.25" y="316" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Metadata call [Mermaid: Caller-&gt;&gt;Service: Metadata call]</text>
   <path d="M 213.25 326 L 480.75 326" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 480.75 326 L 470.75 321 L 470.75 331 L 480.75 326" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 470.75 321 L 470.75 331 L 480.75 326" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 210.75 346 L 210.75 370" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 483.25 346 L 483.25 370" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
 </svg>

@@ -14,6 +14,7 @@ lines:
     text: 'Sync request [Mermaid: Caller->>Service]'
     breakFromFlow: true
     breakToFlow: true
+    toArrow: fill
     arrow: fill
   - type: return
     from: Service
@@ -23,6 +24,7 @@ lines:
     lineDash:
       - 4
       - 2
+    toArrow: fill
     arrow: fill
   - type: call
     from: Caller
@@ -30,6 +32,7 @@ lines:
     text: 'Async signal [Mermaid: Caller-)Service]'
     breakFromFlow: true
     breakToFlow: true
+    toArrow: open
     arrow: open
     async: true
   - type: return
@@ -40,6 +43,7 @@ lines:
     lineDash:
       - 4
       - 2
+    toArrow: open
     arrow: open
   - type: call
     from: Caller
@@ -47,6 +51,7 @@ lines:
     text: 'Failure signal [Mermaid: Caller-xService]'
     breakFromFlow: true
     breakToFlow: true
+    toArrow: cross
     arrow: cross
   - type: return
     from: Service
@@ -56,6 +61,7 @@ lines:
     lineDash:
       - 4
       - 2
+    toArrow: cross
     arrow: cross
   - type: call
     from: Caller

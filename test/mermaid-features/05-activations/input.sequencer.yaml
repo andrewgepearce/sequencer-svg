@@ -13,6 +13,14 @@ actors:
 lines:
   - type: blank
     height: 0
+    activate:
+      - DB
+  - type: blank
+    height: 0
+    deactivate:
+      - DB
+  - type: blank
+    height: 0
     comment: >-
       Note beside explicit activate [Mermaid: Note right of Service: Note beside
       explicit activate]
@@ -21,19 +29,12 @@ lines:
     height: 0
     activate:
       - Service
-  - type: blank
-    height: 0
-    activate:
-      - DB
-  - type: blank
-    height: 0
-    deactivate:
-      - DB
   - type: call
     from: Caller
     to: Service
     text: 'Service already active [Mermaid context: activate Service]'
     breakFromFlow: true
+    toArrow: fill
     arrow: fill
   - type: blank
     height: 0
@@ -50,6 +51,7 @@ lines:
     to: Service
     text: 'Activate target via suffix [Mermaid: Caller->>+Service]'
     breakFromFlow: true
+    toArrow: fill
     arrow: fill
   - type: call
     from: Caller
@@ -57,6 +59,7 @@ lines:
     text: 'Deactivate target via suffix [Mermaid: Caller->>-Service]'
     breakFromFlow: true
     breakToFlow: true
+    toArrow: fill
     arrow: fill
   - type: blank
     height: 0
@@ -73,6 +76,7 @@ lines:
     to: DB
     text: 'DB remains active [Mermaid context: activate DB]'
     breakFromFlow: true
+    toArrow: fill
     arrow: fill
   - type: blank
     height: 0

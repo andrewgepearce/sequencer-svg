@@ -38,7 +38,7 @@ node sequencer.js --mermaid -i test/mermaid-features/08-return-semantics/input.m
   <path d="M 333 277 L 333 287 L 338 287 L 338 277 L 333 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="105.5" y="267" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Request [Mermaid: Caller-&gt;&gt;Service: Request]</text>
   <path d="M 65.5 277 L 333 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 333 277 L 323 272 L 323 282 L 333 277" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 323 272 L 323 282 L 333 277" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 63 297 M 63 363" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 335.5 297 M 335.5 363" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 297 L 63 363" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
@@ -60,7 +60,7 @@ node sequencer.js --mermaid -i test/mermaid-features/08-return-semantics/input.m
   <path d="M 333 417 L 333 427 L 338 427 L 338 417 L 333 417" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="113" y="414.5" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">3. Async-style open return [Mermaid: Service--)Caller: Async-style open return]</text>
   <path d="M 333 422 L 65.5 422" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
-  <path d="M 65.5 422 L 75.5 422 M 65.5 422 L 75.5 417 M 65.5 422 L 75.5 427" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 75.5 422 L 65.5 422 M 75.5 417 L 65.5 422 L 75.5 427" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 63 429 M 63 495" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 335.5 429 M 335.5 495" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 429 L 63 495" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
@@ -71,7 +71,7 @@ node sequencer.js --mermaid -i test/mermaid-features/08-return-semantics/input.m
   <path d="M 333 483 L 333 493 L 338 493 L 338 483 L 333 483" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="113" y="480.5" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">4. Failure return [Mermaid: Service--xCaller: Failure return]</text>
   <path d="M 333 488 L 65.5 488" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
-  <path d="M 65.5 488 M 75.5 483 L 65.5 493 M 75.5 493 L 65.5 483" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2"/>
+  <path d="M 75.5 483 L 65.5 493 M 75.5 493 L 65.5 483" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2"/>
   <path d="M 63 495 M 63 561" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 335.5 495 M 335.5 561" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 495 L 63 561" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>

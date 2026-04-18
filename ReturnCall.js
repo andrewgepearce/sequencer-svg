@@ -19,6 +19,136 @@ let Actor = require("./Actor.js");
 let Comment = require("./Comment.js");
 const InputDocumentError = require("./InputDocumentError.js");
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * Resolve the arrowhead style for one end of a return line.
+ *
+ * @param {object} line Return-line definition.
+ * @param {"from"|"to"} endpoint Arrow endpoint being resolved.
+ * @returns {string} Normalised arrow style.
+ * @example
+ * const arrowType = getReturnArrowType({ arrow: "open" }, "to");
+ */
+function getReturnArrowType(line, endpoint) {
+	const propertyName = endpoint === "from" ? "fromArrow" : "toArrow";
+	let arrowType = line[propertyName];
+	if (!Utilities.isString(arrowType) && endpoint === "to" && Utilities.isString(line.arrow)) {
+		arrowType = line.arrow;
+	}
+	if (!Utilities.isString(arrowType) && endpoint === "to" && line.async === true) {
+		arrowType = "open";
+	}
+	if (!Utilities.isString(arrowType)) {
+		arrowType = endpoint === "to" ? "open" : "none";
+	}
+
+	arrowType = arrowType.toLowerCase();
+	if (
+		arrowType !== "fill" &&
+		arrowType !== "open" &&
+		arrowType !== "cross" &&
+		arrowType !== "empty" &&
+		arrowType !== "none" &&
+		arrowType !== "halftop" &&
+		arrowType !== "halfbottom" &&
+		arrowType !== "sticktop" &&
+		arrowType !== "stickbottom"
+	) {
+		return endpoint === "to" ? "open" : "none";
+	}
+
+	return arrowType;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * Draw one arrowhead for a return line.
+ *
+ * @param {*} ctx Rendering context.
+ * @param {number} x Arrow tip x coordinate.
+ * @param {number} y Arrow tip y coordinate.
+ * @param {"left"|"right"} direction Direction the arrow tip points towards.
+ * @param {string} arrowType Arrow style to draw.
+ * @param {number} arrowSizeY Arrow half-height.
+ * @param {number} lineWidth Stroke width.
+ * @param {string} lineColour Stroke or fill colour.
+ * @returns {void} Nothing.
+ * @example
+ * drawReturnArrowhead(ctx, 40, 20, "left", "open", 5, 1, "rgb(0,0,0)");
+ */
+function drawReturnArrowhead(ctx, x, y, direction, arrowType, arrowSizeY, lineWidth, lineColour) {
+	const horizontalDirection = direction === "right" ? -1 : 1;
+	const rearX = x + horizontalDirection * arrowSizeY * 2;
+	const topY = y - arrowSizeY;
+	const bottomY = y + arrowSizeY;
+
+	ctx.beginPath();
+	ctx.setLineDash([]);
+	ctx.strokeStyle = lineColour;
+	ctx.fillStyle = lineColour;
+
+	if (arrowType === "cross") {
+		ctx.lineWidth = lineWidth + 1;
+		ctx.moveTo(rearX, topY);
+		ctx.lineTo(x, bottomY);
+		ctx.moveTo(rearX, bottomY);
+		ctx.lineTo(x, topY);
+		ctx.stroke();
+		ctx.lineWidth = lineWidth;
+		return;
+	}
+
+	if (arrowType === "fill") {
+		ctx.moveTo(x, y);
+		ctx.lineTo(rearX, topY);
+		ctx.lineTo(rearX, bottomY);
+		ctx.lineTo(x, y);
+		ctx.fill();
+		return;
+	}
+
+	if (arrowType === "open") {
+		ctx.moveTo(rearX, y);
+		ctx.lineTo(x, y);
+		ctx.moveTo(rearX, topY);
+		ctx.lineTo(x, y);
+		ctx.lineTo(rearX, bottomY);
+		ctx.stroke();
+		return;
+	}
+
+	if (arrowType === "halftop") {
+		ctx.moveTo(rearX, topY);
+		ctx.lineTo(x, y);
+		ctx.stroke();
+		return;
+	}
+
+	if (arrowType === "halfbottom") {
+		ctx.moveTo(rearX, bottomY);
+		ctx.lineTo(x, y);
+		ctx.stroke();
+		return;
+	}
+
+	if (arrowType === "sticktop") {
+		ctx.moveTo(rearX, y);
+		ctx.lineTo(x, y);
+		ctx.moveTo(rearX, topY);
+		ctx.lineTo(x, y);
+		ctx.stroke();
+		return;
+	}
+
+	if (arrowType === "stickbottom") {
+		ctx.moveTo(rearX, y);
+		ctx.lineTo(x, y);
+		ctx.moveTo(rearX, bottomY);
+		ctx.lineTo(x, y);
+		ctx.stroke();
+	}
+}
+
 module.exports = class ReturnCall {
 	///////////////////////////////////////////////////////////////////////////////
 	/**
@@ -335,101 +465,28 @@ module.exports = class ReturnCall {
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 5a. Draw the call arrow
-		ctx.beginPath();
-		if (Utilities.isString(this._line.arrow)) this._line.arrow = this._line.arrow.toLowerCase();
-		const arrowType =
-			this._line.arrow === "cross"
-				? "cross"
-				: this._line.arrow === "fill"
-				? "fill"
-				: this._line.arrow === "open"
-				? "open"
-				: this._line.arrow === "empty"
-				? "empty"
-				: this._line.arrow === "none"
-				? "none"
-				: this._line.async === true
-				? "open"
-				: "open";
 		const goingLeft = this._startx > this._endx;
 		const goingRight = !goingLeft;
-		const x = endxAfterFlow;
-		const y = callliney;
-
-		//////////////////////////////////////////////////////////////////////////////
-		// Going right with a cross
-		if (goingRight && arrowType === "cross") {
-			ctx.moveTo(x, y);
-			ctx.setLineDash([]);
-			ctx.lineWidth = lineWidth + 1;
-			ctx.moveTo(x - arrowSizeY * 2, y - arrowSizeY);
-			ctx.lineTo(x, y + arrowSizeY);
-			ctx.moveTo(x - arrowSizeY * 2, y + arrowSizeY);
-			ctx.lineTo(x, y - arrowSizeY);
-			ctx.stroke();
-			ctx.lineWidth = lineWidth;
-		}
-		//////////////////////////////////////////////////////////////////////////////
-		// Going left with a cross
-		else if (goingLeft && arrowType === "cross") {
-			ctx.moveTo(x, y);
-			ctx.setLineDash([]);
-			ctx.lineWidth = lineWidth + 1;
-			ctx.moveTo(x + arrowSizeY * 2, y - arrowSizeY);
-			ctx.lineTo(x, y + arrowSizeY);
-			ctx.moveTo(x + arrowSizeY * 2, y + arrowSizeY);
-			ctx.lineTo(x, y - arrowSizeY);
-			ctx.stroke();
-			ctx.lineWidth = lineWidth;
-		}
-		//////////////////////////////////////////////////////////////////////////////
-		// Going right with a filled arrow
-		else if (goingRight && arrowType === "fill") {
-			ctx.moveTo(x, y);
-			ctx.setLineDash([]);
-			ctx.lineTo(x - arrowSizeY * 2, y - arrowSizeY);
-			ctx.lineTo(x - arrowSizeY * 2, y + arrowSizeY);
-			ctx.lineTo(x, y);
-			ctx.fillStyle = lineColour;
-			ctx.fill();
-		}
-		//////////////////////////////////////////////////////////////////////////////
-		// Going left with a filled arrow
-		else if (goingLeft && arrowType === "fill") {
-			ctx.moveTo(x, y);
-			ctx.setLineDash([]);
-			ctx.lineTo(x + arrowSizeY * 2, y - arrowSizeY);
-			ctx.lineTo(x + arrowSizeY * 2, y + arrowSizeY);
-			ctx.lineTo(x, y);
-			ctx.fillStyle = lineColour;
-			ctx.fill();
-		}
-		//////////////////////////////////////////////////////////////////////////////
-		// Going right with a open arrow
-		else if (goingRight && arrowType === "open") {
-			ctx.moveTo(x, y);
-			ctx.setLineDash([]);
-			ctx.lineTo(x - arrowSizeY * 2, y);
-			ctx.moveTo(x, y);
-			ctx.lineTo(x - arrowSizeY * 2, y - arrowSizeY);
-			ctx.moveTo(x, y);
-			ctx.lineTo(x - arrowSizeY * 2, y + arrowSizeY);
-			ctx.stroke();
-		}
-		//////////////////////////////////////////////////////////////////////////////
-		// Going left with a open arrow sd
-		else if (goingLeft && arrowType === "open") {
-			ctx.moveTo(x, y);
-			ctx.setLineDash([]);
-			ctx.lineTo(x + arrowSizeY * 2, y);
-			ctx.moveTo(x, y);
-			ctx.lineTo(x + arrowSizeY * 2, y - arrowSizeY);
-			ctx.moveTo(x, y);
-			ctx.lineTo(x + arrowSizeY * 2, y + arrowSizeY);
-			ctx.stroke();
-		}
-		//////////////////////////////////////////////////////////////////////////////
-		// Going left or right with no arrow requires no additional drawing.
+		drawReturnArrowhead(
+			ctx,
+			endxAfterFlow,
+			callliney,
+			goingRight ? "right" : "left",
+			getReturnArrowType(this._line, "to"),
+			arrowSizeY,
+			lineWidth,
+			lineColour
+		);
+		drawReturnArrowhead(
+			ctx,
+			startxAfterFlow,
+			callliney,
+			goingRight ? "left" : "right",
+			getReturnArrowType(this._line, "from"),
+			arrowSizeY,
+			lineWidth,
+			lineColour
+		);
 
 		return working.manageMaxWidth(0, starty + finalHeightOfAllLine);
 	}

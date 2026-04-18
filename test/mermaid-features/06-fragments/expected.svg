@@ -50,7 +50,7 @@ node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -
   <path d="M 393 355 L 393 365 L 398 365 L 398 355 L 393 355" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="165.5" y="345" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Retry request [Mermaid: Caller-&gt;&gt;Service: Retry request]</text>
   <path d="M 125.5 355 L 393 355" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 393 355 L 383 350 L 383 360 L 393 355" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 383 350 L 383 360 L 393 355" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 123 375 M 123 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 395.5 375 M 395.5 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 375 L 30 381 L 1004 381 L 1004 375 L 30 375" fill="rgb(255, 255, 255)" stroke="none"/>
@@ -85,7 +85,7 @@ node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -
   <path d="M 393 583 L 393 593 L 398 593 L 398 583 L 393 583" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="165.5" y="573" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Success path [Mermaid: Caller-&gt;&gt;Service: Success path]</text>
   <path d="M 125.5 583 L 393 583" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 393 583 L 383 578 L 383 588 L 393 583" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 383 578 L 383 588 L 393 583" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 123 603 M 123 657" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 395.5 603 M 395.5 657" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 603 L 30 657 L 1004 657 L 1004 603 L 30 603" fill="rgb(255, 255, 255)" stroke="none"/>
@@ -120,7 +120,7 @@ node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -
   <path d="M 393 798 L 393 808 L 398 808 L 398 798 L 393 798" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="175.5" y="788" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">3. Emit audit event [Mermaid: Service-&gt;&gt;Caller: Emit audit event]</text>
   <path d="M 393 798 L 125.5 798" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 125.5 798 L 135.5 793 L 135.5 803 L 125.5 798" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 135.5 793 L 135.5 803 L 125.5 798" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 123 818 M 123 824" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 395.5 818 M 395.5 824" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 818 L 30 824 L 1004 824 L 1004 818 L 30 818" fill="rgb(255, 255, 255)" stroke="none"/>
@@ -166,7 +166,7 @@ node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -
   <path d="M 393 1014 L 393 1024 L 398 1024 L 398 1014 L 393 1014" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="165.5" y="1004" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">4. Failure path [Mermaid: Caller-&gt;&gt;Service: Failure path]</text>
   <path d="M 125.5 1014 L 393 1014" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 393 1014 L 383 1009 L 383 1019 L 393 1014" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 383 1009 L 383 1019 L 393 1014" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 123 1034 M 123 1040" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 395.5 1034 M 395.5 1040" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 1034 L 30 1040 L 1004 1040 L 1004 1034 L 30 1034" fill="rgb(255, 255, 255)" stroke="none"/>

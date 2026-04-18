@@ -41,7 +41,7 @@
 		},
 		"arrow": {
 			"type": "string",
-			"enum": ["fill", "open", "cross", "empty", "none"]
+			"enum": ["fill", "open", "cross", "empty", "none", "halfTop", "halfBottom", "stickTop", "stickBottom"]
 		},
 		"colour": {
 			"type": "string",
@@ -287,6 +287,12 @@
 				"arrow": {
 					"$ref": "#/$defs/arrow"
 				},
+				"fromArrow": {
+					"$ref": "#/$defs/arrow"
+				},
+				"toArrow": {
+					"$ref": "#/$defs/arrow"
+				},
 				"breakFromFlow": {
 					"type": "boolean"
 				},
@@ -374,6 +380,12 @@
 					"minimum": 0
 				},
 				"arrow": {
+					"$ref": "#/$defs/arrow"
+				},
+				"fromArrow": {
+					"$ref": "#/$defs/arrow"
+				},
+				"toArrow": {
 					"$ref": "#/$defs/arrow"
 				},
 				"continueFromFlow": {

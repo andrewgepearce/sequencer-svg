@@ -14,6 +14,7 @@ lines:
     text: 'Request [Mermaid: Caller->>Service: Request]'
     breakFromFlow: true
     breakToFlow: true
+    toArrow: fill
     arrow: fill
   - type: return
     from: Service
@@ -23,6 +24,7 @@ lines:
     lineDash:
       - 4
       - 2
+    toArrow: fill
     arrow: fill
   - type: return
     from: Service
@@ -34,6 +36,7 @@ lines:
     lineDash:
       - 4
       - 2
+    toArrow: open
     arrow: open
   - type: return
     from: Service
@@ -43,6 +46,7 @@ lines:
     lineDash:
       - 4
       - 2
+    toArrow: cross
     arrow: cross
   - type: return
     from: Service

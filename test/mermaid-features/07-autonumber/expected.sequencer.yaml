@@ -14,6 +14,7 @@ lines:
     text: Ping
     breakFromFlow: true
     breakToFlow: true
+    toArrow: fill
     arrow: fill
   - type: call
     from: Service
@@ -21,6 +22,7 @@ lines:
     text: Pong
     breakFromFlow: true
     breakToFlow: true
+    toArrow: fill
     arrow: fill
 description:
   - >-

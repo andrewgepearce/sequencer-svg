@@ -31,12 +31,15 @@ class MermaidTransformError extends Error {
 //////////////////////////////////////////////////////////////////////////////
 /**
  * Transform Mermaid sequence-diagram source into a sequencer-svg document.
- * Slice 7 supports explicit `participant` and `actor` declarations, Mermaid
+ * Slice 9 supports explicit `participant` and `actor` declarations, Mermaid
  * accessibility metadata, basic message lines, standard unidirectional arrow
  * variants, Mermaid notes mapped onto sequencer comments hosted by synthetic
  * blank lines, Mermaid activation/deactivation control, and Mermaid `loop`,
  * `alt`, `opt`, `else`, and `end` fragments mapped onto sequencer fragments,
- * plus Mermaid `autonumber` mapped onto a sequencer document flag.
+ * plus Mermaid `autonumber` mapped onto a sequencer document flag, real
+ * sequencer return lines for dotted Mermaid messages, bidirectional arrows,
+ * and Mermaid half-arrow variants mapped onto sequencer `fromArrow` and
+ * `toArrow` endpoint styles.
  *
  * @example
  * const document = MermaidSequenceTransformer.transform(source, { sourceName: "sample.mmd" });
@@ -600,15 +603,14 @@ class MermaidSequenceTransformer {
 	 * @param {object} activationState Current Mermaid activation counters by alias.
 	 * @param {number} lineNumber 1-based source line number.
 	 * @param {string} sourceLine Original Mermaid source line.
-	 * @returns {{ type: string, from: string, to: string, text: string, lineDash?: number[], arrow?: string, async?: boolean, breakFromFlow?: boolean, breakToFlow?: boolean, continueFromFlow?: boolean }} Sequencer line.
+	 * @returns {{ type: string, from: string, to: string, text: string, lineDash?: number[], arrow?: string, fromArrow?: string, toArrow?: string, async?: boolean, breakFromFlow?: boolean, breakToFlow?: boolean, continueFromFlow?: boolean }} Sequencer line.
 	 * @throws {MermaidTransformError} If the message line is malformed or unsupported.
 	 * @example
 	 * const line = MermaidSequenceTransformer._parseMessageLine("A->>B: Ping", [], {}, 4, "A->>B: Ping");
 	 */
 	static _parseMessageLine(trimmed, actors, activationState, lineNumber, sourceLine) {
-		const supportedArrowTokens = ["-->>", "->>", "--)", "-)", "--x", "-x", "-->", "->"];
-		const unsupportedArrowTokens = ["<<-->>", "<<->>", "--|\\", "-|\\", "--|/", "-|/", "/|--", "/|-", "\\\\--", "\\\\-", "--\\\\", "-\\\\", "--//", "-//", "//--", "//-", "()"];
-		const arrowTokens = unsupportedArrowTokens.concat(supportedArrowTokens).sort((left, right) => right.length - left.length);
+		const arrowDefinitions = this._getSupportedArrowDefinitions();
+		const arrowTokens = arrowDefinitions.map((definition) => definition.token).sort((left, right) => right.length - left.length);
 		let matchedArrowToken = null;
 		let matchedArrowIndex = -1;
 
@@ -625,6 +627,8 @@ class MermaidSequenceTransformer {
 			throw new MermaidTransformError("Unsupported Mermaid message syntax", lineNumber, sourceLine);
 		}
 
+		const arrowDefinition = arrowDefinitions.find((definition) => definition.token === matchedArrowToken);
+
 		const leftSide = trimmed.slice(0, matchedArrowIndex).trim();
 		const rightSide = trimmed.slice(matchedArrowIndex + matchedArrowToken.length).trim();
 		const colonIndex = rightSide.indexOf(":");
@@ -639,18 +643,14 @@ class MermaidSequenceTransformer {
 			throw new MermaidTransformError("Unsupported Mermaid message actor syntax", lineNumber, sourceLine);
 		}
 
-		if (unsupportedArrowTokens.some((token) => arrowToken.includes(token))) {
-			throw new MermaidTransformError(`Mermaid arrow '${arrowToken}' is not supported yet`, lineNumber, sourceLine);
-		}
-
-		if (!supportedArrowTokens.includes(arrowToken)) {
-			throw new MermaidTransformError(`Mermaid arrow '${arrowToken}' is not supported in slice 2`, lineNumber, sourceLine);
+		if (!arrowDefinition) {
+			throw new MermaidTransformError(`Mermaid arrow '${arrowToken}' is not supported in slice 9`, lineNumber, sourceLine);
 		}
 
 		this._ensureImplicitActor(actors, fromAlias);
 		this._ensureImplicitActor(actors, toAlias);
 
-		const isReturnMessage = arrowToken.startsWith("--");
+		const isReturnMessage = arrowDefinition.lineType === "return";
 		const line = isReturnMessage
 			? {
 					type: "return",
@@ -687,20 +687,63 @@ class MermaidSequenceTransformer {
 			line.lineDash = [4, 2];
 		}
 
-		if (arrowToken.endsWith(")")) {
-			line.arrow = "open";
-			if (!isReturnMessage) {
-				line.async = true;
-			}
-		} else if (arrowToken.endsWith("x")) {
-			line.arrow = "cross";
-		} else if (arrowToken.endsWith(">>")) {
-			line.arrow = "fill";
-		} else if (arrowToken === "->" || arrowToken === "-->") {
+		if (arrowDefinition.fromArrow !== "none") {
+			line.fromArrow = arrowDefinition.fromArrow;
+		}
+		if (arrowDefinition.toArrow !== "none") {
+			line.toArrow = arrowDefinition.toArrow;
+			line.arrow = arrowDefinition.toArrow;
+		} else if (arrowDefinition.lineType === "return" || arrowToken === "->" || arrowToken === "-->") {
 			line.arrow = "none";
+		}
+		if (arrowDefinition.async === true && !isReturnMessage) {
+			line.async = true;
 		}
 
 		return line;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return the Mermaid message-arrow definitions supported in this slice.
+	 *
+	 * @returns {{ token: string, lineType: "call"|"return", fromArrow: string, toArrow: string, async?: boolean }[]} Supported Mermaid arrow definitions.
+	 * @example
+	 * const arrows = MermaidSequenceTransformer._getSupportedArrowDefinitions();
+	 */
+	static _getSupportedArrowDefinitions() {
+		return [
+			{ token: "<<-->>", lineType: "return", fromArrow: "fill", toArrow: "fill" },
+			{ token: "<<->>", lineType: "call", fromArrow: "fill", toArrow: "fill" },
+			{ token: "-->>", lineType: "return", fromArrow: "none", toArrow: "fill" },
+			{ token: "->>", lineType: "call", fromArrow: "none", toArrow: "fill" },
+			{ token: "--)", lineType: "return", fromArrow: "none", toArrow: "open" },
+			{ token: "-)", lineType: "call", fromArrow: "none", toArrow: "open", async: true },
+			{ token: "--x", lineType: "return", fromArrow: "none", toArrow: "cross" },
+			{ token: "-x", lineType: "call", fromArrow: "none", toArrow: "cross" },
+			{ token: "--|\\", lineType: "return", fromArrow: "none", toArrow: "halfTop" },
+			{ token: "-|\\", lineType: "call", fromArrow: "none", toArrow: "halfTop" },
+			{ token: "--|/", lineType: "return", fromArrow: "none", toArrow: "halfBottom" },
+			{ token: "-|/", lineType: "call", fromArrow: "none", toArrow: "halfBottom" },
+			{ token: "/|--", lineType: "return", fromArrow: "halfTop", toArrow: "none" },
+			{ token: "/|-", lineType: "call", fromArrow: "halfTop", toArrow: "none" },
+			{ token: "\\|--", lineType: "return", fromArrow: "halfBottom", toArrow: "none" },
+			{ token: "\\|-", lineType: "call", fromArrow: "halfBottom", toArrow: "none" },
+			{ token: "--\\", lineType: "return", fromArrow: "none", toArrow: "stickTop" },
+			{ token: "-\\", lineType: "call", fromArrow: "none", toArrow: "stickTop" },
+			{ token: "--\\\\", lineType: "return", fromArrow: "none", toArrow: "stickTop" },
+			{ token: "-\\\\", lineType: "call", fromArrow: "none", toArrow: "stickTop" },
+			{ token: "--//", lineType: "return", fromArrow: "none", toArrow: "stickBottom" },
+			{ token: "-//", lineType: "call", fromArrow: "none", toArrow: "stickBottom" },
+			{ token: "//--", lineType: "return", fromArrow: "stickTop", toArrow: "none" },
+			{ token: "//-", lineType: "call", fromArrow: "stickTop", toArrow: "none" },
+			{ token: "\\--", lineType: "return", fromArrow: "stickBottom", toArrow: "none" },
+			{ token: "\\-", lineType: "call", fromArrow: "stickBottom", toArrow: "none" },
+			{ token: "\\\\--", lineType: "return", fromArrow: "stickBottom", toArrow: "none" },
+			{ token: "\\\\-", lineType: "call", fromArrow: "stickBottom", toArrow: "none" },
+			{ token: "-->", lineType: "return", fromArrow: "none", toArrow: "none" },
+			{ token: "->", lineType: "call", fromArrow: "none", toArrow: "none" },
+		];
 	}
 
 	////////////////////////////////////////////////////////////////////////////
