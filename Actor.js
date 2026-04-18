@@ -274,6 +274,16 @@ module.exports = class Actor {
 	}
 	///////////////////////////////////////////////////////////////////////////////
 	/**
+	 * Return width.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.width;
+	 */
+	get width() {
+		return this._width;
+	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
 	 * Return left.
 	 * @returns {*} Result value.
 	 * @example

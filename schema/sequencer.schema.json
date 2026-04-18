@@ -97,6 +97,14 @@
 				"bgColour": {
 					"$ref": "#/$defs/colour"
 				},
+				"startActor": {
+					"type": "string",
+					"minLength": 1
+				},
+				"endActor": {
+					"type": "string",
+					"minLength": 1
+				},
 				"borderColour": {
 					"$ref": "#/$defs/colour"
 				},
@@ -199,6 +207,14 @@
 				},
 				"bgColour": {
 					"$ref": "#/$defs/colour"
+				},
+				"startActor": {
+					"type": "string",
+					"minLength": 1
+				},
+				"endActor": {
+					"type": "string",
+					"minLength": 1
 				},
 				"borderColour": {
 					"$ref": "#/$defs/colour"
@@ -455,6 +471,14 @@
 				},
 				"bgColour": {
 					"$ref": "#/$defs/colour"
+				},
+				"startActor": {
+					"type": "string",
+					"minLength": 1
+				},
+				"endActor": {
+					"type": "string",
+					"minLength": 1
 				},
 				"borderColour": {
 					"$ref": "#/$defs/colour"

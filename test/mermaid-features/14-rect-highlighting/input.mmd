@@ -1,0 +1,21 @@
+sequenceDiagram
+accTitle: Mermaid rect highlighting
+accDescr {
+Demonstrates Mermaid rect highlighting mapped onto sequencer fragments with inferred actor spans.
+From the project root, regenerate this Mermaid transform and SVG with:
+node sequencer.js --mermaid -i test/mermaid-features/14-rect-highlighting/input.mmd -o -f -t test/mermaid-features/14-rect-highlighting
+}
+participant Caller
+participant Service
+participant DB
+participant Cache
+Caller->>Service: Start request [Mermaid: Caller->>Service: Start request]
+rect rgba(255, 220, 180, 0.5)
+  Service->>DB: Persist record [Mermaid: Service->>DB: Persist record]
+  DB-->>Service: Persistence complete [Mermaid: DB-->>Service: Persistence complete]
+end
+rect rgb(210, 240, 255)
+  Service->>Cache: Warm cache [Mermaid: Service->>Cache: Warm cache]
+  Note over Service,Cache: Highlighted cache phase [Mermaid: Note over Service,Cache: Highlighted cache phase]
+end
+Service-->>Caller: Reply [Mermaid: Service-->>Caller: Reply]

@@ -35,12 +35,12 @@ class MermaidTransformError extends Error {
  * accessibility metadata, basic message lines, standard unidirectional arrow
  * variants, Mermaid notes mapped onto sequencer comments hosted by synthetic
  * blank lines, Mermaid activation/deactivation control, and Mermaid `loop`,
- * `alt`, `opt`, `par`, `critical`, `break`, `and`, `else`, `option`, and
- * `end` fragments mapped onto sequencer fragments, plus Mermaid
- * `autonumber` mapped onto a sequencer document flag, real sequencer return
- * lines for dotted Mermaid messages, bidirectional arrows, and Mermaid
- * half-arrow variants mapped onto sequencer `fromArrow` and `toArrow`
- * endpoint styles.
+ * `alt`, `opt`, `par`, `critical`, `break`, `rect`, `and`, `else`,
+ * `option`, and `end` fragments mapped onto sequencer fragments, plus
+ * Mermaid `autonumber` mapped onto a sequencer document flag, real
+ * sequencer return lines for dotted Mermaid messages, bidirectional arrows,
+ * and Mermaid half-arrow variants mapped onto sequencer `fromArrow` and
+ * `toArrow` endpoint styles.
  *
  * @example
  * const document = MermaidSequenceTransformer.transform(source, { sourceName: "sample.mmd" });
@@ -234,7 +234,8 @@ class MermaidSequenceTransformer {
 					controlKeyword === "opt" ||
 					controlKeyword === "par" ||
 					controlKeyword === "critical" ||
-					controlKeyword === "break"
+					controlKeyword === "break" ||
+					controlKeyword === "rect"
 				) {
 					const parsedFragment =
 						controlKeyword === "alt"
@@ -243,6 +244,8 @@ class MermaidSequenceTransformer {
 							? this._parseParFragment(statements, index, actors, activationState)
 							: controlKeyword === "critical"
 							? this._parseCriticalFragment(statements, index, actors, activationState)
+							: controlKeyword === "rect"
+							? this._parseRectFragment(statements, index, actors, activationState)
 							: controlKeyword === "break"
 							? this._parseSimpleFragment(statements, index, actors, activationState, "break")
 							: this._parseSimpleFragment(statements, index, actors, activationState, controlKeyword);
@@ -489,6 +492,52 @@ class MermaidSequenceTransformer {
 		return {
 			line: fragment,
 			nextIndex: index + 1,
+		};
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a Mermaid `rect` highlight block into a sequencer region fragment.
+	 *
+	 * @param {{ trimmed: string, sourceLine: string, lineNumber: number }[]} statements Structured Mermaid statements.
+	 * @param {number} startIndex Statement index of the `rect` line.
+	 * @param {object[]} actors Current actor array.
+	 * @param {object} activationState Current Mermaid activation counters by alias.
+	 * @returns {{ line: object, nextIndex: number }} Parsed fragment line and next index.
+	 * @throws {MermaidTransformError} If the fragment is malformed or unterminated.
+	 * @example
+	 * const parsed = MermaidSequenceTransformer._parseRectFragment(statements, 4, actors, activationState);
+	 */
+	static _parseRectFragment(statements, startIndex, actors, activationState) {
+		const startStatement = statements[startIndex];
+		const bgColour = this._parseRectColour(startStatement.trimmed, startStatement.lineNumber, startStatement.sourceLine);
+		const parsedBody = this._parseStructuredLines(statements, startIndex + 1, actors, activationState, ["end"]);
+		const endStatement = statements[parsedBody.nextIndex];
+
+		if (!endStatement || this._getControlKeyword(endStatement.trimmed) !== "end") {
+			throw new MermaidTransformError("Mermaid feature 'rect' is missing a matching 'end'", startStatement.lineNumber, startStatement.sourceLine);
+		}
+
+		const fragment = {
+			type: "fragment",
+			fragmentType: "rect",
+			title: "",
+			condition: "",
+			bgColour: bgColour,
+			borderWidth: 0,
+			lines: parsedBody.lines,
+		};
+		const actorSpan = this._inferActorSpan(parsedBody.lines, actors);
+		if (actorSpan.startActor != null) {
+			fragment.startActor = actorSpan.startActor;
+		}
+		if (actorSpan.endActor != null) {
+			fragment.endActor = actorSpan.endActor;
+		}
+
+		return {
+			line: fragment,
+			nextIndex: parsedBody.nextIndex + 1,
 		};
 	}
 
@@ -938,12 +987,12 @@ class MermaidSequenceTransformer {
 	 * Return the Mermaid control keyword at the start of a line when present.
 	 *
 	 * @param {string} trimmed Trimmed Mermaid source line.
-	 * @returns {"loop"|"alt"|"opt"|"par"|"critical"|"break"|"and"|"else"|"option"|"end"|null} Control keyword or null.
+	 * @returns {"loop"|"alt"|"opt"|"par"|"critical"|"break"|"rect"|"and"|"else"|"option"|"end"|null} Control keyword or null.
 	 * @example
 	 * const keyword = MermaidSequenceTransformer._getControlKeyword("alt Success");
 	 */
 	static _getControlKeyword(trimmed) {
-		const match = String(trimmed).match(/^(loop|alt|opt|par|critical|break|and|else|option|end)\b/i);
+		const match = String(trimmed).match(/^(loop|alt|opt|par|critical|break|rect|and|else|option|end)\b/i);
 		return match ? match[1].toLowerCase() : null;
 	}
 
@@ -1012,6 +1061,126 @@ class MermaidSequenceTransformer {
 		const match = String(trimmed).match(/^option(?:\s+(.*))?$/i);
 		const label = this._cleanMetadataValue(match && match[1] != null ? match[1] : "");
 		return label.length > 0 ? label : "OPTION";
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a Mermaid `rect` colour declaration.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {string} Colour string preserved for sequencer output.
+	 * @throws {MermaidTransformError} If the rect syntax is malformed.
+	 * @example
+	 * const colour = MermaidSequenceTransformer._parseRectColour("rect rgba(0,0,255,0.1)", 8, "rect rgba(0,0,255,0.1)");
+	 */
+	static _parseRectColour(trimmed, lineNumber, sourceLine) {
+		const match = String(trimmed).match(/^rect\s+(.+)$/i);
+		if (!match) {
+			throw new MermaidTransformError("Unsupported Mermaid rect syntax", lineNumber, sourceLine);
+		}
+
+		const colour = this._cleanMetadataValue(match[1]);
+		if (colour.length === 0) {
+			throw new MermaidTransformError("Mermaid rect colour cannot be empty", lineNumber, sourceLine);
+		}
+
+		return colour;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Infer the actor span touched by a collection of transformed sequencer lines.
+	 *
+	 * @param {object[]} lines Sequencer lines inside one Mermaid region.
+	 * @param {object[]} actors Document actors in display order.
+	 * @returns {{ startActor: string|null, endActor: string|null }} Actor span bounds.
+	 * @example
+	 * const span = MermaidSequenceTransformer._inferActorSpan(lines, actors);
+	 */
+	static _inferActorSpan(lines, actors) {
+		if (!Array.isArray(lines) || !Array.isArray(actors)) {
+			return {
+				startActor: null,
+				endActor: null,
+			};
+		}
+
+		const aliases = [];
+		lines.forEach((line) => {
+			this._collectLineActorAliases(line, aliases);
+		});
+
+		const uniqueAliases = aliases.filter((alias, index) => aliases.indexOf(alias) === index);
+		const indexedAliases = actors
+			.map((actor, index) => ({ alias: actor.alias, index: index }))
+			.filter((entry) => uniqueAliases.includes(entry.alias));
+
+		if (indexedAliases.length === 0) {
+			return {
+				startActor: null,
+				endActor: null,
+			};
+		}
+
+		indexedAliases.sort((left, right) => left.index - right.index);
+		return {
+			startActor: indexedAliases[0].alias,
+			endActor: indexedAliases[indexedAliases.length - 1].alias,
+		};
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Collect actor aliases referenced by one transformed sequencer line.
+	 *
+	 * @param {object} line Sequencer line.
+	 * @param {string[]} aliases Mutable alias accumulator.
+	 * @returns {void} Nothing.
+	 * @example
+	 * MermaidSequenceTransformer._collectLineActorAliases({ type: "call", from: "A", to: "B" }, []);
+	 */
+	static _collectLineActorAliases(line, aliases) {
+		if (!line || typeof line !== "object" || !Array.isArray(aliases)) {
+			return;
+		}
+
+		if (typeof line.from === "string") {
+			aliases.push(line.from);
+		}
+		if (typeof line.to === "string") {
+			aliases.push(line.to);
+		}
+		if (typeof line.actor === "string") {
+			aliases.push(line.actor);
+		}
+		if (Array.isArray(line.actors)) {
+			line.actors.forEach((alias) => {
+				if (typeof alias === "string") {
+					aliases.push(alias);
+				}
+			});
+		}
+		if (Array.isArray(line.activate)) {
+			line.activate.forEach((alias) => {
+				if (typeof alias === "string") {
+					aliases.push(alias);
+				}
+			});
+		}
+		if (Array.isArray(line.deactivate)) {
+			line.deactivate.forEach((alias) => {
+				if (typeof alias === "string") {
+					aliases.push(alias);
+				}
+			});
+		}
+		if (Array.isArray(line.lines)) {
+			line.lines.forEach((childLine) => {
+				this._collectLineActorAliases(childLine, aliases);
+			});
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////

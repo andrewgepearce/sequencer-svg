@@ -27,6 +27,68 @@ let Blank = require("./Blank.js");
 let ErrorLine = require("./ErrorLine.js");
 const InputDocumentError = require("./InputDocumentError.js");
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * Resolve the horizontal span of a fragment from optional actor bounds.
+ *
+ * @param {*} working Current working render state.
+ * @param {object} line Fragment line definition.
+ * @param {number} depthIndex Active nested-fragment depth.
+ * @returns {{ startX: number, endX: number }} Fragment x-axis bounds.
+ * @throws {InputDocumentError} If configured actor aliases are invalid or reversed.
+ * @example
+ * const span = resolveFragmentSpan(working, { startActor: "A", endActor: "B" }, 0);
+ */
+function resolveFragmentSpan(working, line, depthIndex) {
+	const defaultStartX = working.windowPadding + depthIndex * working.fragmentSpacing;
+	const defaultEndX = working.canvasWidth - working.windowPadding - depthIndex * working.fragmentSpacing;
+
+	if (!Utilities.isString(line.startActor) && !Utilities.isString(line.endActor)) {
+		return {
+			startX: defaultStartX,
+			endX: defaultEndX,
+		};
+	}
+
+	let startActor = null;
+	let endActor = null;
+	if (Array.isArray(working.postdata.actors)) {
+		working.postdata.actors.forEach((actor) => {
+			if (Utilities.isString(line.startActor) && actor.alias === line.startActor) {
+				startActor = actor;
+			}
+			if (Utilities.isString(line.endActor) && actor.alias === line.endActor) {
+				endActor = actor;
+			}
+		});
+	}
+
+	if (Utilities.isString(line.startActor) && startActor == null) {
+		throw new InputDocumentError(`'fragment' line 'startActor' alias "${line.startActor}" does not match any actor`, line);
+	}
+	if (Utilities.isString(line.endActor) && endActor == null) {
+		throw new InputDocumentError(`'fragment' line 'endActor' alias "${line.endActor}" does not match any actor`, line);
+	}
+
+	const startX =
+		startActor && Utilities.isNumber(startActor.clinstance.middle)
+			? startActor.clinstance.middle - startActor.clinstance.width / 2 - working.globalSpacing / 2
+			: defaultStartX;
+	const endX =
+		endActor && Utilities.isNumber(endActor.clinstance.middle)
+			? endActor.clinstance.middle + endActor.clinstance.width / 2 + working.globalSpacing / 2
+			: defaultEndX;
+
+	if (startX > endX) {
+		throw new InputDocumentError("'fragment' line actor bounds are reversed", line);
+	}
+
+	return {
+		startX: startX < defaultStartX ? defaultStartX : startX,
+		endX: endX > defaultEndX ? defaultEndX : endX,
+	};
+}
+
 module.exports = class Fragment {
 	///////////////////////////////////////////////////////////////////////////////
 	/**
@@ -221,6 +283,7 @@ module.exports = class Fragment {
 		//////////////////////////////////////////////////////////////////////////////
 		// Get fragment type
 		let type = Utilities.isString(this._line.fragmentType) ? this._line.fragmentType : "";
+		const isRectHighlight = type === "rect";
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Get fragment title
@@ -237,6 +300,7 @@ module.exports = class Fragment {
 			: this._line.condition == "object" && Utilities.isString(this._line.condition.text)
 			? this._line.condition.text
 			: "";
+		const showRectHeader = !isRectHighlight || title.length > 0 || condition.length > 0;
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Create text metadata objects
@@ -268,8 +332,9 @@ module.exports = class Fragment {
 		//////////////////////////////////////////////////////////////////////////////
 		// Calculate height of fragment start line
 		let ctx = this._ctx;
-		let fragmentStartX = working.windowPadding + currentActiveAboveThisFragment * working.fragmentSpacing;
-		let fragmentEndX = working.canvasWidth - working.windowPadding - currentActiveAboveThisFragment * working.fragmentSpacing;
+		const fragmentSpan = resolveFragmentSpan(working, this._line, currentActiveAboveThisFragment);
+		let fragmentStartX = fragmentSpan.startX;
+		let fragmentEndX = fragmentSpan.endX;
 		this._fragmentStartX = fragmentStartX;
 		this._fragmentEndX = fragmentEndX;
 		let fragmentTop = null;
@@ -288,26 +353,30 @@ module.exports = class Fragment {
 			);
 		}
 		fragmentTop = Utilities.isObject(commentxy) && Utilities.isNumber(commentxy.y) ? commentxy.y : starty + working.globalSpacing;
-		let textxy = Utilities.drawTextRectangleNoBorderOrBg(
-			this._ctx,
-			type + " " + title,
-			titleTmd,
-			fragmentTop,
-			fragmentStartX,
-			null,
-			null,
-			true
-		);
-		let conditionxy = Utilities.drawTextRectangleNoBorderOrBg(
-			this._ctx,
-			condition,
-			conditionTmd,
-			textxy.y,
-			fragmentStartX,
-			null,
-			null,
-			true
-		);
+		let textxy = !showRectHeader
+			? { x: fragmentStartX, y: fragmentTop }
+			: Utilities.drawTextRectangleNoBorderOrBg(
+					this._ctx,
+					type + " " + title,
+					titleTmd,
+					fragmentTop,
+					fragmentStartX,
+					null,
+					null,
+					true
+			  );
+		let conditionxy = !showRectHeader
+			? { x: fragmentStartX, y: fragmentTop }
+			: Utilities.drawTextRectangleNoBorderOrBg(
+					this._ctx,
+					condition,
+					conditionTmd,
+					textxy.y,
+					fragmentStartX,
+					null,
+					null,
+					true
+			  );
 		let xy = Actor.drawTimelines(working, this._ctx, starty, conditionxy.y - starty, false);
 		let finalHeightOfAllLine = xy.y - starty;
 		let finalHeightAboveFragmentInLine = fragmentTop - starty;
@@ -337,23 +406,25 @@ module.exports = class Fragment {
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 2. Current Fragment rectangle
-		xy = Utilities.drawRectangle(
-			this._ctx,
-			this._borderWidth,
-			this._borderColour,
-			this._borderDash,
-			this._colour,
-			fragmentTop, // top
-			fragmentStartX, // left
-			fragmentEndX - fragmentStartX > 0 ? fragmentEndX - fragmentStartX : working.globalSpacing, // width
-			finalHeightOfFragmentRectangle, //height
-			0,
-			true,
-			true,
-			false,
-			true,
-			false
-		);
+		if (!isRectHighlight || showRectHeader) {
+			xy = Utilities.drawRectangle(
+				this._ctx,
+				this._borderWidth,
+				this._borderColour,
+				this._borderDash,
+				this._colour,
+				fragmentTop, // top
+				fragmentStartX, // left
+				fragmentEndX - fragmentStartX > 0 ? fragmentEndX - fragmentStartX : working.globalSpacing, // width
+				finalHeightOfFragmentRectangle, //height
+				0,
+				true,
+				true,
+				false,
+				true,
+				false
+			);
+		}
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 3. Time lines
@@ -361,39 +432,54 @@ module.exports = class Fragment {
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 4. Type and Title rectangle
-		let offset = (textxy.y - fragmentTop) / 2;
-		if (offset > 10) offset = 10;
-		if (offset < 0) offset = 0;
-		ctx.beginPath();
-		ctx.moveTo(fragmentStartX, fragmentTop);
-		ctx.lineTo(fragmentStartX, textxy.y);
-		ctx.lineTo(textxy.x, textxy.y);
-		ctx.lineTo(textxy.x + offset, textxy.y - offset);
-		ctx.lineTo(textxy.x + offset, fragmentTop);
-		ctx.lineTo(fragmentStartX, fragmentTop);
-		ctx.fillStyle = titleBgColour;
-		ctx.fill();
-		ctx.setLineDash(this._borderDash);
-		ctx.lineWidth = this._borderWidth;
-		ctx.strokeStyle = this._borderColour;
-		ctx.stroke();
+		if (!isRectHighlight || showRectHeader) {
+			let offset = (textxy.y - fragmentTop) / 2;
+			if (offset > 10) offset = 10;
+			if (offset < 0) offset = 0;
+			ctx.beginPath();
+			ctx.moveTo(fragmentStartX, fragmentTop);
+			ctx.lineTo(fragmentStartX, textxy.y);
+			ctx.lineTo(textxy.x, textxy.y);
+			ctx.lineTo(textxy.x + offset, textxy.y - offset);
+			ctx.lineTo(textxy.x + offset, fragmentTop);
+			ctx.lineTo(fragmentStartX, fragmentTop);
+			ctx.fillStyle = titleBgColour;
+			ctx.fill();
+			ctx.setLineDash(this._borderDash);
+			ctx.lineWidth = this._borderWidth;
+			ctx.strokeStyle = this._borderColour;
+			ctx.stroke();
+		}
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 5. Type and title text
-		textxy = Utilities.drawTextRectangleNoBorderOrBg(
-			this._ctx,
-			type + " " + title,
-			titleTmd,
-			fragmentTop,
-			fragmentStartX,
-			null,
-			null,
-			mimic
-		);
+		if (!isRectHighlight || showRectHeader) {
+			textxy = Utilities.drawTextRectangleNoBorderOrBg(
+				this._ctx,
+				type + " " + title,
+				titleTmd,
+				fragmentTop,
+				fragmentStartX,
+				null,
+				null,
+				mimic
+			);
+		}
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 6. Condition text
-		conditionxy = Utilities.drawTextRectangleNoBorderOrBg(this._ctx, condition, conditionTmd, textxy.y, fragmentStartX, null, null, mimic);
+		if (!isRectHighlight || showRectHeader) {
+			conditionxy = Utilities.drawTextRectangleNoBorderOrBg(
+				this._ctx,
+				condition,
+				conditionTmd,
+				textxy.y,
+				fragmentStartX,
+				null,
+				null,
+				mimic
+			);
+		}
 
 		//////////////////////////////////////////////////////////////////////////////
 		// 7. Comment
@@ -417,13 +503,28 @@ module.exports = class Fragment {
 		xy = Fragment.drawLines(working, ctx, xy.y, this._line.lines);
 
 		//////////////////////////////////////////////////////////////////////////////
+		// Add a small bottom pad to pure rect highlights so the colour reads as a band.
+		if (isRectHighlight) {
+			const rectBottomPad = Math.max(4, Math.round(working.globalSpacing / 3));
+			let bottomPad = new Blank(ctx, { type: "blank", height: rectBottomPad });
+			xy = bottomPad.draw(working, xy.y, mimic);
+		}
+
+		//////////////////////////////////////////////////////////////////////////////
 		// Draw a final blank line to make sure we have width
-		let blank = new Blank(ctx, { type: "blank", width: blankWidth, height: 0 });
-		xy = blank.draw(working, xy.y, false);
+		if (!isRectHighlight) {
+			let blank = new Blank(ctx, { type: "blank", width: blankWidth, height: 0 });
+			xy = blank.draw(working, xy.y, false);
+		}
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Remove this active fragment
 		working.activeFragments.pop();
+
+		if (isRectHighlight) {
+			working.manageMaxWidth(0, xy.y);
+			return xy;
+		}
 
 		let endLineTop = xy.y;
 		ctx.lineWidth = 1;

@@ -786,6 +786,16 @@ let schema = {
 			borderColour: _borderColour("rgb(0, 0, 0)"),
 			borderDash: _borderDash([]),
 			borderWidth: _borderWidth(1),
+			startActor: {
+				type: "string",
+				description: "Optional alias of the first actor spanned by the fragment",
+				minLength: 1
+			},
+			endActor: {
+				type: "string",
+				description: "Optional alias of the last actor spanned by the fragment",
+				minLength: 1
+			},
 			fragmentType: {
 				type: "string"
 			},

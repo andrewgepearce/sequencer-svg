@@ -1100,7 +1100,9 @@ module.exports = class Utilities {
 	 */
 	static validRGBAColour(stringColour) {
 		if (typeof stringColour != "string") return false;
-		var n = stringColour.search(/rgba\([0-9]{1,3},[0-9]{1,3},[0-9]{1,3},(0|1|(0.[0-9]+)|(.[0-9]+))\)/);
+		var n = stringColour.search(
+			/rgba\(\s*[0-9]{1,3}\s*,\s*[0-9]{1,3}\s*,\s*[0-9]{1,3}\s*,\s*(0|1|(0\.[0-9]+)|(\.[0-9]+))\s*\)/
+		);
 		if (n != 0) return false;
 		//////////////////////////////////////////////////////////////////////////////
 		// Val 1
