@@ -22,6 +22,7 @@ class SvgContext {
 		this._elements = [];
 		this._currentPath = [];
 		this._currentPoint = { x: 0, y: 0 };
+		this._currentLinkHref = null;
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Canvas 2D state
@@ -466,7 +467,7 @@ class SvgContext {
 		if (this._lineDash.length > 0) {
 			attrs["stroke-dasharray"] = this._lineDash.join(",");
 		}
-		this._elements.push({ tag: "path", attrs });
+		this._elements.push({ tag: "path", attrs, linkHref: this._currentLinkHref });
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -486,6 +487,7 @@ class SvgContext {
 				fill: this._fillStyle,
 				stroke: "none",
 			},
+			linkHref: this._currentLinkHref,
 		});
 	}
 
@@ -523,7 +525,49 @@ class SvgContext {
 		} else if (this._textBaseline === "top") {
 			attrs["dominant-baseline"] = "hanging";
 		}
-		this._elements.push({ tag: "text", attrs, content: text });
+		this._elements.push({ tag: "text", attrs, content: text, linkHref: this._currentLinkHref });
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Add a raw SVG element to the output stream.
+	 *
+	 * @param {string} tag SVG element name.
+	 * @param {object} attrs SVG attributes.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.addSvgElement("path", { d: "M 0 0 L 1 1", fill: "black" });
+	 */
+	addSvgElement(tag, attrs) {
+		if (typeof tag !== "string" || !attrs || typeof attrs !== "object") {
+			return;
+		}
+		this._elements.push({ tag, attrs, linkHref: this._currentLinkHref });
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Begin emitting SVG elements inside a hyperlink wrapper.
+	 *
+	 * @param {string} href Link destination.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.beginLink("https://example.test");
+	 */
+	beginLink(href) {
+		this._currentLinkHref = typeof href === "string" && href.length > 0 ? href : null;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Stop emitting SVG elements inside a hyperlink wrapper.
+	 *
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance.endLink();
+	 */
+	endLink() {
+		this._currentLinkHref = null;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -593,6 +637,7 @@ class SvgContext {
 		this._elements = [];
 		this._currentPath = [];
 		this._currentPoint = { x: 0, y: 0 };
+		this._currentLinkHref = null;
 		this._fillStyle = "rgb(0,0,0)";
 		this._strokeStyle = "rgb(0,0,0)";
 		this._lineWidth = 1;
@@ -639,12 +684,22 @@ class SvgContext {
 		}).up();
 
 		for (const el of this._elements) {
+			let parent = svg;
+			if (typeof el.linkHref === "string" && el.linkHref.length > 0) {
+				parent = svg.ele("a", {
+					href: el.linkHref,
+					target: "_blank",
+				});
+			}
 			if (el.tag === "text") {
-				const textEl = svg.ele("text", el.attrs);
+				const textEl = parent.ele("text", el.attrs);
 				textEl.txt(el.content);
 				textEl.up();
 			} else {
-				svg.ele(el.tag, el.attrs).up();
+				parent.ele(el.tag, el.attrs).up();
+			}
+			if (parent !== svg) {
+				parent.up();
 			}
 		}
 

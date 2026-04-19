@@ -20,6 +20,8 @@ const schema = require("./schema.js");
 const InputDocumentError = require("./InputDocumentError.js");
 
 module.exports = class Actor {
+	static _linkIconPathData =
+		"M634.48 932.5c.6-.73 1.32-1.2 2.16-1.45.84-.36 1.68-.48 2.52-.48 1.92 0 3.36.84 4.2 2.52 1.32 1.3 1.92 2.75 1.92 4.55 0 1.68-.6 3.12-1.92 4.44l-8.88 8.63c-3.12 3.12-6.72 5.52-10.8 7.08-3.96 1.7-7.92 2.53-12 2.53s-8.16-.84-12-2.52c-3.72-1.55-7.2-3.95-10.32-7.07-3-3-5.4-6.6-6.96-10.56-1.56-3.84-2.4-7.8-2.4-12 0-3.96.84-8.04 2.4-11.88 1.56-3.97 3.84-7.45 6.96-10.57l17.88-17.64c3.12-3.13 6.6-5.4 10.56-6.97 3.84-1.68 8.04-2.52 12.24-2.64 4.08 0 8.04.95 12 2.63 3.84 1.56 7.32 3.84 10.32 6.96 1.2 1.3 1.8 2.75 1.8 4.55 0 1.68-.6 3.12-1.8 4.44-.6.6-1.32 1.07-2.04 1.3-.84.37-1.68.5-2.52.5-.72 0-1.56-.13-2.4-.5-.72-.23-1.44-.7-2.04-1.3-3.6-3.97-7.92-5.9-13.08-5.9s-9.6 1.93-13.44 5.9l-17.76 17.5c-3.96 3.6-5.88 8.05-5.88 13.2 0 5.05 1.92 9.6 5.88 13.57 3.6 3.72 7.92 5.64 13.08 5.64s9.6-1.9 13.44-5.63l8.88-8.88zm55.92-82.57c3.12 3 5.4 6.36 6.96 10.32 1.8 3.96 2.64 7.92 2.64 12s-.84 8.04-2.64 11.88c-1.56 3.72-3.84 7.2-6.96 10.32l-17.64 17.64c-3.24 3.23-6.84 5.63-10.8 7.2-3.84 1.55-8.04 2.4-12.24 2.4-4.08 0-8.16-.85-12-2.4-3.84-1.57-7.32-4.1-10.08-7.2-.6-.6-.96-1.2-1.32-1.93-.36-.72-.48-1.56-.48-2.28 0-1.8.6-3.25 1.8-4.57.6-.48 1.2-.96 1.92-1.32.72-.35 1.56-.47 2.4-.47 1.68 0 3.12.6 4.44 1.8 1.68 1.92 3.72 3.36 6.12 4.32 4.56 1.8 9.72 1.8 14.28 0 2.4-.96 4.44-2.4 6.36-4.32l17.88-17.76c3.72-3.6 5.52-7.92 5.52-13.08 0-5.17-1.8-9.73-5.52-13.7-3.72-3.7-8.04-5.63-13.2-5.63s-9.72 1.92-13.68 5.64l-8.88 8.9c-.6.7-1.2 1.07-2.04 1.43-.72.36-1.56.48-2.4.48-.84 0-1.68-.1-2.4-.47-.84-.36-1.44-.72-2.04-1.44-.6-.5-1.08-1.2-1.44-1.93-.36-.84-.48-1.68-.48-2.52 0-1.68.6-3.12 1.92-4.44l8.88-8.87c3.12-3.12 6.72-5.52 10.56-7.08 3.84-1.56 8.04-2.52 12.24-2.52 4.08 0 8.04.84 12 2.64 3.84 1.44 7.32 3.84 10.32 6.96z";
 	///////////////////////////////////////////////////////////////////////////////
 	/**
 	 * Initialise the Actor instance.
@@ -43,6 +45,9 @@ module.exports = class Actor {
 		this._tmd = null;
 		this._actorType = "participant";
 		this._iconReservation = 0;
+		this._linkBadgeReservation = 0;
+		this._links = [];
+		this._headerHeight = null;
 		this._startx = null;
 		this._starty = null;
 		this._flowStateContinue = false;
@@ -469,6 +474,9 @@ module.exports = class Actor {
 			this._alias = this.actorObj.alias;
 		}
 		this._actorType = Actor._normaliseActorType(this.actorObj.actorType);
+		this._links = Array.isArray(this.actorObj.links)
+			? this.actorObj.links.filter((link) => Utilities.isObject(link) && Utilities.isString(link.label) && Utilities.isString(link.url))
+			: [];
 		if (!working.postdata) {
 			working.postdata = {};
 		}
@@ -515,9 +523,11 @@ module.exports = class Actor {
 		this._starty = starty;
 		const wh = Utilities.getTextWidthAndHeight(this._ctx, actortmd, this._name, working.tags);
 		this._iconReservation = Actor._getHeaderIconReservation(this._actorType, actortmd.fontSizePx);
+		this._linkBadgeReservation = this._links.length > 0 ? Actor._getHeaderLinkBadgeReservation(actortmd.fontSizePx) : 0;
 
-		this._height = wh.h; //actortmd.getBoxHeight(this._name);
-		this._width = wh.w + this._iconReservation; //actortmd.getBoxWidth(this._ctx, this._name);
+		this._headerHeight = wh.h;
+		this._height = this._headerHeight;
+		this._width = wh.w + this._iconReservation + this._linkBadgeReservation;
 		this._left = this._startx;
 		this._right = this._startx + this._width;
 		this._middle = this._startx + this._width / 2;
@@ -573,7 +583,7 @@ module.exports = class Actor {
 			topY + 3,
 			this._startx + 3,
 			this._width,
-			this._height,
+			this._headerHeight,
 			this._radius,
 			false,
 			false,
@@ -584,6 +594,10 @@ module.exports = class Actor {
 		working.manageMaxWidthXy(xy);
 		if (this._iconReservation > 0) {
 			xy = this._drawHeaderIcon(topY, mimic);
+			working.manageMaxWidthXy(xy);
+		}
+		if (this._linkBadgeReservation > 0) {
+			xy = this._drawHeaderLinkBadge(topY, mimic);
 			working.manageMaxWidthXy(xy);
 		}
 		if (this._iconReservation > 0) {
@@ -601,8 +615,8 @@ module.exports = class Actor {
 				actortmd,
 				topY,
 				this._startx + this._iconReservation,
-				this._width - this._iconReservation,
-				this._height,
+				this._width - this._iconReservation - this._linkBadgeReservation,
+				this._headerHeight,
 				this._radius,
 				false,
 				false,
@@ -623,8 +637,8 @@ module.exports = class Actor {
 				actortmd,
 				topY,
 				this._startx,
-				this._width,
-				this._height,
+				this._width - this._linkBadgeReservation,
+				this._headerHeight,
 				this._radius,
 				true,
 				true,
@@ -652,7 +666,7 @@ module.exports = class Actor {
 		const iconBoxLeft = this._startx + 6;
 		const iconBoxTop = topY + 4;
 		const iconBoxWidth = Math.max(12, this._iconReservation - 10);
-		const iconBoxHeight = Math.max(12, this._height - 8);
+		const iconBoxHeight = Math.max(12, this._headerHeight - 8);
 		const lineColour = this._actorTmd.borderColour || "rgb(0,0,0)";
 		const lineWidth = 1.5;
 
@@ -693,6 +707,115 @@ module.exports = class Actor {
 			x: iconBoxLeft + iconBoxWidth,
 			y: iconBoxTop + iconBoxHeight,
 		};
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw a compact link badge within the actor header when links exist.
+	 *
+	 * @param {*} topY Parameter derived from topY.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance._drawHeaderLinkBadge(topY, mimic);
+	 */
+	_drawHeaderLinkBadge(topY, mimic) {
+		const badgeWidth = Math.max(20, this._linkBadgeReservation - 4);
+		const badgeHeight = Math.max(16, this._headerHeight - 8);
+		const badgeLeft = this._startx + this._width - this._linkBadgeReservation + 1;
+		const badgeTop = topY + Math.max(4, Math.round((this._headerHeight - badgeHeight) / 2));
+		const ctx = this._ctx;
+		const strokeColour = "rgb(0, 70, 140)";
+
+		if (mimic) {
+			return {
+				x: badgeLeft + badgeWidth,
+				y: badgeTop + badgeHeight,
+			};
+		}
+
+		if (typeof ctx.addSvgElement === "function") {
+			const sourceLeft = 580;
+			const sourceTop = 840.33;
+			const sourceSize = 120;
+			const scale = Math.min(badgeWidth / sourceSize, badgeHeight / sourceSize);
+			const renderedWidth = sourceSize * scale;
+			const renderedHeight = sourceSize * scale;
+			const translateX = badgeLeft + (badgeWidth - renderedWidth) / 2;
+			const translateY = badgeTop + (badgeHeight - renderedHeight) / 2;
+			ctx.addSvgElement("path", {
+				d: Actor._linkIconPathData,
+				fill: strokeColour,
+				stroke: "none",
+				transform: `translate(${translateX} ${translateY}) scale(${scale}) translate(${-sourceLeft} ${-sourceTop})`,
+			});
+		} else {
+			this._drawFallbackChainLinkIcon(badgeLeft, badgeTop, badgeWidth, badgeHeight, strokeColour);
+		}
+
+		return {
+			x: badgeLeft + badgeWidth,
+			y: badgeTop + badgeHeight,
+		};
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw a fallback chain-link icon when raw SVG path injection is not
+	 * available.
+	 *
+	 * @param {*} left Parameter derived from left.
+	 * @param {*} top Parameter derived from top.
+	 * @param {*} width Parameter derived from width.
+	 * @param {*} height Parameter derived from height.
+	 * @param {*} strokeColour Parameter derived from strokeColour.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance._drawFallbackChainLinkIcon(1, 2, 20, 16, "rgb(0,70,140)");
+	 */
+	_drawFallbackChainLinkIcon(left, top, width, height, strokeColour) {
+		const ctx = this._ctx;
+		const lineWidth = Math.max(2, Math.min(width, height) * 0.12);
+		const radius = Math.max(4, Math.min(width, height) * 0.22);
+		const firstStart = { x: left + width * 0.28, y: top + height * 0.72 };
+		const firstEnd = { x: left + width * 0.5, y: top + height * 0.5 };
+		const secondStart = { x: left + width * 0.5, y: top + height * 0.5 };
+		const secondEnd = { x: left + width * 0.72, y: top + height * 0.28 };
+
+		const drawCapsule = (startPoint, endPoint) => {
+			const dx = endPoint.x - startPoint.x;
+			const dy = endPoint.y - startPoint.y;
+			const length = Math.sqrt(dx * dx + dy * dy);
+			if (length <= 0.0001) {
+				return;
+			}
+			const ux = dx / length;
+			const uy = dy / length;
+			const px = -uy;
+			const py = ux;
+			const startOuterX = startPoint.x + px * radius;
+			const startOuterY = startPoint.y + py * radius;
+			const endOuterX = endPoint.x + px * radius;
+			const endOuterY = endPoint.y + py * radius;
+			const startInnerX = startPoint.x - px * radius;
+			const startInnerY = startPoint.y - py * radius;
+			const outerAngle = Math.atan2(py, px);
+			const innerAngle = Math.atan2(-py, -px);
+
+			ctx.beginPath();
+			ctx.moveTo(startOuterX, startOuterY);
+			ctx.lineTo(endOuterX, endOuterY);
+			ctx.arc(endPoint.x, endPoint.y, radius, outerAngle, innerAngle, false);
+			ctx.lineTo(startInnerX, startInnerY);
+			ctx.arc(startPoint.x, startPoint.y, radius, innerAngle, outerAngle, false);
+			ctx.stroke();
+		};
+
+		ctx.lineWidth = lineWidth;
+		ctx.strokeStyle = strokeColour;
+		ctx.setLineDash([]);
+		drawCapsule(firstStart, firstEnd);
+		drawCapsule(secondStart, secondEnd);
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -987,6 +1110,20 @@ module.exports = class Actor {
 		}
 		const baseSize = Utilities.isNumberGt0(fontSizePx) ? fontSizePx : 18;
 		return Math.max(26, Math.round(baseSize * 1.5));
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return the reserved width for a compact header link badge.
+	 *
+	 * @param {*} fontSizePx Parameter derived from fontSizePx.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = Actor._getHeaderLinkBadgeReservation(fontSizePx);
+	 */
+	static _getHeaderLinkBadgeReservation(fontSizePx) {
+		const baseSize = Utilities.isNumberGt0(fontSizePx) ? fontSizePx : 18;
+		return Math.max(30, Math.round(baseSize * 1.55));
 	}
 
 	///////////////////////////////////////////////////////////////////////////////

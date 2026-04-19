@@ -1,0 +1,65 @@
+title: Mermaid actor link visuals
+version: '1.0'
+actors:
+  - name: API
+    alias: API
+    actorType: participant
+    links:
+      - label: Dashboard
+        url: 'https://status.example.test/api'
+      - label: Docs
+        url: 'https://docs.example.test/api'
+  - name: DB
+    alias: DB
+    actorType: participant
+    links:
+      - label: Schema
+        url: 'https://docs.example.test/db'
+  - name: Queue
+    alias: Queue
+    actorType: participant
+    links:
+      - label: Queue metrics
+        url: 'https://ops.example.test/queue'
+      - label: Runbook
+        url: 'https://ops.example.test/queue-runbook'
+  - name: Audit
+    alias: Audit
+    actorType: participant
+lines:
+  - type: call
+    from: API
+    to: DB
+    text: 'Read persistence [Mermaid: API->>DB: Read persistence]'
+    toArrow: fill
+    arrow: fill
+  - type: call
+    from: API
+    to: Queue
+    text: 'Enqueue follow-up [Mermaid: API->>Queue: Enqueue follow-up]'
+    toArrow: fill
+    arrow: fill
+  - type: return
+    from: Queue
+    to: API
+    text: 'Accepted [Mermaid: Queue-->>API: Accepted]'
+    lineDash:
+      - 4
+      - 2
+    toArrow: fill
+    arrow: fill
+  - type: call
+    from: API
+    to: Audit
+    text: 'Record trace [Mermaid: API->>Audit: Record trace]'
+    toArrow: fill
+    arrow: fill
+description:
+  - >-
+    Demonstrates Mermaid actor links rendered as actor header share icons with a
+    full bottom reference block.
+  - 'From the project root, regenerate this Mermaid transform and SVG with:'
+  - >-
+    node sequencer.js --mermaid -i
+    test/mermaid-features/23-actor-link-visuals/input.mmd -o -f -t
+    test/mermaid-features/23-actor-link-visuals

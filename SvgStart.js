@@ -327,6 +327,10 @@ module.exports = class SvgStart {
 		}
 
 		//////////////////////////////////////////////////////////////////////////////
+		// Optional actor link reference block
+		xy = this._drawActorLinksSection(ctx, xy.y);
+
+		//////////////////////////////////////////////////////////////////////////////
 		// Optional pretty-printed source dump
 		if (Utilities.isString(stringpostdata)) {
 			let tmd = TextMetadata.getDefaultTmd();
@@ -436,5 +440,105 @@ module.exports = class SvgStart {
 		}
 
 		return [];
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw a bottom-of-diagram reference block for actor links when present.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} starty Parameter derived from starty.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance._drawActorLinksSection(ctx, starty);
+	 */
+	_drawActorLinksSection(ctx, starty) {
+		const actorsWithLinks = Array.isArray(this.working.postdata && this.working.postdata.actors)
+			? this.working.postdata.actors.filter((actor) => Array.isArray(actor.links) && actor.links.length > 0)
+			: [];
+		if (actorsWithLinks.length === 0) {
+			return { x: this.working.startX, y: starty };
+		}
+
+		const headingTmd = new TextMetadata("sans-serif", 14, 0, 1.1, "rgb(0,0,0)", "rgba(0,0,0,0)", "left", null, 0, [], 0);
+		headingTmd.bold = true;
+
+		const actorHeadingTmd = new TextMetadata("sans-serif", 13, 0, 1.1, "rgb(0,0,0)", "rgba(0,0,0,0)", "left", null, 0, [], 0);
+		actorHeadingTmd.bold = true;
+
+		const linkTmd = new TextMetadata("sans-serif", 13, 0, 1.15, "rgb(0, 70, 140)", "rgba(0,0,0,0)", "left", null, 0, [], 0);
+
+		const baseLeft = this.working.startX;
+		const indentLeft = baseLeft + 18;
+		let currentY = starty + this.working.globalSpacing;
+		let maxX = baseLeft;
+
+		let xy = Utilities.drawTextRectangleNoBorderOrBg(ctx, ["Links"], headingTmd, currentY, baseLeft, undefined, undefined, false, undefined, this.working.tags);
+		this.working.manageMaxWidthXy(xy);
+		currentY = xy.y;
+		maxX = Math.max(maxX, xy.x);
+
+		actorsWithLinks.forEach((actor) => {
+			const actorLabel = Array.isArray(actor.name) ? actor.name.join(" ") : actor.name;
+			xy = Utilities.drawTextRectangleNoBorderOrBg(
+				ctx,
+				[`${actorLabel}:`],
+				actorHeadingTmd,
+				currentY + Math.max(4, Math.round(this.working.globalSpacing / 6)),
+				baseLeft,
+				undefined,
+				undefined,
+				false,
+				undefined,
+				this.working.tags
+			);
+			this.working.manageMaxWidthXy(xy);
+			currentY = xy.y;
+			maxX = Math.max(maxX, xy.x);
+
+			actor.links.forEach((link) => {
+				const lineText = `${link.label}: ${link.url}`;
+				xy = this._drawLinkedTextLine(ctx, indentLeft, currentY, lineText, link.url, linkTmd);
+				this.working.manageMaxWidthXy(xy);
+				currentY = xy.y;
+				maxX = Math.max(maxX, xy.x);
+			});
+		});
+
+		return this.working.manageMaxWidth(maxX, currentY);
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw one left-aligned link line, wrapping it in an SVG hyperlink when the
+	 * context supports it.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} left Parameter derived from left.
+	 * @param {*} top Parameter derived from top.
+	 * @param {string} text Text to render.
+	 * @param {string} href Link destination.
+	 * @param {*} textMetadata Parameter derived from textMetadata.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance._drawLinkedTextLine(ctx, 40, 120, "Docs: https://example.test", "https://example.test", tmd);
+	 */
+	_drawLinkedTextLine(ctx, left, top, text, href, textMetadata) {
+		const wh = Utilities.getTextWidthAndHeight(ctx, textMetadata, [text], undefined);
+		const lineHeight = wh.h;
+		ctx.fillStyle = textMetadata.fgColour;
+		ctx.textBaseline = "alphabetic";
+		ctx.font = `${textMetadata.bold ? "bold " : ""}${textMetadata.italic ? "italic " : ""}${textMetadata.fontSizePx}px ${textMetadata.fontFamily}`;
+		if (typeof ctx.beginLink === "function") {
+			ctx.beginLink(href);
+		}
+		ctx.fillText(text, left, top + lineHeight - Math.max(1, Math.round(textMetadata.fontSizePx * 0.15)));
+		if (typeof ctx.endLink === "function") {
+			ctx.endLink();
+		}
+		return {
+			x: left + wh.w,
+			y: top + lineHeight,
+		};
 	}
 };

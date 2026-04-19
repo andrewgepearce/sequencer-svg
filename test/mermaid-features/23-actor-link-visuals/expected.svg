@@ -1,25 +1,25 @@
 <?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="927" height="626" viewBox="0 0 927 626">
-  <title>Mermaid actor links</title>
-  <desc>Demonstrates Mermaid actor link and links statements mapped onto sequencer actor metadata.
+<svg xmlns="http://www.w3.org/2000/svg" width="1008" height="776" viewBox="0 0 1008 776">
+  <title>Mermaid actor link visuals</title>
+  <desc>Demonstrates Mermaid actor links rendered as actor header share icons with a full bottom reference block.
 From the project root, regenerate this Mermaid transform and SVG with:
-node sequencer.js --mermaid -i test/mermaid-features/21-actor-links/input.mmd -o -f -t test/mermaid-features/21-actor-links</desc>
+node sequencer.js --mermaid -i test/mermaid-features/23-actor-link-visuals/input.mmd -o -f -t test/mermaid-features/23-actor-link-visuals</desc>
   <rect width="100%" height="100%" fill="white"/>
-  <path d="M 0 0 L 0 616 L 917 616 L 917 0 L 0 0" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 30 30 L 30 57 L 200 57 L 200 30 L 30 30" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 0 0 L 0 766 L 998 766 L 998 0 L 0 0" fill="rgb(255, 255, 255)" stroke="none"/>
+  <path d="M 30 30 L 30 57 L 240 57 L 240 30 L 30 30" fill="rgba(0,0,0,0)" stroke="none"/>
   <text x="35" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Title:</text>
   <text x="68.44" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
-  <text x="72.33" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Mermaid actor links</text>
+  <text x="72.33" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Mermaid actor link visuals</text>
   <path d="M 30 57 L 30 84 L 120 84 L 120 57 L 30 57" fill="rgba(0,0,0,0)" stroke="none"/>
   <text x="35" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Version:</text>
   <text x="91.01" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
   <text x="94.9" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1.0</text>
-  <path d="M 30 84 L 30 145 L 887 145 L 887 84 L 30 84" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 30 84 L 30 145 L 968 145 L 968 84 L 30 84" fill="rgba(0,0,0,0)" stroke="none"/>
   <text x="35" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Description:</text>
   <text x="116.68" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
-  <text x="120.57" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Demonstrates Mermaid actor link and links statements mapped onto sequencer actor metadata.</text>
+  <text x="120.57" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Demonstrates Mermaid actor links rendered as actor header share icons with a full bottom reference block.</text>
   <text x="120.57" y="119.8" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">From the project root, regenerate this Mermaid transform and SVG with:</text>
-  <text x="120.57" y="136.6" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">node sequencer.js --mermaid -i test/mermaid-features/21-actor-links/input.mmd -o -f -t test/mermaid-features/21-actor-links</text>
+  <text x="120.57" y="136.6" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">node sequencer.js --mermaid -i test/mermaid-features/23-actor-link-visuals/input.mmd -o -f -t test/mermaid-features/23-actor-link-visuals</text>
   <path d="M 33 183 L 33 211 L 33 211 A 5 5 0 0 0 38 216 L 106 216 L 106 216 A 5 5 0 0 0 111 211 L 111 183 L 111 183 A 5 5 0 0 0 106 178 L 38 178 L 38 178 A 5 5 0 0 0 33 183" fill="rgb(210,210,210)" stroke="none"/>
   <path d="M634.48 932.5c.6-.73 1.32-1.2 2.16-1.45.84-.36 1.68-.48 2.52-.48 1.92 0 3.36.84 4.2 2.52 1.32 1.3 1.92 2.75 1.92 4.55 0 1.68-.6 3.12-1.92 4.44l-8.88 8.63c-3.12 3.12-6.72 5.52-10.8 7.08-3.96 1.7-7.92 2.53-12 2.53s-8.16-.84-12-2.52c-3.72-1.55-7.2-3.95-10.32-7.07-3-3-5.4-6.6-6.96-10.56-1.56-3.84-2.4-7.8-2.4-12 0-3.96.84-8.04 2.4-11.88 1.56-3.97 3.84-7.45 6.96-10.57l17.88-17.64c3.12-3.13 6.6-5.4 10.56-6.97 3.84-1.68 8.04-2.52 12.24-2.64 4.08 0 8.04.95 12 2.63 3.84 1.56 7.32 3.84 10.32 6.96 1.2 1.3 1.8 2.75 1.8 4.55 0 1.68-.6 3.12-1.8 4.44-.6.6-1.32 1.07-2.04 1.3-.84.37-1.68.5-2.52.5-.72 0-1.56-.13-2.4-.5-.72-.23-1.44-.7-2.04-1.3-3.6-3.97-7.92-5.9-13.08-5.9s-9.6 1.93-13.44 5.9l-17.76 17.5c-3.96 3.6-5.88 8.05-5.88 13.2 0 5.05 1.92 9.6 5.88 13.57 3.6 3.72 7.92 5.64 13.08 5.64s9.6-1.9 13.44-5.63l8.88-8.88zm55.92-82.57c3.12 3 5.4 6.36 6.96 10.32 1.8 3.96 2.64 7.92 2.64 12s-.84 8.04-2.64 11.88c-1.56 3.72-3.84 7.2-6.96 10.32l-17.64 17.64c-3.24 3.23-6.84 5.63-10.8 7.2-3.84 1.55-8.04 2.4-12.24 2.4-4.08 0-8.16-.85-12-2.4-3.84-1.57-7.32-4.1-10.08-7.2-.6-.6-.96-1.2-1.32-1.93-.36-.72-.48-1.56-.48-2.28 0-1.8.6-3.25 1.8-4.57.6-.48 1.2-.96 1.92-1.32.72-.35 1.56-.47 2.4-.47 1.68 0 3.12.6 4.44 1.8 1.68 1.92 3.72 3.36 6.12 4.32 4.56 1.8 9.72 1.8 14.28 0 2.4-.96 4.44-2.4 6.36-4.32l17.88-17.76c3.72-3.6 5.52-7.92 5.52-13.08 0-5.17-1.8-9.73-5.52-13.7-3.72-3.7-8.04-5.63-13.2-5.63s-9.72 1.92-13.68 5.64l-8.88 8.9c-.6.7-1.2 1.07-2.04 1.43-.72.36-1.56.48-2.4.48-.84 0-1.68-.1-2.4-.47-.84-.36-1.44-.72-2.04-1.44-.6-.5-1.08-1.2-1.44-1.93-.36-.84-.48-1.68-.48-2.52 0-1.68.6-3.12 1.92-4.44l8.88-8.87c3.12-3.12 6.72-5.52 10.56-7.08 3.84-1.56 8.04-2.52 12.24-2.52 4.08 0 8.04.84 12 2.64 3.84 1.44 7.32 3.84 10.32 6.96z" fill="rgb(0, 70, 140)" stroke="none" transform="translate(79 181) scale(0.21666666666666667) translate(-580 -840.33)"/>
   <path d="M 30 180 L 30 208 L 30 208 A 5 5 0 0 0 35 213 L 73 213 L 73 213 A 5 5 0 0 0 78 208 L 78 180 L 78 180 A 5 5 0 0 0 73 175 L 35 175 L 35 175 A 5 5 0 0 0 30 180" fill="rgb(204,255,153)" stroke="none"/>
@@ -35,9 +35,14 @@ node sequencer.js --mermaid -i test/mermaid-features/21-actor-links/input.mmd -o
   <path d="M 522 180 L 522 208 L 522 208 A 5 5 0 0 0 527 213 L 590 213 L 590 213 A 5 5 0 0 0 595 208 L 595 180 L 595 180 A 5 5 0 0 0 590 175 L 527 175 L 527 175 A 5 5 0 0 0 522 180" fill="rgb(204,255,153)" stroke="none"/>
   <path d="M 522 180 L 522 208 L 522 208 A 5 5 0 0 0 527 213 L 590 213 L 590 213 A 5 5 0 0 0 595 208 L 595 180 L 595 180 A 5 5 0 0 0 590 175 L 527 175 L 527 175 A 5 5 0 0 0 522 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="531" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Queue</text>
+  <path d="M 798 183 L 798 211 L 798 211 A 5 5 0 0 0 803 216 L 853 216 L 853 216 A 5 5 0 0 0 858 211 L 858 183 L 858 183 A 5 5 0 0 0 853 178 L 803 178 L 803 178 A 5 5 0 0 0 798 183" fill="rgb(210,210,210)" stroke="none"/>
+  <path d="M 795 180 L 795 208 L 795 208 A 5 5 0 0 0 800 213 L 850 213 L 850 213 A 5 5 0 0 0 855 208 L 855 180 L 855 180 A 5 5 0 0 0 850 175 L 800 175 L 800 175 A 5 5 0 0 0 795 180" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 795 180 L 795 208 L 795 208 A 5 5 0 0 0 800 213 L 850 213 L 850 213 A 5 5 0 0 0 855 208 L 855 180 L 855 180 A 5 5 0 0 0 850 175 L 800 175 L 800 175 A 5 5 0 0 0 795 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="804" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Audit</text>
   <path d="M 69 213 M 69 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 315 213 M 315 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 573.5 213 M 573.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 825 213 M 825 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 69 213 L 69 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 66.5 277 L 66.5 297 L 71.5 297 L 71.5 277 L 66.5 277" fill="rgb(204,255,153)" stroke="none"/>
   <path d="M 66.5 277 L 66.5 297 M 71.5 297 L 71.5 277 L 66.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -45,12 +50,14 @@ node sequencer.js --mermaid -i test/mermaid-features/21-actor-links/input.mmd -o
   <path d="M 312.5 277 L 312.5 297 L 317.5 297 L 317.5 277 L 312.5 277" fill="rgb(204,255,153)" stroke="none"/>
   <path d="M 312.5 277 L 312.5 297 M 317.5 297 L 317.5 277 L 312.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 573.5 213 L 573.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 825 213 L 825 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <text x="111.5" y="267" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Read persistence [Mermaid: API-&gt;&gt;DB: Read persistence]</text>
   <path d="M 71.5 277 L 312.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 302.5 272 L 302.5 282 L 312.5 277" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 69 297 M 69 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 315 297 M 315 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 573.5 297 M 573.5 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 825 297 M 825 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 69 297 L 69 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 66.5 297 L 66.5 381 L 71.5 381 L 71.5 297 L 66.5 297" fill="rgb(204,255,153)" stroke="none"/>
   <path d="M 66.5 297 L 66.5 381 M 71.5 381 L 71.5 297 M 66.5 297" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -60,35 +67,71 @@ node sequencer.js --mermaid -i test/mermaid-features/21-actor-links/input.mmd -o
   <path d="M 573.5 297 L 573.5 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 571 361 L 571 381 L 576 381 L 576 361 L 571 361" fill="rgb(204,255,153)" stroke="none"/>
   <path d="M 571 361 L 571 381 M 576 381 L 576 361 L 571 361" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 825 297 L 825 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <text x="111.5" y="351" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Enqueue follow-up [Mermaid: API-&gt;&gt;Queue: Enqueue follow-up]</text>
   <path d="M 71.5 361 L 571 361" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 561 356 L 561 366 L 571 361" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 69 381 L 69 405" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 66.5 381 L 66.5 381 L 71.5 381 L 71.5 381 L 66.5 381" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 66.5 381 L 66.5 381 L 71.5 381 L 71.5 381 M 66.5 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 315 381 L 315 405" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 312.5 381 L 312.5 381 L 317.5 381 L 317.5 381 L 312.5 381" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 312.5 381 L 312.5 381 L 317.5 381 L 317.5 381 M 312.5 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 573.5 381 L 573.5 405" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 571 381 L 571 381 L 576 381 L 576 381 L 571 381" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 571 381 L 571 381 L 576 381 L 576 381 M 571 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="30" y="449" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Links</text>
-  <text x="30" y="469" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" xml:space="preserve" font-weight="bold" dominant-baseline="auto">API:</text>
+  <path d="M 69 381 M 69 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 315 381 M 315 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 573.5 381 M 573.5 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 825 381 M 825 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 69 381 L 69 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 66.5 381 L 66.5 447 L 71.5 447 L 71.5 381 L 66.5 381" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 66.5 381 L 66.5 447 M 71.5 447 L 71.5 381 M 66.5 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 315 381 L 315 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 312.5 381 L 312.5 447 L 317.5 447 L 317.5 381 L 312.5 381" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 312.5 381 L 312.5 447 M 317.5 447 L 317.5 381 M 312.5 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 573.5 381 L 573.5 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 571 381 L 571 445 L 576 445 L 576 381 L 571 381" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 571 381 L 571 445 L 576 445 L 576 381 M 571 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 825 381 L 825 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="119" y="432.5" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">3. Accepted [Mermaid: Queue--&gt;&gt;API: Accepted]</text>
+  <path d="M 571 440 L 71.5 440" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
+  <path d="M 71.5 440 L 81.5 435 L 81.5 445 L 71.5 440" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 69 447 M 69 531" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 315 447 M 315 531" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 573.5 447 M 573.5 531" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 825 447 M 825 531" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 69 447 L 69 531" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 66.5 447 L 66.5 531 L 71.5 531 L 71.5 447 L 66.5 447" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 66.5 447 L 66.5 531 M 71.5 531 L 71.5 447 M 66.5 447" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 315 447 L 315 531" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 312.5 447 L 312.5 531 L 317.5 531 L 317.5 447 L 312.5 447" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 312.5 447 L 312.5 531 M 317.5 531 L 317.5 447 M 312.5 447" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 573.5 447 L 573.5 531" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 825 447 L 825 531" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 822.5 511 L 822.5 531 L 827.5 531 L 827.5 511 L 822.5 511" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 822.5 511 L 822.5 531 M 827.5 531 L 827.5 511 L 822.5 511" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="111.5" y="501" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">4. Record trace [Mermaid: API-&gt;&gt;Audit: Record trace]</text>
+  <path d="M 71.5 511 L 822.5 511" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 812.5 506 L 812.5 516 L 822.5 511" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 69 531 L 69 555" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 66.5 531 L 66.5 531 L 71.5 531 L 71.5 531 L 66.5 531" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 66.5 531 L 66.5 531 L 71.5 531 L 71.5 531 M 66.5 531" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 315 531 L 315 555" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 312.5 531 L 312.5 531 L 317.5 531 L 317.5 531 L 312.5 531" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 312.5 531 L 312.5 531 L 317.5 531 L 317.5 531 M 312.5 531" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 573.5 531 L 573.5 555" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 825 531 L 825 555" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 822.5 531 L 822.5 531 L 827.5 531 L 827.5 531 L 822.5 531" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 822.5 531 L 822.5 531 L 827.5 531 L 827.5 531 M 822.5 531" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="30" y="599" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Links</text>
+  <text x="30" y="619" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" xml:space="preserve" font-weight="bold" dominant-baseline="auto">API:</text>
   <a href="https://status.example.test/api" target="_blank">
-    <text x="48" y="484" fill="rgb(0, 70, 140)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" xml:space="preserve" dominant-baseline="auto">Dashboard: https://status.example.test/api</text>
+    <text x="48" y="634" fill="rgb(0, 70, 140)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" xml:space="preserve" dominant-baseline="auto">Dashboard: https://status.example.test/api</text>
   </a>
   <a href="https://docs.example.test/api" target="_blank">
-    <text x="48" y="499" fill="rgb(0, 70, 140)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" xml:space="preserve" dominant-baseline="auto">Docs: https://docs.example.test/api</text>
+    <text x="48" y="649" fill="rgb(0, 70, 140)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" xml:space="preserve" dominant-baseline="auto">Docs: https://docs.example.test/api</text>
   </a>
-  <text x="30" y="519" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" xml:space="preserve" font-weight="bold" dominant-baseline="auto">DB:</text>
+  <text x="30" y="669" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" xml:space="preserve" font-weight="bold" dominant-baseline="auto">DB:</text>
   <a href="https://docs.example.test/db" target="_blank">
-    <text x="48" y="534" fill="rgb(0, 70, 140)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" xml:space="preserve" dominant-baseline="auto">Schema: https://docs.example.test/db</text>
+    <text x="48" y="684" fill="rgb(0, 70, 140)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" xml:space="preserve" dominant-baseline="auto">Schema: https://docs.example.test/db</text>
   </a>
-  <a href="https://ops.example.test/db" target="_blank">
-    <text x="48" y="549" fill="rgb(0, 70, 140)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" xml:space="preserve" dominant-baseline="auto">Runbook: https://ops.example.test/db</text>
-  </a>
-  <text x="30" y="569" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Queue:</text>
+  <text x="30" y="704" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Queue:</text>
   <a href="https://ops.example.test/queue" target="_blank">
-    <text x="48" y="584" fill="rgb(0, 70, 140)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" xml:space="preserve" dominant-baseline="auto">Queue metrics: https://ops.example.test/queue</text>
+    <text x="48" y="719" fill="rgb(0, 70, 140)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" xml:space="preserve" dominant-baseline="auto">Queue metrics: https://ops.example.test/queue</text>
+  </a>
+  <a href="https://ops.example.test/queue-runbook" target="_blank">
+    <text x="48" y="734" fill="rgb(0, 70, 140)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" xml:space="preserve" dominant-baseline="auto">Runbook: https://ops.example.test/queue-runbook</text>
   </a>
 </svg>

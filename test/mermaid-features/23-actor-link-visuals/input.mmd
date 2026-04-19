@@ -1,0 +1,19 @@
+sequenceDiagram
+accTitle: Mermaid actor link visuals
+accDescr {
+Demonstrates Mermaid actor links rendered as actor header share icons with a full bottom reference block.
+From the project root, regenerate this Mermaid transform and SVG with:
+node sequencer.js --mermaid -i test/mermaid-features/23-actor-link-visuals/input.mmd -o -f -t test/mermaid-features/23-actor-link-visuals
+}
+participant API
+participant DB
+participant Queue
+participant Audit
+link API: Dashboard @ https://status.example.test/api
+link API: Docs @ https://docs.example.test/api
+links DB: {"Schema":"https://docs.example.test/db"}
+links Queue: {"Queue metrics":"https://ops.example.test/queue","Runbook":"https://ops.example.test/queue-runbook"}
+API->>DB: Read persistence [Mermaid: API->>DB: Read persistence]
+API->>Queue: Enqueue follow-up [Mermaid: API->>Queue: Enqueue follow-up]
+Queue-->>API: Accepted [Mermaid: Queue-->>API: Accepted]
+API->>Audit: Record trace [Mermaid: API->>Audit: Record trace]
