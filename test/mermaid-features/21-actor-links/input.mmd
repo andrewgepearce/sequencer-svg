@@ -1,0 +1,16 @@
+sequenceDiagram
+accTitle: Mermaid actor links
+accDescr {
+Demonstrates Mermaid actor link and links statements mapped onto sequencer actor metadata.
+From the project root, regenerate this Mermaid transform and SVG with:
+node sequencer.js --mermaid -i test/mermaid-features/21-actor-links/input.mmd -o -f -t test/mermaid-features/21-actor-links
+}
+participant API
+participant DB
+participant Queue
+link API: Dashboard @ https://status.example.test/api
+link API: Docs @ https://docs.example.test/api
+links DB: {"Schema":"https://docs.example.test/db","Runbook":"https://ops.example.test/db"}
+links Queue: {"Queue metrics":"https://ops.example.test/queue"}
+API->>DB: Read persistence [Mermaid: API->>DB: Read persistence]
+API->>Queue: Enqueue follow-up [Mermaid: API->>Queue: Enqueue follow-up]

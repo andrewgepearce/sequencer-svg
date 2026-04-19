@@ -1,0 +1,47 @@
+title: Mermaid actor links
+version: '1.0'
+actors:
+  - name: API
+    alias: API
+    actorType: participant
+    links:
+      - label: Dashboard
+        url: 'https://status.example.test/api'
+      - label: Docs
+        url: 'https://docs.example.test/api'
+  - name: DB
+    alias: DB
+    actorType: participant
+    links:
+      - label: Schema
+        url: 'https://docs.example.test/db'
+      - label: Runbook
+        url: 'https://ops.example.test/db'
+  - name: Queue
+    alias: Queue
+    actorType: participant
+    links:
+      - label: Queue metrics
+        url: 'https://ops.example.test/queue'
+lines:
+  - type: call
+    from: API
+    to: DB
+    text: 'Read persistence [Mermaid: API->>DB: Read persistence]'
+    toArrow: fill
+    arrow: fill
+  - type: call
+    from: API
+    to: Queue
+    text: 'Enqueue follow-up [Mermaid: API->>Queue: Enqueue follow-up]'
+    toArrow: fill
+    arrow: fill
+description:
+  - >-
+    Demonstrates Mermaid actor link and links statements mapped onto sequencer
+    actor metadata.
+  - 'From the project root, regenerate this Mermaid transform and SVG with:'
+  - >-
+    node sequencer.js --mermaid -i
+    test/mermaid-features/21-actor-links/input.mmd -o -f -t
+    test/mermaid-features/21-actor-links

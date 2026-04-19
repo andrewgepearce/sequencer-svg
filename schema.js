@@ -526,6 +526,23 @@ let schema = {
 				description: "The Mermaid-derived actor declaration type when present",
 				enum: ["participant", "actor", "boundary", "control", "entity", "database", "collections", "queue"],
 			},
+			links: {
+				type: "array",
+				items: {
+					type: "object",
+					properties: {
+						label: {
+							type: "string",
+							minLength: 1
+						},
+						url: {
+							type: "string",
+							minLength: 1
+						}
+					},
+					required: ["label", "url"]
+				}
+			},
 			gapToNext: _gapToNext,
 			radius: _radius(5),
 			flowWidth: _flowWidth(5),

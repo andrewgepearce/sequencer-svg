@@ -290,6 +290,12 @@ class MermaidSequenceTransformer {
 				continue;
 			}
 
+			if (this._isActorLinkStatement(statement.trimmed)) {
+				this._parseActorLinkStatement(statement.trimmed, actors, statement.lineNumber, statement.sourceLine);
+				index++;
+				continue;
+			}
+
 			if (this._isLifecycleDirective(statement.trimmed)) {
 				this._parseLifecycleDirective(statement.trimmed, actors, lifecycleDirectiveState, statement.lineNumber, statement.sourceLine);
 				index++;
@@ -1162,6 +1168,102 @@ class MermaidSequenceTransformer {
 
 	////////////////////////////////////////////////////////////////////////////
 	/**
+	 * Detect whether a trimmed Mermaid line is an actor-link statement.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @returns {boolean} True when the line is a `link` or `links` statement.
+	 * @example
+	 * const matched = MermaidSequenceTransformer._isActorLinkStatement("link API: Dashboard @ https://example.test");
+	 */
+	static _isActorLinkStatement(trimmed) {
+		return /^(link|links)\s+/i.test(trimmed);
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a Mermaid actor-link statement into sequencer actor metadata.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @param {object[]} actors Current actor array.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {void} Nothing.
+	 * @throws {MermaidTransformError} If the link syntax is malformed.
+	 * @example
+	 * MermaidSequenceTransformer._parseActorLinkStatement("link API: Docs @ https://example.test", actors, 4, source);
+	 */
+	static _parseActorLinkStatement(trimmed, actors, lineNumber, sourceLine) {
+		if (/^links\s+/i.test(trimmed)) {
+			const match = String(trimmed).match(/^links\s+([A-Za-z0-9_][-A-Za-z0-9_]*)\s*:\s*(\{.*\})$/i);
+			if (!match) {
+				throw new MermaidTransformError("Unsupported Mermaid links syntax", lineNumber, sourceLine);
+			}
+
+			const alias = match[1];
+			this._ensureImplicitActor(actors, alias);
+			let linkMap;
+			try {
+				linkMap = JSON.parse(match[2]);
+			} catch (error) {
+				throw new MermaidTransformError("Invalid Mermaid links JSON object", lineNumber, sourceLine);
+			}
+			if (!linkMap || typeof linkMap !== "object" || Array.isArray(linkMap)) {
+				throw new MermaidTransformError("Mermaid links payload must be a JSON object", lineNumber, sourceLine);
+			}
+
+			Object.keys(linkMap).forEach((label) => {
+				const url = linkMap[label];
+				if (typeof url !== "string" || url.trim().length === 0) {
+					throw new MermaidTransformError("Mermaid links entries must map labels to non-empty URLs", lineNumber, sourceLine);
+				}
+				this._appendActorLink(actors, alias, label, url);
+			});
+			return;
+		}
+
+		const match = String(trimmed).match(/^link\s+([A-Za-z0-9_][-A-Za-z0-9_]*)\s*:\s*(.+?)\s*@\s*(\S.+)$/i);
+		if (!match) {
+			throw new MermaidTransformError("Unsupported Mermaid link syntax", lineNumber, sourceLine);
+		}
+
+		const alias = match[1];
+		const label = this._cleanMetadataValue(match[2]);
+		const url = String(match[3]).trim();
+		if (label.length === 0 || url.length === 0) {
+			throw new MermaidTransformError("Mermaid link label and URL must be non-empty", lineNumber, sourceLine);
+		}
+		this._ensureImplicitActor(actors, alias);
+		this._appendActorLink(actors, alias, label, url);
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Append one link entry to a sequencer actor.
+	 *
+	 * @param {object[]} actors Current actor array.
+	 * @param {string} alias Actor alias.
+	 * @param {string} label Link label.
+	 * @param {string} url Link URL.
+	 * @returns {void} Nothing.
+	 * @example
+	 * MermaidSequenceTransformer._appendActorLink(actors, "API", "Docs", "https://example.test");
+	 */
+	static _appendActorLink(actors, alias, label, url) {
+		const actor = actors.find((candidate) => candidate && candidate.alias === alias);
+		if (!actor) {
+			return;
+		}
+		if (!Array.isArray(actor.links)) {
+			actor.links = [];
+		}
+		actor.links.push({
+			label: label,
+			url: url,
+		});
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
 	 * Detect whether a trimmed Mermaid line looks like a message statement.
 	 *
 	 * @param {string} trimmed Trimmed Mermaid source line.
@@ -2022,10 +2124,6 @@ class MermaidSequenceTransformer {
 	 * throw MermaidSequenceTransformer._unsupportedSyntax("autonumber", 5, "autonumber");
 	 */
 	static _unsupportedSyntax(trimmed, lineNumber, sourceLine) {
-		if (/^(links?|link)\b/i.test(trimmed)) {
-			return new MermaidTransformError("Mermaid links are not supported yet", lineNumber, sourceLine);
-		}
-
 		if (/^(par|critical|break|rect)\b/i.test(trimmed)) {
 			return new MermaidTransformError(`Mermaid feature '${trimmed.split(/\s+/)[0]}' is not supported yet`, lineNumber, sourceLine);
 		}

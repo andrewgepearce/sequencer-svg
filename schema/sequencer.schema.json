@@ -209,6 +209,24 @@
 					"type": "string",
 					"enum": ["participant", "actor", "boundary", "control", "entity", "database", "collections", "queue"]
 				},
+				"links": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"additionalProperties": false,
+						"required": ["label", "url"],
+						"properties": {
+							"label": {
+								"type": "string",
+								"minLength": 1
+							},
+							"url": {
+								"type": "string",
+								"minLength": 1
+							}
+						}
+					}
+				},
 				"gapToNext": {
 					"type": "number",
 					"minimum": 0
