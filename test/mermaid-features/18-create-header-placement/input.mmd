@@ -1,0 +1,11 @@
+sequenceDiagram
+accTitle: Mermaid create header placement
+accDescr {
+Demonstrates delayed actor header placement when the first lifecycle event is create.
+From the project root, regenerate this Mermaid transform and SVG with:
+node sequencer.js --mermaid -i test/mermaid-features/18-create-header-placement/input.mmd -o -f -t test/mermaid-features/18-create-header-placement
+}
+participant Caller
+create participant Worker
+Caller->>Worker: Create worker [Mermaid: Caller->>Worker: Create worker]
+Worker-->>Caller: Ready [Mermaid: Worker-->>Caller: Ready]

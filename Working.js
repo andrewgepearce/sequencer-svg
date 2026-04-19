@@ -568,6 +568,7 @@ module.exports = class Working {
 			}
 			lifecycleState[actor.alias] = {
 				active: firstEvents[actor.alias] === "create" ? false : true,
+				firstEvent: firstEvents[actor.alias] || null,
 			};
 		});
 

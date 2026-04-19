@@ -384,6 +384,27 @@ module.exports = class Actor {
 	}
 	///////////////////////////////////////////////////////////////////////////////
 	/**
+	 * Return actor box height.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.height;
+	 */
+	get height() {
+		return this._height;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return actor box width.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.width;
+	 */
+	get width() {
+		return this._width;
+	}
+	///////////////////////////////////////////////////////////////////////////////
+	/**
 	 * Update startx.
 	 *
 	 * @param {*} x Parameter derived from x.
@@ -491,15 +512,46 @@ module.exports = class Actor {
 			this._height = working.scratchPad.maxActorHeight;
 		}
 
+		const lifecycleState =
+			working.actorLifecycleState && Utilities.isObject(working.actorLifecycleState[this._alias])
+				? working.actorLifecycleState[this._alias]
+				: null;
+		const suppressTopHeader = lifecycleState && lifecycleState.firstEvent === "create";
+		let xy = {
+			x: this._startx + this._width,
+			y: this._starty + this._height,
+		};
+		if (!suppressTopHeader) {
+			xy = this.drawHeader(working, this._starty, mimic, wh);
+		}
+
 		//////////////////////////////////////////////////////////////////////////////
-		// Draw drop shadow
+		// Return
+		return working.manageMaxWidthXy(xy);
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw the actor header box at an arbitrary y position.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @param {*} topY Parameter derived from topY.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @param {*} wh Optional cached text width/height.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.drawHeader(working, topY, mimic, wh);
+	 */
+	drawHeader(working, topY, mimic, wh) {
+		const actortmd = this._actorTmd;
+		const textSize = wh || Utilities.getTextWidthAndHeight(this._ctx, actortmd, this._name, working.tags);
 		let xy = Utilities.drawRectangle(
 			this._ctx,
 			0,
 			null,
 			null,
 			"rgb(210,210,210)",
-			this._starty + 3,
+			topY + 3,
 			this._startx + 3,
 			this._width,
 			this._height,
@@ -511,14 +563,11 @@ module.exports = class Actor {
 			mimic
 		);
 		working.manageMaxWidthXy(xy);
-
-		//////////////////////////////////////////////////////////////////////////////
-		// draw actual rectangle
 		xy = Utilities.drawTextRectangle(
 			this._ctx,
 			this._name,
 			actortmd,
-			this._starty,
+			topY,
 			this._startx,
 			this._width,
 			this._height,
@@ -528,12 +577,9 @@ module.exports = class Actor {
 			true,
 			true,
 			mimic,
-			wh,
+			textSize,
 			working.tags
 		);
-
-		//////////////////////////////////////////////////////////////////////////////
-		// Return
 		return working.manageMaxWidthXy(xy);
 	}
 
@@ -1048,6 +1094,22 @@ module.exports = class Actor {
 					true,
 					mimic
 				);
+			}
+			if (Utilities.isNumber(actorcl.lifecycleEndYPos)) {
+				const markerSize = Math.max(6, actorcl.flowWidth / 2);
+				ctx.lineWidth = 2;
+				ctx.setLineDash([]);
+				ctx.strokeStyle = "rgb(0,0,0)";
+				ctx.beginPath();
+				ctx.moveTo(actorcl.middle - markerSize / 2, actorcl.lifecycleEndYPos - markerSize / 2);
+				mimic
+					? ctx.moveTo(actorcl.middle + markerSize / 2, actorcl.lifecycleEndYPos + markerSize / 2)
+					: ctx.lineTo(actorcl.middle + markerSize / 2, actorcl.lifecycleEndYPos + markerSize / 2);
+				ctx.moveTo(actorcl.middle - markerSize / 2, actorcl.lifecycleEndYPos + markerSize / 2);
+				mimic
+					? ctx.moveTo(actorcl.middle + markerSize / 2, actorcl.lifecycleEndYPos - markerSize / 2)
+					: ctx.lineTo(actorcl.middle + markerSize / 2, actorcl.lifecycleEndYPos - markerSize / 2);
+				ctx.stroke();
 			}
 			actorcl.flowStartYPos = null;
 			actorcl.flowEndYPos = null;

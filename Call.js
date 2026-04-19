@@ -681,6 +681,10 @@ module.exports = class Call {
 		let calltexty = null;
 		let callliney = null;
 		let commentOnStartx = true;
+		const needsDelayedHeader = Utilities.isString(this._line.type) && this._line.type.toLowerCase() === "create";
+		const delayedHeaderTop = starty + working.globalSpacing;
+		const delayedHeaderBottom = needsDelayedHeader ? delayedHeaderTop + this._actorToClass.height : null;
+		const delayedHeaderReserve = needsDelayedHeader ? this._actorToClass.height + working.globalSpacing : 0;
 		let textToPrint = null;
 		if (Utilities.isAllStrings(this._line.text)) {
 			textToPrint = this._line.text.slice();
@@ -715,7 +719,7 @@ module.exports = class Call {
 				commentxy = comment.draw(
 					working,
 					startxAfterFlow + working.globalSpacing,
-					starty + working.globalSpacing,
+					starty + working.globalSpacing + delayedHeaderReserve,
 					textheight,
 					working.globalSpacing,
 					true
@@ -724,7 +728,7 @@ module.exports = class Call {
 				commentxy = comment.draw(
 					working,
 					endxAfterFlow + 2 * arrowSizeY + working.globalSpacing,
-					starty + working.globalSpacing,
+					starty + working.globalSpacing + delayedHeaderReserve,
 					textheight,
 					working.globalSpacing,
 					true
@@ -733,7 +737,7 @@ module.exports = class Call {
 			callliney = commentxy.y;
 			calltexty = callliney - textheight;
 		} else {
-			callliney = starty + textheight + working.globalSpacing;
+			callliney = starty + delayedHeaderReserve + textheight + working.globalSpacing;
 			calltexty = callliney - textheight;
 		}
 
@@ -760,12 +764,16 @@ module.exports = class Call {
 		Utilities.drawActiveStructuralFragmentBackgrounds(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 		Utilities.drawActiveRectHighlights(working, this._ctx, starty, finalHeightOfAllLine, mimic);
 
+		if (needsDelayedHeader) {
+			this._actorToClass.drawHeader(working, delayedHeaderTop, mimic);
+		}
+
 		//////////////////////////////////////////////////////////////////////////////
 		// 2. Time lines
 		this._actorFromClass.flowStartYPos = callliney;
 		this._actorToClass.flowStartYPos = callliney;
 		if (Utilities.isString(this._line.type) && this._line.type.toLowerCase() === "create") {
-			this._actorToClass.lifecycleStartYPos = callliney;
+			this._actorToClass.lifecycleStartYPos = needsDelayedHeader ? delayedHeaderBottom : callliney;
 		}
 		if (this._line.destroyFrom === true) {
 			this._actorFromClass.lifecycleEndYPos = callliney;
