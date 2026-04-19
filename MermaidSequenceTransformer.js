@@ -930,16 +930,80 @@ class MermaidSequenceTransformer {
 		// Mermaid declarations use the first token after the keyword as the stable
 		// participant identifier, with an optional trailing display name after `as`.
 		const match = trimmed.match(/^(participant|actor)\s+([A-Za-z0-9_][-A-Za-z0-9_]*)\s*(?:as\s+(.+))?$/i);
+		if (match) {
+			if (typeof match[3] === "string" && match[3].trim().startsWith("{")) {
+				return this._parseConfiguredParticipantDeclaration(trimmed, lineNumber, sourceLine);
+			}
+			const actorType = match[1].toLowerCase();
+			const alias = match[2];
+			const name = this._cleanParticipantName(match[3] != null ? match[3] : alias);
+
+			if (name.length === 0) {
+				throw new MermaidTransformError("Mermaid participant display name cannot be empty", lineNumber, sourceLine);
+			}
+
+			return {
+				name: name,
+				alias: alias,
+				actorType: actorType,
+			};
+		}
+
+		return this._parseConfiguredParticipantDeclaration(trimmed, lineNumber, sourceLine);
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a Mermaid participant declaration that uses JSON configuration
+	 * syntax for specialised participant kinds or inline aliases.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {{ name: string, alias: string, actorType: string }} Sequencer actor object.
+	 * @throws {MermaidTransformError} If the declaration is malformed.
+	 * @example
+	 * const actor = MermaidSequenceTransformer._parseConfiguredParticipantDeclaration(
+	 *   'participant DB as {"type":"database","name":"Primary store"}',
+	 *   4,
+	 *   'participant DB as {"type":"database","name":"Primary store"}'
+	 * );
+	 */
+	static _parseConfiguredParticipantDeclaration(trimmed, lineNumber, sourceLine) {
+		const match = String(trimmed).match(/^(participant|actor)\s+(.+)$/i);
 		if (!match) {
 			throw new MermaidTransformError("Unsupported Mermaid participant declaration", lineNumber, sourceLine);
 		}
 
-		const actorType = match[1].toLowerCase();
-		const alias = match[2];
-		const name = this._cleanParticipantName(match[3] != null ? match[3] : alias);
+		const declarationType = match[1].toLowerCase();
+		const payload = match[2].trim();
+		let externalAlias = null;
+		let configPayload = payload;
 
+		const aliasAndConfigMatch = payload.match(/^([A-Za-z0-9_][-A-Za-z0-9_]*)\s+as\s+(\{.*)$/);
+		if (aliasAndConfigMatch) {
+			externalAlias = aliasAndConfigMatch[1];
+			configPayload = aliasAndConfigMatch[2].trim();
+		}
+
+		if (!configPayload.startsWith("{")) {
+			throw new MermaidTransformError("Unsupported Mermaid participant declaration", lineNumber, sourceLine);
+		}
+
+		const splitPayload = this._splitJsonObjectPrefix(configPayload, lineNumber, sourceLine);
+		const config = this._parseParticipantConfigurationObject(splitPayload.jsonText, lineNumber, sourceLine);
+		const actorType = this._resolveConfiguredActorType(declarationType, config.type, lineNumber, sourceLine);
+		const alias = externalAlias || config.alias;
+		const name = this._cleanParticipantName(config.name != null ? config.name : config.label != null ? config.label : alias);
+
+		if (!/^[A-Za-z0-9_][-A-Za-z0-9_]*$/.test(alias)) {
+			throw new MermaidTransformError("Mermaid participant alias must be a valid identifier", lineNumber, sourceLine);
+		}
 		if (name.length === 0) {
 			throw new MermaidTransformError("Mermaid participant display name cannot be empty", lineNumber, sourceLine);
+		}
+		if (splitPayload.suffix.length > 0) {
+			throw new MermaidTransformError("Unsupported Mermaid participant declaration suffix", lineNumber, sourceLine);
 		}
 
 		return {
@@ -947,6 +1011,106 @@ class MermaidSequenceTransformer {
 			alias: alias,
 			actorType: actorType,
 		};
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Split a leading JSON object from the remainder of a Mermaid declaration.
+	 *
+	 * @param {string} payload Mermaid declaration payload that begins with `{`.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {{ jsonText: string, suffix: string }} JSON object text plus any trailing suffix.
+	 * @throws {MermaidTransformError} If the JSON object is unterminated.
+	 * @example
+	 * const parts = MermaidSequenceTransformer._splitJsonObjectPrefix('{"type":"database"}', 4, source);
+	 */
+	static _splitJsonObjectPrefix(payload, lineNumber, sourceLine) {
+		let depth = 0;
+		let inString = false;
+		let escaped = false;
+
+		for (let index = 0; index < payload.length; index++) {
+			const char = payload.charAt(index);
+			if (inString) {
+				if (escaped) {
+					escaped = false;
+				} else if (char === "\\") {
+					escaped = true;
+				} else if (char === "\"") {
+					inString = false;
+				}
+				continue;
+			}
+
+			if (char === "\"") {
+				inString = true;
+				continue;
+			}
+			if (char === "{") {
+				depth++;
+				continue;
+			}
+			if (char === "}") {
+				depth--;
+				if (depth === 0) {
+					return {
+						jsonText: payload.slice(0, index + 1),
+						suffix: payload.slice(index + 1).trim(),
+					};
+				}
+			}
+		}
+
+		throw new MermaidTransformError("Mermaid participant JSON configuration is unterminated", lineNumber, sourceLine);
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a Mermaid participant JSON configuration object.
+	 *
+	 * @param {string} jsonText JSON object text.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {{ alias?: string, name?: string, label?: string, type?: string }} Parsed configuration object.
+	 * @throws {MermaidTransformError} If the JSON is invalid or unsupported.
+	 * @example
+	 * const config = MermaidSequenceTransformer._parseParticipantConfigurationObject('{"type":"database","alias":"DB"}', 4, source);
+	 */
+	static _parseParticipantConfigurationObject(jsonText, lineNumber, sourceLine) {
+		let config;
+		try {
+			config = JSON.parse(jsonText);
+		} catch (error) {
+			throw new MermaidTransformError("Invalid Mermaid participant JSON configuration", lineNumber, sourceLine);
+		}
+
+		if (!config || typeof config !== "object" || Array.isArray(config)) {
+			throw new MermaidTransformError("Mermaid participant JSON configuration must be an object", lineNumber, sourceLine);
+		}
+
+		return config;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Resolve the Mermaid actor kind for a configured participant declaration.
+	 *
+	 * @param {"participant"|"actor"} declarationType Declared Mermaid keyword.
+	 * @param {string|undefined} configuredType Optional configured participant kind.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {"participant"|"actor"|"boundary"|"control"|"entity"|"database"|"collections"|"queue"} Resolved actor type.
+	 * @throws {MermaidTransformError} If the configured type is unsupported.
+	 * @example
+	 * const actorType = MermaidSequenceTransformer._resolveConfiguredActorType("participant", "database", 4, source);
+	 */
+	static _resolveConfiguredActorType(declarationType, configuredType, lineNumber, sourceLine) {
+		const actorType = typeof configuredType === "string" && configuredType.trim().length > 0 ? configuredType.trim().toLowerCase() : declarationType;
+		if (!["participant", "actor", "boundary", "control", "entity", "database", "collections", "queue"].includes(actorType)) {
+			throw new MermaidTransformError(`Unsupported Mermaid participant type '${configuredType}'`, lineNumber, sourceLine);
+		}
+		return actorType;
 	}
 
 	////////////////////////////////////////////////////////////////////////////

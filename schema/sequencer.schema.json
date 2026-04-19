@@ -207,7 +207,7 @@
 				},
 				"actorType": {
 					"type": "string",
-					"enum": ["participant", "actor"]
+					"enum": ["participant", "actor", "boundary", "control", "entity", "database", "collections", "queue"]
 				},
 				"gapToNext": {
 					"type": "number",

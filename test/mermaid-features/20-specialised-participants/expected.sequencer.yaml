@@ -1,0 +1,72 @@
+title: Mermaid specialised participants
+version: '1.0'
+actors:
+  - name: Human operator
+    alias: User
+    actorType: actor
+  - name: External boundary
+    alias: Edge
+    actorType: boundary
+  - name: Flow controller
+    alias: FlowController
+    actorType: control
+  - name: Order entity
+    alias: OrderEntity
+    actorType: entity
+  - name: Primary store
+    alias: DB
+    actorType: database
+  - name: Collections store
+    alias: CollectionsNode
+    actorType: collections
+  - name: Job queue
+    alias: JobQueue
+    actorType: queue
+lines:
+  - type: call
+    from: User
+    to: Edge
+    text: 'Start request [Mermaid: User->>Edge: Start request]'
+    toArrow: fill
+    arrow: fill
+  - type: call
+    from: Edge
+    to: FlowController
+    text: 'Route request [Mermaid: Edge->>FlowController: Route request]'
+    toArrow: fill
+    arrow: fill
+  - type: call
+    from: FlowController
+    to: OrderEntity
+    text: 'Load aggregate [Mermaid: FlowController->>OrderEntity: Load aggregate]'
+    toArrow: fill
+    arrow: fill
+  - type: call
+    from: FlowController
+    to: DB
+    text: 'Read persistence [Mermaid: FlowController->>DB: Read persistence]'
+    toArrow: fill
+    arrow: fill
+  - type: call
+    from: FlowController
+    to: CollectionsNode
+    text: >-
+      Gather related rows [Mermaid: FlowController->>CollectionsNode: Gather
+      related rows]
+    toArrow: fill
+    arrow: fill
+  - type: call
+    from: FlowController
+    to: JobQueue
+    text: 'Enqueue follow-up [Mermaid: FlowController->>JobQueue: Enqueue follow-up]'
+    toArrow: fill
+    arrow: fill
+description:
+  - >-
+    Demonstrates Mermaid specialised participant declarations mapped onto
+    sequencer actor metadata.
+  - 'From the project root, regenerate this Mermaid transform and SVG with:'
+  - >-
+    node sequencer.js --mermaid -i
+    test/mermaid-features/20-specialised-participants/input.mmd -o -f -t
+    test/mermaid-features/20-specialised-participants

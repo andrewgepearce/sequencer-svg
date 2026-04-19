@@ -1,0 +1,20 @@
+sequenceDiagram
+accTitle: Mermaid specialised participants
+accDescr {
+Demonstrates Mermaid specialised participant declarations mapped onto sequencer actor metadata.
+From the project root, regenerate this Mermaid transform and SVG with:
+node sequencer.js --mermaid -i test/mermaid-features/20-specialised-participants/input.mmd -o -f -t test/mermaid-features/20-specialised-participants
+}
+actor {"alias":"User","name":"Human operator"}
+participant Edge as {"type":"boundary","name":"External boundary"}
+participant {"type":"control","alias":"FlowController","name":"Flow controller"}
+participant {"type":"entity","alias":"OrderEntity","label":"Order entity"}
+participant DB as {"type":"database","alias":"IgnoredInternalDb","name":"Primary store"}
+participant {"type":"collections","alias":"CollectionsNode","label":"Collections store"}
+participant {"type":"queue","alias":"JobQueue","label":"Job queue"}
+User->>Edge: Start request [Mermaid: User->>Edge: Start request]
+Edge->>FlowController: Route request [Mermaid: Edge->>FlowController: Route request]
+FlowController->>OrderEntity: Load aggregate [Mermaid: FlowController->>OrderEntity: Load aggregate]
+FlowController->>DB: Read persistence [Mermaid: FlowController->>DB: Read persistence]
+FlowController->>CollectionsNode: Gather related rows [Mermaid: FlowController->>CollectionsNode: Gather related rows]
+FlowController->>JobQueue: Enqueue follow-up [Mermaid: FlowController->>JobQueue: Enqueue follow-up]
