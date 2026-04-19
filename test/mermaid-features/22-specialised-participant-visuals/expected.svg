@@ -1,25 +1,25 @@
 <?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="2406" height="781" viewBox="0 0 2406 781">
-  <title>Mermaid specialised participants</title>
-  <desc>Demonstrates Mermaid specialised participant declarations mapped onto sequencer actor metadata.
+  <title>Mermaid specialised participant visuals</title>
+  <desc>Demonstrates specialised Mermaid participant kinds rendered with distinct header icons.
 From the project root, regenerate this Mermaid transform and SVG with:
-node sequencer.js --mermaid -i test/mermaid-features/20-specialised-participants/input.mmd -o -f -t test/mermaid-features/20-specialised-participants</desc>
+node sequencer.js --mermaid -i test/mermaid-features/22-specialised-participant-visuals/input.mmd -o -f -t test/mermaid-features/22-specialised-participant-visuals</desc>
   <rect width="100%" height="100%" fill="white"/>
   <path d="M 0 0 L 0 771 L 2396 771 L 2396 0 L 0 0" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 30 30 L 30 57 L 282 57 L 282 30 L 30 30" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 30 30 L 30 57 L 321 57 L 321 30 L 30 30" fill="rgba(0,0,0,0)" stroke="none"/>
   <text x="35" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Title:</text>
   <text x="68.44" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
-  <text x="72.33" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Mermaid specialised participants</text>
+  <text x="72.33" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Mermaid specialised participant visuals</text>
   <path d="M 30 57 L 30 84 L 120 84 L 120 57 L 30 57" fill="rgba(0,0,0,0)" stroke="none"/>
   <text x="35" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Version:</text>
   <text x="91.01" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
   <text x="94.9" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1.0</text>
-  <path d="M 30 84 L 30 145 L 1050 145 L 1050 84 L 30 84" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 30 84 L 30 145 L 1131 145 L 1131 84 L 30 84" fill="rgba(0,0,0,0)" stroke="none"/>
   <text x="35" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Description:</text>
   <text x="116.68" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
-  <text x="120.57" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Demonstrates Mermaid specialised participant declarations mapped onto sequencer actor metadata.</text>
+  <text x="120.57" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Demonstrates specialised Mermaid participant kinds rendered with distinct header icons.</text>
   <text x="120.57" y="119.8" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">From the project root, regenerate this Mermaid transform and SVG with:</text>
-  <text x="120.57" y="136.6" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">node sequencer.js --mermaid -i test/mermaid-features/20-specialised-participants/input.mmd -o -f -t test/mermaid-features/20-specialised-participants</text>
+  <text x="120.57" y="136.6" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">node sequencer.js --mermaid -i test/mermaid-features/22-specialised-participant-visuals/input.mmd -o -f -t test/mermaid-features/22-specialised-participant-visuals</text>
   <path d="M 33 183 L 33 211 L 33 211 A 5 5 0 0 0 38 216 L 204 216 L 204 216 A 5 5 0 0 0 209 211 L 209 183 L 209 183 A 5 5 0 0 0 204 178 L 38 178 L 38 178 A 5 5 0 0 0 33 183" fill="rgb(255,232,204)" stroke="none"/>
   <path d="M 45.8 187.4 A 3 3 0 0 1 39.8 187.4 A 3 3 0 0 1 45.8 187.4 M 42.8 192.4 L 42.8 199.4 M 39.06 194.4 L 46.54 194.4 M 42.8 199.4 L 39.74 207 M 42.8 199.4 L 45.86 207" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.5"/>
   <path d="M 57 180 L 57 208 L 57 208 A 5 5 0 0 0 62 213 L 201 213 L 201 213 A 5 5 0 0 0 206 208 L 206 180 L 206 180 A 5 5 0 0 0 201 175 L 62 175 L 62 175 A 5 5 0 0 0 57 180" fill="rgba(0,0,0,0)" stroke="none"/>

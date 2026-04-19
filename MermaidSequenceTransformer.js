@@ -948,11 +948,16 @@ class MermaidSequenceTransformer {
 				throw new MermaidTransformError("Mermaid participant display name cannot be empty", lineNumber, sourceLine);
 			}
 
-			return {
+			const actor = {
 				name: name,
 				alias: alias,
 				actorType: actorType,
 			};
+			const bgColour = this._getDefaultActorBgColour(actorType);
+			if (typeof bgColour === "string") {
+				actor.bgColour = bgColour;
+			}
+			return actor;
 		}
 
 		return this._parseConfiguredParticipantDeclaration(trimmed, lineNumber, sourceLine);
@@ -1012,11 +1017,16 @@ class MermaidSequenceTransformer {
 			throw new MermaidTransformError("Unsupported Mermaid participant declaration suffix", lineNumber, sourceLine);
 		}
 
-		return {
+		const actor = {
 			name: name,
 			alias: alias,
 			actorType: actorType,
 		};
+		const bgColour = this._getDefaultActorBgColour(actorType);
+		if (typeof bgColour === "string") {
+			actor.bgColour = bgColour;
+		}
+		return actor;
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -1117,6 +1127,36 @@ class MermaidSequenceTransformer {
 			throw new MermaidTransformError(`Unsupported Mermaid participant type '${configuredType}'`, lineNumber, sourceLine);
 		}
 		return actorType;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return the default sequencer background colour for a Mermaid actor kind.
+	 *
+	 * @param {"participant"|"actor"|"boundary"|"control"|"entity"|"database"|"collections"|"queue"} actorType Mermaid actor kind.
+	 * @returns {string|undefined} Default background colour, or undefined when the sequencer default should remain.
+	 * @example
+	 * const colour = MermaidSequenceTransformer._getDefaultActorBgColour("database");
+	 */
+	static _getDefaultActorBgColour(actorType) {
+		switch (actorType) {
+			case "actor":
+				return "rgb(255,232,204)";
+			case "boundary":
+				return "rgb(196,232,255)";
+			case "control":
+				return "rgb(255,244,179)";
+			case "entity":
+				return "rgb(220,255,214)";
+			case "database":
+				return "rgb(255,221,234)";
+			case "collections":
+				return "rgb(226,220,255)";
+			case "queue":
+				return "rgb(255,235,186)";
+			default:
+				return undefined;
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////

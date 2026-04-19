@@ -1,4 +1,4 @@
-title: Mermaid specialised participants
+title: Mermaid specialised participant visuals
 version: '1.0'
 actors:
   - name: Human operator
@@ -70,10 +70,10 @@ lines:
     arrow: fill
 description:
   - >-
-    Demonstrates Mermaid specialised participant declarations mapped onto
-    sequencer actor metadata.
+    Demonstrates specialised Mermaid participant kinds rendered with distinct
+    header icons.
   - 'From the project root, regenerate this Mermaid transform and SVG with:'
   - >-
     node sequencer.js --mermaid -i
-    test/mermaid-features/20-specialised-participants/input.mmd -o -f -t
-    test/mermaid-features/20-specialised-participants
+    test/mermaid-features/22-specialised-participant-visuals/input.mmd -o -f -t
+    test/mermaid-features/22-specialised-participant-visuals

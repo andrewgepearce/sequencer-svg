@@ -41,6 +41,8 @@ module.exports = class Actor {
 		this._left = null;
 		this._middle = null;
 		this._tmd = null;
+		this._actorType = "participant";
+		this._iconReservation = 0;
 		this._startx = null;
 		this._starty = null;
 		this._flowStateContinue = false;
@@ -313,6 +315,17 @@ module.exports = class Actor {
 	get alias() {
 		return this._alias;
 	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return actor type.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = instance.actorType;
+	 */
+	get actorType() {
+		return this._actorType;
+	}
 	///////////////////////////////////////////////////////////////////////////////
 	/**
 	 * Return middle.
@@ -455,6 +468,7 @@ module.exports = class Actor {
 		} else {
 			this._alias = this.actorObj.alias;
 		}
+		this._actorType = Actor._normaliseActorType(this.actorObj.actorType);
 		if (!working.postdata) {
 			working.postdata = {};
 		}
@@ -500,9 +514,10 @@ module.exports = class Actor {
 		this._startx = startx;
 		this._starty = starty;
 		const wh = Utilities.getTextWidthAndHeight(this._ctx, actortmd, this._name, working.tags);
+		this._iconReservation = Actor._getHeaderIconReservation(this._actorType, actortmd.fontSizePx);
 
 		this._height = wh.h; //actortmd.getBoxHeight(this._name);
-		this._width = wh.w; //actortmd.getBoxWidth(this._ctx, this._name);
+		this._width = wh.w + this._iconReservation; //actortmd.getBoxWidth(this._ctx, this._name);
 		this._left = this._startx;
 		this._right = this._startx + this._width;
 		this._middle = this._startx + this._width / 2;
@@ -548,12 +563,13 @@ module.exports = class Actor {
 	drawHeader(working, topY, mimic, wh) {
 		const actortmd = this._actorTmd;
 		const textSize = wh || Utilities.getTextWidthAndHeight(this._ctx, actortmd, this._name, working.tags);
+		const headerBgColour = this._iconReservation > 0 ? actortmd.bgColour || "rgb(210,210,210)" : "rgb(210,210,210)";
 		let xy = Utilities.drawRectangle(
 			this._ctx,
 			0,
 			null,
 			null,
-			"rgb(210,210,210)",
+			headerBgColour,
 			topY + 3,
 			this._startx + 3,
 			this._width,
@@ -566,24 +582,411 @@ module.exports = class Actor {
 			mimic
 		);
 		working.manageMaxWidthXy(xy);
-		xy = Utilities.drawTextRectangle(
-			this._ctx,
-			this._name,
-			actortmd,
-			topY,
-			this._startx,
-			this._width,
-			this._height,
-			this._radius,
-			true,
-			true,
-			true,
-			true,
-			mimic,
-			textSize,
-			working.tags
-		);
+		if (this._iconReservation > 0) {
+			xy = this._drawHeaderIcon(topY, mimic);
+			working.manageMaxWidthXy(xy);
+		}
+		if (this._iconReservation > 0) {
+			const previousBgColour = actortmd.bgColour;
+			const previousBorderColour = actortmd.borderColour;
+			const previousBorderWidth = actortmd.borderWidth;
+			const previousBorderDash = actortmd.borderDash;
+			actortmd.bgColour = "rgba(0,0,0,0)";
+			actortmd.borderColour = null;
+			actortmd.borderWidth = 0;
+			actortmd.borderDash = [];
+			xy = Utilities.drawTextRectangle(
+				this._ctx,
+				this._name,
+				actortmd,
+				topY,
+				this._startx + this._iconReservation,
+				this._width - this._iconReservation,
+				this._height,
+				this._radius,
+				false,
+				false,
+				false,
+				false,
+				mimic,
+				textSize,
+				working.tags
+			);
+			actortmd.bgColour = previousBgColour;
+			actortmd.borderColour = previousBorderColour;
+			actortmd.borderWidth = previousBorderWidth;
+			actortmd.borderDash = previousBorderDash;
+		} else {
+			xy = Utilities.drawTextRectangle(
+				this._ctx,
+				this._name,
+				actortmd,
+				topY,
+				this._startx,
+				this._width,
+				this._height,
+				this._radius,
+				true,
+				true,
+				true,
+				true,
+				mimic,
+				textSize,
+				working.tags
+			);
+		}
 		return working.manageMaxWidthXy(xy);
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw the specialised participant icon within the actor header.
+	 *
+	 * @param {*} topY Parameter derived from topY.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance._drawHeaderIcon(topY, mimic);
+	 */
+	_drawHeaderIcon(topY, mimic) {
+		const iconBoxLeft = this._startx + 6;
+		const iconBoxTop = topY + 4;
+		const iconBoxWidth = Math.max(12, this._iconReservation - 10);
+		const iconBoxHeight = Math.max(12, this._height - 8);
+		const lineColour = this._actorTmd.borderColour || "rgb(0,0,0)";
+		const lineWidth = 1.5;
+
+		if (mimic) {
+			return {
+				x: iconBoxLeft + iconBoxWidth,
+				y: iconBoxTop + iconBoxHeight,
+			};
+		}
+
+		switch (this._actorType) {
+			case "actor":
+				this._drawActorPersonIcon(iconBoxLeft, iconBoxTop, iconBoxWidth, iconBoxHeight, lineColour, lineWidth);
+				break;
+			case "boundary":
+				this._drawBoundaryIcon(iconBoxLeft, iconBoxTop, iconBoxWidth, iconBoxHeight, lineColour, lineWidth);
+				break;
+			case "control":
+				this._drawControlIcon(iconBoxLeft, iconBoxTop, iconBoxWidth, iconBoxHeight, lineColour, lineWidth);
+				break;
+			case "entity":
+				this._drawEntityIcon(iconBoxLeft, iconBoxTop, iconBoxWidth, iconBoxHeight, lineColour, lineWidth);
+				break;
+			case "database":
+				this._drawDatabaseIcon(iconBoxLeft, iconBoxTop, iconBoxWidth, iconBoxHeight, lineColour, lineWidth);
+				break;
+			case "collections":
+				this._drawCollectionsIcon(iconBoxLeft, iconBoxTop, iconBoxWidth, iconBoxHeight, lineColour, lineWidth);
+				break;
+			case "queue":
+				this._drawQueueIcon(iconBoxLeft, iconBoxTop, iconBoxWidth, iconBoxHeight, lineColour, lineWidth);
+				break;
+			default:
+				break;
+		}
+
+		return {
+			x: iconBoxLeft + iconBoxWidth,
+			y: iconBoxTop + iconBoxHeight,
+		};
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw a stick-person icon for Mermaid actors.
+	 *
+	 * @param {*} left Parameter derived from left.
+	 * @param {*} top Parameter derived from top.
+	 * @param {*} width Parameter derived from width.
+	 * @param {*} height Parameter derived from height.
+	 * @param {*} lineColour Parameter derived from lineColour.
+	 * @param {*} lineWidth Parameter derived from lineWidth.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance._drawActorPersonIcon(left, top, width, height, lineColour, lineWidth);
+	 */
+	_drawActorPersonIcon(left, top, width, height, lineColour, lineWidth) {
+		const ctx = this._ctx;
+		const headRadius = Math.max(3, Math.min(width, height) * 0.14);
+		const centreX = left + width * 0.4;
+		const headCentreY = top + height * 0.28;
+		const shoulderY = headCentreY + headRadius + 2;
+		const hipY = top + height * 0.68;
+		const armSpan = width * 0.22;
+		const legSpan = width * 0.18;
+
+		ctx.lineWidth = lineWidth;
+		ctx.strokeStyle = lineColour;
+		ctx.setLineDash([]);
+		ctx.beginPath();
+		ctx.arc(centreX, headCentreY, headRadius, 0, 2 * Math.PI);
+		ctx.moveTo(centreX, shoulderY);
+		ctx.lineTo(centreX, hipY);
+		ctx.moveTo(centreX - armSpan, shoulderY + 2);
+		ctx.lineTo(centreX + armSpan, shoulderY + 2);
+		ctx.moveTo(centreX, hipY);
+		ctx.lineTo(centreX - legSpan, top + height - 2);
+		ctx.moveTo(centreX, hipY);
+		ctx.lineTo(centreX + legSpan, top + height - 2);
+		ctx.stroke();
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw a boundary icon.
+	 *
+	 * @param {*} left Parameter derived from left.
+	 * @param {*} top Parameter derived from top.
+	 * @param {*} width Parameter derived from width.
+	 * @param {*} height Parameter derived from height.
+	 * @param {*} lineColour Parameter derived from lineColour.
+	 * @param {*} lineWidth Parameter derived from lineWidth.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance._drawBoundaryIcon(left, top, width, height, lineColour, lineWidth);
+	 */
+	_drawBoundaryIcon(left, top, width, height, lineColour, lineWidth) {
+		const ctx = this._ctx;
+		const innerTop = top + 3;
+		const innerBottom = top + height - 3;
+		const leftBar = left + width * 0.18;
+		const rightBar = left + width * 0.62;
+
+		ctx.lineWidth = lineWidth;
+		ctx.strokeStyle = lineColour;
+		ctx.setLineDash([]);
+		ctx.beginPath();
+		ctx.moveTo(leftBar, innerTop);
+		ctx.lineTo(leftBar, innerBottom);
+		ctx.moveTo(rightBar, innerTop);
+		ctx.lineTo(rightBar, innerBottom);
+		ctx.moveTo(leftBar, innerTop);
+		ctx.lineTo(rightBar, innerTop);
+		ctx.moveTo(leftBar, innerBottom);
+		ctx.lineTo(rightBar, innerBottom);
+		ctx.stroke();
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw a control icon.
+	 *
+	 * @param {*} left Parameter derived from left.
+	 * @param {*} top Parameter derived from top.
+	 * @param {*} width Parameter derived from width.
+	 * @param {*} height Parameter derived from height.
+	 * @param {*} lineColour Parameter derived from lineColour.
+	 * @param {*} lineWidth Parameter derived from lineWidth.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance._drawControlIcon(left, top, width, height, lineColour, lineWidth);
+	 */
+	_drawControlIcon(left, top, width, height, lineColour, lineWidth) {
+		const ctx = this._ctx;
+		const centreX = left + width * 0.4;
+		const centreY = top + height * 0.52;
+		const radius = Math.max(5, Math.min(width, height) * 0.26);
+
+		ctx.lineWidth = lineWidth;
+		ctx.strokeStyle = lineColour;
+		ctx.setLineDash([]);
+		ctx.beginPath();
+		ctx.arc(centreX, centreY, radius, 0, 2 * Math.PI);
+		ctx.moveTo(centreX - radius, centreY);
+		ctx.lineTo(centreX + radius, centreY);
+		ctx.moveTo(centreX, centreY - radius);
+		ctx.lineTo(centreX, centreY + radius);
+		ctx.stroke();
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw an entity icon.
+	 *
+	 * @param {*} left Parameter derived from left.
+	 * @param {*} top Parameter derived from top.
+	 * @param {*} width Parameter derived from width.
+	 * @param {*} height Parameter derived from height.
+	 * @param {*} lineColour Parameter derived from lineColour.
+	 * @param {*} lineWidth Parameter derived from lineWidth.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance._drawEntityIcon(left, top, width, height, lineColour, lineWidth);
+	 */
+	_drawEntityIcon(left, top, width, height, lineColour, lineWidth) {
+		const ctx = this._ctx;
+		const boxLeft = left + width * 0.12;
+		const boxTop = top + 3;
+		const boxWidth = width * 0.56;
+		const boxHeight = height - 6;
+		const fold = Math.max(4, Math.min(boxWidth, boxHeight) * 0.22);
+
+		ctx.lineWidth = lineWidth;
+		ctx.strokeStyle = lineColour;
+		ctx.setLineDash([]);
+		ctx.beginPath();
+		ctx.moveTo(boxLeft, boxTop);
+		ctx.lineTo(boxLeft + boxWidth - fold, boxTop);
+		ctx.lineTo(boxLeft + boxWidth, boxTop + fold);
+		ctx.lineTo(boxLeft + boxWidth, boxTop + boxHeight);
+		ctx.lineTo(boxLeft, boxTop + boxHeight);
+		ctx.lineTo(boxLeft, boxTop);
+		ctx.moveTo(boxLeft + boxWidth - fold, boxTop);
+		ctx.lineTo(boxLeft + boxWidth - fold, boxTop + fold);
+		ctx.lineTo(boxLeft + boxWidth, boxTop + fold);
+		ctx.stroke();
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw a database icon.
+	 *
+	 * @param {*} left Parameter derived from left.
+	 * @param {*} top Parameter derived from top.
+	 * @param {*} width Parameter derived from width.
+	 * @param {*} height Parameter derived from height.
+	 * @param {*} lineColour Parameter derived from lineColour.
+	 * @param {*} lineWidth Parameter derived from lineWidth.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance._drawDatabaseIcon(left, top, width, height, lineColour, lineWidth);
+	 */
+	_drawDatabaseIcon(left, top, width, height, lineColour, lineWidth) {
+		const ctx = this._ctx;
+		const boxLeft = left + width * 0.1;
+		const boxWidth = width * 0.6;
+		const topY = top + 4;
+		const bottomY = top + height - 4;
+		const ellipseHeight = Math.max(4, height * 0.16);
+		const centreX = boxLeft + boxWidth / 2;
+		const radiusX = boxWidth / 2;
+		const radiusY = ellipseHeight / 2;
+
+		ctx.lineWidth = lineWidth;
+		ctx.strokeStyle = lineColour;
+		ctx.setLineDash([]);
+		ctx.beginPath();
+		ctx.moveTo(boxLeft, topY + radiusY);
+		ctx.lineTo(boxLeft, bottomY - radiusY);
+		ctx.moveTo(boxLeft + boxWidth, topY + radiusY);
+		ctx.lineTo(boxLeft + boxWidth, bottomY - radiusY);
+		ctx.stroke();
+
+		ctx.beginPath();
+		ctx.arc(centreX, topY + radiusY, radiusX, Math.PI, 0, false);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.arc(centreX, topY + radiusY, radiusX, 0, Math.PI, false);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.arc(centreX, bottomY - radiusY, radiusX, 0, Math.PI, false);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.arc(centreX, bottomY - radiusY, radiusX, Math.PI, 0, false);
+		ctx.stroke();
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw a collections icon.
+	 *
+	 * @param {*} left Parameter derived from left.
+	 * @param {*} top Parameter derived from top.
+	 * @param {*} width Parameter derived from width.
+	 * @param {*} height Parameter derived from height.
+	 * @param {*} lineColour Parameter derived from lineColour.
+	 * @param {*} lineWidth Parameter derived from lineWidth.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance._drawCollectionsIcon(left, top, width, height, lineColour, lineWidth);
+	 */
+	_drawCollectionsIcon(left, top, width, height, lineColour, lineWidth) {
+		const backLeft = left + width * 0.18;
+		const backTop = top + 3;
+		const frontLeft = left + width * 0.08;
+		const frontTop = top + 7;
+		const boxWidth = width * 0.52;
+		const boxHeight = height - 10;
+		Utilities.drawRectangle(this._ctx, lineWidth, lineColour, [], null, backTop, backLeft, boxWidth, boxHeight, 0, true, true, true, true, false);
+		Utilities.drawRectangle(this._ctx, lineWidth, lineColour, [], null, frontTop, frontLeft, boxWidth, boxHeight, 0, true, true, true, true, false);
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Draw a queue icon.
+	 *
+	 * @param {*} left Parameter derived from left.
+	 * @param {*} top Parameter derived from top.
+	 * @param {*} width Parameter derived from width.
+	 * @param {*} height Parameter derived from height.
+	 * @param {*} lineColour Parameter derived from lineColour.
+	 * @param {*} lineWidth Parameter derived from lineWidth.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance._drawQueueIcon(left, top, width, height, lineColour, lineWidth);
+	 */
+	_drawQueueIcon(left, top, width, height, lineColour, lineWidth) {
+		const ctx = this._ctx;
+		const startX = left + width * 0.08;
+		const endX = left + width * 0.56;
+		const yPositions = [top + height * 0.3, top + height * 0.5, top + height * 0.7];
+		const arrowX = left + width * 0.72;
+
+		ctx.lineWidth = lineWidth;
+		ctx.strokeStyle = lineColour;
+		ctx.setLineDash([]);
+		ctx.beginPath();
+		yPositions.forEach((yPos) => {
+			ctx.moveTo(startX, yPos);
+			ctx.lineTo(endX, yPos);
+		});
+		ctx.moveTo(arrowX - 6, top + height * 0.5);
+		ctx.lineTo(arrowX, top + height * 0.5);
+		ctx.moveTo(arrowX - 4, top + height * 0.5 - 4);
+		ctx.lineTo(arrowX, top + height * 0.5);
+		ctx.lineTo(arrowX - 4, top + height * 0.5 + 4);
+		ctx.stroke();
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return the supported actor type for rendering.
+	 *
+	 * @param {*} actorType Parameter derived from actorType.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = Actor._normaliseActorType(actorType);
+	 */
+	static _normaliseActorType(actorType) {
+		if (
+			Utilities.isString(actorType) &&
+			["participant", "actor", "boundary", "control", "entity", "database", "collections", "queue"].includes(actorType)
+		) {
+			return actorType;
+		}
+		return "participant";
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return the reserved width for an actor-type icon.
+	 *
+	 * @param {*} actorType Parameter derived from actorType.
+	 * @param {*} fontSizePx Parameter derived from fontSizePx.
+	 * @returns {*} Result value.
+	 * @example
+	 * const value = Actor._getHeaderIconReservation(actorType, fontSizePx);
+	 */
+	static _getHeaderIconReservation(actorType, fontSizePx) {
+		if (actorType === "participant") {
+			return 0;
+		}
+		const baseSize = Utilities.isNumberGt0(fontSizePx) ? fontSizePx : 18;
+		return Math.max(26, Math.round(baseSize * 1.5));
 	}
 
 	///////////////////////////////////////////////////////////////////////////////

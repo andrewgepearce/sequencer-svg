@@ -7,6 +7,7 @@ actors:
   - name: Database Layer
     alias: DB
     actorType: actor
+    bgColour: 'rgb(255,232,204)'
   - name: API
     alias: API
     actorType: participant
