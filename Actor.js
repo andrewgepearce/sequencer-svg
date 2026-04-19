@@ -15,6 +15,7 @@
 
 let Utilities = require("./Utilities.js");
 let TextMetadata = require("./TextMetadata.js");
+let ActorGroup = require("./ActorGroup.js");
 const schema = require("./schema.js");
 const InputDocumentError = require("./InputDocumentError.js");
 
@@ -502,6 +503,8 @@ module.exports = class Actor {
 
 		this._height = wh.h; //actortmd.getBoxHeight(this._name);
 		this._width = wh.w; //actortmd.getBoxWidth(this._ctx, this._name);
+		this._left = this._startx;
+		this._right = this._startx + this._width;
 		this._middle = this._startx + this._width / 2;
 		if (!Utilities.isNumber(working.scratchPad.maxActorHeight)) {
 			working.scratchPad.maxActorHeight = 0;
@@ -613,6 +616,10 @@ module.exports = class Actor {
 			maxx = xy.x > maxx ? xy.x : maxx;
 			maxy = xy.y > maxy ? xy.y : maxy;
 		});
+
+		//////////////////////////////////////////////////////////////////////////////
+		// Draw bottom-layer actor groups now that actor positions are known.
+		ActorGroup.drawAll(working, ctx, actorStartY, false);
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Now actually draw the actors

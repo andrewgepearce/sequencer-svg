@@ -1,0 +1,29 @@
+title: Discontinuous actor groups
+version: "1.0"
+actors:
+  - name: Caller
+    alias: Caller
+  - name: Browser
+    alias: Browser
+  - name: Service
+    alias: Service
+  - name: DB
+    alias: DB
+  - name: Cache
+    alias: Cache
+actorGroups:
+  - title: Shared services
+    bgColour: 'rgba(210,230,255,0.6)'
+    actors:
+      - Caller
+      - Service
+      - Cache
+lines:
+  - type: call
+    from: Caller
+    to: Service
+    text: Ping
+  - type: call
+    from: Service
+    to: Cache
+    text: Warm cache

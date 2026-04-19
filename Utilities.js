@@ -1141,7 +1141,20 @@ module.exports = class Utilities {
 	 * instance.validColour(stringColour);
 	 */
 	static validColour(stringColour) {
-		return Utilities.validRGBColour(stringColour) || Utilities.validRGBAColour(stringColour);
+		return Utilities.validRGBColour(stringColour) || Utilities.validRGBAColour(stringColour) || Utilities.validNamedColour(stringColour);
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return whether the provided colour is a CSS-style named colour token.
+	 *
+	 * @param {*} stringColour Candidate colour value.
+	 * @returns {boolean} True when the value looks like a named colour.
+	 * @example
+	 * const ok = Utilities.validNamedColour("Aqua");
+	 */
+	static validNamedColour(stringColour) {
+		return Utilities.isString(stringColour) && /^[A-Za-z]+$/.test(stringColour.trim());
 	}
 
 	///////////////////////////////////////////////////////////////////////////////

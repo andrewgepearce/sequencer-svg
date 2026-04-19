@@ -569,12 +569,46 @@ let schema = {
 					$ref: base + "actor"
 				}
 			},
+			actorGroups: {
+				type: "array",
+				items: {
+					$ref: base + "actorGroup"
+				}
+			},
 			lines: {
 				type: "array",
 				items: _line
 			}
 		},
 		required: ["title", "version", "actors", "lines"]
+	},
+	actorGroup: {
+		$schema: "http://json-schema.org/draft-07/schema#",
+		$id: base + "actorGroup",
+		title: "Actor Group Schema",
+		decription: "Definition of an actor-group JSON object within a Sequencer document",
+		type: "object",
+		properties: {
+			title: _stringEmptyByDefault,
+			bgColour: _bgColour("rgba(220,220,220,0.35)"),
+			actors: {
+				type: "array",
+				items: {
+					type: "string",
+					minLength: 1
+				}
+			},
+			startActor: _alias,
+			endActor: _alias
+		},
+		anyOf: [
+			{
+				required: ["actors"]
+			},
+			{
+				required: ["startActor", "endActor"]
+			}
+		]
 	},
 	call: {
 		$schema: "http://json-schema.org/draft-07/schema#",

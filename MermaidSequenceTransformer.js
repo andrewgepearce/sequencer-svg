@@ -71,6 +71,7 @@ class MermaidSequenceTransformer {
 			title: this._humaniseStem(stem),
 			version: "1.0",
 			actors: [],
+			actorGroups: [],
 			lines: [],
 		};
 		const activationState = Object.create(null);
@@ -80,8 +81,19 @@ class MermaidSequenceTransformer {
 		};
 
 		const statements = this._collectStatements(source, document);
-		const parsedDocument = this._parseStructuredLines(statements, 0, document.actors, activationState, lifecycleDirectiveState, null);
+		const parsedDocument = this._parseStructuredLines(
+			statements,
+			0,
+			document.actors,
+			document.actorGroups,
+			activationState,
+			lifecycleDirectiveState,
+			null
+		);
 		document.lines = parsedDocument.lines;
+		if (document.actorGroups.length === 0) {
+			delete document.actorGroups;
+		}
 		if (parsedDocument.nextIndex !== statements.length) {
 			const unexpectedStatement = statements[parsedDocument.nextIndex];
 			throw new MermaidTransformError(
@@ -213,13 +225,14 @@ class MermaidSequenceTransformer {
 	 * @param {{ trimmed: string, sourceLine: string, lineNumber: number }[]} statements Structured Mermaid statements.
 	 * @param {number} startIndex Statement index to start from.
 	 * @param {object[]} actors Current actor array.
+	 * @param {object[]} actorGroups Current actor-group array.
 	 * @param {object} activationState Current Mermaid activation counters by alias.
 	 * @param {string[]|null} stopKeywords Optional control keywords that stop this parse scope.
 	 * @returns {{ lines: object[], nextIndex: number }} Parsed sequencer lines and next statement index.
 	 * @example
 	 * const result = MermaidSequenceTransformer._parseStructuredLines(statements, 0, actors, activationState, ["end"]);
 	 */
-	static _parseStructuredLines(statements, startIndex, actors, activationState, lifecycleDirectiveState, stopKeywords) {
+	static _parseStructuredLines(statements, startIndex, actors, actorGroups, activationState, lifecycleDirectiveState, stopKeywords) {
 		const lines = [];
 		let index = startIndex;
 
@@ -239,20 +252,26 @@ class MermaidSequenceTransformer {
 					controlKeyword === "par" ||
 					controlKeyword === "critical" ||
 					controlKeyword === "break" ||
-					controlKeyword === "rect"
+					controlKeyword === "rect" ||
+					controlKeyword === "box"
 				) {
+					if (controlKeyword === "box") {
+						const parsedBox = this._parseActorGroupBox(statements, index, actors, actorGroups);
+						index = parsedBox.nextIndex;
+						continue;
+					}
 					const parsedFragment =
 						controlKeyword === "alt"
-							? this._parseAltFragment(statements, index, actors, activationState, lifecycleDirectiveState)
+							? this._parseAltFragment(statements, index, actors, actorGroups, activationState, lifecycleDirectiveState)
 							: controlKeyword === "par"
-							? this._parseParFragment(statements, index, actors, activationState, lifecycleDirectiveState)
+							? this._parseParFragment(statements, index, actors, actorGroups, activationState, lifecycleDirectiveState)
 							: controlKeyword === "critical"
-							? this._parseCriticalFragment(statements, index, actors, activationState, lifecycleDirectiveState)
+							? this._parseCriticalFragment(statements, index, actors, actorGroups, activationState, lifecycleDirectiveState)
 							: controlKeyword === "rect"
-							? this._parseRectFragment(statements, index, actors, activationState, lifecycleDirectiveState)
+							? this._parseRectFragment(statements, index, actors, actorGroups, activationState, lifecycleDirectiveState)
 							: controlKeyword === "break"
-							? this._parseSimpleFragment(statements, index, actors, activationState, lifecycleDirectiveState, "break")
-							: this._parseSimpleFragment(statements, index, actors, activationState, lifecycleDirectiveState, controlKeyword);
+							? this._parseSimpleFragment(statements, index, actors, actorGroups, activationState, lifecycleDirectiveState, "break")
+							: this._parseSimpleFragment(statements, index, actors, actorGroups, activationState, lifecycleDirectiveState, controlKeyword);
 					lines.push(parsedFragment.line);
 					index = parsedFragment.nextIndex;
 					continue;
@@ -322,10 +341,18 @@ class MermaidSequenceTransformer {
 	 * @example
 	 * const parsed = MermaidSequenceTransformer._parseSimpleFragment(statements, 2, actors, activationState, "loop");
 	 */
-	static _parseSimpleFragment(statements, startIndex, actors, activationState, lifecycleDirectiveState, fragmentType) {
+	static _parseSimpleFragment(statements, startIndex, actors, actorGroups, activationState, lifecycleDirectiveState, fragmentType) {
 		const startStatement = statements[startIndex];
 		const condition = this._parseFragmentLabel(startStatement.trimmed, fragmentType, startStatement.lineNumber, startStatement.sourceLine);
-		const parsedBody = this._parseStructuredLines(statements, startIndex + 1, actors, activationState, lifecycleDirectiveState, ["end"]);
+		const parsedBody = this._parseStructuredLines(
+			statements,
+			startIndex + 1,
+			actors,
+			actorGroups,
+			activationState,
+			lifecycleDirectiveState,
+			["end"]
+		);
 		const endStatement = statements[parsedBody.nextIndex];
 
 		if (!endStatement || this._getControlKeyword(endStatement.trimmed) !== "end") {
@@ -361,7 +388,7 @@ class MermaidSequenceTransformer {
 	 * @example
 	 * const parsed = MermaidSequenceTransformer._parseAltFragment(statements, 4, actors, activationState);
 	 */
-	static _parseAltFragment(statements, startIndex, actors, activationState, lifecycleDirectiveState) {
+	static _parseAltFragment(statements, startIndex, actors, actorGroups, activationState, lifecycleDirectiveState) {
 		const startStatement = statements[startIndex];
 		const initialCondition = this._parseFragmentLabel(startStatement.trimmed, "alt", startStatement.lineNumber, startStatement.sourceLine);
 		const fragment = {
@@ -371,7 +398,15 @@ class MermaidSequenceTransformer {
 			condition: initialCondition,
 			lines: [],
 		};
-		const firstBranch = this._parseStructuredLines(statements, startIndex + 1, actors, activationState, lifecycleDirectiveState, ["else", "end"]);
+		const firstBranch = this._parseStructuredLines(
+			statements,
+			startIndex + 1,
+			actors,
+			actorGroups,
+			activationState,
+			lifecycleDirectiveState,
+			["else", "end"]
+		);
 		fragment.lines.push(...firstBranch.lines);
 
 		let index = firstBranch.nextIndex;
@@ -382,7 +417,15 @@ class MermaidSequenceTransformer {
 				condition: this._parseElseLabel(elseStatement.trimmed),
 			});
 
-			const nextBranch = this._parseStructuredLines(statements, index + 1, actors, activationState, lifecycleDirectiveState, ["else", "end"]);
+			const nextBranch = this._parseStructuredLines(
+				statements,
+				index + 1,
+				actors,
+				actorGroups,
+				activationState,
+				lifecycleDirectiveState,
+				["else", "end"]
+			);
 			fragment.lines.push(...nextBranch.lines);
 			index = nextBranch.nextIndex;
 		}
@@ -411,7 +454,7 @@ class MermaidSequenceTransformer {
 	 * @example
 	 * const parsed = MermaidSequenceTransformer._parseParFragment(statements, 4, actors, activationState);
 	 */
-	static _parseParFragment(statements, startIndex, actors, activationState, lifecycleDirectiveState) {
+	static _parseParFragment(statements, startIndex, actors, actorGroups, activationState, lifecycleDirectiveState) {
 		const startStatement = statements[startIndex];
 		const initialCondition = this._parseFragmentLabel(startStatement.trimmed, "par", startStatement.lineNumber, startStatement.sourceLine);
 		const fragment = {
@@ -421,7 +464,15 @@ class MermaidSequenceTransformer {
 			condition: initialCondition,
 			lines: [],
 		};
-		const firstBranch = this._parseStructuredLines(statements, startIndex + 1, actors, activationState, lifecycleDirectiveState, ["and", "end"]);
+		const firstBranch = this._parseStructuredLines(
+			statements,
+			startIndex + 1,
+			actors,
+			actorGroups,
+			activationState,
+			lifecycleDirectiveState,
+			["and", "end"]
+		);
 		fragment.lines.push(...firstBranch.lines);
 
 		let index = firstBranch.nextIndex;
@@ -432,7 +483,15 @@ class MermaidSequenceTransformer {
 				condition: this._parseAndLabel(andStatement.trimmed),
 			});
 
-			const nextBranch = this._parseStructuredLines(statements, index + 1, actors, activationState, lifecycleDirectiveState, ["and", "end"]);
+			const nextBranch = this._parseStructuredLines(
+				statements,
+				index + 1,
+				actors,
+				actorGroups,
+				activationState,
+				lifecycleDirectiveState,
+				["and", "end"]
+			);
 			fragment.lines.push(...nextBranch.lines);
 			index = nextBranch.nextIndex;
 		}
@@ -461,7 +520,7 @@ class MermaidSequenceTransformer {
 	 * @example
 	 * const parsed = MermaidSequenceTransformer._parseCriticalFragment(statements, 4, actors, activationState);
 	 */
-	static _parseCriticalFragment(statements, startIndex, actors, activationState, lifecycleDirectiveState) {
+	static _parseCriticalFragment(statements, startIndex, actors, actorGroups, activationState, lifecycleDirectiveState) {
 		const startStatement = statements[startIndex];
 		const initialCondition = this._parseFragmentLabel(
 			startStatement.trimmed,
@@ -476,7 +535,15 @@ class MermaidSequenceTransformer {
 			condition: initialCondition,
 			lines: [],
 		};
-		const firstBranch = this._parseStructuredLines(statements, startIndex + 1, actors, activationState, lifecycleDirectiveState, ["option", "end"]);
+		const firstBranch = this._parseStructuredLines(
+			statements,
+			startIndex + 1,
+			actors,
+			actorGroups,
+			activationState,
+			lifecycleDirectiveState,
+			["option", "end"]
+		);
 		fragment.lines.push(...firstBranch.lines);
 
 		let index = firstBranch.nextIndex;
@@ -487,7 +554,15 @@ class MermaidSequenceTransformer {
 				condition: this._parseOptionLabel(optionStatement.trimmed),
 			});
 
-			const nextBranch = this._parseStructuredLines(statements, index + 1, actors, activationState, lifecycleDirectiveState, ["option", "end"]);
+			const nextBranch = this._parseStructuredLines(
+				statements,
+				index + 1,
+				actors,
+				actorGroups,
+				activationState,
+				lifecycleDirectiveState,
+				["option", "end"]
+			);
 			fragment.lines.push(...nextBranch.lines);
 			index = nextBranch.nextIndex;
 		}
@@ -520,10 +595,18 @@ class MermaidSequenceTransformer {
 	 * @example
 	 * const parsed = MermaidSequenceTransformer._parseRectFragment(statements, 4, actors, activationState);
 	 */
-	static _parseRectFragment(statements, startIndex, actors, activationState, lifecycleDirectiveState) {
+	static _parseRectFragment(statements, startIndex, actors, actorGroups, activationState, lifecycleDirectiveState) {
 		const startStatement = statements[startIndex];
 		const bgColour = this._parseRectColour(startStatement.trimmed, startStatement.lineNumber, startStatement.sourceLine);
-		const parsedBody = this._parseStructuredLines(statements, startIndex + 1, actors, activationState, lifecycleDirectiveState, ["end"]);
+		const parsedBody = this._parseStructuredLines(
+			statements,
+			startIndex + 1,
+			actors,
+			actorGroups,
+			activationState,
+			lifecycleDirectiveState,
+			["end"]
+		);
 		const endStatement = statements[parsedBody.nextIndex];
 
 		if (!endStatement || this._getControlKeyword(endStatement.trimmed) !== "end") {
@@ -551,6 +634,153 @@ class MermaidSequenceTransformer {
 			line: fragment,
 			nextIndex: parsedBody.nextIndex + 1,
 		};
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a Mermaid `box` participant-group block into a top-level actor group.
+	 *
+	 * @param {{ trimmed: string, sourceLine: string, lineNumber: number }[]} statements Structured Mermaid statements.
+	 * @param {number} startIndex Statement index of the `box` line.
+	 * @param {object[]} actors Current actor array.
+	 * @param {object[]} actorGroups Current actor-group array.
+	 * @returns {{ nextIndex: number }} Next statement index after the box.
+	 * @throws {MermaidTransformError} If the box is malformed or contains unsupported content.
+	 * @example
+	 * MermaidSequenceTransformer._parseActorGroupBox(statements, 4, actors, actorGroups);
+	 */
+	static _parseActorGroupBox(statements, startIndex, actors, actorGroups) {
+		const startStatement = statements[startIndex];
+		const boxHeader = this._parseActorGroupBoxHeader(startStatement.trimmed, startStatement.lineNumber, startStatement.sourceLine);
+		const groupedAliases = [];
+		let index = startIndex + 1;
+
+		while (index < statements.length) {
+			const statement = statements[index];
+			const controlKeyword = this._getControlKeyword(statement.trimmed);
+			if (controlKeyword === "end") {
+				if (groupedAliases.length === 0) {
+					throw new MermaidTransformError(
+						"Mermaid box must declare at least one participant or actor",
+						startStatement.lineNumber,
+						startStatement.sourceLine
+					);
+				}
+				actorGroups.push({
+					title: boxHeader.title,
+					bgColour: boxHeader.bgColour,
+					actors: groupedAliases,
+				});
+				return {
+					nextIndex: index + 1,
+				};
+			}
+
+			if (!this._isParticipantDeclaration(statement.trimmed)) {
+				throw new MermaidTransformError(
+					"Mermaid box may only contain participant or actor declarations",
+					statement.lineNumber,
+					statement.sourceLine
+				);
+			}
+
+			const actor = this._parseParticipantDeclaration(statement.trimmed, statement.lineNumber, statement.sourceLine);
+			this._registerActor(actors, actor);
+			groupedAliases.push(actor.alias);
+			index++;
+		}
+
+		throw new MermaidTransformError("Mermaid feature 'box' is missing a matching 'end'", startStatement.lineNumber, startStatement.sourceLine);
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a Mermaid `box` header into colour/title metadata.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {{ title: string, bgColour: string }} Parsed box metadata.
+	 * @throws {MermaidTransformError} If the syntax is malformed.
+	 * @example
+	 * const header = MermaidSequenceTransformer._parseActorGroupBoxHeader("box Aqua Backend", 4, "box Aqua Backend");
+	 */
+	static _parseActorGroupBoxHeader(trimmed, lineNumber, sourceLine) {
+		const match = String(trimmed).match(/^box(?:\s+(.*))?$/i);
+		if (!match) {
+			throw new MermaidTransformError("Unsupported Mermaid box syntax", lineNumber, sourceLine);
+		}
+
+		const payload = this._cleanMetadataValue(match[1] != null ? match[1] : "");
+		if (payload.length === 0) {
+			return {
+				title: "",
+				bgColour: "rgba(220,220,220,0.35)",
+			};
+		}
+
+		if (/^rgba?\(/i.test(payload)) {
+			const closingBracketIndex = payload.indexOf(")");
+			if (closingBracketIndex === -1) {
+				throw new MermaidTransformError("Unsupported Mermaid box colour syntax", lineNumber, sourceLine);
+			}
+			return {
+				bgColour: payload.slice(0, closingBracketIndex + 1).trim(),
+				title: this._cleanMetadataValue(payload.slice(closingBracketIndex + 1)),
+			};
+		}
+
+		const tokens = payload.split(/\s+/).filter((token) => token.length > 0);
+		if (tokens.length === 0) {
+			return {
+				title: "",
+				bgColour: "rgba(220,220,220,0.35)",
+			};
+		}
+
+		if (this._isNamedColourToken(tokens[0])) {
+			return {
+				bgColour: tokens[0],
+				title: this._cleanMetadataValue(tokens.slice(1).join(" ")),
+			};
+		}
+
+		return {
+			title: payload,
+			bgColour: "rgba(220,220,220,0.35)",
+		};
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Detect whether a Mermaid token should be treated as a named colour.
+	 *
+	 * @param {string} token Candidate colour token.
+	 * @returns {boolean} True when the token is a supported named colour.
+	 * @example
+	 * const isNamedColour = MermaidSequenceTransformer._isNamedColourToken("Aqua");
+	 */
+	static _isNamedColourToken(token) {
+		return [
+			"aqua",
+			"black",
+			"blue",
+			"fuchsia",
+			"gray",
+			"green",
+			"lime",
+			"maroon",
+			"navy",
+			"olive",
+			"orange",
+			"purple",
+			"red",
+			"silver",
+			"teal",
+			"transparent",
+			"white",
+			"yellow",
+		].includes(String(token).trim().toLowerCase());
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -1149,12 +1379,12 @@ class MermaidSequenceTransformer {
 	 * Return the Mermaid control keyword at the start of a line when present.
 	 *
 	 * @param {string} trimmed Trimmed Mermaid source line.
-	 * @returns {"loop"|"alt"|"opt"|"par"|"critical"|"break"|"rect"|"and"|"else"|"option"|"end"|null} Control keyword or null.
+	 * @returns {"loop"|"alt"|"opt"|"par"|"critical"|"break"|"rect"|"box"|"and"|"else"|"option"|"end"|null} Control keyword or null.
 	 * @example
 	 * const keyword = MermaidSequenceTransformer._getControlKeyword("alt Success");
 	 */
 	static _getControlKeyword(trimmed) {
-		const match = String(trimmed).match(/^(loop|alt|opt|par|critical|break|rect|and|else|option|end)\b/i);
+		const match = String(trimmed).match(/^(loop|alt|opt|par|critical|break|rect|box|and|else|option|end)\b/i);
 		return match ? match[1].toLowerCase() : null;
 	}
 
@@ -1632,7 +1862,7 @@ class MermaidSequenceTransformer {
 			return new MermaidTransformError("Mermaid links are not supported yet", lineNumber, sourceLine);
 		}
 
-		if (/^(par|critical|break|rect|box)\b/i.test(trimmed)) {
+		if (/^(par|critical|break|rect)\b/i.test(trimmed)) {
 			return new MermaidTransformError(`Mermaid feature '${trimmed.split(/\s+/)[0]}' is not supported yet`, lineNumber, sourceLine);
 		}
 

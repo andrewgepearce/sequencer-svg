@@ -47,6 +47,7 @@ module.exports = class Working {
 		this._timelineDash = [3, 3];
 		this._activeFragments = [];
 		this._activeRectHighlights = [];
+		this._resolvedActorGroupRuns = [];
 		this._callCount = 0;
 		this._autonumber = true;
 		this._actorLifecycleState = Object.create(null);
@@ -222,6 +223,17 @@ module.exports = class Working {
 	 */
 	get activeRectHighlights() {
 		return this._activeRectHighlights;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Return resolved actor-group runs for rendering.
+	 * @returns {Array<object>} Resolved actor-group runs.
+	 * @example
+	 * const value = instance.resolvedActorGroupRuns;
+	 */
+	get resolvedActorGroupRuns() {
+		return this._resolvedActorGroupRuns;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -537,6 +549,7 @@ module.exports = class Working {
 				: 150;
 		this._activeFragments = [];
 		this._activeRectHighlights = [];
+		this._resolvedActorGroupRuns = this._resolveActorGroupRuns();
 		this._autonumber = this.postdata.autonumber === false ? false : true;
 		this._actorLifecycleState = this._buildActorLifecycleState();
 		this._tags = Utilities.isAllStrings(this.postdata.params.tags) ? this.postdata.params.tags : [];
@@ -617,6 +630,104 @@ module.exports = class Working {
 				firstEvents[line.to] = "destroy";
 			}
 		});
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Resolve document-level actor groups into contiguous visual runs using the
+	 * final actor order.
+	 *
+	 * @returns {Array<object>} Resolved actor-group runs ready for rendering.
+	 * @example
+	 * const runs = instance._resolveActorGroupRuns();
+	 */
+	_resolveActorGroupRuns() {
+		const actorGroups = Array.isArray(this.postdata && this.postdata.actorGroups) ? this.postdata.actorGroups : [];
+		const actors = Array.isArray(this.postdata && this.postdata.actors) ? this.postdata.actors : [];
+		const actorOrder = Object.create(null);
+		const resolvedRuns = [];
+
+		actors.forEach((actor, index) => {
+			if (actor && Utilities.isString(actor.alias)) {
+				actorOrder[actor.alias] = index;
+			}
+		});
+
+		actorGroups.forEach((group, groupIndex) => {
+			if (!Utilities.isObject(group)) {
+				this.logWarnOnce(`Actor group ${groupIndex + 1} is not a valid object and will be ignored`);
+				return;
+			}
+
+			const title = Utilities.isString(group.title) ? group.title : "";
+			const bgColour = Utilities.isString(group.bgColour) ? group.bgColour : "rgba(220,220,220,0.35)";
+			let aliases = [];
+
+			if (Utilities.isAllStrings(group.actors) && group.actors.length > 0) {
+				aliases = group.actors.slice();
+			} else if (Utilities.isString(group.startActor) && Utilities.isString(group.endActor)) {
+				const startIndex = actorOrder[group.startActor];
+				const endIndex = actorOrder[group.endActor];
+				if (!Utilities.isNumber(startIndex) || !Utilities.isNumber(endIndex)) {
+					this.logWarnOnce(
+						`Actor group '${title || group.startActor + "-" + group.endActor}' references unknown start or end actors and will be ignored`
+					);
+					return;
+				}
+				const lowIndex = Math.min(startIndex, endIndex);
+				const highIndex = Math.max(startIndex, endIndex);
+				if (startIndex > endIndex) {
+					this.logWarnOnce(`Actor group '${title || group.startActor + "-" + group.endActor}' had reversed actor bounds and was normalised`);
+				}
+				aliases = actors.slice(lowIndex, highIndex + 1).map((actor) => actor.alias);
+			} else {
+				this.logWarnOnce(`Actor group ${groupIndex + 1} has no actors and will be ignored`);
+				return;
+			}
+
+			const uniqueKnownAliases = Array.from(new Set(aliases.filter((alias) => Utilities.isNumber(actorOrder[alias])))).sort(
+				(leftAlias, rightAlias) => actorOrder[leftAlias] - actorOrder[rightAlias]
+			);
+			const missingAliases = aliases.filter((alias) => !Utilities.isNumber(actorOrder[alias]));
+			if (missingAliases.length > 0) {
+				this.logWarnOnce(
+					`Actor group '${title || "untitled"}' ignored unknown actors: ${Array.from(new Set(missingAliases)).join(", ")}`
+				);
+			}
+			if (uniqueKnownAliases.length === 0) {
+				return;
+			}
+
+			const runs = [];
+			let currentRun = [uniqueKnownAliases[0]];
+			for (let index = 1; index < uniqueKnownAliases.length; index++) {
+				const previousAlias = uniqueKnownAliases[index - 1];
+				const alias = uniqueKnownAliases[index];
+				if (actorOrder[alias] === actorOrder[previousAlias] + 1) {
+					currentRun.push(alias);
+				} else {
+					runs.push(currentRun);
+					currentRun = [alias];
+				}
+			}
+			runs.push(currentRun);
+
+			if (runs.length > 1) {
+				this.logWarnOnce(`Actor group '${title || "untitled"}' was discontinuous and has been rendered as ${runs.length} boxes`);
+			}
+
+			runs.forEach((runActors, runIndex) => {
+				resolvedRuns.push({
+					title: title,
+					bgColour: bgColour,
+					actors: runActors,
+					groupIndex: groupIndex,
+					runIndex: runIndex,
+				});
+			});
+		});
+
+		return resolvedRuns;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////

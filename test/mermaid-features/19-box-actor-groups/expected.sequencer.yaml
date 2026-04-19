@@ -1,0 +1,71 @@
+title: Mermaid actor boxes
+version: '1.0'
+actors:
+  - name: Caller
+    alias: Caller
+    actorType: participant
+  - name: Browser
+    alias: Browser
+    actorType: participant
+  - name: DB
+    alias: DB
+    actorType: participant
+  - name: Cache
+    alias: Cache
+    actorType: participant
+  - name: Service
+    alias: Service
+    actorType: participant
+  - name: Audit
+    alias: Audit
+    actorType: participant
+actorGroups:
+  - title: Client tier
+    bgColour: Aqua
+    actors:
+      - Caller
+      - Browser
+  - title: Data tier
+    bgColour: 'rgba(255, 230, 200, 0.55)'
+    actors:
+      - DB
+      - Cache
+  - title: Data tier
+    bgColour: 'rgba(255, 230, 200, 0.55)'
+    actors:
+      - Audit
+lines:
+  - type: call
+    from: Caller
+    to: Service
+    text: 'Start request [Mermaid: Caller->>Service: Start request]'
+    toArrow: fill
+    arrow: fill
+  - type: call
+    from: Service
+    to: DB
+    text: 'Persist record [Mermaid: Service->>DB: Persist record]'
+    toArrow: fill
+    arrow: fill
+  - type: call
+    from: Service
+    to: Cache
+    text: 'Prime cache [Mermaid: Service->>Cache: Prime cache]'
+    toArrow: fill
+    arrow: fill
+  - type: call
+    from: Service
+    to: Audit
+    text: 'Record audit [Mermaid: Service->>Audit: Record audit]'
+    toArrow: fill
+    arrow: fill
+description:
+  - >-
+    Demonstrates Mermaid participant boxes mapped onto sequencer actor groups,
+    including adjacent different-colour boxes and a repeated Data tier box
+    ending on Audit.
+  - 'From the project root, regenerate this Mermaid transform and SVG with:'
+  - >-
+    node sequencer.js --mermaid -i
+    test/mermaid-features/19-box-actor-groups/input.mmd -o -f -t
+    test/mermaid-features/19-box-actor-groups

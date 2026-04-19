@@ -1,0 +1,23 @@
+sequenceDiagram
+accTitle: Mermaid actor boxes
+accDescr {
+Demonstrates Mermaid participant boxes mapped onto sequencer actor groups, including adjacent different-colour boxes and a repeated Data tier box ending on Audit.
+From the project root, regenerate this Mermaid transform and SVG with:
+node sequencer.js --mermaid -i test/mermaid-features/19-box-actor-groups/input.mmd -o -f -t test/mermaid-features/19-box-actor-groups
+}
+box Aqua Client tier
+  participant Caller
+  participant Browser
+end
+box rgba(255, 230, 200, 0.55) Data tier
+  participant DB
+  participant Cache
+end
+participant Service
+box rgba(255, 230, 200, 0.55) Data tier
+  participant Audit
+end
+Caller->>Service: Start request [Mermaid: Caller->>Service: Start request]
+Service->>DB: Persist record [Mermaid: Service->>DB: Persist record]
+Service->>Cache: Prime cache [Mermaid: Service->>Cache: Prime cache]
+Service->>Audit: Record audit [Mermaid: Service->>Audit: Record audit]
