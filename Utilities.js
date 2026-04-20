@@ -1133,6 +1133,20 @@ module.exports = class Utilities {
 
 	///////////////////////////////////////////////////////////////////////////////
 	/**
+	 * Handle valid hex colour.
+	 *
+	 * @param {*} stringColour Parameter derived from stringColour.
+	 * @returns {*} Result value.
+	 * @example
+	 * instance.validHexColour("#AABBCC");
+	 */
+	static validHexColour(stringColour) {
+		if (typeof stringColour != "string") return false;
+		return /^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{4}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/.test(stringColour.trim());
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
 	 * Handle valid colour.
 	 *
 	 * @param {*} stringColour Parameter derived from stringColour.
@@ -1141,7 +1155,12 @@ module.exports = class Utilities {
 	 * instance.validColour(stringColour);
 	 */
 	static validColour(stringColour) {
-		return Utilities.validRGBColour(stringColour) || Utilities.validRGBAColour(stringColour) || Utilities.validNamedColour(stringColour);
+		return (
+			Utilities.validRGBColour(stringColour) ||
+			Utilities.validRGBAColour(stringColour) ||
+			Utilities.validHexColour(stringColour) ||
+			Utilities.validNamedColour(stringColour)
+		);
 	}
 
 	///////////////////////////////////////////////////////////////////////////////

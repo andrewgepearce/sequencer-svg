@@ -884,7 +884,7 @@ class MermaidSequenceTransformer {
 			};
 		}
 
-		if (this._isNamedColourToken(tokens[0])) {
+		if (this._isNamedColourToken(tokens[0]) || this._isHexColourToken(tokens[0])) {
 			return {
 				bgColour: tokens[0],
 				title: this._cleanMetadataValue(tokens.slice(1).join(" ")),
@@ -927,6 +927,19 @@ class MermaidSequenceTransformer {
 			"white",
 			"yellow",
 		].includes(String(token).trim().toLowerCase());
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Detect whether a Mermaid token should be treated as a hex colour.
+	 *
+	 * @param {string} token Candidate colour token.
+	 * @returns {boolean} True when the token is a supported hex colour.
+	 * @example
+	 * const isHexColour = MermaidSequenceTransformer._isHexColourToken("#D0EBFF");
+	 */
+	static _isHexColourToken(token) {
+		return /^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{4}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/.test(String(token).trim());
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -1166,7 +1179,88 @@ class MermaidSequenceTransformer {
 		if (typeof bgColour === "string") {
 			actor.bgColour = bgColour;
 		}
+		this._applyConfiguredParticipantColours(config, actor, lineNumber, sourceLine);
 		return actor;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Apply Mermaid participant colour hints from a JSON configuration object.
+	 *
+	 * @param {object} config Parsed Mermaid participant configuration object.
+	 * @param {object} actor Mutable sequencer actor object.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {void} Nothing.
+	 * @throws {MermaidTransformError} If a recognised colour property is present but invalid.
+	 * @example
+	 * MermaidSequenceTransformer._applyConfiguredParticipantColours(
+	 *   { backgroundColor: "#D0EBFF", textColor: "#0B7285" },
+	 *   { alias: "API" },
+	 *   4,
+	 *   source
+	 * );
+	 */
+	static _applyConfiguredParticipantColours(config, actor, lineNumber, sourceLine) {
+		const bgColour = this._getConfiguredColourValue(
+			config,
+			["bgColour", "bgColor", "backgroundColour", "backgroundColor", "colour", "color"],
+			lineNumber,
+			sourceLine,
+			"participant background colour"
+		);
+		const fgColour = this._getConfiguredColourValue(
+			config,
+			["fgColour", "fgColor", "textColour", "textColor", "fontColour", "fontColor"],
+			lineNumber,
+			sourceLine,
+			"participant text colour"
+		);
+		const borderColour = this._getConfiguredColourValue(
+			config,
+			["borderColour", "borderColor", "lineColour", "lineColor", "strokeColour", "strokeColor", "stroke"],
+			lineNumber,
+			sourceLine,
+			"participant border colour"
+		);
+
+		if (typeof bgColour === "string") {
+			actor.bgColour = bgColour;
+		}
+		if (typeof fgColour === "string") {
+			actor.fgColour = fgColour;
+		}
+		if (typeof borderColour === "string") {
+			actor.borderColour = borderColour;
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Read one Mermaid configuration colour value from the first matching key.
+	 *
+	 * @param {object} config Parsed Mermaid participant configuration object.
+	 * @param {string[]} keys Candidate Mermaid property names.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @param {string} label Human-readable property label for diagnostics.
+	 * @returns {string|undefined} First non-empty colour string, or undefined when absent.
+	 * @throws {MermaidTransformError} If a recognised property is present but not a non-empty string.
+	 * @example
+	 * const colour = MermaidSequenceTransformer._getConfiguredColourValue(config, ["color"], 4, source, "participant background colour");
+	 */
+	static _getConfiguredColourValue(config, keys, lineNumber, sourceLine, label) {
+		for (const key of keys) {
+			if (!Object.prototype.hasOwnProperty.call(config, key)) {
+				continue;
+			}
+			if (typeof config[key] !== "string" || config[key].trim().length === 0) {
+				throw new MermaidTransformError(`Mermaid ${label} must be a non-empty string`, lineNumber, sourceLine);
+			}
+			return config[key].trim();
+		}
+
+		return undefined;
 	}
 
 	////////////////////////////////////////////////////////////////////////////
