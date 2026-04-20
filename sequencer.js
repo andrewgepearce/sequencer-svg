@@ -22,6 +22,7 @@ const commandLineArgs = require("command-line-args");
 const commandLineUsage = require("command-line-usage");
 
 const SvgStart = require("./SvgStart.js");
+const { ReadableYamlFormatter } = require("./ReadableYamlFormatter.js");
 const { MermaidSequenceTransformer, MermaidTransformError } = require("./MermaidSequenceTransformer.js");
 
 //////////////////////////////////////////////////////////////////////////////
@@ -224,7 +225,7 @@ function buildInputDocument(data, sourceName) {
 		try {
 			const jsono = MermaidSequenceTransformer.transform(data, { sourceName: sourceName });
 			jsonstr = JSON.stringify(jsono, null, 3);
-			yamlstr = formatMermaidYamlOutput(jsono);
+			yamlstr = formatGeneratedYamlOutput(jsono);
 			return jsono;
 		} catch (error) {
 			if (error instanceof MermaidTransformError) {
@@ -289,32 +290,15 @@ function formatMermaidSourceLine(sourceLine) {
 
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Format transformed Mermaid output as sequencer YAML, preserving Mermaid
- * source comments as YAML header comments when present.
+ * Format generated sequencer YAML using the readable formatter.
  *
- * @param {object} document Transformed sequencer document.
+ * @param {object} document Sequencer document.
  * @returns {string} YAML output string.
  * @example
- * const yamlText = formatMermaidYamlOutput(document);
+ * const yamlText = formatGeneratedYamlOutput(document);
  */
-function formatMermaidYamlOutput(document) {
-	const baseYaml = yaml.safeDump(document);
-	const sourceComments =
-		document && Array.isArray(document.__mermaidComments) ? document.__mermaidComments.filter((comment) => comment) : [];
-
-	if (sourceComments.length === 0) {
-		return baseYaml;
-	}
-
-	const headerLines = ["# Mermaid source comments:"];
-	sourceComments.forEach((comment) => {
-		const lineNumber = typeof comment.lineNumber === "number" ? comment.lineNumber : "?";
-		const text = typeof comment.text === "string" && comment.text.length > 0 ? comment.text : "(blank comment)";
-		headerLines.push(`# [${lineNumber}] ${text}`);
-	});
-	headerLines.push("");
-
-	return headerLines.join("\n") + baseYaml;
+function formatGeneratedYamlOutput(document) {
+	return ReadableYamlFormatter.format(document);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -628,7 +612,7 @@ function getObjectFromData(data, isYaml) {
 		try {
 			const jsono = loadWithSourceLines(data, (msg) => console.error("Warning whilst parsing YAML: " + msg));
 			jsonstr = JSON.stringify(jsono, null, 3);
-			yamlstr = yaml.safeDump(jsono);
+			yamlstr = formatGeneratedYamlOutput(jsono);
 			return jsono;
 		} catch (error) {
 			console.error("Error whilst parsing YAML: " + error.message);
@@ -639,7 +623,7 @@ function getObjectFromData(data, isYaml) {
 	try {
 		const jsono = JSON.parse(data);
 		jsonstr = JSON.stringify(jsono, null, 3);
-		yamlstr = yaml.safeDump(jsono);
+		yamlstr = formatGeneratedYamlOutput(jsono);
 		annotateJsonWithSourceLines(jsono, data);
 		return jsono;
 	} catch (error) {

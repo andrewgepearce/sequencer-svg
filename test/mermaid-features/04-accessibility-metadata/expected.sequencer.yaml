@@ -1,27 +1,11 @@
 title: Mermaid accessibility metadata
 version: '1.0'
 actors:
-  - name: Caller
-    alias: Caller
-    actorType: participant
-  - name: Service
-    alias: Service
-    actorType: participant
+  - {name: Caller, alias: Caller, actorType: participant}
+  - {name: Service, alias: Service, actorType: participant}
 lines:
-  - type: blank
-    height: 0
-    comment: >-
-      Accessibility metadata demo [Mermaid: Note over Caller,Service:
-      Accessibility metadata demo]
-    actors:
-      - Caller
-      - Service
-  - type: call
-    from: Caller
-    to: Service
-    text: 'Metadata call [Mermaid: Caller->>Service: Metadata call]'
-    toArrow: fill
-    arrow: fill
+  - {type: blank, height: 0, comment: 'Accessibility metadata demo [Mermaid: Note over Caller,Service: Accessibility metadata demo]', actors: [Caller, Service]}
+  - {type: call, from: Caller, to: Service, text: 'Metadata call [Mermaid: Caller->>Service: Metadata call]', toArrow: fill, arrow: fill}
 description:
   - First description line from Mermaid accessibility metadata.
   - Second description line remains multiline in sequencer.

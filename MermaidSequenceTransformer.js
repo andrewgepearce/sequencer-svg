@@ -79,10 +79,11 @@ class MermaidSequenceTransformer {
 		const lifecycleDirectiveState = {
 			pendingCreate: Object.create(null),
 			pendingDestroy: Object.create(null),
+			pendingCreateComments: Object.create(null),
+			pendingDestroyComments: Object.create(null),
 		};
 
 		const statements = this._collectStatements(source, document);
-		const mermaidComments = statements.__mermaidComments;
 		const parsedDocument = this._parseStructuredLines(
 			statements,
 			0,
@@ -105,15 +106,6 @@ class MermaidSequenceTransformer {
 			);
 		}
 
-		if (Array.isArray(mermaidComments) && mermaidComments.length > 0) {
-			Object.defineProperty(document, "__mermaidComments", {
-				value: mermaidComments.map((comment) => ({ lineNumber: comment.lineNumber, text: comment.text })),
-				enumerable: false,
-				configurable: true,
-				writable: true,
-			});
-		}
-
 		return document;
 	}
 
@@ -130,12 +122,12 @@ class MermaidSequenceTransformer {
 	 */
 	static _collectStatements(source, document) {
 		const statements = [];
-		const mermaidComments = [];
 		const lines = source.replace(/^\uFEFF/, "").split(/\r?\n/);
 		let seenSequenceDiagram = false;
 		let insideDirective = false;
 		let insideAccDescr = false;
 		let accDescrLines = [];
+		let pendingComments = [];
 
 		for (let index = 0; index < lines.length; index++) {
 			const sourceLine = lines[index];
@@ -161,7 +153,7 @@ class MermaidSequenceTransformer {
 			}
 
 			if (trimmed.startsWith("%%")) {
-				mermaidComments.push({
+				pendingComments.push({
 					lineNumber: lineNumber,
 					text: this._normaliseMermaidCommentText(trimmed),
 				});
@@ -196,22 +188,30 @@ class MermaidSequenceTransformer {
 			}
 
 			if (this._isAccessibilityTitleLine(trimmed)) {
+				this._attachYamlEntryComments(document, "title", pendingComments);
+				pendingComments = [];
 				document.title = this._parseAccessibilityTitle(trimmed, lineNumber, sourceLine);
 				continue;
 			}
 
 			if (this._isAccessibilityDescriptionLine(trimmed)) {
+				this._attachYamlEntryComments(document, "description", pendingComments);
+				pendingComments = [];
 				document.description = this._parseAccessibilityDescription(trimmed, lineNumber, sourceLine);
 				continue;
 			}
 
 			if (this._startsAccessibilityDescriptionBlock(trimmed)) {
+				this._attachYamlEntryComments(document, "description", pendingComments);
+				pendingComments = [];
 				insideAccDescr = true;
 				accDescrLines = [];
 				continue;
 			}
 
 			if (this._isAutonumberLine(trimmed)) {
+				this._attachYamlEntryComments(document, "autonumber", pendingComments);
+				pendingComments = [];
 				document.autonumber = true;
 				continue;
 			}
@@ -220,7 +220,9 @@ class MermaidSequenceTransformer {
 				trimmed: trimmed,
 				sourceLine: sourceLine,
 				lineNumber: lineNumber,
+				leadingComments: pendingComments,
 			});
+			pendingComments = [];
 		}
 
 		if (!seenSequenceDiagram) {
@@ -231,12 +233,7 @@ class MermaidSequenceTransformer {
 			throw new MermaidTransformError("Unterminated Mermaid accDescr block");
 		}
 
-		Object.defineProperty(statements, "__mermaidComments", {
-			value: mermaidComments,
-			enumerable: false,
-			configurable: true,
-			writable: true,
-		});
+		this._attachYamlTrailingComments(document, pendingComments);
 
 		return statements;
 	}
@@ -257,6 +254,76 @@ class MermaidSequenceTransformer {
 
 		const withoutPrefix = trimmed.replace(/^%%\s?/, "");
 		return withoutPrefix.trim();
+	}
+
+	static _attachYamlLeadingComments(target, comments) {
+		if (!target || typeof target !== "object" || !Array.isArray(comments) || comments.length === 0) {
+			return;
+		}
+
+		const existingComments = Array.isArray(target.__yamlLeadingComments) ? target.__yamlLeadingComments.slice() : [];
+		Object.defineProperty(target, "__yamlLeadingComments", {
+			value: existingComments.concat(this._normaliseYamlCommentLines(comments)),
+			enumerable: false,
+			configurable: true,
+			writable: true,
+		});
+	}
+
+	static _attachYamlEntryComments(target, key, comments) {
+		if (!target || typeof target !== "object" || typeof key !== "string" || !Array.isArray(comments) || comments.length === 0) {
+			return;
+		}
+
+		const existingMap = target.__yamlEntryComments && typeof target.__yamlEntryComments === "object" ? target.__yamlEntryComments : {};
+		const updatedMap = Object.assign({}, existingMap);
+		updatedMap[key] = (Array.isArray(updatedMap[key]) ? updatedMap[key] : []).concat(this._normaliseYamlCommentLines(comments));
+		Object.defineProperty(target, "__yamlEntryComments", {
+			value: updatedMap,
+			enumerable: false,
+			configurable: true,
+			writable: true,
+		});
+	}
+
+	static _attachYamlTrailingComments(target, comments) {
+		if (!target || typeof target !== "object" || !Array.isArray(comments) || comments.length === 0) {
+			return;
+		}
+
+		const existingComments = Array.isArray(target.__yamlTrailingComments) ? target.__yamlTrailingComments.slice() : [];
+		Object.defineProperty(target, "__yamlTrailingComments", {
+			value: existingComments.concat(this._normaliseYamlCommentLines(comments)),
+			enumerable: false,
+			configurable: true,
+			writable: true,
+		});
+	}
+
+	static _consumePendingYamlComments(commentMap, key, target) {
+		if (!commentMap || typeof commentMap !== "object" || typeof key !== "string" || !target || typeof target !== "object") {
+			return;
+		}
+
+		if (!Array.isArray(commentMap[key]) || commentMap[key].length === 0) {
+			return;
+		}
+
+		this._attachYamlLeadingComments(target, commentMap[key]);
+		delete commentMap[key];
+	}
+
+	static _normaliseYamlCommentLines(comments) {
+		return comments
+			.map((comment) => {
+				if (comment && typeof comment === "object") {
+					const prefix = typeof comment.lineNumber === "number" ? `[Mermaid source line ${comment.lineNumber}] ` : "";
+					const text = typeof comment.text === "string" ? comment.text : "";
+					return prefix + text;
+				}
+				return typeof comment === "string" ? comment : "";
+			})
+			.filter((comment) => typeof comment === "string");
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -326,41 +393,59 @@ class MermaidSequenceTransformer {
 			}
 
 			if (this._isParticipantDeclaration(statement.trimmed)) {
-				this._registerActor(actors, this._parseParticipantDeclaration(statement.trimmed, statement.lineNumber, statement.sourceLine));
+				const actor = this._parseParticipantDeclaration(statement.trimmed, statement.lineNumber, statement.sourceLine);
+				this._attachYamlLeadingComments(actor, statement.leadingComments);
+				this._registerActor(actors, actor);
 				index++;
 				continue;
 			}
 
 			if (this._isActorLinkStatement(statement.trimmed)) {
-				this._parseActorLinkStatement(statement.trimmed, actors, statement.lineNumber, statement.sourceLine);
+				this._parseActorLinkStatement(statement.trimmed, actors, statement.lineNumber, statement.sourceLine, statement.leadingComments);
 				index++;
 				continue;
 			}
 
 			if (this._isLifecycleDirective(statement.trimmed)) {
-				this._parseLifecycleDirective(statement.trimmed, actors, lifecycleDirectiveState, statement.lineNumber, statement.sourceLine);
+				this._parseLifecycleDirective(
+					statement.trimmed,
+					actors,
+					lifecycleDirectiveState,
+					statement.lineNumber,
+					statement.sourceLine,
+					statement.leadingComments
+				);
 				index++;
 				continue;
 			}
 
 			if (this._isActivationDirective(statement.trimmed)) {
-				lines.push(
-					this._parseActivationDirective(statement.trimmed, actors, activationState, statement.lineNumber, statement.sourceLine)
-				);
+				const line = this._parseActivationDirective(statement.trimmed, actors, activationState, statement.lineNumber, statement.sourceLine);
+				this._attachYamlLeadingComments(line, statement.leadingComments);
+				lines.push(line);
 				index++;
 				continue;
 			}
 
 			if (this._looksLikeMessageLine(statement.trimmed)) {
-				lines.push(
-					this._parseMessageLine(statement.trimmed, actors, activationState, lifecycleDirectiveState, statement.lineNumber, statement.sourceLine)
+				const line = this._parseMessageLine(
+					statement.trimmed,
+					actors,
+					activationState,
+					lifecycleDirectiveState,
+					statement.lineNumber,
+					statement.sourceLine
 				);
+				this._attachYamlLeadingComments(line, statement.leadingComments);
+				lines.push(line);
 				index++;
 				continue;
 			}
 
 			if (this._isNoteLine(statement.trimmed)) {
-				lines.push(this._parseNoteLine(statement.trimmed, actors, statement.lineNumber, statement.sourceLine));
+				const line = this._parseNoteLine(statement.trimmed, actors, statement.lineNumber, statement.sourceLine);
+				this._attachYamlLeadingComments(line, statement.leadingComments);
+				lines.push(line);
 				index++;
 				continue;
 			}
@@ -410,14 +495,16 @@ class MermaidSequenceTransformer {
 			);
 		}
 
+		const fragment = {
+			type: "fragment",
+			fragmentType: fragmentType,
+			title: "",
+			condition: condition,
+			lines: parsedBody.lines,
+		};
+		this._attachYamlLeadingComments(fragment, startStatement.leadingComments);
 		return {
-			line: {
-				type: "fragment",
-				fragmentType: fragmentType,
-				title: "",
-				condition: condition,
-				lines: parsedBody.lines,
-			},
+			line: fragment,
 			nextIndex: parsedBody.nextIndex + 1,
 		};
 	}
@@ -459,10 +546,12 @@ class MermaidSequenceTransformer {
 		let index = firstBranch.nextIndex;
 		while (index < statements.length && this._getControlKeyword(statements[index].trimmed) === "else") {
 			const elseStatement = statements[index];
-			fragment.lines.push({
+			const conditionLine = {
 				type: "condition",
 				condition: this._parseElseLabel(elseStatement.trimmed),
-			});
+			};
+			this._attachYamlLeadingComments(conditionLine, elseStatement.leadingComments);
+			fragment.lines.push(conditionLine);
 
 			const nextBranch = this._parseStructuredLines(
 				statements,
@@ -481,6 +570,7 @@ class MermaidSequenceTransformer {
 		if (!endStatement || this._getControlKeyword(endStatement.trimmed) !== "end") {
 			throw new MermaidTransformError("Mermaid feature 'alt' is missing a matching 'end'", startStatement.lineNumber, startStatement.sourceLine);
 		}
+		this._attachYamlLeadingComments(fragment, startStatement.leadingComments);
 
 		return {
 			line: fragment,
@@ -525,10 +615,12 @@ class MermaidSequenceTransformer {
 		let index = firstBranch.nextIndex;
 		while (index < statements.length && this._getControlKeyword(statements[index].trimmed) === "and") {
 			const andStatement = statements[index];
-			fragment.lines.push({
+			const conditionLine = {
 				type: "condition",
 				condition: this._parseAndLabel(andStatement.trimmed),
-			});
+			};
+			this._attachYamlLeadingComments(conditionLine, andStatement.leadingComments);
+			fragment.lines.push(conditionLine);
 
 			const nextBranch = this._parseStructuredLines(
 				statements,
@@ -547,6 +639,7 @@ class MermaidSequenceTransformer {
 		if (!endStatement || this._getControlKeyword(endStatement.trimmed) !== "end") {
 			throw new MermaidTransformError("Mermaid feature 'par' is missing a matching 'end'", startStatement.lineNumber, startStatement.sourceLine);
 		}
+		this._attachYamlLeadingComments(fragment, startStatement.leadingComments);
 
 		return {
 			line: fragment,
@@ -596,10 +689,12 @@ class MermaidSequenceTransformer {
 		let index = firstBranch.nextIndex;
 		while (index < statements.length && this._getControlKeyword(statements[index].trimmed) === "option") {
 			const optionStatement = statements[index];
-			fragment.lines.push({
+			const conditionLine = {
 				type: "condition",
 				condition: this._parseOptionLabel(optionStatement.trimmed),
-			});
+			};
+			this._attachYamlLeadingComments(conditionLine, optionStatement.leadingComments);
+			fragment.lines.push(conditionLine);
 
 			const nextBranch = this._parseStructuredLines(
 				statements,
@@ -622,6 +717,7 @@ class MermaidSequenceTransformer {
 				startStatement.sourceLine
 			);
 		}
+		this._attachYamlLeadingComments(fragment, startStatement.leadingComments);
 
 		return {
 			line: fragment,
@@ -676,6 +772,7 @@ class MermaidSequenceTransformer {
 		if (actorSpan.endActor != null) {
 			fragment.endActor = actorSpan.endActor;
 		}
+		this._attachYamlLeadingComments(fragment, startStatement.leadingComments);
 
 		return {
 			line: fragment,
@@ -713,11 +810,13 @@ class MermaidSequenceTransformer {
 						startStatement.sourceLine
 					);
 				}
-				actorGroups.push({
+				const actorGroup = {
 					title: boxHeader.title,
 					bgColour: boxHeader.bgColour,
 					actors: groupedAliases,
-				});
+				};
+				this._attachYamlLeadingComments(actorGroup, startStatement.leadingComments);
+				actorGroups.push(actorGroup);
 				return {
 					nextIndex: index + 1,
 				};
@@ -1255,6 +1354,7 @@ class MermaidSequenceTransformer {
 		if (existingActor) {
 			existingActor.name = actor.name;
 			existingActor.actorType = actor.actorType;
+			this._attachYamlLeadingComments(existingActor, actor.__yamlLeadingComments);
 			return;
 		}
 
@@ -1287,7 +1387,7 @@ class MermaidSequenceTransformer {
 	 * @example
 	 * MermaidSequenceTransformer._parseActorLinkStatement("link API: Docs @ https://example.test", actors, 4, source);
 	 */
-	static _parseActorLinkStatement(trimmed, actors, lineNumber, sourceLine) {
+	static _parseActorLinkStatement(trimmed, actors, lineNumber, sourceLine, leadingComments) {
 		if (/^links\s+/i.test(trimmed)) {
 			const match = String(trimmed).match(/^links\s+([A-Za-z0-9_][-A-Za-z0-9_]*)\s*:\s*(\{.*\})$/i);
 			if (!match) {
@@ -1313,6 +1413,7 @@ class MermaidSequenceTransformer {
 				}
 				this._appendActorLink(actors, alias, label, url);
 			});
+			this._attachYamlLeadingComments(this._findActorByAlias(actors, alias), leadingComments);
 			return;
 		}
 
@@ -1329,6 +1430,7 @@ class MermaidSequenceTransformer {
 		}
 		this._ensureImplicitActor(actors, alias);
 		this._appendActorLink(actors, alias, label, url);
+		this._attachYamlLeadingComments(this._findActorByAlias(actors, alias), leadingComments);
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -1355,6 +1457,10 @@ class MermaidSequenceTransformer {
 			label: label,
 			url: url,
 		});
+	}
+
+	static _findActorByAlias(actors, alias) {
+		return Array.isArray(actors) ? actors.find((candidate) => candidate && candidate.alias === alias) : undefined;
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -1504,6 +1610,7 @@ class MermaidSequenceTransformer {
 			lifecycleDirectiveState.pendingDestroy != null &&
 			lifecycleDirectiveState.pendingDestroy[fromAlias] === true
 		) {
+			this._consumePendingYamlComments(lifecycleDirectiveState.pendingDestroyComments, fromAlias, line);
 			line.destroyFrom = true;
 			if (isReturnMessage) {
 				delete line.continueFromFlow;
@@ -1518,11 +1625,13 @@ class MermaidSequenceTransformer {
 			lifecycleDirectiveState.pendingDestroy != null &&
 			lifecycleDirectiveState.pendingDestroy[toAlias] === true
 		) {
+			this._consumePendingYamlComments(lifecycleDirectiveState.pendingDestroyComments, toAlias, line);
 			line.destroyTo = true;
 			line.breakToFlow = true;
 			delete lifecycleDirectiveState.pendingDestroy[toAlias];
 		}
 		if (isCreateMessage) {
+			this._consumePendingYamlComments(lifecycleDirectiveState.pendingCreateComments, toAlias, line);
 			delete lifecycleDirectiveState.pendingCreate[toAlias];
 		}
 
@@ -1557,11 +1666,14 @@ class MermaidSequenceTransformer {
 	 * @example
 	 * MermaidSequenceTransformer._parseLifecycleDirective("destroy Worker", actors, state, 4, "destroy Worker");
 	 */
-	static _parseLifecycleDirective(trimmed, actors, lifecycleDirectiveState, lineNumber, sourceLine) {
+	static _parseLifecycleDirective(trimmed, actors, lifecycleDirectiveState, lineNumber, sourceLine, leadingComments) {
 		if (/^create\s+/i.test(trimmed)) {
 			const actor = this._parseParticipantDeclaration(trimmed.replace(/^create\s+/i, ""), lineNumber, sourceLine);
 			this._registerActor(actors, actor);
 			lifecycleDirectiveState.pendingCreate[actor.alias] = true;
+			if (Array.isArray(leadingComments) && leadingComments.length > 0) {
+				lifecycleDirectiveState.pendingCreateComments[actor.alias] = this._normaliseYamlCommentLines(leadingComments);
+			}
 			return;
 		}
 
@@ -1572,6 +1684,9 @@ class MermaidSequenceTransformer {
 
 		this._ensureImplicitActor(actors, destroyMatch[1]);
 		lifecycleDirectiveState.pendingDestroy[destroyMatch[1]] = true;
+		if (Array.isArray(leadingComments) && leadingComments.length > 0) {
+			lifecycleDirectiveState.pendingDestroyComments[destroyMatch[1]] = this._normaliseYamlCommentLines(leadingComments);
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////

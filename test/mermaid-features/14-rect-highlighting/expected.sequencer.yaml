@@ -1,25 +1,12 @@
 title: Mermaid rect highlighting
 version: '1.0'
 actors:
-  - name: Caller
-    alias: Caller
-    actorType: participant
-  - name: Service
-    alias: Service
-    actorType: participant
-  - name: DB
-    alias: DB
-    actorType: participant
-  - name: Cache
-    alias: Cache
-    actorType: participant
+  - {name: Caller, alias: Caller, actorType: participant}
+  - {name: Service, alias: Service, actorType: participant}
+  - {name: DB, alias: DB, actorType: participant}
+  - {name: Cache, alias: Cache, actorType: participant}
 lines:
-  - type: call
-    from: Caller
-    to: Service
-    text: 'Start request [Mermaid: Caller->>Service: Start request]'
-    toArrow: fill
-    arrow: fill
+  - {type: call, from: Caller, to: Service, text: 'Start request [Mermaid: Caller->>Service: Start request]', toArrow: fill, arrow: fill}
   - type: fragment
     fragmentType: rect
     title: ''
@@ -27,19 +14,12 @@ lines:
     bgColour: 'rgba(255, 220, 180, 0.5)'
     borderWidth: 0
     lines:
-      - type: call
-        from: Service
-        to: DB
-        text: 'Persist record [Mermaid: Service->>DB: Persist record]'
-        toArrow: fill
-        arrow: fill
+      - {type: call, from: Service, to: DB, text: 'Persist record [Mermaid: Service->>DB: Persist record]', toArrow: fill, arrow: fill}
       - type: return
         from: DB
         to: Service
         text: 'Persistence complete [Mermaid: DB-->>Service: Persistence complete]'
-        lineDash:
-          - 4
-          - 2
+        lineDash: [4, 2]
         toArrow: fill
         arrow: fill
     startActor: Service
@@ -51,37 +31,12 @@ lines:
     bgColour: 'rgb(210, 240, 255)'
     borderWidth: 0
     lines:
-      - type: call
-        from: Service
-        to: Cache
-        text: 'Warm cache [Mermaid: Service->>Cache: Warm cache]'
-        toArrow: fill
-        arrow: fill
-      - type: blank
-        height: 0
-        comment: >-
-          Highlighted cache phase [Mermaid: Note over Service,Cache: Highlighted
-          cache phase]
-        actors:
-          - Service
-          - Cache
+      - {type: call, from: Service, to: Cache, text: 'Warm cache [Mermaid: Service->>Cache: Warm cache]', toArrow: fill, arrow: fill}
+      - {type: blank, height: 0, comment: 'Highlighted cache phase [Mermaid: Note over Service,Cache: Highlighted cache phase]', actors: [Service, Cache]}
     startActor: Service
     endActor: Cache
-  - type: return
-    from: Service
-    to: Caller
-    text: 'Reply [Mermaid: Service-->>Caller: Reply]'
-    lineDash:
-      - 4
-      - 2
-    toArrow: fill
-    arrow: fill
+  - {type: return, from: Service, to: Caller, text: 'Reply [Mermaid: Service-->>Caller: Reply]', lineDash: [4, 2], toArrow: fill, arrow: fill}
 description:
-  - >-
-    Demonstrates Mermaid rect highlighting mapped onto sequencer fragments with
-    inferred actor spans.
+  - Demonstrates Mermaid rect highlighting mapped onto sequencer fragments with inferred actor spans.
   - 'From the project root, regenerate this Mermaid transform and SVG with:'
-  - >-
-    node sequencer.js --mermaid -i
-    test/mermaid-features/14-rect-highlighting/input.mmd -o -f -t
-    test/mermaid-features/14-rect-highlighting
+  - node sequencer.js --mermaid -i test/mermaid-features/14-rect-highlighting/input.mmd -o -f -t test/mermaid-features/14-rect-highlighting

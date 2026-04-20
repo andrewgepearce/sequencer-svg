@@ -5,6 +5,7 @@ const { execFileSync } = require("child_process");
 
 const yaml = require("js-yaml");
 
+const { ReadableYamlFormatter } = require("../../ReadableYamlFormatter.js");
 const { MermaidSequenceTransformer } = require("../../MermaidSequenceTransformer.js");
 
 //////////////////////////////////////////////////////////////////////////////
@@ -58,7 +59,7 @@ describe("Mermaid feature slice 1: participants and aliases", () => {
 
 		const transformed = MermaidSequenceTransformer.transform(source, { sourceName: getFixturePath("input.mmd") });
 
-		expect(yaml.safeDump(transformed)).toBe(expectedYaml);
+		expect(ReadableYamlFormatter.format(transformed)).toBe(expectedYaml);
 	});
 
 	test("renders SVG from Mermaid input and writes the transformed sequencer YAML sidecar", () => {

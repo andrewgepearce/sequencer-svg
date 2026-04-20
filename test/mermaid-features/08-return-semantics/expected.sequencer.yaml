@@ -1,64 +1,32 @@
 title: Mermaid return semantics
 version: '1.0'
 actors:
-  - name: Caller
-    alias: Caller
-    actorType: participant
-  - name: Service
-    alias: Service
-    actorType: participant
+  - {name: Caller, alias: Caller, actorType: participant}
+  - {name: Service, alias: Service, actorType: participant}
 lines:
-  - type: call
-    from: Caller
-    to: Service
-    text: 'Request [Mermaid: Caller->>Service: Request]'
-    toArrow: fill
-    arrow: fill
+  - {type: call, from: Caller, to: Service, text: 'Request [Mermaid: Caller->>Service: Request]', toArrow: fill, arrow: fill}
+  - {type: return, from: Service, to: Caller, text: 'Response [Mermaid: Service-->>Caller: Response]', lineDash: [4, 2], toArrow: fill, arrow: fill}
   - type: return
     from: Service
     to: Caller
-    text: 'Response [Mermaid: Service-->>Caller: Response]'
-    lineDash:
-      - 4
-      - 2
-    toArrow: fill
-    arrow: fill
-  - type: return
-    from: Service
-    to: Caller
-    text: >-
-      Async-style open return [Mermaid: Service--)Caller: Async-style open
-      return]
-    lineDash:
-      - 4
-      - 2
+    text: 'Async-style open return [Mermaid: Service--)Caller: Async-style open return]'
+    lineDash: [4, 2]
     toArrow: open
     arrow: open
   - type: return
     from: Service
     to: Caller
     text: 'Failure return [Mermaid: Service--xCaller: Failure return]'
-    lineDash:
-      - 4
-      - 2
+    lineDash: [4, 2]
     toArrow: cross
     arrow: cross
   - type: return
     from: Service
     to: Caller
-    text: >-
-      Completion without arrow [Mermaid: Service-->Caller: Completion without
-      arrow]
-    lineDash:
-      - 4
-      - 2
+    text: 'Completion without arrow [Mermaid: Service-->Caller: Completion without arrow]'
+    lineDash: [4, 2]
     arrow: none
 description:
-  - >-
-    Demonstrates solid Mermaid messages mapping to sequencer calls and dotted
-    Mermaid messages mapping to sequencer returns.
+  - Demonstrates solid Mermaid messages mapping to sequencer calls and dotted Mermaid messages mapping to sequencer returns.
   - 'From the project root, regenerate this Mermaid transform and SVG with:'
-  - >-
-    node sequencer.js --mermaid -i
-    test/mermaid-features/08-return-semantics/input.mmd -o -f -t
-    test/mermaid-features/08-return-semantics
+  - node sequencer.js --mermaid -i test/mermaid-features/08-return-semantics/input.mmd -o -f -t test/mermaid-features/08-return-semantics

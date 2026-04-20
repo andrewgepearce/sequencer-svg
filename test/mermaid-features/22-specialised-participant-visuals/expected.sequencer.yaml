@@ -1,65 +1,27 @@
 title: Mermaid specialised participant visuals
 version: '1.0'
 actors:
-  - name: Human operator
-    alias: User
-    actorType: actor
-    bgColour: 'rgb(255,232,204)'
-  - name: External boundary
-    alias: Edge
-    actorType: boundary
-    bgColour: 'rgb(196,232,255)'
-  - name: Flow controller
-    alias: FlowController
-    actorType: control
-    bgColour: 'rgb(255,244,179)'
-  - name: Order entity
-    alias: OrderEntity
-    actorType: entity
-    bgColour: 'rgb(220,255,214)'
-  - name: Primary store
-    alias: DB
-    actorType: database
-    bgColour: 'rgb(255,221,234)'
-  - name: Collections store
-    alias: CollectionsNode
-    actorType: collections
-    bgColour: 'rgb(226,220,255)'
-  - name: Job queue
-    alias: JobQueue
-    actorType: queue
-    bgColour: 'rgb(255,235,186)'
+  - {name: Human operator, alias: User, actorType: actor, bgColour: 'rgb(255,232,204)'}
+  - {name: External boundary, alias: Edge, actorType: boundary, bgColour: 'rgb(196,232,255)'}
+  - {name: Flow controller, alias: FlowController, actorType: control, bgColour: 'rgb(255,244,179)'}
+  - {name: Order entity, alias: OrderEntity, actorType: entity, bgColour: 'rgb(220,255,214)'}
+  - {name: Primary store, alias: DB, actorType: database, bgColour: 'rgb(255,221,234)'}
+  - {name: Collections store, alias: CollectionsNode, actorType: collections, bgColour: 'rgb(226,220,255)'}
+  - {name: Job queue, alias: JobQueue, actorType: queue, bgColour: 'rgb(255,235,186)'}
 lines:
-  - type: call
-    from: User
-    to: Edge
-    text: 'Start request [Mermaid: User->>Edge: Start request]'
-    toArrow: fill
-    arrow: fill
-  - type: call
-    from: Edge
-    to: FlowController
-    text: 'Route request [Mermaid: Edge->>FlowController: Route request]'
-    toArrow: fill
-    arrow: fill
+  - {type: call, from: User, to: Edge, text: 'Start request [Mermaid: User->>Edge: Start request]', toArrow: fill, arrow: fill}
+  - {type: call, from: Edge, to: FlowController, text: 'Route request [Mermaid: Edge->>FlowController: Route request]', toArrow: fill, arrow: fill}
   - type: call
     from: FlowController
     to: OrderEntity
     text: 'Load aggregate [Mermaid: FlowController->>OrderEntity: Load aggregate]'
     toArrow: fill
     arrow: fill
-  - type: call
-    from: FlowController
-    to: DB
-    text: 'Read persistence [Mermaid: FlowController->>DB: Read persistence]'
-    toArrow: fill
-    arrow: fill
+  - {type: call, from: FlowController, to: DB, text: 'Read persistence [Mermaid: FlowController->>DB: Read persistence]', toArrow: fill, arrow: fill}
   - type: call
     from: FlowController
     to: CollectionsNode
-    text: >-
-      Gather related rows [Mermaid: FlowController->>CollectionsNode: Gather
-      related rows]
+    text: 'Gather related rows [Mermaid: FlowController->>CollectionsNode: Gather related rows]'
     toArrow: fill
     arrow: fill
   - type: call
@@ -69,11 +31,8 @@ lines:
     toArrow: fill
     arrow: fill
 description:
-  - >-
-    Demonstrates specialised Mermaid participant kinds rendered with distinct
-    header icons.
+  - Demonstrates specialised Mermaid participant kinds rendered with distinct header icons.
   - 'From the project root, regenerate this Mermaid transform and SVG with:'
   - >-
-    node sequencer.js --mermaid -i
-    test/mermaid-features/22-specialised-participant-visuals/input.mmd -o -f -t
+    node sequencer.js --mermaid -i test/mermaid-features/22-specialised-participant-visuals/input.mmd -o -f -t
     test/mermaid-features/22-specialised-participant-visuals

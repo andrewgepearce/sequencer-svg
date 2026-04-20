@@ -1,43 +1,16 @@
 title: Input
 version: '1.0'
 actors:
-  - name: Caller
-    alias: Caller
-    actorType: participant
-  - name: Service
-    alias: Service
-    actorType: participant
-  - name: DB
-    alias: DB
-    actorType: participant
-  - name: Audit
-    alias: Audit
-    actorType: participant
+  - {name: Caller, alias: Caller, actorType: participant}
+  - {name: Service, alias: Service, actorType: participant}
+  - {name: DB, alias: DB, actorType: participant}
+  - {name: Audit, alias: Audit, actorType: participant}
 lines:
+  - {type: blank, height: 0, comment: 'Left note [Mermaid: Note left of Caller: Left note]', actor: Caller}
+  - {type: blank, height: 0, comment: 'Right note [Mermaid: Note right of Service: Right note]', actor: Service}
+  - {type: blank, height: 0, comment: 'Single actor note [Mermaid: Note over DB: Single actor note]', actor: DB}
   - type: blank
     height: 0
-    comment: 'Left note [Mermaid: Note left of Caller: Left note]'
-    actor: Caller
-  - type: blank
-    height: 0
-    comment: 'Right note [Mermaid: Note right of Service: Right note]'
-    actor: Service
-  - type: blank
-    height: 0
-    comment: 'Single actor note [Mermaid: Note over DB: Single actor note]'
-    actor: DB
-  - type: blank
-    height: 0
-    comment:
-      - >-
-        Shared note line 1 [Mermaid: Note over Caller,Service: Shared note line
-        1
-      - 'Shared note line 2]'
-      - Shared note line 2
-    actors:
-      - Caller
-      - Service
-  - type: blank
-    height: 0
-    comment: 'Implicit actor note [Mermaid: Note over Audit: Implicit actor note]'
-    actor: Audit
+    comment: ['Shared note line 1 [Mermaid: Note over Caller,Service: Shared note line 1', 'Shared note line 2]', Shared note line 2]
+    actors: [Caller, Service]
+  - {type: blank, height: 0, comment: 'Implicit actor note [Mermaid: Note over Audit: Implicit actor note]', actor: Audit}

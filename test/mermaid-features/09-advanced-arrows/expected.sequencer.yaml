@@ -1,94 +1,51 @@
 title: Mermaid advanced arrows
 version: '1.0'
 actors:
-  - name: Caller
-    alias: Caller
-    actorType: participant
-  - name: Service
-    alias: Service
-    actorType: participant
+  - {name: Caller, alias: Caller, actorType: participant}
+  - {name: Service, alias: Service, actorType: participant}
 lines:
-  - type: call
-    from: Caller
-    to: Service
-    text: 'Bidirectional filled [Mermaid: Caller<<->>Service]'
-    fromArrow: fill
-    toArrow: fill
-    arrow: fill
+  - {type: call, from: Caller, to: Service, text: 'Bidirectional filled [Mermaid: Caller<<->>Service]', fromArrow: fill, toArrow: fill, arrow: fill}
   - type: return
     from: Service
     to: Caller
     text: 'Bidirectional dotted filled [Mermaid: Service<<-->>Caller]'
-    lineDash:
-      - 4
-      - 2
+    lineDash: [4, 2]
     fromArrow: fill
     toArrow: fill
     arrow: fill
-  - type: call
-    from: Caller
-    to: Service
-    text: 'Top half end [Mermaid: Caller-|\Service]'
-    toArrow: halfTop
-    arrow: halfTop
+  - {type: call, from: Caller, to: Service, text: 'Top half end [Mermaid: Caller-|\Service]', toArrow: halfTop, arrow: halfTop}
   - type: return
     from: Service
     to: Caller
     text: 'Dotted bottom half end [Mermaid: Service--|/Caller]'
-    lineDash:
-      - 4
-      - 2
+    lineDash: [4, 2]
     toArrow: halfBottom
     arrow: halfBottom
-  - type: call
-    from: Caller
-    to: Service
-    text: 'Reverse top half [Mermaid: Caller/|-Service]'
-    fromArrow: halfTop
+  - {type: call, from: Caller, to: Service, text: 'Reverse top half [Mermaid: Caller/|-Service]', fromArrow: halfTop}
   - type: return
     from: Service
     to: Caller
     text: 'Dotted reverse bottom half [Mermaid: Service\|--Caller]'
-    lineDash:
-      - 4
-      - 2
+    lineDash: [4, 2]
     fromArrow: halfBottom
     arrow: none
-  - type: call
-    from: Caller
-    to: Service
-    text: 'Top stick end [Mermaid: Caller-\Service]'
-    toArrow: stickTop
-    arrow: stickTop
+  - {type: call, from: Caller, to: Service, text: 'Top stick end [Mermaid: Caller-\Service]', toArrow: stickTop, arrow: stickTop}
   - type: return
     from: Service
     to: Caller
     text: 'Dotted bottom stick end [Mermaid: Service--//Caller]'
-    lineDash:
-      - 4
-      - 2
+    lineDash: [4, 2]
     toArrow: stickBottom
     arrow: stickBottom
-  - type: call
-    from: Caller
-    to: Service
-    text: 'Reverse top stick [Mermaid: Caller//-Service]'
-    fromArrow: stickTop
+  - {type: call, from: Caller, to: Service, text: 'Reverse top stick [Mermaid: Caller//-Service]', fromArrow: stickTop}
   - type: return
     from: Service
     to: Caller
     text: 'Dotted reverse bottom stick [Mermaid: Service\\--Caller]'
-    lineDash:
-      - 4
-      - 2
+    lineDash: [4, 2]
     fromArrow: stickBottom
     arrow: none
 description:
-  - >-
-    Demonstrates Mermaid bidirectional arrows and half-arrow variants mapped
-    onto sequencer endpoint arrows.
+  - Demonstrates Mermaid bidirectional arrows and half-arrow variants mapped onto sequencer endpoint arrows.
   - 'From the project root, regenerate this Mermaid transform and SVG with:'
-  - >-
-    node sequencer.js --mermaid -i
-    test/mermaid-features/09-advanced-arrows/input.mmd -o -f -t
-    test/mermaid-features/09-advanced-arrows
+  - node sequencer.js --mermaid -i test/mermaid-features/09-advanced-arrows/input.mmd -o -f -t test/mermaid-features/09-advanced-arrows

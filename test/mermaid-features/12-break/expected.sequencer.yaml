@@ -1,52 +1,20 @@
 title: Mermaid break fragments
 version: '1.0'
 actors:
-  - name: Caller
-    alias: Caller
-    actorType: participant
-  - name: Service
-    alias: Service
-    actorType: participant
-  - name: DB
-    alias: DB
-    actorType: participant
+  - {name: Caller, alias: Caller, actorType: participant}
+  - {name: Service, alias: Service, actorType: participant}
+  - {name: DB, alias: DB, actorType: participant}
 lines:
-  - type: call
-    from: Caller
-    to: Service
-    text: 'Submit request [Mermaid: Caller->>Service: Submit request]'
-    toArrow: fill
-    arrow: fill
+  - {type: call, from: Caller, to: Service, text: 'Submit request [Mermaid: Caller->>Service: Submit request]', toArrow: fill, arrow: fill}
   - type: fragment
     fragmentType: break
     title: ''
     condition: 'Validation failed [Mermaid: break Validation failed]'
     lines:
-      - type: call
-        from: Service
-        to: Caller
-        text: >-
-          Return validation error [Mermaid: Service->>Caller: Return validation
-          error]
-        toArrow: fill
-        arrow: fill
-      - type: call
-        from: Service
-        to: DB
-        text: 'Record failed attempt [Mermaid: Service->>DB: Record failed attempt]'
-        toArrow: fill
-        arrow: fill
-  - type: call
-    from: Caller
-    to: Service
-    text: >-
-      Continue outer narrative [Mermaid: Caller->>Service: Continue outer
-      narrative]
-    toArrow: fill
-    arrow: fill
+      - {type: call, from: Service, to: Caller, text: 'Return validation error [Mermaid: Service->>Caller: Return validation error]', toArrow: fill, arrow: fill}
+      - {type: call, from: Service, to: DB, text: 'Record failed attempt [Mermaid: Service->>DB: Record failed attempt]', toArrow: fill, arrow: fill}
+  - {type: call, from: Caller, to: Service, text: 'Continue outer narrative [Mermaid: Caller->>Service: Continue outer narrative]', toArrow: fill, arrow: fill}
 description:
   - Demonstrates Mermaid break fragments mapped onto sequencer fragment regions.
   - 'From the project root, regenerate this Mermaid transform and SVG with:'
-  - >-
-    node sequencer.js --mermaid -i test/mermaid-features/12-break/input.mmd -o
-    -f -t test/mermaid-features/12-break
+  - node sequencer.js --mermaid -i test/mermaid-features/12-break/input.mmd -o -f -t test/mermaid-features/12-break

@@ -5,6 +5,7 @@ const { execFileSync } = require("child_process");
 
 const yaml = require("js-yaml");
 
+const { ReadableYamlFormatter } = require("../../ReadableYamlFormatter.js");
 const { MermaidSequenceTransformer } = require("../../MermaidSequenceTransformer.js");
 
 //////////////////////////////////////////////////////////////////////////////
@@ -84,7 +85,7 @@ describe("Mermaid feature slice 19: box actor groups", () => {
 
 		const transformed = MermaidSequenceTransformer.transform(source, { sourceName: getFixturePath("input.mmd") });
 
-		expect(yaml.safeDump(transformed)).toBe(expectedYaml);
+		expect(ReadableYamlFormatter.format(transformed)).toBe(expectedYaml);
 		expect(transformed.actorGroups).toHaveLength(3);
 		expect(transformed.actorGroups[0].title).toBe("Client tier");
 		expect(transformed.actorGroups[0].bgColour).toBe("Aqua");

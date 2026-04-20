@@ -1,34 +1,12 @@
 title: Mermaid create header placement
 version: '1.0'
 actors:
-  - name: Caller
-    alias: Caller
-    actorType: participant
-  - name: Worker
-    alias: Worker
-    actorType: participant
+  - {name: Caller, alias: Caller, actorType: participant}
+  - {name: Worker, alias: Worker, actorType: participant}
 lines:
-  - type: create
-    from: Caller
-    to: Worker
-    text: 'Create worker [Mermaid: Caller->>Worker: Create worker]'
-    toArrow: fill
-    arrow: fill
-  - type: return
-    from: Worker
-    to: Caller
-    text: 'Ready [Mermaid: Worker-->>Caller: Ready]'
-    lineDash:
-      - 4
-      - 2
-    toArrow: fill
-    arrow: fill
+  - {type: create, from: Caller, to: Worker, text: 'Create worker [Mermaid: Caller->>Worker: Create worker]', toArrow: fill, arrow: fill}
+  - {type: return, from: Worker, to: Caller, text: 'Ready [Mermaid: Worker-->>Caller: Ready]', lineDash: [4, 2], toArrow: fill, arrow: fill}
 description:
-  - >-
-    Demonstrates delayed actor header placement when the first lifecycle event
-    is create.
+  - Demonstrates delayed actor header placement when the first lifecycle event is create.
   - 'From the project root, regenerate this Mermaid transform and SVG with:'
-  - >-
-    node sequencer.js --mermaid -i
-    test/mermaid-features/18-create-header-placement/input.mmd -o -f -t
-    test/mermaid-features/18-create-header-placement
+  - node sequencer.js --mermaid -i test/mermaid-features/18-create-header-placement/input.mmd -o -f -t test/mermaid-features/18-create-header-placement

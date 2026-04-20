@@ -5,6 +5,7 @@ const { execFileSync } = require("child_process");
 
 const yaml = require("js-yaml");
 
+const { ReadableYamlFormatter } = require("../../ReadableYamlFormatter.js");
 const { MermaidSequenceTransformer } = require("../../MermaidSequenceTransformer.js");
 
 function readFixture(fileName) {
@@ -25,12 +26,11 @@ describe("Mermaid feature slice 26: comment pass-through", () => {
 		const transformed = MermaidSequenceTransformer.transform(source, { sourceName: getFixturePath("input.mmd") });
 		const expectedParsedYaml = yaml.safeLoad(readFixture("expected.sequencer.yaml"));
 
+		expect(ReadableYamlFormatter.format(transformed)).toBe(readFixture("expected.sequencer.yaml"));
 		expect(yaml.safeDump(transformed)).toBe(yaml.safeDump(expectedParsedYaml));
-		expect(transformed.__mermaidComments).toEqual([
-			{ lineNumber: 8, text: "Diagram overview" },
-			{ lineNumber: 11, text: "Request comment" },
-			{ lineNumber: 13, text: "Response comment" },
-		]);
+		expect(transformed.actors[0].__yamlLeadingComments).toEqual(["[Mermaid source line 8] Diagram overview"]);
+		expect(transformed.lines[0].__yamlLeadingComments).toEqual(["[Mermaid source line 11] Request comment"]);
+		expect(transformed.lines[1].__yamlLeadingComments).toEqual(["[Mermaid source line 13] Response comment"]);
 	});
 
 	test("renders SVG from Mermaid input and writes transformed YAML with source comments preserved as YAML comments", () => {

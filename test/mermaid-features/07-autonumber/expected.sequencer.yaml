@@ -1,32 +1,13 @@
 title: Mermaid autonumber
 version: '1.0'
 actors:
-  - name: Caller
-    alias: Caller
-    actorType: participant
-  - name: Service
-    alias: Service
-    actorType: participant
+  - {name: Caller, alias: Caller, actorType: participant}
+  - {name: Service, alias: Service, actorType: participant}
 lines:
-  - type: call
-    from: Caller
-    to: Service
-    text: Ping
-    toArrow: fill
-    arrow: fill
-  - type: call
-    from: Service
-    to: Caller
-    text: Pong
-    toArrow: fill
-    arrow: fill
+  - {type: call, from: Caller, to: Service, text: Ping, toArrow: fill, arrow: fill}
+  - {type: call, from: Service, to: Caller, text: Pong, toArrow: fill, arrow: fill}
 description:
-  - >-
-    Demonstrates Mermaid autonumber mapped onto the sequencer autonumber
-    document flag.
+  - Demonstrates Mermaid autonumber mapped onto the sequencer autonumber document flag.
   - 'From the project root, regenerate this Mermaid transform and SVG with:'
-  - >-
-    <code>node sequencer.js --mermaid -i
-    test/mermaid-features/07-autonumber/input.mmd -o -f -t
-    test/mermaid-features/07-autonumber
+  - <code>node sequencer.js --mermaid -i test/mermaid-features/07-autonumber/input.mmd -o -f -t test/mermaid-features/07-autonumber
 autonumber: true
