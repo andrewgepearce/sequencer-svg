@@ -75,6 +75,9 @@ describe("Mermaid feature slice 10: parallel fragments", () => {
 		});
 
 		expect(fs.readFileSync(path.join(tempDir, "input.sequencer.yaml"), "utf8")).toBe(expectedYaml);
-		expect(fs.readFileSync(path.join(tempDir, "input.svg"), "utf8")).toBe(expectedSvg);
+		const actualSvg = fs.readFileSync(path.join(tempDir, "input.svg"), "utf8");
+
+		expect(actualSvg).toBe(expectedSvg);
+		expect(actualSvg).toContain('d="M 33 246 L 33 274 L 72 274 L 82 264 L 82 246 L 33 246"');
 	});
 });

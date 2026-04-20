@@ -188,6 +188,52 @@ function getRectNestedInsetPx(working) {
 		: 10;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * Draw the inset parallel-marker lines inside a fragment title tab.
+ *
+ * @param {*} ctx Render context.
+ * @param {number} fragmentStartX Left edge of the title tab.
+ * @param {number} fragmentTop Top edge of the title tab.
+ * @param {*} textxy Measured title text bounds.
+ * @param {number} offset Diagonal tab offset.
+ * @param {string} borderColour Stroke colour for the marker.
+ * @param {number} borderWidth Stroke width for the marker.
+ * @param {Array<number>} borderDash Border dash pattern for the marker.
+ * @param {*} mimic Whether this is a measurement-only render pass.
+ * @returns {void} Nothing.
+ * @example
+ * drawParallelTitleMarker(ctx, 30, 200, { x: 65, y: 224 }, 10, "rgb(0,0,0)", 1, [], false);
+ */
+function drawParallelTitleMarker(ctx, fragmentStartX, fragmentTop, textxy, offset, borderColour, borderWidth, borderDash, mimic) {
+	if (mimic === true || !Utilities.isObject(textxy) || !Utilities.isNumber(textxy.x) || !Utilities.isNumber(textxy.y)) {
+		return;
+	}
+
+	const inset = Math.max(3, Math.round(borderWidth) + 2);
+	const innerLeft = fragmentStartX + inset;
+	const innerTop = fragmentTop + inset;
+	const innerBottom = textxy.y - inset;
+	const innerRight = textxy.x - inset;
+	const diagonalX = textxy.x + offset - inset;
+	const diagonalY = textxy.y - offset - inset;
+	if (innerBottom <= innerTop || innerRight <= innerLeft || diagonalX <= innerRight || diagonalY < innerTop) {
+		return;
+	}
+
+	ctx.beginPath();
+	ctx.moveTo(innerLeft, innerTop);
+	ctx.lineTo(innerLeft, innerBottom);
+	ctx.lineTo(innerRight, innerBottom);
+	ctx.lineTo(diagonalX, diagonalY);
+	ctx.lineTo(diagonalX, innerTop);
+	ctx.lineTo(innerLeft, innerTop);
+	ctx.setLineDash(borderDash);
+	ctx.lineWidth = borderWidth;
+	ctx.strokeStyle = borderColour;
+	ctx.stroke();
+}
+
 module.exports = class Fragment {
 	///////////////////////////////////////////////////////////////////////////////
 	/**
@@ -343,6 +389,11 @@ module.exports = class Fragment {
 		}
 
 		//////////////////////////////////////////////////////////////////////////////
+		// Get fragment type early so later rendering can apply any type-specific
+		// geometry treatment without changing the fragment model.
+		let type = Utilities.isString(this._line.fragmentType) ? this._line.fragmentType : "";
+
+		//////////////////////////////////////////////////////////////////////////////
 		// Get the fragment colour
 		this._colour = Utilities.validColour(this._line.bgColour)
 			? this._line.bgColour
@@ -412,8 +463,7 @@ module.exports = class Fragment {
 				: 1;
 
 		//////////////////////////////////////////////////////////////////////////////
-		// Get fragment type
-		let type = Utilities.isString(this._line.fragmentType) ? this._line.fragmentType : "";
+		// Resolve rect-specific behaviour.
 		const isRectHighlight = type === "rect";
 		if (!isRectHighlight && !Utilities.validColour(this._line.bgColour) && getLastActiveRectHighlight(working) != null) {
 			this._colour = "rgba(255,255,255,0)";
@@ -462,6 +512,9 @@ module.exports = class Fragment {
 					Fragment.getDefaultConditionTmd()
 			  );
 		conditionTmd.bgColour = "rgba(255,255,255,0)";
+		if (type === "par") {
+			titleTmd.padding = titleTmd.padding + 10;
+		}
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Calculate height of fragment start line
@@ -654,6 +707,19 @@ module.exports = class Fragment {
 			ctx.lineWidth = this._borderWidth;
 			ctx.strokeStyle = this._borderColour;
 			ctx.stroke();
+			if (type === "par") {
+				drawParallelTitleMarker(
+					ctx,
+					fragmentStartX,
+					fragmentTop,
+					textxy,
+					offset,
+					this._borderColour,
+					this._borderWidth,
+					this._borderDash,
+					mimic
+				);
+			}
 		}
 
 		//////////////////////////////////////////////////////////////////////////////
