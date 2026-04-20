@@ -224,7 +224,7 @@ function buildInputDocument(data, sourceName) {
 		try {
 			const jsono = MermaidSequenceTransformer.transform(data, { sourceName: sourceName });
 			jsonstr = JSON.stringify(jsono, null, 3);
-			yamlstr = yaml.safeDump(jsono);
+			yamlstr = formatMermaidYamlOutput(jsono);
 			return jsono;
 		} catch (error) {
 			if (error instanceof MermaidTransformError) {
@@ -285,6 +285,36 @@ function formatMermaidSourceLine(sourceLine) {
 
 	const trimmed = sourceLine.trim();
 	return trimmed.length > 0 ? trimmed : "(blank line)";
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Format transformed Mermaid output as sequencer YAML, preserving Mermaid
+ * source comments as YAML header comments when present.
+ *
+ * @param {object} document Transformed sequencer document.
+ * @returns {string} YAML output string.
+ * @example
+ * const yamlText = formatMermaidYamlOutput(document);
+ */
+function formatMermaidYamlOutput(document) {
+	const baseYaml = yaml.safeDump(document);
+	const sourceComments =
+		document && Array.isArray(document.__mermaidComments) ? document.__mermaidComments.filter((comment) => comment) : [];
+
+	if (sourceComments.length === 0) {
+		return baseYaml;
+	}
+
+	const headerLines = ["# Mermaid source comments:"];
+	sourceComments.forEach((comment) => {
+		const lineNumber = typeof comment.lineNumber === "number" ? comment.lineNumber : "?";
+		const text = typeof comment.text === "string" && comment.text.length > 0 ? comment.text : "(blank comment)";
+		headerLines.push(`# [${lineNumber}] ${text}`);
+	});
+	headerLines.push("");
+
+	return headerLines.join("\n") + baseYaml;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

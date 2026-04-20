@@ -1,0 +1,14 @@
+sequenceDiagram
+accTitle: Mermaid comment pass through
+accDescr {
+Demonstrates Mermaid %% comments preserved in generated sequencer YAML.
+From the project root, regenerate this Mermaid transform and SVG with:
+node sequencer.js --mermaid -i test/mermaid-features/26-comment-pass-through/input.mmd -o -f -t test/mermaid-features/26-comment-pass-through
+}
+%% Diagram overview
+participant API
+participant DB
+%% Request comment
+API->>DB: Fetch
+%% Response comment
+DB-->>API: OK

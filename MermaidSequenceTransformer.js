@@ -82,6 +82,7 @@ class MermaidSequenceTransformer {
 		};
 
 		const statements = this._collectStatements(source, document);
+		const mermaidComments = statements.__mermaidComments;
 		const parsedDocument = this._parseStructuredLines(
 			statements,
 			0,
@@ -104,6 +105,15 @@ class MermaidSequenceTransformer {
 			);
 		}
 
+		if (Array.isArray(mermaidComments) && mermaidComments.length > 0) {
+			Object.defineProperty(document, "__mermaidComments", {
+				value: mermaidComments.map((comment) => ({ lineNumber: comment.lineNumber, text: comment.text })),
+				enumerable: false,
+				configurable: true,
+				writable: true,
+			});
+		}
+
 		return document;
 	}
 
@@ -120,6 +130,7 @@ class MermaidSequenceTransformer {
 	 */
 	static _collectStatements(source, document) {
 		const statements = [];
+		const mermaidComments = [];
 		const lines = source.replace(/^\uFEFF/, "").split(/\r?\n/);
 		let seenSequenceDiagram = false;
 		let insideDirective = false;
@@ -150,6 +161,10 @@ class MermaidSequenceTransformer {
 			}
 
 			if (trimmed.startsWith("%%")) {
+				mermaidComments.push({
+					lineNumber: lineNumber,
+					text: this._normaliseMermaidCommentText(trimmed),
+				});
 				continue;
 			}
 
@@ -216,7 +231,32 @@ class MermaidSequenceTransformer {
 			throw new MermaidTransformError("Unterminated Mermaid accDescr block");
 		}
 
+		Object.defineProperty(statements, "__mermaidComments", {
+			value: mermaidComments,
+			enumerable: false,
+			configurable: true,
+			writable: true,
+		});
+
 		return statements;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Convert a Mermaid `%%` comment line into plain pass-through text.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line beginning with `%%`.
+	 * @returns {string} Plain comment text.
+	 * @example
+	 * const text = MermaidSequenceTransformer._normaliseMermaidCommentText("%% Comment");
+	 */
+	static _normaliseMermaidCommentText(trimmed) {
+		if (typeof trimmed !== "string") {
+			return "";
+		}
+
+		const withoutPrefix = trimmed.replace(/^%%\s?/, "");
+		return withoutPrefix.trim();
 	}
 
 	////////////////////////////////////////////////////////////////////////////

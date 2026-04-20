@@ -1,0 +1,36 @@
+# Mermaid source comments:
+# [8] Diagram overview
+# [11] Request comment
+# [13] Response comment
+title: Mermaid comment pass through
+version: '1.0'
+actors:
+  - name: API
+    alias: API
+    actorType: participant
+  - name: DB
+    alias: DB
+    actorType: participant
+lines:
+  - type: call
+    from: API
+    to: DB
+    text: Fetch
+    toArrow: fill
+    arrow: fill
+  - type: return
+    from: DB
+    to: API
+    text: OK
+    lineDash:
+      - 4
+      - 2
+    toArrow: fill
+    arrow: fill
+description:
+  - Demonstrates Mermaid %% comments preserved in generated sequencer YAML.
+  - 'From the project root, regenerate this Mermaid transform and SVG with:'
+  - >-
+    node sequencer.js --mermaid -i
+    test/mermaid-features/26-comment-pass-through/input.mmd -o -f -t
+    test/mermaid-features/26-comment-pass-through
