@@ -47,10 +47,10 @@ node sequencer.js --mermaid -i test/mermaid-features/11-critical-regions/input.m
   <path d="M 914.5 213 L 914.5 291" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 243 L 30 291 L 1240 291 L 1240 243 L 30 243" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 243 L 30 291 M 1240 291 L 1240 243 L 30 243" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 30 243 L 30 267 L 84 267 L 94 257 L 94 243 L 30 243" fill="rgba(200,200,0,0.8)" stroke="none"/>
-  <path d="M 30 243 L 30 267 L 84 267 L 94 257 L 94 243 L 30 243" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="35" y="262" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">critical </text>
-  <text x="35" y="284" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" xml:space="preserve" dominant-baseline="auto">Required update [Mermaid: critical Required update]</text>
+  <path d="M 30 243 L 30 268 L 85 268 L 95 258 L 95 243 L 30 243" fill="rgba(200,200,0,0.8)" stroke="none"/>
+  <path d="M 30 243 L 30 268 L 85 268 L 95 258 L 95 243 L 30 243" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2"/>
+  <text x="35.5" y="262.5" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">critical </text>
+  <text x="35" y="285" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" xml:space="preserve" dominant-baseline="auto">Required update [Mermaid: critical Required update]</text>
   <path d="M 123 291 M 123 375" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 395.5 291 M 395.5 375" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 657 291 M 657 375" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>

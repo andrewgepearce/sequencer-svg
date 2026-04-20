@@ -75,6 +75,9 @@ describe("Mermaid feature slice 11: critical regions", () => {
 		});
 
 		expect(fs.readFileSync(path.join(tempDir, "input.sequencer.yaml"), "utf8")).toBe(expectedYaml);
-		expect(fs.readFileSync(path.join(tempDir, "input.svg"), "utf8")).toBe(expectedSvg);
+		const actualSvg = fs.readFileSync(path.join(tempDir, "input.svg"), "utf8");
+
+		expect(actualSvg).toBe(expectedSvg);
+		expect(actualSvg).toContain('d="M 30 243 L 30 268 L 85 268 L 95 258 L 95 243 L 30 243" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2"');
 	});
 });

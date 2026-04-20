@@ -514,6 +514,8 @@ module.exports = class Fragment {
 		conditionTmd.bgColour = "rgba(255,255,255,0)";
 		if (type === "par") {
 			titleTmd.padding = titleTmd.padding + 10;
+		} else if (type === "critical") {
+			titleTmd.padding = titleTmd.padding + 1;
 		}
 
 		//////////////////////////////////////////////////////////////////////////////
@@ -692,6 +694,7 @@ module.exports = class Fragment {
 		// 4. Type and Title rectangle
 		if (!isRectHighlight || showRectHeader) {
 			let offset = (textxy.y - fragmentTop) / 2;
+			const titleBorderWidth = type === "critical" ? this._borderWidth + 1 : this._borderWidth;
 			if (offset > 10) offset = 10;
 			if (offset < 0) offset = 0;
 			ctx.beginPath();
@@ -704,7 +707,7 @@ module.exports = class Fragment {
 			ctx.fillStyle = titleBgColour;
 			ctx.fill();
 			ctx.setLineDash(this._borderDash);
-			ctx.lineWidth = this._borderWidth;
+			ctx.lineWidth = titleBorderWidth;
 			ctx.strokeStyle = this._borderColour;
 			ctx.stroke();
 			if (type === "par") {
@@ -715,7 +718,7 @@ module.exports = class Fragment {
 					textxy,
 					offset,
 					this._borderColour,
-					this._borderWidth,
+					titleBorderWidth,
 					this._borderDash,
 					mimic
 				);
