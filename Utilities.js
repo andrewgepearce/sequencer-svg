@@ -16,6 +16,41 @@
 module.exports = class Utilities {
 	///////////////////////////////////////////////////////////////////////////////
 	/**
+	 * Return the built-in text tag aliases supported by the renderer.
+	 *
+	 * @returns {string[]} Built-in tag replacement entries.
+	 * @example
+	 * const tags = Utilities.getBuiltInTags();
+	 */
+	static getBuiltInTags() {
+		return [
+			"<code>=<rgb(0,0,180)><font=monospace>",
+			"</code>=</font></rgb>",
+			"<comment>=<rgb(30,30,30)><i>",
+			"</comment>=</i></rgb>",
+			"<emph>=<i><b>",
+			"</emph>=</i></b>",
+			"<//>=<rgb(30,30,30)><i>// ",
+			"<///>=</i></rgb>",
+		];
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Combine user-defined tags with the built-in aliases.
+	 *
+	 * @param {*} tags Parameter derived from tags.
+	 * @returns {string[]} Resolved tag replacement entries.
+	 * @example
+	 * const tags = Utilities.resolveTags(["<code>=<b>"]);
+	 */
+	static resolveTags(tags) {
+		const userTags = Utilities.isAllStrings(tags) ? tags.slice() : [];
+		return userTags.concat(Utilities.getBuiltInTags());
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
 	 * Handle reduce string to fit width.
 	 *
 	 * @param {*} ctx Parameter derived from ctx.

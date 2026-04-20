@@ -1,0 +1,12 @@
+title: Built-in tag aliases
+version: '1.0'
+actors:
+  - {name: Client, alias: client}
+lines:
+  - type: blank
+    height: 0
+    comment:
+      - '<code>const x = 1</code>'
+      - '<comment>note text</comment>'
+      - '<emph>strong emphasis</emph>'
+      - '<//>shorthand comment<///>'

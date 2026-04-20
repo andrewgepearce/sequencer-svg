@@ -183,6 +183,17 @@ Font assets are stored under `fonts/`.
 
 If you add new font-family support, you must also add the matching bundled font files and update `fonts.js`.
 
+## Built-in Tag Aliases
+
+The renderer supports a small built-in set of text tag aliases without requiring `params.tags`:
+
+- `<code>` / `</code>`: blue monospace text
+- `<comment>` / `</comment>`: dark italic text
+- `<emph>` / `</emph>`: bold italic text
+- `<//>` / `<///>`: dark italic text prefixed with `// `
+
+`params.tags` still works for project-specific aliases, and user-defined entries take precedence over these built-in aliases when the names collide.
+
 ## Development Notes
 
 This codebase intentionally preserves much of the original drawing model by using a Canvas-like shim in `SvgContext.js`. That keeps the rendering logic close to the original behaviour while allowing SVG output.

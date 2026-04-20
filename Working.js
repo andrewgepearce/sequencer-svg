@@ -552,7 +552,7 @@ module.exports = class Working {
 		this._resolvedActorGroupRuns = this._resolveActorGroupRuns();
 		this._autonumber = this.postdata.autonumber === false ? false : true;
 		this._actorLifecycleState = this._buildActorLifecycleState();
-		this._tags = Utilities.isAllStrings(this.postdata.params.tags) ? this.postdata.params.tags : [];
+		this._tags = Utilities.resolveTags(this.postdata.params.tags);
 		if (this.tags.length > 0) {
 			this.logDebug("Using tags array of " + this.tags);
 		}

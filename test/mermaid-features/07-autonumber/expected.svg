@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="995" height="445" viewBox="0 0 995 445">
+<svg xmlns="http://www.w3.org/2000/svg" width="1183" height="445" viewBox="0 0 1183 445">
   <title>Mermaid autonumber</title>
   <desc>Demonstrates Mermaid autonumber mapped onto the sequencer autonumber document flag.
 From the project root, regenerate this Mermaid transform and SVG with:
 &lt;code&gt;node sequencer.js --mermaid -i test/mermaid-features/07-autonumber/input.mmd -o -f -t test/mermaid-features/07-autonumber</desc>
   <rect width="100%" height="100%" fill="white"/>
-  <path d="M 0 0 L 0 435 L 985 435 L 985 0 L 0 0" fill="rgb(255, 255, 255)" stroke="none"/>
+  <path d="M 0 0 L 0 435 L 1173 435 L 1173 0 L 0 0" fill="rgb(255, 255, 255)" stroke="none"/>
   <path d="M 30 30 L 30 57 L 212 57 L 212 30 L 30 30" fill="rgba(0,0,0,0)" stroke="none"/>
   <text x="35" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Title:</text>
   <text x="68.44" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
@@ -14,13 +14,12 @@ From the project root, regenerate this Mermaid transform and SVG with:
   <text x="35" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Version:</text>
   <text x="91.01" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
   <text x="94.9" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1.0</text>
-  <path d="M 30 84 L 30 145 L 955 145 L 955 84 L 30 84" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 30 84 L 30 145 L 1143 145 L 1143 84 L 30 84" fill="rgba(0,0,0,0)" stroke="none"/>
   <text x="35" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Description:</text>
   <text x="116.68" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
   <text x="120.57" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Demonstrates Mermaid autonumber mapped onto the sequencer autonumber document flag.</text>
   <text x="120.57" y="119.8" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">From the project root, regenerate this Mermaid transform and SVG with:</text>
-  <text x="120.57" y="136.6" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">&lt;code&gt;</text>
-  <text x="167.28" y="136.6" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">node sequencer.js --mermaid -i test/mermaid-features/07-autonumber/input.mmd -o -f -t test/mermaid-features/07-autonumber</text>
+  <text x="120.57" y="136.6" fill="rgb(0,0,180)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">node sequencer.js --mermaid -i test/mermaid-features/07-autonumber/input.mmd -o -f -t test/mermaid-features/07-autonumber</text>
   <path d="M 33 183 L 33 211 L 33 211 A 5 5 0 0 0 38 216 L 94 216 L 94 216 A 5 5 0 0 0 99 211 L 99 183 L 99 183 A 5 5 0 0 0 94 178 L 38 178 L 38 178 A 5 5 0 0 0 33 183" fill="rgb(210,210,210)" stroke="none"/>
   <path d="M 30 180 L 30 208 L 30 208 A 5 5 0 0 0 35 213 L 91 213 L 91 213 A 5 5 0 0 0 96 208 L 96 180 L 96 180 A 5 5 0 0 0 91 175 L 35 175 L 35 175 A 5 5 0 0 0 30 180" fill="rgb(204,255,153)" stroke="none"/>
   <path d="M 30 180 L 30 208 L 30 208 A 5 5 0 0 0 35 213 L 91 213 L 91 213 A 5 5 0 0 0 96 208 L 96 180 L 96 180 A 5 5 0 0 0 91 175 L 35 175 L 35 175 A 5 5 0 0 0 30 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
