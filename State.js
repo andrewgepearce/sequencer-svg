@@ -204,7 +204,7 @@ module.exports = class State {
 			fontFamily: "sans-serif",
 			fontSizePx: 14,
 			fgColour: "rgb(0,0,0)",
-			bgColour: "rgb(255,255,0)",
+			bgColour: "rgb(255,218,161)",
 			padding: 10,
 			spacing: 1,
 			align: "left",

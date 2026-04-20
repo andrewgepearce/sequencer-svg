@@ -36,7 +36,7 @@ let _gapToNext = {
 	type: "number",
 	description: "The gap in pixels between this actor and the following actor",
 	minimum: 0,
-	default: 200
+	default: 150
 };
 let _centerAlign = {
 	type: "string",
@@ -554,7 +554,7 @@ let schema = {
 			spacing: _spacing(1.1),
 			align: _centerAlign,
 			fgColour: _fgColour("rgb(0,0,0)"),
-			bgColour: _bgColour("rgb(204,255,153)"),
+				bgColour: _bgColour("rgb(95,183,224)"),
 			borderColour: _borderColour("rgb(0, 0, 0)"),
 			borderWidth: _borderWidth(1),
 			borderDash: _borderDash([])
@@ -634,7 +634,7 @@ let schema = {
 		decription: "Definition of an Call JSON object withing a Sequencer document",
 		type: "object",
 		properties: {
-			fontFamily: _fontFamily("sans-serif"),
+				fontFamily: _fontFamily("monospace"),
 			fontSizePx: _fontSizePx(14),
 			fgColour: _fgColour("rgb(0,0,0)"),
 			padding: _padding(20),
@@ -704,7 +704,7 @@ let schema = {
 		decription: "Definition of a create JSON object within a Sequencer document",
 		type: "object",
 		properties: {
-			fontFamily: _fontFamily("sans-serif"),
+				fontFamily: _fontFamily("monospace"),
 			fontSizePx: _fontSizePx(14),
 			fgColour: _fgColour("rgb(0,0,0)"),
 			padding: _padding(20),

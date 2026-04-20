@@ -21,69 +21,69 @@ node sequencer.js --mermaid -i test/mermaid-features/08-return-semantics/input.m
   <text x="120.57" y="119.8" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">From the project root, regenerate this Mermaid transform and SVG with:</text>
   <text x="120.57" y="136.6" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">node sequencer.js --mermaid -i test/mermaid-features/08-return-semantics/input.mmd -o -f -t test/mermaid-features/08-return-semantics</text>
   <path d="M 33 183 L 33 211 L 33 211 A 5 5 0 0 0 38 216 L 94 216 L 94 216 A 5 5 0 0 0 99 211 L 99 183 L 99 183 A 5 5 0 0 0 94 178 L 38 178 L 38 178 A 5 5 0 0 0 33 183" fill="rgb(210,210,210)" stroke="none"/>
-  <path d="M 30 180 L 30 208 L 30 208 A 5 5 0 0 0 35 213 L 91 213 L 91 213 A 5 5 0 0 0 96 208 L 96 180 L 96 180 A 5 5 0 0 0 91 175 L 35 175 L 35 175 A 5 5 0 0 0 30 180" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 30 180 L 30 208 L 30 208 A 5 5 0 0 0 35 213 L 91 213 L 91 213 A 5 5 0 0 0 96 208 L 96 180 L 96 180 A 5 5 0 0 0 91 175 L 35 175 L 35 175 A 5 5 0 0 0 30 180" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 30 180 L 30 208 L 30 208 A 5 5 0 0 0 35 213 L 91 213 L 91 213 A 5 5 0 0 0 96 208 L 96 180 L 96 180 A 5 5 0 0 0 91 175 L 35 175 L 35 175 A 5 5 0 0 0 30 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="39" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Caller</text>
-  <path d="M 299 183 L 299 211 L 299 211 A 5 5 0 0 0 304 216 L 373 216 L 373 216 A 5 5 0 0 0 378 211 L 378 183 L 378 183 A 5 5 0 0 0 373 178 L 304 178 L 304 178 A 5 5 0 0 0 299 183" fill="rgb(210,210,210)" stroke="none"/>
-  <path d="M 296 180 L 296 208 L 296 208 A 5 5 0 0 0 301 213 L 370 213 L 370 213 A 5 5 0 0 0 375 208 L 375 180 L 375 180 A 5 5 0 0 0 370 175 L 301 175 L 301 175 A 5 5 0 0 0 296 180" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 296 180 L 296 208 L 296 208 A 5 5 0 0 0 301 213 L 370 213 L 370 213 A 5 5 0 0 0 375 208 L 375 180 L 375 180 A 5 5 0 0 0 370 175 L 301 175 L 301 175 A 5 5 0 0 0 296 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="305" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Service</text>
+  <path d="M 249 183 L 249 211 L 249 211 A 5 5 0 0 0 254 216 L 323 216 L 323 216 A 5 5 0 0 0 328 211 L 328 183 L 328 183 A 5 5 0 0 0 323 178 L 254 178 L 254 178 A 5 5 0 0 0 249 183" fill="rgb(210,210,210)" stroke="none"/>
+  <path d="M 246 180 L 246 208 L 246 208 A 5 5 0 0 0 251 213 L 320 213 L 320 213 A 5 5 0 0 0 325 208 L 325 180 L 325 180 A 5 5 0 0 0 320 175 L 251 175 L 251 175 A 5 5 0 0 0 246 180" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 246 180 L 246 208 L 246 208 A 5 5 0 0 0 251 213 L 320 213 L 320 213 A 5 5 0 0 0 325 208 L 325 180 L 325 180 A 5 5 0 0 0 320 175 L 251 175 L 251 175 A 5 5 0 0 0 246 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="255" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Service</text>
   <path d="M 63 213 M 63 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 335.5 213 M 335.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 285.5 213 M 285.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 213 L 63 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 60.5 277 L 60.5 297 L 65.5 297 L 65.5 277 L 60.5 277" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 60.5 277 L 60.5 297 L 65.5 297 L 65.5 277 L 60.5 277" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 277 L 60.5 297 M 65.5 297 L 65.5 277 L 60.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 335.5 213 L 335.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 333 277 L 333 297 L 338 297 L 338 277 L 333 277" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 333 277 L 333 297 M 338 297 L 338 277 L 333 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="105.5" y="267" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Request [Mermaid: Caller-&gt;&gt;Service: Request]</text>
-  <path d="M 65.5 277 L 333 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 323 272 L 323 282 L 333 277" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 285.5 213 L 285.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 283 277 L 283 297 L 288 297 L 288 277 L 283 277" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 283 277 L 283 297 M 288 297 L 288 277 L 283 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="105.5" y="267" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Request [Mermaid: Caller-&gt;&gt;Service: Request]</text>
+  <path d="M 65.5 277 L 283 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 273 272 L 273 282 L 283 277" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 63 297 M 63 363" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 335.5 297 M 335.5 363" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 285.5 297 M 285.5 363" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 297 L 63 363" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 60.5 297 L 60.5 363 L 65.5 363 L 65.5 297 L 60.5 297" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 60.5 297 L 60.5 363 L 65.5 363 L 65.5 297 L 60.5 297" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 297 L 60.5 363 M 65.5 363 L 65.5 297 M 60.5 297" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 335.5 297 L 335.5 363" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 333 297 L 333 361 L 338 361 L 338 297 L 333 297" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 333 297 L 333 361 L 338 361 L 338 297 M 333 297" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="113" y="348.5" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Response [Mermaid: Service--&gt;&gt;Caller: Response]</text>
-  <path d="M 333 356 L 65.5 356" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
+  <path d="M 285.5 297 L 285.5 363" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 283 297 L 283 361 L 288 361 L 288 297 L 283 297" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 283 297 L 283 361 L 288 361 L 288 297 M 283 297" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="113" y="348.5" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Response [Mermaid: Service--&gt;&gt;Caller: Response]</text>
+  <path d="M 283 356 L 65.5 356" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
   <path d="M 65.5 356 L 75.5 351 L 75.5 361 L 65.5 356" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 63 363 M 63 429" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 335.5 363 M 335.5 429" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 285.5 363 M 285.5 429" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 363 L 63 429" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 60.5 363 L 60.5 429 L 65.5 429 L 65.5 363 L 60.5 363" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 60.5 363 L 60.5 429 L 65.5 429 L 65.5 363 L 60.5 363" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 363 L 60.5 429 M 65.5 429 L 65.5 363 M 60.5 363" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 335.5 363 L 335.5 429" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 333 417 L 333 427 L 338 427 L 338 417 L 333 417" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 333 417 L 333 427 L 338 427 L 338 417 L 333 417" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="113" y="414.5" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">3. Async-style open return [Mermaid: Service--)Caller: Async-style open return]</text>
-  <path d="M 333 422 L 65.5 422" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
+  <path d="M 285.5 363 L 285.5 429" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 283 417 L 283 427 L 288 427 L 288 417 L 283 417" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 283 417 L 283 427 L 288 427 L 288 417 L 283 417" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="113" y="414.5" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">3. Async-style open return [Mermaid: Service--)Caller: Async-style open return]</text>
+  <path d="M 283 422 L 65.5 422" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
   <path d="M 75.5 422 L 65.5 422 M 75.5 417 L 65.5 422 L 75.5 427" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 63 429 M 63 495" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 335.5 429 M 335.5 495" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 285.5 429 M 285.5 495" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 429 L 63 495" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 60.5 429 L 60.5 495 L 65.5 495 L 65.5 429 L 60.5 429" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 60.5 429 L 60.5 495 L 65.5 495 L 65.5 429 L 60.5 429" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 429 L 60.5 495 M 65.5 495 L 65.5 429 M 60.5 429" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 335.5 429 L 335.5 495" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 333 483 L 333 493 L 338 493 L 338 483 L 333 483" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 333 483 L 333 493 L 338 493 L 338 483 L 333 483" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="113" y="480.5" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">4. Failure return [Mermaid: Service--xCaller: Failure return]</text>
-  <path d="M 333 488 L 65.5 488" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
+  <path d="M 285.5 429 L 285.5 495" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 283 483 L 283 493 L 288 493 L 288 483 L 283 483" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 283 483 L 283 493 L 288 493 L 288 483 L 283 483" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="113" y="480.5" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">4. Failure return [Mermaid: Service--xCaller: Failure return]</text>
+  <path d="M 283 488 L 65.5 488" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
   <path d="M 75.5 483 L 65.5 493 M 75.5 493 L 65.5 483" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2"/>
   <path d="M 63 495 M 63 561" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 335.5 495 M 335.5 561" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 285.5 495 M 285.5 561" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 495 L 63 561" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 60.5 495 L 60.5 561 L 65.5 561 L 65.5 495 L 60.5 495" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 60.5 495 L 60.5 561 L 65.5 561 L 65.5 495 L 60.5 495" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 495 L 60.5 561 M 65.5 561 L 65.5 495 M 60.5 495" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 335.5 495 L 335.5 561" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 333 549 L 333 559 L 338 559 L 338 549 L 333 549" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 333 549 L 333 559 L 338 559 L 338 549 L 333 549" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="113" y="546.5" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">5. Completion without arrow [Mermaid: Service--&gt;Caller: Completion without arrow]</text>
-  <path d="M 333 554 L 65.5 554" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
+  <path d="M 285.5 495 L 285.5 561" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 283 549 L 283 559 L 288 559 L 288 549 L 283 549" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 283 549 L 283 559 L 288 559 L 288 549 L 283 549" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="113" y="546.5" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">5. Completion without arrow [Mermaid: Service--&gt;Caller: Completion without arrow]</text>
+  <path d="M 283 554 L 65.5 554" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
   <path d="M 63 561 L 63 585" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 60.5 561 L 60.5 561 L 65.5 561 L 65.5 561 L 60.5 561" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 60.5 561 L 60.5 561 L 65.5 561 L 65.5 561 L 60.5 561" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 561 L 60.5 561 L 65.5 561 L 65.5 561 M 60.5 561" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 335.5 561 L 335.5 585" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 285.5 561 L 285.5 585" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
 </svg>

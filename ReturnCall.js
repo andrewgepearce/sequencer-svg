@@ -642,7 +642,7 @@ module.exports = class ReturnCall {
 	 */
 	static getDefaultTmd() {
 		const defaultCallTmd = {
-			fontFamily: "sans-serif",
+			fontFamily: "monospace",
 			fontSizePx: 14,
 			fgColour: "rgb(0,0,0)",
 			bgColour: "rgba(255,255,255,0)",

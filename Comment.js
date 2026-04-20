@@ -121,7 +121,7 @@ module.exports = class Comment {
 			? this._line.bgColour
 			: working.postdata.params && working.postdata.params.comment && Utilities.validColour(working.postdata.params.comment.bgColour)
 			? working.postdata.params.comment.bgColour
-			: "rgb(0, 255, 50)";
+			: "rgb(0,253,144)";
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Get the border colour
@@ -225,7 +225,7 @@ module.exports = class Comment {
 				  Utilities.isNumber(working.postdata.params.comment.spacing) &&
 				  working.postdata.params.comment.spacing >= 0
 				? working.postdata.params.comment.spacing
-				: 1;
+				: 1.2;
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Get the fold size
@@ -391,9 +391,9 @@ module.exports = class Comment {
 			fontFamily: "sans-serif",
 			fontSizePx: 10,
 			fgColour: "rgb(0,0,0)",
-			bgColour: "rgb(0,255,50)",
+			bgColour: "rgb(0,253,144)",
 			padding: 10,
-			spacing: 1,
+			spacing: 1.2,
 			align: "left",
 			borderColour: "rgb(0,0,0)",
 			borderWidth: 1,

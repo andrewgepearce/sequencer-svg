@@ -37,6 +37,25 @@ module.exports = class Utilities {
 
 	///////////////////////////////////////////////////////////////////////////////
 	/**
+	 * Return the built-in fragment background palette used when no explicit
+	 * fragment colours are configured.
+	 *
+	 * @returns {string[]} Built-in fragment background colours by nesting depth.
+	 * @example
+	 * const colours = Utilities.getBuiltInFragmentBgColours();
+	 */
+	static getBuiltInFragmentBgColours() {
+		return [
+			"rgb(184,184,184)",
+			"rgb(255,182,196)",
+			"rgb(158,255,25)",
+			"rgb(66,227,245)",
+			"rgb(255,212,121)",
+		];
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
 	 * Combine user-defined tags with the built-in aliases.
 	 *
 	 * @param {*} tags Parameter derived from tags.

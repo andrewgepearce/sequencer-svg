@@ -21,39 +21,39 @@ From the project root, regenerate this Mermaid transform and SVG with:
   <text x="120.57" y="119.8" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">From the project root, regenerate this Mermaid transform and SVG with:</text>
   <text x="120.57" y="136.6" fill="rgb(0,0,180)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">node sequencer.js --mermaid -i test/mermaid-features/07-autonumber/input.mmd -o -f -t test/mermaid-features/07-autonumber</text>
   <path d="M 33 183 L 33 211 L 33 211 A 5 5 0 0 0 38 216 L 94 216 L 94 216 A 5 5 0 0 0 99 211 L 99 183 L 99 183 A 5 5 0 0 0 94 178 L 38 178 L 38 178 A 5 5 0 0 0 33 183" fill="rgb(210,210,210)" stroke="none"/>
-  <path d="M 30 180 L 30 208 L 30 208 A 5 5 0 0 0 35 213 L 91 213 L 91 213 A 5 5 0 0 0 96 208 L 96 180 L 96 180 A 5 5 0 0 0 91 175 L 35 175 L 35 175 A 5 5 0 0 0 30 180" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 30 180 L 30 208 L 30 208 A 5 5 0 0 0 35 213 L 91 213 L 91 213 A 5 5 0 0 0 96 208 L 96 180 L 96 180 A 5 5 0 0 0 91 175 L 35 175 L 35 175 A 5 5 0 0 0 30 180" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 30 180 L 30 208 L 30 208 A 5 5 0 0 0 35 213 L 91 213 L 91 213 A 5 5 0 0 0 96 208 L 96 180 L 96 180 A 5 5 0 0 0 91 175 L 35 175 L 35 175 A 5 5 0 0 0 30 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="39" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Caller</text>
-  <path d="M 299 183 L 299 211 L 299 211 A 5 5 0 0 0 304 216 L 373 216 L 373 216 A 5 5 0 0 0 378 211 L 378 183 L 378 183 A 5 5 0 0 0 373 178 L 304 178 L 304 178 A 5 5 0 0 0 299 183" fill="rgb(210,210,210)" stroke="none"/>
-  <path d="M 296 180 L 296 208 L 296 208 A 5 5 0 0 0 301 213 L 370 213 L 370 213 A 5 5 0 0 0 375 208 L 375 180 L 375 180 A 5 5 0 0 0 370 175 L 301 175 L 301 175 A 5 5 0 0 0 296 180" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 296 180 L 296 208 L 296 208 A 5 5 0 0 0 301 213 L 370 213 L 370 213 A 5 5 0 0 0 375 208 L 375 180 L 375 180 A 5 5 0 0 0 370 175 L 301 175 L 301 175 A 5 5 0 0 0 296 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="305" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Service</text>
+  <path d="M 249 183 L 249 211 L 249 211 A 5 5 0 0 0 254 216 L 323 216 L 323 216 A 5 5 0 0 0 328 211 L 328 183 L 328 183 A 5 5 0 0 0 323 178 L 254 178 L 254 178 A 5 5 0 0 0 249 183" fill="rgb(210,210,210)" stroke="none"/>
+  <path d="M 246 180 L 246 208 L 246 208 A 5 5 0 0 0 251 213 L 320 213 L 320 213 A 5 5 0 0 0 325 208 L 325 180 L 325 180 A 5 5 0 0 0 320 175 L 251 175 L 251 175 A 5 5 0 0 0 246 180" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 246 180 L 246 208 L 246 208 A 5 5 0 0 0 251 213 L 320 213 L 320 213 A 5 5 0 0 0 325 208 L 325 180 L 325 180 A 5 5 0 0 0 320 175 L 251 175 L 251 175 A 5 5 0 0 0 246 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="255" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Service</text>
   <path d="M 63 213 M 63 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 335.5 213 M 335.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 285.5 213 M 285.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 213 L 63 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 60.5 277 L 60.5 297 L 65.5 297 L 65.5 277 L 60.5 277" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 60.5 277 L 60.5 297 L 65.5 297 L 65.5 277 L 60.5 277" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 277 L 60.5 297 M 65.5 297 L 65.5 277 L 60.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 335.5 213 L 335.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 333 277 L 333 297 L 338 297 L 338 277 L 333 277" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 333 277 L 333 297 M 338 297 L 338 277 L 333 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="105.5" y="267" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Ping</text>
-  <path d="M 65.5 277 L 333 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 323 272 L 323 282 L 333 277" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 285.5 213 L 285.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 283 277 L 283 297 L 288 297 L 288 277 L 283 277" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 283 277 L 283 297 M 288 297 L 288 277 L 283 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="105.5" y="267" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Ping</text>
+  <path d="M 65.5 277 L 283 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 273 272 L 273 282 L 283 277" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 63 297 M 63 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 335.5 297 M 335.5 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 285.5 297 M 285.5 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 297 L 63 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 60.5 297 L 60.5 381 L 65.5 381 L 65.5 297 L 60.5 297" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 60.5 297 L 60.5 381 L 65.5 381 L 65.5 297 L 60.5 297" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 297 L 60.5 381 M 65.5 381 L 65.5 297 M 60.5 297" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 335.5 297 L 335.5 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 333 297 L 333 381 L 338 381 L 338 297 L 333 297" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 333 297 L 333 381 M 338 381 L 338 297 M 333 297" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="115.5" y="351" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Pong</text>
-  <path d="M 333 361 L 65.5 361" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 285.5 297 L 285.5 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 283 297 L 283 381 L 288 381 L 288 297 L 283 297" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 283 297 L 283 381 M 288 381 L 288 297 M 283 297" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="115.5" y="351" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Pong</text>
+  <path d="M 283 361 L 65.5 361" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 75.5 356 L 75.5 366 L 65.5 361" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 63 381 L 63 405" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 60.5 381 L 60.5 381 L 65.5 381 L 65.5 381 L 60.5 381" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 60.5 381 L 60.5 381 L 65.5 381 L 65.5 381 L 60.5 381" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 381 L 60.5 381 L 65.5 381 L 65.5 381 M 60.5 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 335.5 381 L 335.5 405" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 333 381 L 333 381 L 338 381 L 338 381 L 333 381" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 333 381 L 333 381 L 338 381 L 338 381 M 333 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 285.5 381 L 285.5 405" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 283 381 L 283 381 L 288 381 L 288 381 L 283 381" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 283 381 L 283 381 L 288 381 L 288 381 M 283 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
 </svg>

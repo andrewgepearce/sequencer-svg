@@ -402,7 +402,9 @@ module.exports = class Fragment {
 			  Array.isArray(working.postdata.params.fragment.bgColours) &&
 			  Utilities.validColour(working.postdata.params.fragment.bgColours[currentActiveAboveThisFragment])
 			? working.postdata.params.fragment.bgColours[currentActiveAboveThisFragment]
-			: "rgb(255, 255, 255)";
+			: Utilities.validColour(Utilities.getBuiltInFragmentBgColours()[currentActiveAboveThisFragment])
+			? Utilities.getBuiltInFragmentBgColours()[currentActiveAboveThisFragment]
+			: "rgb(255,212,121)";
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Get the title bar colour

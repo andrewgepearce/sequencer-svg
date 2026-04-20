@@ -6,135 +6,135 @@ From the project root, regenerate this Mermaid transform and SVG with:
 node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -f -t test/mermaid-features/06-fragments</desc>
   <rect width="100%" height="100%" fill="white"/>
   <path d="M 0 0 L 0 1070 L 1214 1070 L 1214 0 L 0 0" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 90 30 L 90 57 L 259 57 L 259 30 L 90 30" fill="rgba(0,0,0,0)" stroke="none"/>
-  <text x="95" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Title:</text>
-  <text x="128.44" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
-  <text x="132.33" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Mermaid fragments</text>
-  <path d="M 90 57 L 90 84 L 180 84 L 180 57 L 90 57" fill="rgba(0,0,0,0)" stroke="none"/>
-  <text x="95" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Version:</text>
-  <text x="151.01" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
-  <text x="154.9" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1.0</text>
-  <path d="M 90 84 L 90 145 L 944 145 L 944 84 L 90 84" fill="rgba(0,0,0,0)" stroke="none"/>
-  <text x="95" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Description:</text>
-  <text x="176.68" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
-  <text x="180.57" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Demonstrates Mermaid loop, alt, else, and opt fragment transforms.</text>
-  <text x="180.57" y="119.8" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">From the project root, regenerate this Mermaid transform and SVG with:</text>
-  <text x="180.57" y="136.6" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -f -t test/mermaid-features/06-fragments</text>
-  <path d="M 93 183 L 93 211 L 93 211 A 5 5 0 0 0 98 216 L 154 216 L 154 216 A 5 5 0 0 0 159 211 L 159 183 L 159 183 A 5 5 0 0 0 154 178 L 98 178 L 98 178 A 5 5 0 0 0 93 183" fill="rgb(210,210,210)" stroke="none"/>
-  <path d="M 90 180 L 90 208 L 90 208 A 5 5 0 0 0 95 213 L 151 213 L 151 213 A 5 5 0 0 0 156 208 L 156 180 L 156 180 A 5 5 0 0 0 151 175 L 95 175 L 95 175 A 5 5 0 0 0 90 180" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 90 180 L 90 208 L 90 208 A 5 5 0 0 0 95 213 L 151 213 L 151 213 A 5 5 0 0 0 156 208 L 156 180 L 156 180 A 5 5 0 0 0 151 175 L 95 175 L 95 175 A 5 5 0 0 0 90 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="99" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Caller</text>
-  <path d="M 359 183 L 359 211 L 359 211 A 5 5 0 0 0 364 216 L 433 216 L 433 216 A 5 5 0 0 0 438 211 L 438 183 L 438 183 A 5 5 0 0 0 433 178 L 364 178 L 364 178 A 5 5 0 0 0 359 183" fill="rgb(210,210,210)" stroke="none"/>
-  <path d="M 356 180 L 356 208 L 356 208 A 5 5 0 0 0 361 213 L 430 213 L 430 213 A 5 5 0 0 0 435 208 L 435 180 L 435 180 A 5 5 0 0 0 430 175 L 361 175 L 361 175 A 5 5 0 0 0 356 180" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 356 180 L 356 208 L 356 208 A 5 5 0 0 0 361 213 L 430 213 L 430 213 A 5 5 0 0 0 435 208 L 435 180 L 435 180 A 5 5 0 0 0 430 175 L 361 175 L 361 175 A 5 5 0 0 0 356 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="365" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Service</text>
-  <path d="M 123 213 L 123 291" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 395.5 213 L 395.5 291" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 30 243 L 30 291 L 1184 291 L 1184 243 L 30 243" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 123 213 L 123 291" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 395.5 213 L 395.5 291" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 145.75 30 L 145.75 57 L 314.75 57 L 314.75 30 L 145.75 30" fill="rgba(0,0,0,0)" stroke="none"/>
+  <text x="150.75" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Title:</text>
+  <text x="184.19" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
+  <text x="188.08" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Mermaid fragments</text>
+  <path d="M 145.75 57 L 145.75 84 L 235.75 84 L 235.75 57 L 145.75 57" fill="rgba(0,0,0,0)" stroke="none"/>
+  <text x="150.75" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Version:</text>
+  <text x="206.76" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
+  <text x="210.65" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1.0</text>
+  <path d="M 145.75 84 L 145.75 145 L 999.75 145 L 999.75 84 L 145.75 84" fill="rgba(0,0,0,0)" stroke="none"/>
+  <text x="150.75" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Description:</text>
+  <text x="232.43" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
+  <text x="236.32" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Demonstrates Mermaid loop, alt, else, and opt fragment transforms.</text>
+  <text x="236.32" y="119.8" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">From the project root, regenerate this Mermaid transform and SVG with:</text>
+  <text x="236.32" y="136.6" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -f -t test/mermaid-features/06-fragments</text>
+  <path d="M 148.75 183 L 148.75 211 L 148.75 211 A 5 5 0 0 0 153.75 216 L 209.75 216 L 209.75 216 A 5 5 0 0 0 214.75 211 L 214.75 183 L 214.75 183 A 5 5 0 0 0 209.75 178 L 153.75 178 L 153.75 178 A 5 5 0 0 0 148.75 183" fill="rgb(210,210,210)" stroke="none"/>
+  <path d="M 145.75 180 L 145.75 208 L 145.75 208 A 5 5 0 0 0 150.75 213 L 206.75 213 L 206.75 213 A 5 5 0 0 0 211.75 208 L 211.75 180 L 211.75 180 A 5 5 0 0 0 206.75 175 L 150.75 175 L 150.75 175 A 5 5 0 0 0 145.75 180" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 145.75 180 L 145.75 208 L 145.75 208 A 5 5 0 0 0 150.75 213 L 206.75 213 L 206.75 213 A 5 5 0 0 0 211.75 208 L 211.75 180 L 211.75 180 A 5 5 0 0 0 206.75 175 L 150.75 175 L 150.75 175 A 5 5 0 0 0 145.75 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="154.75" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Caller</text>
+  <path d="M 364.75 183 L 364.75 211 L 364.75 211 A 5 5 0 0 0 369.75 216 L 438.75 216 L 438.75 216 A 5 5 0 0 0 443.75 211 L 443.75 183 L 443.75 183 A 5 5 0 0 0 438.75 178 L 369.75 178 L 369.75 178 A 5 5 0 0 0 364.75 183" fill="rgb(210,210,210)" stroke="none"/>
+  <path d="M 361.75 180 L 361.75 208 L 361.75 208 A 5 5 0 0 0 366.75 213 L 435.75 213 L 435.75 213 A 5 5 0 0 0 440.75 208 L 440.75 180 L 440.75 180 A 5 5 0 0 0 435.75 175 L 366.75 175 L 366.75 175 A 5 5 0 0 0 361.75 180" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 361.75 180 L 361.75 208 L 361.75 208 A 5 5 0 0 0 366.75 213 L 435.75 213 L 435.75 213 A 5 5 0 0 0 440.75 208 L 440.75 180 L 440.75 180 A 5 5 0 0 0 435.75 175 L 366.75 175 L 366.75 175 A 5 5 0 0 0 361.75 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="370.75" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Service</text>
+  <path d="M 178.75 213 L 178.75 291" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 401.25 213 L 401.25 291" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 30 243 L 30 291 L 1184 291 L 1184 243 L 30 243" fill="rgb(184,184,184)" stroke="none"/>
+  <path d="M 178.75 213 L 178.75 291" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 401.25 213 L 401.25 291" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 243 L 30 291 L 1184 291 L 1184 243 L 30 243" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 243 L 30 291 M 1184 291 L 1184 243 L 30 243" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 30 243 L 30 267 L 71 267 L 81 257 L 81 243 L 30 243" fill="rgba(200,200,0,0.8)" stroke="none"/>
   <path d="M 30 243 L 30 267 L 71 267 L 81 257 L 81 243 L 30 243" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="35" y="262" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">loop </text>
   <text x="35" y="284" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" xml:space="preserve" dominant-baseline="auto">Retry while pending [Mermaid: loop Retry while pending]</text>
-  <path d="M 123 291 M 123 375" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 395.5 291 M 395.5 375" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 30 291 L 30 375 L 1184 375 L 1184 291 L 30 291" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 123 291 L 123 375" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 120.5 355 L 120.5 375 L 125.5 375 L 125.5 355 L 120.5 355" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 120.5 355 L 120.5 375 M 125.5 375 L 125.5 355 L 120.5 355" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 395.5 291 L 395.5 375" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 393 355 L 393 375 L 398 375 L 398 355 L 393 355" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 393 355 L 393 375 M 398 375 L 398 355 L 393 355" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="165.5" y="345" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Retry request [Mermaid: Caller-&gt;&gt;Service: Retry request]</text>
-  <path d="M 125.5 355 L 393 355" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 383 350 L 383 360 L 393 355" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 178.75 291 M 178.75 375" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 401.25 291 M 401.25 375" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 30 291 L 30 375 L 1184 375 L 1184 291 L 30 291" fill="rgb(184,184,184)" stroke="none"/>
+  <path d="M 178.75 291 L 178.75 375" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 176.25 355 L 176.25 375 L 181.25 375 L 181.25 355 L 176.25 355" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 176.25 355 L 176.25 375 M 181.25 375 L 181.25 355 L 176.25 355" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 401.25 291 L 401.25 375" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 398.75 355 L 398.75 375 L 403.75 375 L 403.75 355 L 398.75 355" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 398.75 355 L 398.75 375 M 403.75 375 L 403.75 355 L 398.75 355" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="221.25" y="345" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Retry request [Mermaid: Caller-&gt;&gt;Service: Retry request]</text>
+  <path d="M 181.25 355 L 398.75 355" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 388.75 350 L 388.75 360 L 398.75 355" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 30 291 L 30 375 L 1184 375 L 1184 291 L 30 291" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 291 L 30 375 M 1184 375 L 1184 291 M 30 291" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 123 375 M 123 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 395.5 375 M 395.5 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 30 375 L 30 381 L 1184 381 L 1184 375 L 30 375" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 123 375 L 123 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 120.5 375 L 120.5 381 L 125.5 381 L 125.5 375 L 120.5 375" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 120.5 375 L 120.5 381 M 125.5 381 L 125.5 375 M 120.5 375" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 395.5 375 L 395.5 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 393 375 L 393 381 L 398 381 L 398 375 L 393 375" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 393 375 L 393 381 M 398 381 L 398 375 M 393 375" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 178.75 375 M 178.75 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 401.25 375 M 401.25 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 30 375 L 30 381 L 1184 381 L 1184 375 L 30 375" fill="rgb(184,184,184)" stroke="none"/>
+  <path d="M 178.75 375 L 178.75 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 176.25 375 L 176.25 381 L 181.25 381 L 181.25 375 L 176.25 375" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 176.25 375 L 176.25 381 M 181.25 381 L 181.25 375 M 176.25 375" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 401.25 375 L 401.25 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 398.75 375 L 398.75 381 L 403.75 381 L 403.75 375 L 398.75 375" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 398.75 375 L 398.75 381 M 403.75 381 L 403.75 375 M 398.75 375" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 30 375 L 30 381 L 1184 381 L 1184 375 L 30 375" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 375 L 30 381 M 1184 381 L 1184 375 M 30 375" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 123 381 M 123 441" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 395.5 381 M 395.5 441" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 30 381 L 30 411 L 1184 411 L 1184 381 L 30 381" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 123 381 L 123 441" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 120.5 381 L 120.5 441 L 125.5 441 L 125.5 381 L 120.5 381" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 120.5 381 L 120.5 441 M 125.5 441 L 125.5 381 M 120.5 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 395.5 381 L 395.5 441" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 393 381 L 393 441 L 398 441 L 398 381 L 393 381" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 393 381 L 393 441 M 398 441 L 398 381 M 393 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 178.75 381 M 178.75 441" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 401.25 381 M 401.25 441" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 30 381 L 30 411 L 1184 411 L 1184 381 L 30 381" fill="rgb(184,184,184)" stroke="none"/>
+  <path d="M 178.75 381 L 178.75 441" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 176.25 381 L 176.25 441 L 181.25 441 L 181.25 381 L 176.25 381" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 176.25 381 L 176.25 441 M 181.25 441 L 181.25 381 M 176.25 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 401.25 381 L 401.25 441" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 398.75 381 L 398.75 441 L 403.75 441 L 403.75 381 L 398.75 381" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 398.75 381 L 398.75 441 M 403.75 441 L 403.75 381 M 398.75 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 30 381 L 30 411 L 1184 411 L 1184 381 L 30 381" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 381 L 30 411 L 1184 411 L 1184 381 M 30 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 123 411 L 123 489" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 120.5 411 L 120.5 489 L 125.5 489 L 125.5 411 L 120.5 411" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 120.5 411 L 120.5 489 M 125.5 489 L 125.5 411 M 120.5 411" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 395.5 411 L 395.5 489" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 393 411 L 393 489 L 398 489 L 398 411 L 393 411" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 393 411 L 393 489 M 398 489 L 398 411 M 393 411" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 30 441 L 30 489 L 1184 489 L 1184 441 L 30 441" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 123 411 L 123 489" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 120.5 411 L 120.5 489 L 125.5 489 L 125.5 411 L 120.5 411" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 120.5 411 L 120.5 489 M 125.5 489 L 125.5 411 M 120.5 411" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 395.5 411 L 395.5 489" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 393 411 L 393 489 L 398 489 L 398 411 L 393 411" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 393 411 L 393 489 M 398 489 L 398 411 M 393 411" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 178.75 411 L 178.75 489" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 176.25 411 L 176.25 489 L 181.25 489 L 181.25 411 L 176.25 411" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 176.25 411 L 176.25 489 M 181.25 489 L 181.25 411 M 176.25 411" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 401.25 411 L 401.25 489" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 398.75 411 L 398.75 489 L 403.75 489 L 403.75 411 L 398.75 411" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 398.75 411 L 398.75 489 M 403.75 489 L 403.75 411 M 398.75 411" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 30 441 L 30 489 L 1184 489 L 1184 441 L 30 441" fill="rgb(184,184,184)" stroke="none"/>
+  <path d="M 178.75 411 L 178.75 489" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 176.25 411 L 176.25 489 L 181.25 489 L 181.25 411 L 176.25 411" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 176.25 411 L 176.25 489 M 181.25 489 L 181.25 411 M 176.25 411" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 401.25 411 L 401.25 489" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 398.75 411 L 398.75 489 L 403.75 489 L 403.75 411 L 398.75 411" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 398.75 411 L 398.75 489 M 403.75 489 L 403.75 411 M 398.75 411" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 30 441 L 30 489 L 1184 489 L 1184 441 L 30 441" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 441 L 30 489 M 1184 489 L 1184 441 L 30 441" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 30 441 L 30 465 L 59 465 L 69 455 L 69 441 L 30 441" fill="rgba(200,200,0,0.8)" stroke="none"/>
   <path d="M 30 441 L 30 465 L 59 465 L 69 455 L 69 441 L 30 441" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="35" y="460" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">alt </text>
   <text x="35" y="482" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" xml:space="preserve" dominant-baseline="auto">Success branch [Mermaid: alt Success branch]</text>
-  <path d="M 123 489 M 123 573" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 395.5 489 M 395.5 573" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 30 489 L 30 573 L 1184 573 L 1184 489 L 30 489" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 123 489 L 123 573" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 120.5 489 L 120.5 573 L 125.5 573 L 125.5 489 L 120.5 489" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 120.5 489 L 120.5 573 M 125.5 573 L 125.5 489 M 120.5 489" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 395.5 489 L 395.5 573" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 393 489 L 393 573 L 398 573 L 398 489 L 393 489" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 393 489 L 393 573 M 398 573 L 398 489 M 393 489" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="165.5" y="543" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Success path [Mermaid: Caller-&gt;&gt;Service: Success path]</text>
-  <path d="M 125.5 553 L 393 553" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 383 548 L 383 558 L 393 553" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 178.75 489 M 178.75 573" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 401.25 489 M 401.25 573" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 30 489 L 30 573 L 1184 573 L 1184 489 L 30 489" fill="rgb(184,184,184)" stroke="none"/>
+  <path d="M 178.75 489 L 178.75 573" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 176.25 489 L 176.25 573 L 181.25 573 L 181.25 489 L 176.25 489" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 176.25 489 L 176.25 573 M 181.25 573 L 181.25 489 M 176.25 489" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 401.25 489 L 401.25 573" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 398.75 489 L 398.75 573 L 403.75 573 L 403.75 489 L 398.75 489" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 398.75 489 L 398.75 573 M 403.75 573 L 403.75 489 M 398.75 489" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="221.25" y="543" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Success path [Mermaid: Caller-&gt;&gt;Service: Success path]</text>
+  <path d="M 181.25 553 L 398.75 553" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 388.75 548 L 388.75 558 L 398.75 553" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 30 489 L 30 573 L 1184 573 L 1184 489 L 30 489" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 489 L 30 573 M 1184 573 L 1184 489 M 30 489" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 123 573 M 123 627" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 395.5 573 M 395.5 627" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 30 573 L 30 627 L 1184 627 L 1184 573 L 30 573" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 123 573 L 123 627" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 120.5 573 L 120.5 627 L 125.5 627 L 125.5 573 L 120.5 573" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 120.5 573 L 120.5 627 M 125.5 627 L 125.5 573 M 120.5 573" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 395.5 573 L 395.5 627" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 393 573 L 393 627 L 398 627 L 398 573 L 393 573" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 393 573 L 393 627 M 398 627 L 398 573 M 393 573" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 178.75 573 M 178.75 627" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 401.25 573 M 401.25 627" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 30 573 L 30 627 L 1184 627 L 1184 573 L 30 573" fill="rgb(184,184,184)" stroke="none"/>
+  <path d="M 178.75 573 L 178.75 627" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 176.25 573 L 176.25 627 L 181.25 627 L 181.25 573 L 176.25 573" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 176.25 573 L 176.25 627 M 181.25 627 L 181.25 573 M 176.25 573" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 401.25 573 L 401.25 627" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 398.75 573 L 398.75 627 L 403.75 627 L 403.75 573 L 398.75 573" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 398.75 573 L 398.75 627 M 403.75 627 L 403.75 573 M 398.75 573" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 30 603 L 1184 603" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="4,3"/>
   <text x="35" y="621" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" xml:space="preserve" dominant-baseline="auto">Failure branch [Mermaid: else Failure branch]</text>
   <path d="M 30 573 L 30 627 L 1184 627 L 1184 573 L 30 573" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 573 L 30 627 M 1184 627 L 1184 573 M 30 573" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 123 626 L 123 704" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 120.5 626 L 120.5 704 L 125.5 704 L 125.5 626 L 120.5 626" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 120.5 626 L 120.5 704 M 125.5 704 L 125.5 626 M 120.5 626" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 395.5 626 L 395.5 704" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 393 626 L 393 704 L 398 704 L 398 626 L 393 626" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 393 626 L 393 704 M 398 704 L 398 626 M 393 626" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 30 626 L 30 704 L 1184 704 L 1184 626 L 30 626" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 60 656 L 60 704 L 1154 704 L 1154 656 L 60 656" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 123 626 L 123 704" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 120.5 626 L 120.5 704 L 125.5 704 L 125.5 626 L 120.5 626" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 120.5 626 L 120.5 704 M 125.5 704 L 125.5 626 M 120.5 626" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 395.5 626 L 395.5 704" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 393 626 L 393 704 L 398 704 L 398 626 L 393 626" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 393 626 L 393 704 M 398 704 L 398 626 M 393 626" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 178.75 626 L 178.75 704" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 176.25 626 L 176.25 704 L 181.25 704 L 181.25 626 L 176.25 626" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 176.25 626 L 176.25 704 M 181.25 704 L 181.25 626 M 176.25 626" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 401.25 626 L 401.25 704" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 398.75 626 L 398.75 704 L 403.75 704 L 403.75 626 L 398.75 626" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 398.75 626 L 398.75 704 M 403.75 704 L 403.75 626 M 398.75 626" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 30 626 L 30 704 L 1184 704 L 1184 626 L 30 626" fill="rgb(184,184,184)" stroke="none"/>
+  <path d="M 60 656 L 60 704 L 1154 704 L 1154 656 L 60 656" fill="rgb(255,182,196)" stroke="none"/>
+  <path d="M 178.75 626 L 178.75 704" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 176.25 626 L 176.25 704 L 181.25 704 L 181.25 626 L 176.25 626" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 176.25 626 L 176.25 704 M 181.25 704 L 181.25 626 M 176.25 626" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 401.25 626 L 401.25 704" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 398.75 626 L 398.75 704 L 403.75 704 L 403.75 626 L 398.75 626" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 398.75 626 L 398.75 704 M 403.75 704 L 403.75 626 M 398.75 626" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 30 626 L 30 704 L 1184 704 L 1184 626 L 30 626" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 626 L 30 704 M 1184 704 L 1184 626 M 30 626" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 60 656 L 60 704 L 1154 704 L 1154 656 L 60 656" fill="rgba(255,255,255,0)" stroke="none"/>
@@ -143,113 +143,113 @@ node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -
   <path d="M 60 656 L 60 680 L 94 680 L 104 670 L 104 656 L 60 656" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="65" y="675" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">opt </text>
   <text x="65" y="697" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" xml:space="preserve" dominant-baseline="auto">Audit branch [Mermaid: opt Audit branch]</text>
-  <path d="M 123 704 M 123 788" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 395.5 704 M 395.5 788" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 30 704 L 30 788 L 1184 788 L 1184 704 L 30 704" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 60 704 L 60 788 L 1154 788 L 1154 704 L 60 704" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 123 704 L 123 788" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 120.5 704 L 120.5 788 L 125.5 788 L 125.5 704 L 120.5 704" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 120.5 704 L 120.5 788 M 125.5 788 L 125.5 704 M 120.5 704" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 395.5 704 L 395.5 788" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 393 704 L 393 788 L 398 788 L 398 704 L 393 704" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 393 704 L 393 788 M 398 788 L 398 704 M 393 704" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="175.5" y="758" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">3. Emit audit event [Mermaid: Service-&gt;&gt;Caller: Emit audit event]</text>
-  <path d="M 393 768 L 125.5 768" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 135.5 763 L 135.5 773 L 125.5 768" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 178.75 704 M 178.75 788" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 401.25 704 M 401.25 788" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 30 704 L 30 788 L 1184 788 L 1184 704 L 30 704" fill="rgb(184,184,184)" stroke="none"/>
+  <path d="M 60 704 L 60 788 L 1154 788 L 1154 704 L 60 704" fill="rgb(255,182,196)" stroke="none"/>
+  <path d="M 178.75 704 L 178.75 788" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 176.25 704 L 176.25 788 L 181.25 788 L 181.25 704 L 176.25 704" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 176.25 704 L 176.25 788 M 181.25 788 L 181.25 704 M 176.25 704" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 401.25 704 L 401.25 788" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 398.75 704 L 398.75 788 L 403.75 788 L 403.75 704 L 398.75 704" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 398.75 704 L 398.75 788 M 403.75 788 L 403.75 704 M 398.75 704" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="231.25" y="758" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">3. Emit audit event [Mermaid: Service-&gt;&gt;Caller: Emit audit event]</text>
+  <path d="M 398.75 768 L 181.25 768" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 191.25 763 L 191.25 773 L 181.25 768" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 30 704 L 30 788 L 1184 788 L 1184 704 L 30 704" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 704 L 30 788 M 1184 788 L 1184 704 M 30 704" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 60 704 L 60 788 L 1154 788 L 1154 704 L 60 704" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 60 704 L 60 788 M 1154 788 L 1154 704 M 60 704" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 123 788 M 123 794" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 395.5 788 M 395.5 794" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 30 788 L 30 794 L 1184 794 L 1184 788 L 30 788" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 60 788 L 60 794 L 1154 794 L 1154 788 L 60 788" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 123 788 L 123 794" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 120.5 788 L 120.5 794 L 125.5 794 L 125.5 788 L 120.5 788" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 120.5 788 L 120.5 794 M 125.5 794 L 125.5 788 M 120.5 788" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 395.5 788 L 395.5 794" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 393 788 L 393 794 L 398 794 L 398 788 L 393 788" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 393 788 L 393 794 M 398 794 L 398 788 M 393 788" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 178.75 788 M 178.75 794" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 401.25 788 M 401.25 794" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 30 788 L 30 794 L 1184 794 L 1184 788 L 30 788" fill="rgb(184,184,184)" stroke="none"/>
+  <path d="M 60 788 L 60 794 L 1154 794 L 1154 788 L 60 788" fill="rgb(255,182,196)" stroke="none"/>
+  <path d="M 178.75 788 L 178.75 794" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 176.25 788 L 176.25 794 L 181.25 794 L 181.25 788 L 176.25 788" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 176.25 788 L 176.25 794 M 181.25 794 L 181.25 788 M 176.25 788" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 401.25 788 L 401.25 794" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 398.75 788 L 398.75 794 L 403.75 794 L 403.75 788 L 398.75 788" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 398.75 788 L 398.75 794 M 403.75 794 L 403.75 788 M 398.75 788" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 30 788 L 30 794 L 1184 794 L 1184 788 L 30 788" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 788 L 30 794 M 1184 794 L 1184 788 M 30 788" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 60 788 L 60 794 L 1154 794 L 1154 788 L 60 788" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 60 788 L 60 794 M 1154 794 L 1154 788 M 60 788" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 123 794 M 123 854" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 395.5 794 M 395.5 854" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 30 794 L 30 854 L 1184 854 L 1184 794 L 30 794" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 60 794 L 60 824 L 1154 824 L 1154 794 L 60 794" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 123 794 L 123 854" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 120.5 794 L 120.5 854 L 125.5 854 L 125.5 794 L 120.5 794" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 120.5 794 L 120.5 854 M 125.5 854 L 125.5 794 M 120.5 794" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 395.5 794 L 395.5 854" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 393 794 L 393 854 L 398 854 L 398 794 L 393 794" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 393 794 L 393 854 M 398 854 L 398 794 M 393 794" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 178.75 794 M 178.75 854" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 401.25 794 M 401.25 854" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 30 794 L 30 854 L 1184 854 L 1184 794 L 30 794" fill="rgb(184,184,184)" stroke="none"/>
+  <path d="M 60 794 L 60 824 L 1154 824 L 1154 794 L 60 794" fill="rgb(255,182,196)" stroke="none"/>
+  <path d="M 178.75 794 L 178.75 854" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 176.25 794 L 176.25 854 L 181.25 854 L 181.25 794 L 176.25 794" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 176.25 794 L 176.25 854 M 181.25 854 L 181.25 794 M 176.25 794" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 401.25 794 L 401.25 854" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 398.75 794 L 398.75 854 L 403.75 854 L 403.75 794 L 398.75 794" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 398.75 794 L 398.75 854 M 403.75 854 L 403.75 794 M 398.75 794" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 30 794 L 30 854 L 1184 854 L 1184 794 L 30 794" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 794 L 30 854 M 1184 854 L 1184 794 M 30 794" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 60 794 L 60 824 L 1154 824 L 1154 794 L 60 794" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 60 794 L 60 824 L 1154 824 L 1154 794 M 60 794" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 123 857 M 605.75 857 M 613 864.25 M 613 886 M 123 886 M 123 857" fill="rgb(210,210,210)" stroke="none"/>
-  <path d="M 120 854 M 602.75 854 M 602.75 861.25 M 610 861.25 M 610 883 M 120 883 M 120 854" fill="rgb(0, 255, 50)" stroke="none"/>
-  <path d="M 120 854 M 602.75 854 M 602.75 861.25 M 610 861.25 M 602.75 854 M 610 861.25 M 610 883 M 120 883 M 120 854" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 48 857 M 530.75 857 M 538 864.25 M 538 886 M 48 886 M 48 857" fill="rgb(210,210,210)" stroke="none"/>
-  <path d="M 45 854 M 527.75 854 M 527.75 861.25 M 535 861.25 M 535 883 M 45 883 M 45 854" fill="rgb(0, 255, 50)" stroke="none"/>
-  <path d="M 45 854 M 527.75 854 M 527.75 861.25 M 535 861.25 M 527.75 854 M 535 861.25 M 535 883 M 45 883 M 45 854" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 123 824 M 123 890" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 395.5 824 M 395.5 890" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 30 824 L 30 890 L 1184 890 L 1184 824 L 30 824" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 123 824 L 123 890" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 120.5 824 L 120.5 890 L 125.5 890 L 125.5 824 L 120.5 824" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 120.5 824 L 120.5 890 M 125.5 890 L 125.5 824 M 120.5 824" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 395.5 824 L 395.5 890" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 393 824 L 393 890 L 398 890 L 398 824 L 393 824" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 393 824 L 393 890 M 398 890 L 398 824 M 393 824" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 48 857 L 530.75 857 L 538 864.25 L 538 886 L 48 886 L 48 857" fill="rgb(210,210,210)" stroke="none"/>
-  <path d="M 45 854 L 527.75 854 L 527.75 861.25 L 535 861.25 L 535 883 L 45 883 L 45 854" fill="rgb(0, 255, 50)" stroke="none"/>
-  <path d="M 45 854 L 527.75 854 L 527.75 861.25 L 535 861.25 M 527.75 854 L 535 861.25 L 535 883 L 45 883 L 45 854" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 45 854 M 45 883 M 535 883 M 535 854 M 45 854" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 123 857 M 605 857 M 613 865 M 613 889 M 123 889 M 123 857" fill="rgb(210,210,210)" stroke="none"/>
+  <path d="M 120 854 M 602 854 M 602 862 M 610 862 M 610 886 M 120 886 M 120 854" fill="rgb(0,253,144)" stroke="none"/>
+  <path d="M 120 854 M 602 854 M 602 862 M 610 862 M 602 854 M 610 862 M 610 886 M 120 886 M 120 854" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 48 857 M 530 857 M 538 865 M 538 889 M 48 889 M 48 857" fill="rgb(210,210,210)" stroke="none"/>
+  <path d="M 45 854 M 527 854 M 527 862 M 535 862 M 535 886 M 45 886 M 45 854" fill="rgb(0,253,144)" stroke="none"/>
+  <path d="M 45 854 M 527 854 M 527 862 M 535 862 M 527 854 M 535 862 M 535 886 M 45 886 M 45 854" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 178.75 824 M 178.75 890" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 401.25 824 M 401.25 890" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 30 824 L 30 890 L 1184 890 L 1184 824 L 30 824" fill="rgb(184,184,184)" stroke="none"/>
+  <path d="M 178.75 824 L 178.75 890" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 176.25 824 L 176.25 890 L 181.25 890 L 181.25 824 L 176.25 824" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 176.25 824 L 176.25 890 M 181.25 890 L 181.25 824 M 176.25 824" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 401.25 824 L 401.25 890" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 398.75 824 L 398.75 890 L 403.75 890 L 403.75 824 L 398.75 824" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 398.75 824 L 398.75 890 M 403.75 890 L 403.75 824 M 398.75 824" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 48 857 L 530 857 L 538 865 L 538 889 L 48 889 L 48 857" fill="rgb(210,210,210)" stroke="none"/>
+  <path d="M 45 854 L 527 854 L 527 862 L 535 862 L 535 886 L 45 886 L 45 854" fill="rgb(0,253,144)" stroke="none"/>
+  <path d="M 45 854 L 527 854 L 527 862 L 535 862 M 527 854 L 535 862 L 535 886 L 45 886 L 45 854" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 45 854 M 45 886 M 535 886 M 535 854 M 45 854" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="52.5" y="875.5" fill="rgb(0, 0, 0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Failure branch note [Mermaid: Note over Caller,Service: Failure branch note]</text>
   <path d="M 30 824 L 30 890 L 1184 890 L 1184 824 L 30 824" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 824 L 30 890 M 1184 890 L 1184 824 M 30 824" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 123 890 M 123 974" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 395.5 890 M 395.5 974" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 30 890 L 30 974 L 1184 974 L 1184 890 L 30 890" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 123 890 L 123 974" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 120.5 890 L 120.5 974 L 125.5 974 L 125.5 890 L 120.5 890" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 120.5 890 L 120.5 974 M 125.5 974 L 125.5 890 M 120.5 890" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 395.5 890 L 395.5 974" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 393 890 L 393 974 L 398 974 L 398 890 L 393 890" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 393 890 L 393 974 M 398 974 L 398 890 M 393 890" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="165.5" y="944" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">4. Failure path [Mermaid: Caller-&gt;&gt;Service: Failure path]</text>
-  <path d="M 125.5 954 L 393 954" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 383 949 L 383 959 L 393 954" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 178.75 890 M 178.75 974" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 401.25 890 M 401.25 974" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 30 890 L 30 974 L 1184 974 L 1184 890 L 30 890" fill="rgb(184,184,184)" stroke="none"/>
+  <path d="M 178.75 890 L 178.75 974" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 176.25 890 L 176.25 974 L 181.25 974 L 181.25 890 L 176.25 890" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 176.25 890 L 176.25 974 M 181.25 974 L 181.25 890 M 176.25 890" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 401.25 890 L 401.25 974" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 398.75 890 L 398.75 974 L 403.75 974 L 403.75 890 L 398.75 890" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 398.75 890 L 398.75 974 M 403.75 974 L 403.75 890 M 398.75 890" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="221.25" y="944" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">4. Failure path [Mermaid: Caller-&gt;&gt;Service: Failure path]</text>
+  <path d="M 181.25 954 L 398.75 954" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 388.75 949 L 388.75 959 L 398.75 954" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 30 890 L 30 974 L 1184 974 L 1184 890 L 30 890" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 890 L 30 974 M 1184 974 L 1184 890 M 30 890" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 123 974 M 123 980" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 395.5 974 M 395.5 980" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 30 974 L 30 980 L 1184 980 L 1184 974 L 30 974" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 123 974 L 123 980" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 120.5 974 L 120.5 980 L 125.5 980 L 125.5 974 L 120.5 974" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 120.5 974 L 120.5 980 M 125.5 980 L 125.5 974 M 120.5 974" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 395.5 974 L 395.5 980" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 393 974 L 393 980 L 398 980 L 398 974 L 393 974" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 393 974 L 393 980 M 398 980 L 398 974 M 393 974" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 178.75 974 M 178.75 980" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 401.25 974 M 401.25 980" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 30 974 L 30 980 L 1184 980 L 1184 974 L 30 974" fill="rgb(184,184,184)" stroke="none"/>
+  <path d="M 178.75 974 L 178.75 980" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 176.25 974 L 176.25 980 L 181.25 980 L 181.25 974 L 176.25 974" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 176.25 974 L 176.25 980 M 181.25 980 L 181.25 974 M 176.25 974" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 401.25 974 L 401.25 980" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 398.75 974 L 398.75 980 L 403.75 980 L 403.75 974 L 398.75 974" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 398.75 974 L 398.75 980 M 403.75 980 L 403.75 974 M 398.75 974" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 30 974 L 30 980 L 1184 980 L 1184 974 L 30 974" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 974 L 30 980 M 1184 980 L 1184 974 M 30 974" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 123 980 M 123 1040" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 395.5 980 M 395.5 1040" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 30 980 L 30 1010 L 1184 1010 L 1184 980 L 30 980" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 123 980 L 123 1040" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 120.5 980 L 120.5 1040 L 125.5 1040 L 125.5 980 L 120.5 980" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 120.5 980 L 120.5 1040 M 125.5 1040 L 125.5 980 M 120.5 980" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 395.5 980 L 395.5 1040" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 393 980 L 393 1040 L 398 1040 L 398 980 L 393 980" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 393 980 L 393 1040 M 398 1040 L 398 980 M 393 980" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 178.75 980 M 178.75 1040" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 401.25 980 M 401.25 1040" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 30 980 L 30 1010 L 1184 1010 L 1184 980 L 30 980" fill="rgb(184,184,184)" stroke="none"/>
+  <path d="M 178.75 980 L 178.75 1040" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 176.25 980 L 176.25 1040 L 181.25 1040 L 181.25 980 L 176.25 980" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 176.25 980 L 176.25 1040 M 181.25 1040 L 181.25 980 M 176.25 980" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 401.25 980 L 401.25 1040" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 398.75 980 L 398.75 1040 L 403.75 1040 L 403.75 980 L 398.75 980" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 398.75 980 L 398.75 1040 M 403.75 1040 L 403.75 980 M 398.75 980" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 30 980 L 30 1010 L 1184 1010 L 1184 980 L 30 980" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 980 L 30 1010 L 1184 1010 L 1184 980 M 30 980" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 123 1010 L 123 1034" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 120.5 1010 L 120.5 1010 L 125.5 1010 L 125.5 1010 L 120.5 1010" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 120.5 1010 L 120.5 1010 L 125.5 1010 L 125.5 1010 M 120.5 1010" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 395.5 1010 L 395.5 1034" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 393 1010 L 393 1010 L 398 1010 L 398 1010 L 393 1010" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 393 1010 L 393 1010 L 398 1010 L 398 1010 M 393 1010" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 178.75 1010 L 178.75 1034" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 176.25 1010 L 176.25 1010 L 181.25 1010 L 181.25 1010 L 176.25 1010" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 176.25 1010 L 176.25 1010 L 181.25 1010 L 181.25 1010 M 176.25 1010" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 401.25 1010 L 401.25 1034" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 398.75 1010 L 398.75 1010 L 403.75 1010 L 403.75 1010 L 398.75 1010" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 398.75 1010 L 398.75 1010 L 403.75 1010 L 403.75 1010 M 398.75 1010" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
 </svg>

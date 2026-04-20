@@ -21,89 +21,89 @@ node sequencer.js --mermaid -i test/mermaid-features/17-create-destroy/input.mmd
   <text x="120.57" y="119.8" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">From the project root, regenerate this Mermaid transform and SVG with:</text>
   <text x="120.57" y="136.6" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">node sequencer.js --mermaid -i test/mermaid-features/17-create-destroy/input.mmd -o -f -t test/mermaid-features/17-create-destroy</text>
   <path d="M 33 183 L 33 211 L 33 211 A 5 5 0 0 0 38 216 L 147 216 L 147 216 A 5 5 0 0 0 152 211 L 152 183 L 152 183 A 5 5 0 0 0 147 178 L 38 178 L 38 178 A 5 5 0 0 0 33 183" fill="rgb(210,210,210)" stroke="none"/>
-  <path d="M 30 180 L 30 208 L 30 208 A 5 5 0 0 0 35 213 L 144 213 L 144 213 A 5 5 0 0 0 149 208 L 149 180 L 149 180 A 5 5 0 0 0 144 175 L 35 175 L 35 175 A 5 5 0 0 0 30 180" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 30 180 L 30 208 L 30 208 A 5 5 0 0 0 35 213 L 144 213 L 144 213 A 5 5 0 0 0 149 208 L 149 180 L 149 180 A 5 5 0 0 0 144 175 L 35 175 L 35 175 A 5 5 0 0 0 30 180" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 30 180 L 30 208 L 30 208 A 5 5 0 0 0 35 213 L 144 213 L 144 213 A 5 5 0 0 0 149 208 L 149 180 L 149 180 A 5 5 0 0 0 144 175 L 35 175 L 35 175 A 5 5 0 0 0 30 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="39" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Orchestrator</text>
-  <path d="M 352 183 L 352 211 L 352 211 A 5 5 0 0 0 357 216 L 423 216 L 423 216 A 5 5 0 0 0 428 211 L 428 183 L 428 183 A 5 5 0 0 0 423 178 L 357 178 L 357 178 A 5 5 0 0 0 352 183" fill="rgb(210,210,210)" stroke="none"/>
-  <path d="M 349 180 L 349 208 L 349 208 A 5 5 0 0 0 354 213 L 420 213 L 420 213 A 5 5 0 0 0 425 208 L 425 180 L 425 180 A 5 5 0 0 0 420 175 L 354 175 L 354 175 A 5 5 0 0 0 349 180" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 349 180 L 349 208 L 349 208 A 5 5 0 0 0 354 213 L 420 213 L 420 213 A 5 5 0 0 0 425 208 L 425 180 L 425 180 A 5 5 0 0 0 420 175 L 354 175 L 354 175 A 5 5 0 0 0 349 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="358" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Worker</text>
+  <path d="M 302 183 L 302 211 L 302 211 A 5 5 0 0 0 307 216 L 373 216 L 373 216 A 5 5 0 0 0 378 211 L 378 183 L 378 183 A 5 5 0 0 0 373 178 L 307 178 L 307 178 A 5 5 0 0 0 302 183" fill="rgb(210,210,210)" stroke="none"/>
+  <path d="M 299 180 L 299 208 L 299 208 A 5 5 0 0 0 304 213 L 370 213 L 370 213 A 5 5 0 0 0 375 208 L 375 180 L 375 180 A 5 5 0 0 0 370 175 L 304 175 L 304 175 A 5 5 0 0 0 299 180" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 299 180 L 299 208 L 299 208 A 5 5 0 0 0 304 213 L 370 213 L 370 213 A 5 5 0 0 0 375 208 L 375 180 L 375 180 A 5 5 0 0 0 370 175 L 304 175 L 304 175 A 5 5 0 0 0 299 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="308" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Worker</text>
   <path d="M 89.5 213 M 89.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 387 213 M 387 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 337 213 M 337 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 89.5 213 L 89.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 87 277 L 87 297 L 92 297 L 92 277 L 87 277" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 87 277 L 87 297 L 92 297 L 92 277 L 87 277" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 87 277 L 87 297 M 92 297 L 92 277 L 87 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 387 213 L 387 277" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 384.5 277 L 384.5 287 L 389.5 287 L 389.5 277 L 384.5 277" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 384.5 277 L 384.5 287 L 389.5 287 L 389.5 277 L 384.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 384 274 L 390 280 M 384 280 L 390 274" fill="none" stroke="rgb(0,0,0)" stroke-width="2"/>
-  <text x="132" y="267" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Stop inherited worker [Mermaid: Orchestrator-xWorker: Stop inherited worker]</text>
-  <path d="M 92 277 L 384.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 374.5 272 L 384.5 282 M 374.5 282 L 384.5 272" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2"/>
+  <path d="M 337 213 L 337 277" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 334.5 277 L 334.5 287 L 339.5 287 L 339.5 277 L 334.5 277" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 334.5 277 L 334.5 287 L 339.5 287 L 339.5 277 L 334.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 334 274 L 340 280 M 334 280 L 340 274" fill="none" stroke="rgb(0,0,0)" stroke-width="2"/>
+  <text x="132" y="267" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Stop inherited worker [Mermaid: Orchestrator-xWorker: Stop inherited worker]</text>
+  <path d="M 92 277 L 334.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 324.5 272 L 334.5 282 M 324.5 282 L 334.5 272" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2"/>
   <path d="M 89.5 297 M 89.5 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 352 335 L 352 363 L 352 363 A 5 5 0 0 0 357 368 L 423 368 L 423 368 A 5 5 0 0 0 428 363 L 428 335 L 428 335 A 5 5 0 0 0 423 330 L 357 330 L 357 330 A 5 5 0 0 0 352 335" fill="rgb(210,210,210)" stroke="none"/>
-  <path d="M 349 332 L 349 360 L 349 360 A 5 5 0 0 0 354 365 L 420 365 L 420 365 A 5 5 0 0 0 425 360 L 425 332 L 425 332 A 5 5 0 0 0 420 327 L 354 327 L 354 327 A 5 5 0 0 0 349 332" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 349 332 L 349 360 L 349 360 A 5 5 0 0 0 354 365 L 420 365 L 420 365 A 5 5 0 0 0 425 360 L 425 332 L 425 332 A 5 5 0 0 0 420 327 L 354 327 L 354 327 A 5 5 0 0 0 349 332" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="358" y="354" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Worker</text>
+  <path d="M 302 335 L 302 363 L 302 363 A 5 5 0 0 0 307 368 L 373 368 L 373 368 A 5 5 0 0 0 378 363 L 378 335 L 378 335 A 5 5 0 0 0 373 330 L 307 330 L 307 330 A 5 5 0 0 0 302 335" fill="rgb(210,210,210)" stroke="none"/>
+  <path d="M 299 332 L 299 360 L 299 360 A 5 5 0 0 0 304 365 L 370 365 L 370 365 A 5 5 0 0 0 375 360 L 375 332 L 375 332 A 5 5 0 0 0 370 327 L 304 327 L 304 327 A 5 5 0 0 0 299 332" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 299 332 L 299 360 L 299 360 A 5 5 0 0 0 304 365 L 370 365 L 370 365 A 5 5 0 0 0 375 360 L 375 332 L 375 332 A 5 5 0 0 0 370 327 L 304 327 L 304 327 A 5 5 0 0 0 299 332" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="308" y="354" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Worker</text>
   <path d="M 89.5 297 L 89.5 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 87 297 L 87 447 L 92 447 L 92 297 L 87 297" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 87 297 L 87 447 L 92 447 L 92 297 L 87 297" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 87 297 L 87 447 M 92 447 L 92 297 M 87 297" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 387 365 L 387 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 384.5 429 L 384.5 447 L 389.5 447 L 389.5 429 L 384.5 429" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 384.5 429 L 384.5 447 M 389.5 447 L 389.5 429 L 384.5 429" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="132" y="419" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Create worker [Mermaid: Orchestrator-&gt;&gt;Worker: Create worker]</text>
-  <path d="M 92 429 L 384.5 429" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 374.5 424 L 374.5 434 L 384.5 429" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 337 365 L 337 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 334.5 429 L 334.5 447 L 339.5 447 L 339.5 429 L 334.5 429" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 334.5 429 L 334.5 447 M 339.5 447 L 339.5 429 L 334.5 429" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="132" y="419" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Create worker [Mermaid: Orchestrator-&gt;&gt;Worker: Create worker]</text>
+  <path d="M 92 429 L 334.5 429" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 324.5 424 L 324.5 434 L 334.5 429" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 89.5 447 M 89.5 513" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 387 447 M 387 513" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 337 447 M 337 513" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 89.5 447 L 89.5 513" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 87 447 L 87 513 L 92 513 L 92 447 L 87 447" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 87 447 L 87 513 L 92 513 L 92 447 L 87 447" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 87 447 L 87 513 M 92 513 L 92 447 M 87 447" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 387 447 L 387 513" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 384.5 447 L 384.5 513 L 389.5 513 L 389.5 447 L 384.5 447" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 384.5 447 L 384.5 513 M 389.5 513 L 389.5 447 M 384.5 447" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="139.5" y="498.5" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">3. Ready [Mermaid: Worker--&gt;&gt;Orchestrator: Ready]</text>
-  <path d="M 384.5 506 L 92 506" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
+  <path d="M 337 447 L 337 513" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 334.5 447 L 334.5 513 L 339.5 513 L 339.5 447 L 334.5 447" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 334.5 447 L 334.5 513 M 339.5 513 L 339.5 447 M 334.5 447" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="139.5" y="498.5" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">3. Ready [Mermaid: Worker--&gt;&gt;Orchestrator: Ready]</text>
+  <path d="M 334.5 506 L 92 506" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
   <path d="M 92 506 L 102 501 L 102 511 L 92 506" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 89.5 513 M 89.5 597" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 387 513 M 387 597" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 337 513 M 337 597" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 89.5 513 L 89.5 597" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 87 513 L 87 597 L 92 597 L 92 513 L 87 513" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 87 513 L 87 597 L 92 597 L 92 513 L 87 513" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 87 513 L 87 597 M 92 597 L 92 513 M 87 513" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 387 513 L 387 577" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 384.5 513 L 384.5 587 L 389.5 587 L 389.5 513 L 384.5 513" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 384.5 513 L 384.5 587 L 389.5 587 L 389.5 513 M 384.5 513" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 384 574 L 390 580 M 384 580 L 390 574" fill="none" stroke="rgb(0,0,0)" stroke-width="2"/>
-  <text x="132" y="567" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">4. Stop worker [Mermaid: Orchestrator-xWorker: Stop worker]</text>
-  <path d="M 92 577 L 384.5 577" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 374.5 572 L 384.5 582 M 374.5 582 L 384.5 572" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2"/>
+  <path d="M 337 513 L 337 577" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 334.5 513 L 334.5 587 L 339.5 587 L 339.5 513 L 334.5 513" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 334.5 513 L 334.5 587 L 339.5 587 L 339.5 513 M 334.5 513" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 334 574 L 340 580 M 334 580 L 340 574" fill="none" stroke="rgb(0,0,0)" stroke-width="2"/>
+  <text x="132" y="567" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">4. Stop worker [Mermaid: Orchestrator-xWorker: Stop worker]</text>
+  <path d="M 92 577 L 334.5 577" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 324.5 572 L 334.5 582 M 324.5 582 L 334.5 572" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2"/>
   <path d="M 89.5 597 M 89.5 747" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 352 635 L 352 663 L 352 663 A 5 5 0 0 0 357 668 L 423 668 L 423 668 A 5 5 0 0 0 428 663 L 428 635 L 428 635 A 5 5 0 0 0 423 630 L 357 630 L 357 630 A 5 5 0 0 0 352 635" fill="rgb(210,210,210)" stroke="none"/>
-  <path d="M 349 632 L 349 660 L 349 660 A 5 5 0 0 0 354 665 L 420 665 L 420 665 A 5 5 0 0 0 425 660 L 425 632 L 425 632 A 5 5 0 0 0 420 627 L 354 627 L 354 627 A 5 5 0 0 0 349 632" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 349 632 L 349 660 L 349 660 A 5 5 0 0 0 354 665 L 420 665 L 420 665 A 5 5 0 0 0 425 660 L 425 632 L 425 632 A 5 5 0 0 0 420 627 L 354 627 L 354 627 A 5 5 0 0 0 349 632" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="358" y="654" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Worker</text>
+  <path d="M 302 635 L 302 663 L 302 663 A 5 5 0 0 0 307 668 L 373 668 L 373 668 A 5 5 0 0 0 378 663 L 378 635 L 378 635 A 5 5 0 0 0 373 630 L 307 630 L 307 630 A 5 5 0 0 0 302 635" fill="rgb(210,210,210)" stroke="none"/>
+  <path d="M 299 632 L 299 660 L 299 660 A 5 5 0 0 0 304 665 L 370 665 L 370 665 A 5 5 0 0 0 375 660 L 375 632 L 375 632 A 5 5 0 0 0 370 627 L 304 627 L 304 627 A 5 5 0 0 0 299 632" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 299 632 L 299 660 L 299 660 A 5 5 0 0 0 304 665 L 370 665 L 370 665 A 5 5 0 0 0 375 660 L 375 632 L 375 632 A 5 5 0 0 0 370 627 L 304 627 L 304 627 A 5 5 0 0 0 299 632" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="308" y="654" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Worker</text>
   <path d="M 89.5 597 L 89.5 747" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 87 597 L 87 747 L 92 747 L 92 597 L 87 597" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 87 597 L 87 747 L 92 747 L 92 597 L 87 597" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 87 597 L 87 747 M 92 747 L 92 597 M 87 597" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 387 665 L 387 747" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 384.5 729 L 384.5 747 L 389.5 747 L 389.5 729 L 384.5 729" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 384.5 729 L 384.5 747 M 389.5 747 L 389.5 729 L 384.5 729" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <text x="132" y="719" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">5. Recreate worker [Mermaid: Orchestrator-&gt;&gt;Worker: Recreate worker]</text>
-  <path d="M 92 729 L 384.5 729" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 374.5 724 L 374.5 734 L 384.5 729" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 337 665 L 337 747" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 334.5 729 L 334.5 747 L 339.5 747 L 339.5 729 L 334.5 729" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 334.5 729 L 334.5 747 M 339.5 747 L 339.5 729 L 334.5 729" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="132" y="719" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">5. Recreate worker [Mermaid: Orchestrator-&gt;&gt;Worker: Recreate worker]</text>
+  <path d="M 92 729 L 334.5 729" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 324.5 724 L 324.5 734 L 334.5 729" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 89.5 747 M 89.5 831" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 387 747 M 387 831" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 337 747 M 337 831" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 89.5 747 L 89.5 831" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 87 747 L 87 831 L 92 831 L 92 747 L 87 747" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 87 747 L 87 831 L 92 831 L 92 747 L 87 747" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 87 747 L 87 831 M 92 831 L 92 747 M 87 747" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 387 747 L 387 811" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 384.5 747 L 384.5 821 L 389.5 821 L 389.5 747 L 384.5 747" fill="rgb(204,255,153)" stroke="none"/>
-  <path d="M 384.5 747 L 384.5 821 L 389.5 821 L 389.5 747 M 384.5 747" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 384 808 L 390 814 M 384 814 L 390 808" fill="none" stroke="rgb(0,0,0)" stroke-width="2"/>
-  <text x="132" y="801" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">6. Stop recreated worker [Mermaid: Orchestrator-xWorker: Stop recreated worker]</text>
-  <path d="M 92 811 L 384.5 811" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 374.5 806 L 384.5 816 M 374.5 816 L 384.5 806" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2"/>
+  <path d="M 337 747 L 337 811" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 334.5 747 L 334.5 821 L 339.5 821 L 339.5 747 L 334.5 747" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 334.5 747 L 334.5 821 L 339.5 821 L 339.5 747 M 334.5 747" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 334 808 L 340 814 M 334 814 L 340 808" fill="none" stroke="rgb(0,0,0)" stroke-width="2"/>
+  <text x="132" y="801" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">6. Stop recreated worker [Mermaid: Orchestrator-xWorker: Stop recreated worker]</text>
+  <path d="M 92 811 L 334.5 811" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 324.5 806 L 334.5 816 M 324.5 816 L 334.5 806" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2"/>
   <path d="M 89.5 831 L 89.5 855" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 87 831 L 87 831 L 92 831 L 92 831 L 87 831" fill="rgb(204,255,153)" stroke="none"/>
+  <path d="M 87 831 L 87 831 L 92 831 L 92 831 L 87 831" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 87 831 L 87 831 L 92 831 L 92 831 M 87 831" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
 </svg>
