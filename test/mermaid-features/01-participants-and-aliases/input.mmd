@@ -1,4 +1,10 @@
 sequenceDiagram
 participant Caller as "Caller Service"
-actor DB as "Database Layer"
+actor User as "Human operator"
+participant Edge as {"type":"boundary","name":"External boundary"}
+participant Control as {"type":"control","name":"Flow controller"}
+participant Entity as {"type":"entity","name":"Order entity"}
+participant DB as {"type":"database","name":"Database Layer"}
+participant Collections as {"type":"collections","name":"Collections store"}
+participant Queue as {"type":"queue","name":"Job queue"}
 participant API

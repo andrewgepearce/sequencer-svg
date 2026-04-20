@@ -53,13 +53,35 @@ function createTempDir() {
 }
 
 describe("Mermaid feature slice 1: participants and aliases", () => {
-	test("transforms explicit Mermaid participants into sequencer actors in declaration order", () => {
+	test("transforms Mermaid participant declarations into sequencer actors in declaration order", () => {
 		const source = readFixture("input.mmd");
 		const expectedYaml = readFixture("expected.sequencer.yaml");
 
 		const transformed = MermaidSequenceTransformer.transform(source, { sourceName: getFixturePath("input.mmd") });
 
 		expect(ReadableYamlFormatter.format(transformed)).toBe(expectedYaml);
+		expect(transformed.actors.map((actor) => actor.alias)).toEqual([
+			"Caller",
+			"User",
+			"Edge",
+			"Control",
+			"Entity",
+			"DB",
+			"Collections",
+			"Queue",
+			"API",
+		]);
+		expect(transformed.actors.map((actor) => actor.actorType)).toEqual([
+			"participant",
+			"actor",
+			"boundary",
+			"control",
+			"entity",
+			"database",
+			"collections",
+			"queue",
+			"participant",
+		]);
 	});
 
 	test("renders SVG from Mermaid input and writes the transformed sequencer YAML sidecar", () => {
