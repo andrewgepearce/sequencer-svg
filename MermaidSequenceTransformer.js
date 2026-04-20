@@ -23,6 +23,7 @@ class MermaidTransformError extends Error {
 	constructor(message, lineNumber, sourceLine) {
 		super(lineNumber ? `${message} at Mermaid source line ${lineNumber}` : message);
 		this.name = "MermaidTransformError";
+		this.reason = message;
 		this.lineNumber = lineNumber;
 		this.sourceLine = sourceLine;
 	}

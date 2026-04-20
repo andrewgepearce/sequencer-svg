@@ -30,6 +30,9 @@ function listMermaidFeatureDirectories() {
 	return fs
 		.readdirSync(path.join(__dirname, "..", "mermaid-features"), { withFileTypes: true })
 		.filter((entry) => entry.isDirectory())
+		.filter((entry) =>
+			fs.existsSync(path.join(__dirname, "..", "mermaid-features", entry.name, "expected.sequencer.yaml"))
+		)
 		.map((entry) => entry.name)
 		.sort();
 }

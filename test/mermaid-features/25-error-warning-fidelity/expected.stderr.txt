@@ -1,0 +1,4 @@
+Error whilst transforming Mermaid:
+  Mermaid feature 'alt' is missing a matching 'end'
+  Source line 3: alt Missing end
+  Hint: Add a matching 'end' for this Mermaid block.

@@ -228,7 +228,10 @@ function buildInputDocument(data, sourceName) {
 			return jsono;
 		} catch (error) {
 			if (error instanceof MermaidTransformError) {
-				console.error("Error whilst transforming Mermaid: " + error.message);
+				console.error(formatMermaidTransformError(error));
+				if (options.verbose === true && typeof error.stack === "string") {
+					console.error(error.stack);
+				}
 				process.exit(-1);
 			}
 
@@ -237,6 +240,88 @@ function buildInputDocument(data, sourceName) {
 	}
 
 	return getObjectFromData(data, options.yaml);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Format a Mermaid transform error for CLI stderr output.
+ *
+ * @param {MermaidTransformError} error Mermaid transform error.
+ * @returns {string} Multi-line CLI diagnostic string.
+ * @example
+ * const message = formatMermaidTransformError(error);
+ */
+function formatMermaidTransformError(error) {
+	const lines = [];
+	const reason = typeof error.reason === "string" && error.reason.length > 0 ? error.reason : error.message;
+	lines.push("Error whilst transforming Mermaid:");
+	lines.push("  " + reason);
+
+	if (typeof error.lineNumber === "number") {
+		lines.push("  Source line " + error.lineNumber + ": " + formatMermaidSourceLine(error.sourceLine));
+	}
+
+	const hint = getMermaidTransformErrorHint(reason);
+	if (typeof hint === "string" && hint.length > 0) {
+		lines.push("  Hint: " + hint);
+	}
+
+	return lines.join("\n");
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Format a Mermaid source line for CLI diagnostics.
+ *
+ * @param {string|undefined} sourceLine Raw Mermaid source line.
+ * @returns {string} Single-line diagnostic representation.
+ * @example
+ * const source = formatMermaidSourceLine("alt Missing end");
+ */
+function formatMermaidSourceLine(sourceLine) {
+	if (typeof sourceLine !== "string") {
+		return "(source line unavailable)";
+	}
+
+	const trimmed = sourceLine.trim();
+	return trimmed.length > 0 ? trimmed : "(blank line)";
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Return a short CLI hint for common Mermaid transform failures.
+ *
+ * @param {string} reason Mermaid transform error reason.
+ * @returns {string} Optional hint text.
+ * @example
+ * const hint = getMermaidTransformErrorHint("Expected Mermaid 'sequenceDiagram' header");
+ */
+function getMermaidTransformErrorHint(reason) {
+	if (typeof reason !== "string" || reason.length === 0) {
+		return "";
+	}
+
+	if (reason.includes("missing a matching 'end'")) {
+		return "Add a matching 'end' for this Mermaid block.";
+	}
+
+	if (reason === "Expected Mermaid 'sequenceDiagram' header") {
+		return "Start the document with a standalone 'sequenceDiagram' line.";
+	}
+
+	if (reason === "Unterminated Mermaid accDescr block") {
+		return "Close the Mermaid accDescr block with a standalone '}'.";
+	}
+
+	if (reason.startsWith("Unsupported Mermaid")) {
+		return "Check the Mermaid syntax on this line against the currently supported sequence-diagram features.";
+	}
+
+	if (reason.includes("not supported yet")) {
+		return "Check the Mermaid syntax on this line against the currently supported sequence-diagram features.";
+	}
+
+	return "";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
