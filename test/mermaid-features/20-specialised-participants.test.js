@@ -47,7 +47,7 @@ function createTempDir() {
 }
 
 describe("Mermaid feature slice 20: specialised participants", () => {
-	test("transforms Mermaid specialised participant declarations into sequencer actor metadata", () => {
+	test("transforms Mermaid @{} specialised participant declarations into sequencer actor metadata", () => {
 		const source = readFixture("input.mmd");
 		const expectedYaml = readFixture("expected.sequencer.yaml");
 
@@ -71,6 +71,15 @@ describe("Mermaid feature slice 20: specialised participants", () => {
 			"database",
 			"collections",
 			"queue",
+		]);
+		expect(transformed.actors.map((actor) => actor.name)).toEqual([
+			"Human operator",
+			"External boundary",
+			"Flow controller",
+			"Order entity",
+			"Primary store",
+			"Collections store",
+			"Job queue",
 		]);
 		expect(transformed.actors[4].name).toBe("Primary store");
 		expect(transformed.actors[4].alias).toBe("DB");

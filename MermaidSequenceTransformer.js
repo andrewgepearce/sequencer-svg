@@ -1141,33 +1141,28 @@ class MermaidSequenceTransformer {
 
 		const declarationType = match[1].toLowerCase();
 		const payload = match[2].trim();
-		let externalAlias = null;
-		let configPayload = payload;
-
-		const aliasAndConfigMatch = payload.match(/^([A-Za-z0-9_][-A-Za-z0-9_]*)\s+as\s+(\{.*)$/);
-		if (aliasAndConfigMatch) {
-			externalAlias = aliasAndConfigMatch[1];
-			configPayload = aliasAndConfigMatch[2].trim();
-		}
-
-		if (!configPayload.startsWith("{")) {
-			throw new MermaidTransformError("Unsupported Mermaid participant declaration", lineNumber, sourceLine);
-		}
-
-		const splitPayload = this._splitJsonObjectPrefix(configPayload, lineNumber, sourceLine);
+		const parsedConfigDeclaration = this._parseConfiguredParticipantDeclarationHeader(payload, lineNumber, sourceLine);
+		const splitPayload = this._splitJsonObjectPrefix(parsedConfigDeclaration.configPayload, lineNumber, sourceLine);
+		const externalName = this._parseConfiguredParticipantDeclarationSuffix(splitPayload.suffix, lineNumber, sourceLine);
 		const config = this._parseParticipantConfigurationObject(splitPayload.jsonText, lineNumber, sourceLine);
 		const actorType = this._resolveConfiguredActorType(declarationType, config.type, lineNumber, sourceLine);
-		const alias = externalAlias || config.alias;
-		const name = this._parseParticipantNamePayload(config.name != null ? config.name : config.label != null ? config.label : alias);
+		const alias = parsedConfigDeclaration.externalAlias || config.alias;
+		const configuredDisplayName = config.name != null
+			? config.name
+			: config.label != null
+				? config.label
+				: parsedConfigDeclaration.externalAlias && config.alias != null
+					? config.alias
+					: alias;
+		const name = externalName != null
+			? this._parseParticipantNamePayload(externalName)
+			: this._parseParticipantNamePayload(configuredDisplayName);
 
 		if (!/^[A-Za-z0-9_][-A-Za-z0-9_]*$/.test(alias)) {
 			throw new MermaidTransformError("Mermaid participant alias must be a valid identifier", lineNumber, sourceLine);
 		}
 		if ((typeof name === "string" && name.length === 0) || (Array.isArray(name) && name.length === 0)) {
 			throw new MermaidTransformError("Mermaid participant display name cannot be empty", lineNumber, sourceLine);
-		}
-		if (splitPayload.suffix.length > 0) {
-			throw new MermaidTransformError("Unsupported Mermaid participant declaration suffix", lineNumber, sourceLine);
 		}
 
 		const actor = {
@@ -1181,6 +1176,88 @@ class MermaidSequenceTransformer {
 		}
 		this._applyConfiguredParticipantColours(config, actor, lineNumber, sourceLine);
 		return actor;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse the non-JSON header of a Mermaid configured participant declaration.
+	 *
+	 * @param {string} payload Mermaid declaration payload after the keyword.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {{ externalAlias: string|null, configPayload: string }} Parsed declaration header.
+	 * @throws {MermaidTransformError} If the declaration shape is unsupported.
+	 * @example
+	 * const parsed = MermaidSequenceTransformer._parseConfiguredParticipantDeclarationHeader(
+	 *   'API@{"type":"boundary"} as Public API',
+	 *   4,
+	 *   source
+	 * );
+	 */
+	static _parseConfiguredParticipantDeclarationHeader(payload, lineNumber, sourceLine) {
+		const aliasAndInlineConfigMatch = payload.match(/^([A-Za-z0-9_][-A-Za-z0-9_]*)\s*@\s*(\{.*)$/);
+		if (aliasAndInlineConfigMatch) {
+			return {
+				externalAlias: aliasAndInlineConfigMatch[1],
+				configPayload: aliasAndInlineConfigMatch[2].trim(),
+			};
+		}
+
+		const aliasAndLegacyConfigMatch = payload.match(/^([A-Za-z0-9_][-A-Za-z0-9_]*)\s+as\s+(\{.*)$/);
+		if (aliasAndLegacyConfigMatch) {
+			return {
+				externalAlias: aliasAndLegacyConfigMatch[1],
+				configPayload: aliasAndLegacyConfigMatch[2].trim(),
+			};
+		}
+
+		const directInlineConfigMatch = payload.match(/^@\s*(\{.*)$/);
+		if (directInlineConfigMatch) {
+			return {
+				externalAlias: null,
+				configPayload: directInlineConfigMatch[1].trim(),
+			};
+		}
+
+		if (payload.startsWith("{")) {
+			return {
+				externalAlias: null,
+				configPayload: payload,
+			};
+		}
+
+		throw new MermaidTransformError("Unsupported Mermaid participant declaration", lineNumber, sourceLine);
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse the trailing suffix of a configured Mermaid participant declaration.
+	 *
+	 * @param {string} suffix Mermaid declaration suffix after the JSON object.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {string|null} External display name from `as ...`, or null when absent.
+	 * @throws {MermaidTransformError} If the suffix is unsupported.
+	 * @example
+	 * const name = MermaidSequenceTransformer._parseConfiguredParticipantDeclarationSuffix('as "Public API"', 4, source);
+	 */
+	static _parseConfiguredParticipantDeclarationSuffix(suffix, lineNumber, sourceLine) {
+		const trimmedSuffix = String(suffix).trim();
+		if (trimmedSuffix.length === 0) {
+			return null;
+		}
+
+		const match = trimmedSuffix.match(/^as\s+(.+)$/i);
+		if (!match) {
+			throw new MermaidTransformError("Unsupported Mermaid participant declaration suffix", lineNumber, sourceLine);
+		}
+
+		const name = this._cleanMetadataValue(match[1]);
+		if (name.length === 0) {
+			throw new MermaidTransformError("Mermaid participant display name cannot be empty", lineNumber, sourceLine);
+		}
+
+		return name;
 	}
 
 	////////////////////////////////////////////////////////////////////////////

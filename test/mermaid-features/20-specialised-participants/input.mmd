@@ -6,12 +6,12 @@ From the project root, regenerate this Mermaid transform and SVG with:
 node sequencer.js --mermaid -i test/mermaid-features/20-specialised-participants/input.mmd -o -f -t test/mermaid-features/20-specialised-participants
 }
 actor {"alias":"User","name":"Human operator"}
-participant Edge as {"type":"boundary","name":"External boundary"}
-participant {"type":"control","alias":"FlowController","name":"Flow controller"}
-participant {"type":"entity","alias":"OrderEntity","label":"Order entity"}
-participant DB as {"type":"database","alias":"IgnoredInternalDb","name":"Primary store"}
-participant {"type":"collections","alias":"CollectionsNode","label":"Collections store"}
-participant {"type":"queue","alias":"JobQueue","label":"Job queue"}
+participant Edge@{"type":"boundary"} as External boundary
+participant FlowController@{"type":"control","alias":"Flow controller"}
+participant OrderEntity@{"type":"entity","label":"Order entity"}
+participant DB@{"type":"database","name":"Primary store"}
+participant CollectionsNode@{"type":"collections","label":"Collections store"}
+participant JobQueue@{"type":"queue","alias":"Job queue"}
 User->>Edge: Start request [Mermaid: User->>Edge: Start request]
 Edge->>FlowController: Route request [Mermaid: Edge->>FlowController: Route request]
 FlowController->>OrderEntity: Load aggregate [Mermaid: FlowController->>OrderEntity: Load aggregate]
