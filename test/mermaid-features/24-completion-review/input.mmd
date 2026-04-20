@@ -1,0 +1,12 @@
+sequenceDiagram
+accTitle: Mermaid completion review
+accDescr {
+Demonstrates Mermaid entity-code escapes and actor-name line breaks.
+From the project root, regenerate this Mermaid transform and SVG with:
+node sequencer.js --mermaid -i test/mermaid-features/24-completion-review/input.mmd -o -f -t test/mermaid-features/24-completion-review
+}
+participant API as "API<br/>Gateway"
+participant DB as "Primary #35; Store"
+Note over API,DB: Escaped #35; and #59; plus &amp; name support
+API->>DB: Query #35;42#59; status &amp; health [Mermaid: API->>DB: Query #35;42#59; status &amp; health]
+DB-->>API: OK &lt;done&gt; [Mermaid: DB-->>API: OK &lt;done&gt;]

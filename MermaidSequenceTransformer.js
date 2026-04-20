@@ -942,9 +942,9 @@ class MermaidSequenceTransformer {
 			}
 			const actorType = match[1].toLowerCase();
 			const alias = match[2];
-			const name = this._cleanParticipantName(match[3] != null ? match[3] : alias);
+			const name = this._parseParticipantNamePayload(match[3] != null ? match[3] : alias);
 
-			if (name.length === 0) {
+			if ((typeof name === "string" && name.length === 0) || (Array.isArray(name) && name.length === 0)) {
 				throw new MermaidTransformError("Mermaid participant display name cannot be empty", lineNumber, sourceLine);
 			}
 
@@ -1005,12 +1005,12 @@ class MermaidSequenceTransformer {
 		const config = this._parseParticipantConfigurationObject(splitPayload.jsonText, lineNumber, sourceLine);
 		const actorType = this._resolveConfiguredActorType(declarationType, config.type, lineNumber, sourceLine);
 		const alias = externalAlias || config.alias;
-		const name = this._cleanParticipantName(config.name != null ? config.name : config.label != null ? config.label : alias);
+		const name = this._parseParticipantNamePayload(config.name != null ? config.name : config.label != null ? config.label : alias);
 
 		if (!/^[A-Za-z0-9_][-A-Za-z0-9_]*$/.test(alias)) {
 			throw new MermaidTransformError("Mermaid participant alias must be a valid identifier", lineNumber, sourceLine);
 		}
-		if (name.length === 0) {
+		if ((typeof name === "string" && name.length === 0) || (Array.isArray(name) && name.length === 0)) {
 			throw new MermaidTransformError("Mermaid participant display name cannot be empty", lineNumber, sourceLine);
 		}
 		if (splitPayload.suffix.length > 0) {
@@ -1180,6 +1180,20 @@ class MermaidSequenceTransformer {
 		}
 
 		return trimmed;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a Mermaid participant display name, including line breaks and entity
+	 * escapes.
+	 *
+	 * @param {string} value Raw Mermaid participant display name.
+	 * @returns {string|string[]} Decoded participant name payload.
+	 * @example
+	 * const name = MermaidSequenceTransformer._parseParticipantNamePayload("API<br/>Gateway");
+	 */
+	static _parseParticipantNamePayload(value) {
+		return this._parseTextPayload(this._cleanParticipantName(value));
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -2114,8 +2128,7 @@ class MermaidSequenceTransformer {
 	 * const payload = MermaidSequenceTransformer._parseTextPayload("Line 1<br/>Line 2");
 	 */
 	static _parseTextPayload(value) {
-		const parts = String(value)
-			.trim()
+		const parts = this._decodeMermaidEntities(String(value).trim())
 			.split(/<br\s*\/?>/i)
 			.map((part) => part.trim());
 
@@ -2132,7 +2145,7 @@ class MermaidSequenceTransformer {
 	 * const payload = MermaidSequenceTransformer._parseMetadataPayload("'Line 1<br/>Line 2'");
 	 */
 	static _parseMetadataPayload(value) {
-		const parts = this._cleanMetadataValue(value)
+		const parts = this._decodeMermaidEntities(this._cleanMetadataValue(value))
 			.split(/<br\s*\/?>/i)
 			.map((part) => part.trim());
 
@@ -2150,6 +2163,40 @@ class MermaidSequenceTransformer {
 	 */
 	static _cleanMetadataValue(value) {
 		return this._cleanParticipantName(String(value).trim());
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Decode Mermaid-supported entity escapes in visible text payloads.
+	 *
+	 * @param {string} value Raw Mermaid text.
+	 * @returns {string} Decoded Mermaid text.
+	 * @example
+	 * const text = MermaidSequenceTransformer._decodeMermaidEntities("A#35;B &amp; C");
+	 */
+	static _decodeMermaidEntities(value) {
+		const namedEntities = {
+			amp: "&",
+			lt: "<",
+			gt: ">",
+			quot: "\"",
+			apos: "'",
+			nbsp: "\u00A0",
+		};
+
+		return String(value)
+			.replace(/&#(\d+);/g, (_match, codePoint) => {
+				const numeric = Number.parseInt(codePoint, 10);
+				return Number.isInteger(numeric) ? String.fromCodePoint(numeric) : _match;
+			})
+			.replace(/#(\d+);/g, (_match, codePoint) => {
+				const numeric = Number.parseInt(codePoint, 10);
+				return Number.isInteger(numeric) ? String.fromCodePoint(numeric) : _match;
+			})
+			.replace(/&([a-zA-Z]+);/g, (match, entityName) => {
+				const replacement = namedEntities[String(entityName).toLowerCase()];
+				return typeof replacement === "string" ? replacement : match;
+			});
 	}
 
 	////////////////////////////////////////////////////////////////////////////
