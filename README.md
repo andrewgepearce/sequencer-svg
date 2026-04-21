@@ -117,14 +117,14 @@ lines:
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `title` | string | Yes | — | Document title (rendered at top) |
-| `version` | string | Yes | — | Version string (e.g. "1.0", "2.1.3") |
-| `description` | string or string[] | No | — | Multi-line description |
-| `actors` | array | Yes | — | Actor definitions |
-| `actorGroups` | array | No | — | Visual groupings of actors |
-| `lines` | array | Yes | — | Diagram content (messages, fragments, etc.) |
-| `autonumber` | boolean | No | `false` | Enable automatic message numbering |
-| `params` | object | No | — | Document-wide styling defaults |
+| `title` | string | Yes | — | Document title rendered at the top of the diagram |
+| `version` | string | Yes | — | Version string displayed below the title (e.g. "1.0", "2.1.3") |
+| `description` | string or string[] | No | — | Description text rendered below the version; use an array for multiple lines |
+| `actors` | array | Yes | — | Array of actor definition objects (see Actor Properties) |
+| `actorGroups` | array | No | — | Array of actor group objects for visual groupings (see Actor Groups) |
+| `lines` | array | Yes | — | Array of line objects defining messages, fragments, and spacing |
+| `autonumber` | boolean | No | `false` | When `true`, prefixes each message with a sequential number; when `false`, no numbering |
+| `params` | object | No | — | Document-wide styling defaults that apply to all elements unless overridden |
 
 ---
 
@@ -150,32 +150,32 @@ actors:
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `name` | string or string[] | Yes | — | Display name (array for multi-line) |
-| `alias` | string | Yes | — | Short identifier used in `from`/`to` |
-| `actorType` | string | No | `"participant"` | Visual style (see Actor Types) |
-| `gapToNext` | number | No | `150` | Pixels to next actor |
-| `links` | array | No | — | Clickable links rendered below actor |
-| `bgColour` | colour | No | `"rgb(95,183,224)"` | Background colour |
-| `borderColour` | colour | No | `"rgb(0,0,0)"` | Border colour |
-| `fgColour` | colour | No | `"rgb(0,0,0)"` | Text colour |
-| `fontFamily` | string | No | `"sans-serif"` | Font family |
-| `fontSizePx` | number | No | `18` | Font size in pixels |
-| `radius` | number | No | `5` | Corner radius |
+| `name` | string or string[] | Yes | — | Display name shown in the actor header; use an array for multiple lines |
+| `alias` | string | Yes | — | Short identifier used to reference this actor in `from`/`to` fields |
+| `actorType` | string | No | `"participant"` | Visual style of the actor header icon (see Actor Types below) |
+| `gapToNext` | number | No | `150` | Horizontal gap in pixels between this actor and the next actor |
+| `links` | array | No | — | Array of `{label, url}` objects rendered as clickable links below the actor |
+| `bgColour` | colour | No | `"rgb(95,183,224)"` | Fill colour of the actor header box |
+| `borderColour` | colour | No | `"rgb(0,0,0)"` | Stroke colour of the actor header box border |
+| `fgColour` | colour | No | `"rgb(0,0,0)"` | Text colour of the actor name |
+| `fontFamily` | string | No | `"sans-serif"` | Font family for the actor name text |
+| `fontSizePx` | number | No | `18` | Font size in pixels for the actor name text |
+| `radius` | number | No | `5` | Corner radius in pixels for the actor header box |
 
 ### Actor Types
 
-The `actorType` property controls the visual representation:
+The `actorType` property controls the visual representation of the actor header:
 
 | Type | Description |
 |------|-------------|
-| `participant` | Standard box (default) |
-| `actor` | Stick figure icon |
-| `boundary` | Boundary symbol (UI/external interface) |
-| `control` | Control symbol (controller/coordinator) |
-| `entity` | Entity symbol (data/model) |
-| `database` | Database cylinder |
-| `collections` | Stacked boxes (collection/array) |
-| `queue` | Queue symbol |
+| `participant` | Standard rectangular box; the default when no type is specified |
+| `actor` | Stick figure icon representing a human user or external agent |
+| `boundary` | Circle with vertical line; represents a UI or external system interface |
+| `control` | Circle with arrow; represents a controller or coordinator component |
+| `entity` | Circle with horizontal underline; represents a data entity or domain model |
+| `database` | Cylinder shape; represents a database or persistent storage |
+| `collections` | Stacked rectangles; represents a collection, array, or set of items |
+| `queue` | Rectangle with internal dividers; represents a message queue or buffer |
 
 ```yaml
 actors:
@@ -202,13 +202,13 @@ Group actors visually with a labelled box.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `title` | string | No | `""` | Label displayed on the group box |
-| `bgColour` | colour | No | `"rgba(220,220,220,0.35)"` | Background colour |
-| `actors` | string[] | One of | — | Explicit list of actor aliases |
-| `startActor` | string | One of | — | First actor in range |
-| `endActor` | string | One of | — | Last actor in range |
+| `title` | string | No | `""` | Label displayed at the top of the group box; empty string shows no label |
+| `bgColour` | colour | No | `"rgba(220,220,220,0.35)"` | Fill colour of the group box background |
+| `actors` | string[] | One of | — | Explicit list of actor aliases to include in this group |
+| `startActor` | string | One of | — | Alias of the first (leftmost) actor in a contiguous range |
+| `endActor` | string | One of | — | Alias of the last (rightmost) actor in a contiguous range |
 
-You must specify either `actors` or both `startActor` and `endActor`.
+You must specify either `actors` (explicit list) or both `startActor` and `endActor` (contiguous range).
 
 **Example using actor list:**
 
@@ -261,32 +261,32 @@ A solid arrow from one actor to another:
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `from` | string | Yes | — | Source actor alias |
-| `to` | string | Yes | — | Target actor alias |
-| `text` | string or string[] | Yes | — | Message label |
-| `arrow` | string | No | `"fill"` | Arrow style at target (shorthand for `toArrow`) |
-| `fromArrow` | string | No | `"none"` | Arrow style at source |
-| `toArrow` | string | No | `"fill"` | Arrow style at target (overrides `arrow`) |
-| `fromAnchor` | string | No | `"edge"` | Connection point: "edge" or "central" |
-| `toAnchor` | string | No | `"edge"` | Connection point: "edge" or "central" |
-| `async` | boolean | No | `false` | Render as async (open arrow, no wait) |
-| `breakFromFlow` | boolean | No | `false` | Deactivate source after this call |
-| `breakToFlow` | boolean | No | `false` | Don't activate target |
-| `destroyFrom` | boolean | No | `false` | Terminate source actor lifecycle |
-| `destroyTo` | boolean | No | `false` | Terminate target actor lifecycle |
-| `comment` | object | No | — | Attached comment block |
+| `from` | string | Yes | — | Alias of the source actor sending the message |
+| `to` | string | Yes | — | Alias of the target actor receiving the message |
+| `text` | string or string[] | Yes | — | Message label displayed on the arrow; use an array for multiple lines |
+| `arrow` | string | No | `"fill"` | Arrow style at target end; shorthand for `toArrow` (see Arrow Styles below) |
+| `fromArrow` | string | No | `"none"` | Arrow style at source end (see Arrow Styles below) |
+| `toArrow` | string | No | `"fill"` | Arrow style at target end; if specified, overrides `arrow` |
+| `fromAnchor` | string | No | `"edge"` | Where the line connects to the source: `"edge"` attaches at the activation bar edge, `"central"` attaches at the actor timeline centre |
+| `toAnchor` | string | No | `"edge"` | Where the line connects to the target: `"edge"` attaches at the activation bar edge, `"central"` attaches at the actor timeline centre |
+| `async` | boolean | No | `false` | When `true`, renders with open arrowhead and does not keep source active while awaiting response; when `false`, renders as synchronous call |
+| `breakFromFlow` | boolean | No | `false` | When `true`, deactivates the source actor after sending this message; when `false`, source remains active |
+| `breakToFlow` | boolean | No | `false` | When `true`, the target actor is not activated by this message; when `false`, target becomes active |
+| `destroyFrom` | boolean | No | `false` | When `true`, terminates the source actor's lifecycle with an X marker; when `false`, source continues |
+| `destroyTo` | boolean | No | `false` | When `true`, terminates the target actor's lifecycle with an X marker; when `false`, target continues |
+| `comment` | object | No | — | Comment/note block attached to this message (see comment syntax) |
 
 #### Arrow Styles
 
 | Style | Description |
 |-------|-------------|
-| `fill` | Filled arrowhead (synchronous) |
-| `open` | Open arrowhead (asynchronous) |
-| `cross` | X mark (lost message) |
-| `empty` | Empty triangle |
-| `none` | No arrowhead |
-| `halfTop` | Half arrow (top) |
-| `halfBottom` | Half arrow (bottom) |
+| `fill` | Solid filled triangular arrowhead; typically indicates synchronous call |
+| `open` | Open (unfilled) arrowhead; typically indicates asynchronous message |
+| `cross` | X mark at the line end; indicates a lost or failed message |
+| `empty` | Outlined triangular arrowhead with no fill |
+| `none` | No arrowhead; just a plain line end |
+| `halfTop` | Half arrowhead pointing upward from the line |
+| `halfBottom` | Half arrowhead pointing downward from the line |
 
 ### return — Return Message
 
@@ -342,12 +342,12 @@ Add vertical spacing, optionally with activation changes or comments:
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `height` | number | Yes | — | Vertical space in pixels |
-| `actor` | string | No | — | Single actor for attached comment |
-| `actors` | string[] | No | — | Actor range for spanning comment |
-| `activate` | string[] | No | — | Actors to activate |
-| `deactivate` | string[] | No | — | Actors to deactivate |
-| `comment` | object | No | — | Note/comment block |
+| `height` | number | Yes | — | Vertical space in pixels added to the diagram at this point |
+| `actor` | string | No | — | Alias of the actor to anchor a comment to; comment appears beside this actor's timeline |
+| `actors` | string[] | No | — | Array of two actor aliases; comment spans horizontally between these actors |
+| `activate` | string[] | No | — | Array of actor aliases whose activation bars begin at this point |
+| `deactivate` | string[] | No | — | Array of actor aliases whose activation bars end at this point |
+| `comment` | object | No | — | Note/comment block to display; requires `actor` or `actors` to position it |
 
 ### fragment — Control Structure
 
@@ -369,26 +369,26 @@ Fragments represent control structures like loops, conditions, and parallel exec
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `fragmentType` | string | Yes | — | Type of fragment (see below) |
-| `title` | string | Yes | — | Label in fragment header |
-| `condition` | string | Yes | — | Condition text (shown below title) |
-| `lines` | array | Yes | — | Nested content |
-| `startActor` | string | No | — | Left boundary actor |
-| `endActor` | string | No | — | Right boundary actor |
-| `bgColour` | colour | No | `"rgb(255,255,255)"` | Background colour |
-| `borderColour` | colour | No | `"rgb(0,0,0)"` | Border colour |
+| `fragmentType` | string | Yes | — | Type of fragment controlling its semantics and header label (see Fragment Types below) |
+| `title` | string | Yes | — | Label displayed in the fragment header tab (e.g. "Retry logic") |
+| `condition` | string | Yes | — | Condition text displayed in brackets below the title (e.g. "while x < 3"); use empty string if none |
+| `lines` | array | Yes | — | Array of line objects contained within this fragment |
+| `startActor` | string | No | — | Alias of the leftmost actor; if omitted, fragment spans all actors used within it |
+| `endActor` | string | No | — | Alias of the rightmost actor; if omitted, fragment spans all actors used within it |
+| `bgColour` | colour | No | `"rgb(255,255,255)"` | Fill colour of the fragment background |
+| `borderColour` | colour | No | `"rgb(0,0,0)"` | Stroke colour of the fragment border |
 
 #### Fragment Types
 
 | Type | Description |
 |------|-------------|
-| `loop` | Iteration/repetition |
-| `alt` | Alternative (if/else) — use with `condition` lines |
-| `opt` | Optional block |
-| `par` | Parallel execution |
-| `critical` | Critical section |
-| `break` | Break/exception handling |
-| `rect` | Highlight region (no structural meaning) |
+| `loop` | Iteration/repetition block; condition specifies the loop guard (e.g. "while x < 3") |
+| `alt` | Alternative paths (if/else); use nested `condition` lines to define else branches |
+| `opt` | Optional block; contents execute only if condition is met |
+| `par` | Parallel execution; use nested `condition` lines with `and` to show concurrent paths |
+| `critical` | Critical section; rendered with heavier border to indicate mutual exclusion |
+| `break` | Break/exception handling; exits the enclosing fragment when condition is met |
+| `rect` | Highlight region with coloured background; purely visual, no control-flow semantics |
 
 **Example: Nested fragments with loop, alt, else, and opt:**
 
