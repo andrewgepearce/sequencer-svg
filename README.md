@@ -967,7 +967,7 @@ The renderer supports built-in text markup tags:
 | `<code>...</code>` | Blue monospace text |
 | `<comment>...</comment>` | Dark italic text |
 | `<emph>...</emph>` | Bold italic text |
-| `<//>...<////>` | Dark italic with `// ` prefix |
+| `<//>...<////>` | Dark italic with `//` prefix |
 
 Example:
 
