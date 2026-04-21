@@ -27,7 +27,7 @@ Useful generated artefacts under `/tmp/seq-compare/`:
 
 ## Current state
 
-- Bug 1 is **not closed**. Several wrong hypotheses were tried and one incorrect clamp was reverted.
+- Bug 1 appears resolved in the current renderer after the Bug 6 and Bug 8 cleanup work.
 - The current working tree keeps two renderer changes:
   - [Fragment.js](/Users/andrewpearce/dev/github/sequencer-svg/Fragment.js) now redraws structural fragment end-band borders before the end-band timeline/activation pass.
   - [Fragment.js](/Users/andrewpearce/dev/github/sequencer-svg/Fragment.js) again returns the `Actor.drawTimelines(...)` Y from fragment end-bands, matching [scratch/sequencer/Fragment.js](/Users/andrewpearce/dev/github/sequencer-svg/scratch/sequencer/Fragment.js).
@@ -41,9 +41,13 @@ Useful generated artefacts under `/tmp/seq-compare/`:
   - `13-activation-flow-defaults`
   - `14-rect-highlighting`
 
-The important caveat is: passing snapshots only proves the fixtures match the current renderer. It does **not** prove visual parity with the old PNG baseline.
+The important caveat is: passing snapshots only proves the fixtures match the current renderer. It does **not** prove visual parity with the old PNG baseline on every renderer bug, but Bug 1 was rechecked visually against a fresh rasterized current build before being downgraded.
 
 ## Bug 1 — fragment-end activation/timeline mismatch against old PNG
+
+### Status
+
+Resolved in current `main` as of 2026-04-21, based on fresh rasterized comparison against the old PNG baseline.
 
 ### Target behaviour from old renderer
 
@@ -78,26 +82,26 @@ So the goal is **not** “clamp the activation to the fragment bottom”. That e
    - structural fragment end-band borders are currently drawn before end-band timelines/activations in [Fragment.js](/Users/andrewpearce/dev/github/sequencer-svg/Fragment.js)
    - this was kept because the old/new visual mismatch includes border-vs-activation stacking
 
-### Current remaining problem
+### Resolution
 
-Bug 1 is now narrower than at the start, but still open.
+After Bug 6 and Bug 8 were fixed, the fragment-end comparison was rerun from a fresh current build rather than relying on the older `/tmp/seq-compare` raster artifacts.
 
-The remaining questions are:
+Fresh comparison outputs used:
 
-- Does the current end-band border ordering now fully match the old PNG around the activation-bar/body overlap?
-- Is there still a visible fragment-edge stroke crossing the activation bar where the old PNG does not show one?
-- Is the activation bottom cap rendered at the correct Y and with the correct visibility compared to the old PNG?
-- Is any dashed timeline still appearing above the activation fill in the end-band region?
+- current rasterized SVG: `/tmp/bug1-current.png`
+- current bottom crop, 4x: `/tmp/bug1-current-bottom-4x.png`
+- old baseline bottom crop, 4x: `/tmp/bug1-old-bottom-4x.png`
 
-The user’s latest review explicitly called out these still-visible problems:
+That fresh comparison no longer showed the original Bug 1 symptoms:
 
-- activation bar extends below the fragment, which is correct
-- activation bar ends do not clearly match the old bottom-cap appearance
-- a line still appears to cross the activation bars on the fragment edge
-- dashed tail must start from the bottom of the activation bar
-- dashed timeline must never appear above the activation bar
+- the activation bar still extends below the fragment, matching old
+- the dashed tail resumes below the bar
+- the fragment-edge stroke is no longer visibly cutting across the activation bar
+- the activation bar cap is visible at the join
 
-### Current code state for Bug 1
+The older `/tmp/seq-compare/new-bottom-zoom-4x.png` comparison image still shows the classic crossing artefact, but that image predates the later Bug 6 and Bug 8 fixes and is no longer representative of the current renderer state.
+
+### Current code state that remains important
 
 In the current renderer:
 
@@ -111,20 +115,14 @@ In the current renderer:
 
 - [Actor.js](/Users/andrewpearce/dev/github/sequencer-svg/Actor.js) still draws timelines first, then activation rectangles, matching the old general pattern inside `drawTimelinesWithBreak`.
 
-This means the current open issue is no longer about clamping height. It is about whether the remaining draw ordering and Y positions truly reproduce the old canvas output.
+This means the old Bug 1 lesson still stands: do not reintroduce the activation-height clamp unless new evidence contradicts the old PNG and old code.
 
-### Next investigation steps
+### Follow-on notes
 
-1. Compare the current rasterized SVG bottom zoom directly against `old-bottom-zoom-4x.png`.
-2. If a crossing line is still visible, identify which exact SVG path creates it:
-   - fragment end-band border path from [Fragment.js](/Users/andrewpearce/dev/github/sequencer-svg/Fragment.js)
-   - activation-bar border path from [Actor.js](/Users/andrewpearce/dev/github/sequencer-svg/Actor.js)
-   - dashed timeline path from [Actor.js](/Users/andrewpearce/dev/github/sequencer-svg/Actor.js)
-3. If needed, add short-lived tracing or targeted path suppression to isolate:
-   - fragment end border only
-   - activation rectangle border only
-   - dashed tail only
-4. Do not reintroduce the activation-height clamp unless new evidence contradicts the old PNG and old code.
+- Two nearby issues remain and may have been confused with Bug 1 earlier:
+  - Bug 2: the Y-placement drift versus the old renderer
+  - Bug 7: the zero-height activation-tail rectangle still emitted at the very end
+- If the visual fragment-end crossing symptom reappears, regenerate fresh comparison crops before trusting older `/tmp/seq-compare` zoom images.
 
 ## Bug 2 — Y accumulation drift between old and new
 
