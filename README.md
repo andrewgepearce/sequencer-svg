@@ -264,9 +264,9 @@ A solid arrow from one actor to another:
 | `from` | string | Yes | — | Source actor alias |
 | `to` | string | Yes | — | Target actor alias |
 | `text` | string or string[] | Yes | — | Message label |
-| `arrow` | string | No | `"fill"` | Arrow style at target |
-| `fromArrow` | string | No | — | Arrow style at source |
-| `toArrow` | string | No | — | Arrow style at target |
+| `arrow` | string | No | `"fill"` | Arrow style at target (shorthand for `toArrow`) |
+| `fromArrow` | string | No | `"none"` | Arrow style at source |
+| `toArrow` | string | No | `"fill"` | Arrow style at target (overrides `arrow`) |
 | `fromAnchor` | string | No | `"edge"` | Connection point: "edge" or "central" |
 | `toAnchor` | string | No | `"edge"` | Connection point: "edge" or "central" |
 | `async` | boolean | No | `false` | Render as async (open arrow, no wait) |
