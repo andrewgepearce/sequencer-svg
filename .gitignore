@@ -7,5 +7,7 @@ agent.md
 scratch
 test/mermaid-features/**/input.sequencer.yaml
 test/mermaid-features/**/input.svg
+test/mermaid-features/**/*.sequencer.svg
+examples/readme/*.sequencer.svg
 AGENTS.md
 BACKLOG.md
