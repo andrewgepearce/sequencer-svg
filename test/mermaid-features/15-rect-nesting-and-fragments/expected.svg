@@ -40,11 +40,6 @@ node sequencer.js --mermaid -i test/mermaid-features/15-rect-nesting-and-fragmen
   <path d="M 920 180 L 920 208 L 920 208 A 5 5 0 0 0 925 213 L 975 213 L 975 213 A 5 5 0 0 0 980 208 L 980 180 L 980 180 A 5 5 0 0 0 975 175 L 925 175 L 925 175 A 5 5 0 0 0 920 180" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 920 180 L 920 208 L 920 208 A 5 5 0 0 0 925 213 L 975 213 L 975 213 A 5 5 0 0 0 980 208 L 980 180 L 980 180 A 5 5 0 0 0 975 175 L 925 175 L 925 175 A 5 5 0 0 0 920 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="929" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Audit</text>
-  <path d="M 93 213 L 93 243" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 315.5 213 L 315.5 243" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 527 213 L 527 243" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 734.5 213 L 734.5 243" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 950 213 L 950 243" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 261 243 L 261 243 L 995 243 L 995 243 L 261 243" fill="rgba(255, 230, 200, 0.5)" stroke="none"/>
   <path d="M 93 213 L 93 243" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 315.5 213 L 315.5 243" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
@@ -64,15 +59,6 @@ node sequencer.js --mermaid -i test/mermaid-features/15-rect-nesting-and-fragmen
   <text x="358" y="297" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Outer same-start write [Mermaid: Service-&gt;&gt;DB: Outer same-start write]</text>
   <path d="M 318 307 L 524.5 307" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 514.5 302 L 514.5 312 L 524.5 307" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 93 327 L 93 357" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 315.5 327 L 315.5 357" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 313 327 L 313 357 L 318 357 L 318 327 L 313 327" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 313 327 L 313 357 M 318 357 L 318 327 M 313 327" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 527 327 L 527 357" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 524.5 327 L 524.5 357 L 529.5 357 L 529.5 327 L 524.5 327" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 524.5 327 L 524.5 357 M 529.5 357 L 529.5 327 M 524.5 327" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 734.5 327 L 734.5 357" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 950 327 L 950 357" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 261 327 L 261 357 L 995 357 L 995 327 L 261 327" fill="rgba(255, 230, 200, 0.5)" stroke="none"/>
   <path d="M 271 357 L 271 357 L 775 357 L 775 357 L 271 357" fill="rgba(255, 190, 190, 0.5)" stroke="none"/>
   <path d="M 93 327 L 93 357" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
@@ -113,17 +99,6 @@ node sequencer.js --mermaid -i test/mermaid-features/15-rect-nesting-and-fragmen
   <path d="M 732 441 L 732 453 L 737 453 L 737 441 L 732 441" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 732 441 L 732 453 M 737 453 L 737 441 M 732 441" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 950 441 L 950 453" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 93 453 L 93 531" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 315.5 453 L 315.5 531" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 313 453 L 313 531 L 318 531 L 318 453 L 313 453" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 313 453 L 313 531 M 318 531 L 318 453 M 313 453" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 527 453 L 527 531" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 524.5 453 L 524.5 531 L 529.5 531 L 529.5 453 L 524.5 453" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 524.5 453 L 524.5 531 M 529.5 531 L 529.5 453 M 524.5 453" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 734.5 453 L 734.5 531" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 732 453 L 732 531 L 737 531 L 737 453 L 732 453" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 732 453 L 732 531 M 737 531 L 737 453 M 732 453" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 950 453 L 950 531" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 483 L 30 531 L 1308 531 L 1308 483 L 30 483" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 261 453 L 261 531 L 995 531 L 995 453 L 261 453" fill="rgba(255, 230, 200, 0.5)" stroke="none"/>
   <path d="M 93 453 L 93 531" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
@@ -211,19 +186,6 @@ node sequencer.js --mermaid -i test/mermaid-features/15-rect-nesting-and-fragmen
   <path d="M 950 681 L 950 693" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 947.5 681 L 947.5 693 L 952.5 693 L 952.5 681 L 947.5 681" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 947.5 681 L 947.5 693 M 952.5 693 L 952.5 681 M 947.5 681" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 93 693 L 93 771" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 315.5 693 L 315.5 771" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 313 693 L 313 771 L 318 771 L 318 693 L 313 693" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 313 693 L 313 771 M 318 771 L 318 693 M 313 693" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 527 693 L 527 771" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 524.5 693 L 524.5 771 L 529.5 771 L 529.5 693 L 524.5 693" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 524.5 693 L 524.5 771 M 529.5 771 L 529.5 693 M 524.5 693" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 734.5 693 L 734.5 771" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 732 693 L 732 771 L 737 771 L 737 693 L 732 693" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 732 693 L 732 771 M 737 771 L 737 693 M 732 693" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 950 693 L 950 771" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 947.5 693 L 947.5 771 L 952.5 771 L 952.5 693 L 947.5 693" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 947.5 693 L 947.5 771 M 952.5 771 L 952.5 693 M 947.5 693" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 30 723 L 30 771 L 1308 771 L 1308 723 L 30 723" fill="rgb(184,184,184)" stroke="none"/>
   <path d="M 93 693 L 93 771" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 315.5 693 L 315.5 771" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
@@ -244,19 +206,6 @@ node sequencer.js --mermaid -i test/mermaid-features/15-rect-nesting-and-fragmen
   <path d="M 30 723 L 30 747 L 64 747 L 74 737 L 74 723 L 30 723" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="35" y="742" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">opt </text>
   <text x="35" y="764" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" xml:space="preserve" dominant-baseline="auto">Outer optional branch</text>
-  <path d="M 93 771 L 93 801" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 315.5 771 L 315.5 801" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 313 771 L 313 801 L 318 801 L 318 771 L 313 771" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 313 771 L 313 801 M 318 801 L 318 771 M 313 771" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 527 771 L 527 801" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 524.5 771 L 524.5 801 L 529.5 801 L 529.5 771 L 524.5 771" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 524.5 771 L 524.5 801 M 529.5 801 L 529.5 771 M 524.5 771" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 734.5 771 L 734.5 801" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 732 771 L 732 801 L 737 801 L 737 771 L 732 771" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 732 771 L 732 801 M 737 801 L 737 771 M 732 771" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 950 771 L 950 801" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 947.5 771 L 947.5 801 L 952.5 801 L 952.5 771 L 947.5 771" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 947.5 771 L 947.5 801 M 952.5 801 L 952.5 771 M 947.5 771" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 30 771 L 30 801 L 1308 801 L 1308 771 L 30 771" fill="rgb(184,184,184)" stroke="none"/>
   <path d="M 490 801 L 490 801 L 995 801 L 995 801 L 490 801" fill="rgb(220, 240, 255)" stroke="none"/>
   <path d="M 93 771 L 93 801" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
@@ -343,19 +292,6 @@ node sequencer.js --mermaid -i test/mermaid-features/15-rect-nesting-and-fragmen
   <path d="M 950 903 L 950 963" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 947.5 903 L 947.5 963 L 952.5 963 L 952.5 903 L 947.5 903" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 947.5 903 L 947.5 963 M 952.5 963 L 952.5 903 M 947.5 903" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 93 963 L 93 993" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 315.5 963 L 315.5 993" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 313 963 L 313 993 L 318 993 L 318 963 L 313 963" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 313 963 L 313 993 M 318 993 L 318 963 M 313 963" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 527 963 L 527 993" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 524.5 963 L 524.5 993 L 529.5 993 L 529.5 963 L 524.5 963" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 524.5 963 L 524.5 993 M 529.5 993 L 529.5 963 M 524.5 963" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 734.5 963 L 734.5 993" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 732 963 L 732 993 L 737 993 L 737 963 L 732 963" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 732 963 L 732 993 M 737 993 L 737 963 M 732 963" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 950 963 L 950 993" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 947.5 963 L 947.5 993 L 952.5 993 L 952.5 963 L 947.5 963" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 947.5 963 L 947.5 993 M 952.5 993 L 952.5 963 M 947.5 963" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 261 993 L 261 993 L 995 993 L 995 993 L 261 993" fill="rgba(220, 255, 220, 0.6)" stroke="none"/>
   <path d="M 93 963 L 93 993" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 315.5 963 L 315.5 993" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
@@ -387,19 +323,6 @@ node sequencer.js --mermaid -i test/mermaid-features/15-rect-nesting-and-fragmen
   <text x="358" y="1047" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">5. Outer different-start anchor [Mermaid: Service-&gt;&gt;Audit: Outer different-start anchor]</text>
   <path d="M 318 1057 L 947.5 1057" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 937.5 1052 L 937.5 1062 L 947.5 1057" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 93 1077 L 93 1107" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 315.5 1077 L 315.5 1107" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 313 1077 L 313 1107 L 318 1107 L 318 1077 L 313 1077" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 313 1077 L 313 1107 M 318 1107 L 318 1077 M 313 1077" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 527 1077 L 527 1107" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 524.5 1077 L 524.5 1107 L 529.5 1107 L 529.5 1077 L 524.5 1077" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 524.5 1077 L 524.5 1107 M 529.5 1107 L 529.5 1077 M 524.5 1077" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 734.5 1077 L 734.5 1107" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 732 1077 L 732 1107 L 737 1107 L 737 1077 L 732 1077" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 732 1077 L 732 1107 M 737 1107 L 737 1077 M 732 1077" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 950 1077 L 950 1107" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 947.5 1077 L 947.5 1107 L 952.5 1107 L 952.5 1077 L 947.5 1077" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 947.5 1077 L 947.5 1107 M 952.5 1107 L 952.5 1077 M 947.5 1077" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 261 1077 L 261 1107 L 995 1107 L 995 1077 L 261 1077" fill="rgba(220, 255, 220, 0.6)" stroke="none"/>
   <path d="M 490 1107 L 490 1107 L 995 1107 L 995 1107 L 490 1107" fill="rgba(200, 235, 255, 0.6)" stroke="none"/>
   <path d="M 93 1077 L 93 1107" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>

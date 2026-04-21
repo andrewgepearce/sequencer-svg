@@ -274,7 +274,7 @@ Guard against zero-height activation-rectangle emission in `drawTimelinesWithBre
 
 ### Status
 
-Open. Newly identified. Separate from Bug 3.
+Fixed in the working tree on 2026-04-21.
 
 ### Symptom
 
@@ -297,14 +297,16 @@ The net effect is repeated dashed timeline paths at identical coordinates in the
 - Harder visual diffing
 - Potential dash-phase artefacts at fragment boundaries when the same dashed line is stroked multiple times
 
-### Expected fix
+### Implemented fix
 
-Audit fragment-region rendering so each visible timeline segment is emitted once per final pass.
+- [Fragment.js](/Users/andrewpearce/dev/github/sequencer-svg/Fragment.js) now treats the fragment height-probing timeline pass as measurement-only.
+- That pass now runs with `mimic === true`, and fragment-local actor state is captured/restored around it so the later visible timeline pass still sees the same flow/lifecycle state.
+- The result is that fragment transition regions now emit one visible dashed timeline segment per final pass instead of a measurement pass plus a visible pass.
 
-This may require:
+### Verification
 
-- collapsing redundant `Actor.drawTimelines(...)` calls
-- or separating measurement/timeline/state updates from the final visible draw call
+- The fragment repro SVG no longer repeats identical dashed timeline segments at the same coordinates in the same output file.
+- `npx jest --runInBand test/mermaid-features` passes with 27 suites and 57 tests.
 
 ## Bug 9 — fragment closing-band stroke path semantics are awkward for SVG
 

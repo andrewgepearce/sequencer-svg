@@ -599,7 +599,10 @@ module.exports = class Fragment {
 					null,
 					true
 			  );
-		let xy = Actor.drawTimelines(working, this._ctx, starty, conditionxy.y - starty, false);
+		const actorLookup = this._buildActorLookup(working);
+		const incomingActorState = this._captureActorState(actorLookup);
+		let xy = Actor.drawTimelines(working, this._ctx, starty, conditionxy.y - starty, true);
+		this._restoreActorState(actorLookup, incomingActorState);
 		let finalHeightOfAllLine = xy.y - starty;
 		let finalHeightAboveFragmentInLine = fragmentTop - starty;
 		let finalHeightOfFragmentRectangle = finalHeightOfAllLine - finalHeightAboveFragmentInLine;
@@ -832,7 +835,9 @@ module.exports = class Fragment {
 		// Calculate the end line dimensions
 		const heightOfEndRectangle = working.globalSpacing;
 		const heightOfEndLine = heightOfEndRectangle + working.globalSpacing;
+		const incomingEndLineActorState = this._captureActorState(actorLookup);
 		const xyend = Actor.drawTimelines(working, ctx, endLineTop, heightOfEndLine, true);
+		this._restoreActorState(actorLookup, incomingEndLineActorState);
 		const finalHeightOfEndLine = xyend.y - endLineTop;
 		const finalHeightOfEndRectangle = finalHeightOfEndLine - working.globalSpacing;
 
@@ -1094,5 +1099,80 @@ module.exports = class Fragment {
 			}
 		});
 		return working.manageMaxWidthXy(xy);
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Capture actor flow and lifecycle state across fragment measurement passes.
+	 *
+	 * @param {*} actorLookup Parameter derived from actorLookup.
+	 * @returns {*} Result value.
+	 * @example
+	 * const actorState = instance._captureActorState(actorLookup);
+	 */
+	_captureActorState(actorLookup) {
+		let actorState = {};
+
+		Object.keys(actorLookup).forEach((alias) => {
+			actorState[alias] = {
+				flowStateContinue: actorLookup[alias].isFlowStateContinue(),
+				flowStartYPos: actorLookup[alias].flowStartYPos,
+				flowEndYPos: actorLookup[alias].flowEndYPos,
+				lifecycleStartYPos: actorLookup[alias].lifecycleStartYPos,
+				lifecycleEndYPos: actorLookup[alias].lifecycleEndYPos,
+			};
+		});
+
+		return actorState;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Restore actor flow and lifecycle state after a measurement pass.
+	 *
+	 * @param {*} actorLookup Parameter derived from actorLookup.
+	 * @param {*} actorState Parameter derived from actorState.
+	 * @returns {void} Nothing.
+	 * @example
+	 * instance._restoreActorState(actorLookup, actorState);
+	 */
+	_restoreActorState(actorLookup, actorState) {
+		Object.keys(actorLookup).forEach((alias) => {
+			if (actorState[alias] && actorState[alias].flowStateContinue === true) {
+				actorLookup[alias].setFlowStateContinue();
+			} else {
+				actorLookup[alias].clearFlowStateContinue();
+			}
+
+			actorLookup[alias].flowStartYPos = actorState[alias] ? actorState[alias].flowStartYPos : null;
+			actorLookup[alias].flowEndYPos = actorState[alias] ? actorState[alias].flowEndYPos : null;
+			actorLookup[alias].lifecycleStartYPos = actorState[alias] ? actorState[alias].lifecycleStartYPos : null;
+			actorLookup[alias].lifecycleEndYPos = actorState[alias] ? actorState[alias].lifecycleEndYPos : null;
+		});
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Build an alias-to-actor-class lookup for fragment-local measurement passes.
+	 *
+	 * @param {*} working Parameter derived from working.
+	 * @returns {*} Result value.
+	 * @example
+	 * const actorLookup = instance._buildActorLookup(working);
+	 */
+	_buildActorLookup(working) {
+		let actorLookup = {};
+
+		if (!Array.isArray(working.postdata && working.postdata.actors)) {
+			return actorLookup;
+		}
+
+		working.postdata.actors.forEach((actor) => {
+			if (actor && actor.clinstance && Utilities.isString(actor.alias)) {
+				actorLookup[actor.alias] = actor.clinstance;
+			}
+		});
+
+		return actorLookup;
 	}
 };

@@ -42,13 +42,6 @@ node sequencer.js --mermaid -i test/mermaid-features/12-break/input.mmd -o -f -t
   <text x="135.5" y="267" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Submit request [Mermaid: Caller-&gt;&gt;Service: Submit request]</text>
   <path d="M 95.5 277 L 313 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 303 272 L 303 282 L 313 277" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 93 297 L 93 375" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 90.5 297 L 90.5 375 L 95.5 375 L 95.5 297 L 90.5 297" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 90.5 297 L 90.5 375 M 95.5 375 L 95.5 297 M 90.5 297" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 315.5 297 L 315.5 375" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 313 297 L 313 375 L 318 375 L 318 297 L 313 297" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 313 297 L 313 375 M 318 375 L 318 297 M 313 297" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 527 297 L 527 375" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 327 L 30 375 L 995 375 L 995 327 L 30 327" fill="rgb(184,184,184)" stroke="none"/>
   <path d="M 93 297 L 93 375" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 90.5 297 L 90.5 375 L 95.5 375 L 95.5 297 L 90.5 297" fill="rgb(95,183,224)" stroke="none"/>

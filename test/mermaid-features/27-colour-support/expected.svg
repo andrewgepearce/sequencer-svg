@@ -36,9 +36,6 @@ node sequencer.js --mermaid -i test/mermaid-features/27-colour-support/input.mmd
   <path d="M 562.36 186 L 562.36 206 L 571.2 206 L 571.2 186 L 562.36 186" fill="none" stroke="#F08C00" stroke-width="1.5"/>
   <path d="M 582 180 L 582 208 L 582 208 A 5 5 0 0 0 587 213 L 693 213 L 693 213 A 5 5 0 0 0 698 208 L 698 180 L 698 180 A 5 5 0 0 0 693 175 L 587 175 L 587 175 A 5 5 0 0 0 582 180" fill="rgba(0,0,0,0)" stroke="none"/>
   <text x="591" y="202" fill="#7A4F01" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Cache node</text>
-  <path d="M 91 213 L 91 243" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 353.5 213 L 353.5 243" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 626.5 213 L 626.5 243" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 243 L 30 243 L 713 243 L 713 243 L 30 243" fill="#E7F5FF" stroke="none"/>
   <path d="M 91 213 L 91 243" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 353.5 213 L 353.5 243" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
