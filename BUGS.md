@@ -202,6 +202,170 @@ Do not treat this as separate from Bug 1/4 until the basic fragment-end comparis
 
 Once Bug 1 is visually matched, re-check the nested `opt` region to see whether Bug 5 still exists independently.
 
+## Bug 6 — mimic passes emit measurement-only paths into the SVG
+
+### Status
+
+Open. Newly identified. Not represented in the earlier renderer notes.
+
+### Symptom
+
+The renderer runs multiple mimic/layout passes before the real draw pass, but some mimic-mode drawing still serializes into the final SVG as degenerate `moveTo`-only paths.
+
+These paths render nothing useful, bloat the SVG, and make inspection harder because they sit adjacent to real geometry.
+
+### Evidence
+
+Two concrete sources have been identified:
+
+- [Actor.js](/Users/andrewpearce/dev/github/sequencer-svg/Actor.js) timeline path generation uses:
+  - `mimic ? ctx.moveTo(actorcl.middle, timelineEnd) : ctx.lineTo(...)`
+  - This produces degenerate timeline subpaths such as `M x y M x y2`.
+- [Utilities.js](/Users/andrewpearce/dev/github/sequencer-svg/Utilities.js) rectangle path construction uses `moveTo` in mimic mode when building rectangle perimeter paths.
+  - This shows up around note-box shadow/fill geometry and other measurement-only rectangles.
+
+### Why it matters
+
+- Bloats emitted SVG unnecessarily
+- Pollutes manual diffing and visual inspection
+- Risks masking real path-order issues when reading the SVG by eye
+
+### Expected fix
+
+Do not emit path commands to the SVG context in mimic mode for geometry that is measurement-only.
+
+Likely fix options:
+
+- short-circuit earlier in the callers when `mimic === true`
+- or make the SVG context ignore path-construction calls during mimic passes
+
+## Bug 7 — zero-height activation rectangle emitted at the final tail
+
+### Status
+
+Open. Newly identified.
+
+### Symptom
+
+The final activation-tail region can emit a zero-height rectangle where all four rectangle corners share the same Y coordinate.
+
+This is mostly harmless visually right now, but it is a real geometry bug and a source of unnecessary SVG noise.
+
+### Evidence
+
+Example from `06-fragments`:
+
+- a path equivalent to:
+  - `M ... 1100 L ... 1100 L ... 1100 L ... 1100 ...`
+
+This comes from the “we have a start and an end” branch in [Actor.js](/Users/andrewpearce/dev/github/sequencer-svg/Actor.js) when `flowEndYPos === flowStartYPos`.
+
+### Current suspicion
+
+The likely trigger is [Actor.clearAllFlows](/Users/andrewpearce/dev/github/sequencer-svg/Actor.js), which sets `flowEndYPos = starty` for actors marked continue, allowing the later tail draw to re-enter a branch that constructs a zero-length activation rectangle.
+
+### Expected fix
+
+Guard against zero-height activation-rectangle emission in `drawTimelinesWithBreak`, or prevent `clearAllFlows` from creating a same-start same-end rectangle state for continuation tails.
+
+## Bug 8 — timelines are over-drawn multiple times within a single transition region
+
+### Status
+
+Open. Newly identified. Separate from Bug 3.
+
+### Symptom
+
+The same dashed timeline segment can be emitted multiple times at identical coordinates inside one fragment transition region.
+
+This is distinct from the “extra mimic passes” problem in Bug 3. Bug 3 is about whole render passes; Bug 8 is about duplicate timeline drawing inside one final render.
+
+### Evidence
+
+Fragment rendering currently calls timeline drawing multiple times around the same regions, especially at fragment boundaries:
+
+- [Fragment.js](/Users/andrewpearce/dev/github/sequencer-svg/Fragment.js) calls `Actor.drawTimelines(...)` in multiple fragment-band stages
+- other active-fragment/background/border paths are interleaved around those same regions
+
+The net effect is repeated dashed timeline paths at identical coordinates in the final SVG.
+
+### Why it matters
+
+- Unnecessary SVG size
+- Harder visual diffing
+- Potential dash-phase artefacts at fragment boundaries when the same dashed line is stroked multiple times
+
+### Expected fix
+
+Audit fragment-region rendering so each visible timeline segment is emitted once per final pass.
+
+This may require:
+
+- collapsing redundant `Actor.drawTimelines(...)` calls
+- or separating measurement/timeline/state updates from the final visible draw call
+
+## Bug 9 — fragment closing-band stroke path semantics are awkward for SVG
+
+### Status
+
+Open. Newly identified. Related to Bug 4, but more specific.
+
+### Symptom
+
+Some fragment closing-band border paths are intentionally “partial rectangles” with only selected sides, but the current path-construction pattern uses move/line alternation that is canvas-tolerant and SVG-awkward.
+
+This can produce edge-order and dash-phase asymmetry that is hard to reason about in the emitted SVG.
+
+### Evidence
+
+Closing-band border paths of the form:
+
+- `M left top L left bottom M right bottom L right top M left top`
+
+are valid for the intended border selection, but the path-construction style in [Utilities.js](/Users/andrewpearce/dev/github/sequencer-svg/Utilities.js) makes the right edge effectively traverse in the opposite direction from the left edge.
+
+### Why it matters
+
+- Makes SVG output harder to inspect
+- Can create subtle dashed-stroke inconsistencies if dashed borders are ever used here
+- Overlaps with the visual “line crossing the activation bar” investigations in Bugs 1 and 4
+
+### Expected fix
+
+Refactor rectangle-border path construction for partial-border cases so the SVG path semantics are explicit and stable, rather than relying on canvas-style move/line alternation.
+
+## Bug 10 — width mismatch against old PNG is primarily font-driven
+
+### Status
+
+Open, but not currently treated as a correctness blocker.
+
+### Symptom
+
+The new SVG output is materially wider than the old PNG baseline, and the dominant cause appears to be text metrics rather than fragment geometry.
+
+### Evidence
+
+The most obvious contributor is call-text width:
+
+- SVG output uses the bundled Liberation font stack
+- the old PNG renderer used different canvas text metrics
+
+That width difference propagates into actor spacing and `working.manageMaxWidth(...)`, stretching the whole diagram.
+
+### Current view
+
+This is likely the single biggest source of overall width mismatch between old PNG and current SVG, but it is separate from the fragment/activation bugs above.
+
+### Expected fix
+
+Decide whether this should be treated as:
+
+- acceptable port drift due to different font metrics
+- or a compatibility bug requiring closer font-metric emulation
+
+For now, do not mix this with Bug 1 or Bug 2. It should stay isolated as a font-measurement compatibility question.
+
 ## Trace-revert checklist
 
 Older investigation notes referred to temporary stderr traces in:
