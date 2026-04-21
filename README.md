@@ -177,6 +177,10 @@ The `actorType` property controls the visual representation:
 | `collections` | Stacked boxes (collection/array) |
 | `queue` | Queue symbol |
 
+**All actor types rendered:**
+
+![Actor types](test/mermaid-features/01-participants-and-aliases/expected.svg)
+
 ### Actor Groups
 
 Group actors visually with a labelled box:
@@ -196,6 +200,10 @@ actorGroups:
   - title: Backend
     actors: [DB, Cache, Queue]
 ```
+
+**Example with multiple actor groups:**
+
+![Actor groups](test/mermaid-features/19-box-actor-groups/expected.svg)
 
 ---
 
