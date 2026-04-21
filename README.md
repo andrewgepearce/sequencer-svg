@@ -424,9 +424,19 @@ sequencer-svg transforms Mermaid sequence diagram syntax into its native format.
 
 ### Basic Syntax
 
-**Mermaid input:**
+**Mermaid diagram:**
 
 ```mermaid
+sequenceDiagram
+    participant A as Alice
+    participant B as Bob
+    A->>B: Hello Bob!
+    B-->>A: Hi Alice!
+```
+
+**Mermaid source:**
+
+```text
 sequenceDiagram
     participant A as Alice
     participant B as Bob
@@ -453,9 +463,24 @@ lines:
 
 ### Messages and Arrows
 
-**Mermaid input:**
+**Mermaid diagram:**
 
 ```mermaid
+sequenceDiagram
+    participant A
+    participant B
+    A->>B: Sync call (filled arrow)
+    B-->>A: Return (dashed, filled)
+    A-)B: Async (open arrow)
+    B--)A: Async return (dashed, open)
+    A-xB: Lost message (cross)
+    A->B: Solid line, no arrow
+    A-->B: Dashed line, no arrow
+```
+
+**Mermaid source:**
+
+```text
 sequenceDiagram
     participant A
     participant B
@@ -505,9 +530,19 @@ lines:
 
 ### Activations
 
-**Mermaid input:**
+**Mermaid diagram:**
 
 ```mermaid
+sequenceDiagram
+    participant A
+    participant B
+    A->>+B: Request (activates B)
+    B-->>-A: Response (deactivates B)
+```
+
+**Mermaid source:**
+
+```text
 sequenceDiagram
     participant A
     participant B
@@ -544,9 +579,21 @@ The `+` suffix activates the target; the `-` suffix deactivates it. You can also
 
 ### Notes
 
-**Mermaid input:**
+**Mermaid diagram:**
 
 ```mermaid
+sequenceDiagram
+    participant A
+    participant B
+    Note over A: Single actor note
+    Note over A,B: Spanning note
+    Note right of A: Right-side note
+    Note left of B: Left-side note
+```
+
+**Mermaid source:**
+
+```text
 sequenceDiagram
     participant A
     participant B
@@ -579,9 +626,32 @@ Notes transform to `blank` lines with a `comment` property. Use `actor` for sing
 
 ### Fragments
 
-**Mermaid input:**
+**Mermaid diagram:**
 
 ```mermaid
+sequenceDiagram
+    participant A
+    participant B
+    participant C
+
+    loop Every minute
+        A->>B: ping
+    end
+
+    alt Success
+        A->>B: process
+    else Failure
+        A->>C: handleError
+    end
+
+    opt Optional step
+        A->>B: optional()
+    end
+```
+
+**Mermaid source:**
+
+```text
 sequenceDiagram
     participant A
     participant B
@@ -642,9 +712,23 @@ The `else` keyword becomes a `condition` line inside the fragment. Additional fr
 
 ### Rect Highlighting
 
-**Mermaid input:**
+**Mermaid diagram:**
 
 ```mermaid
+sequenceDiagram
+    participant A
+    participant B
+    A->>B: Before highlight
+    rect rgb(200, 220, 255)
+        A->>B: Inside highlight
+        B-->>A: Response
+    end
+    A->>B: After highlight
+```
+
+**Mermaid source:**
+
+```text
 sequenceDiagram
     participant A
     participant B
@@ -688,9 +772,22 @@ Rect regions become `fragmentType: rect` with a `bgColour` and `borderWidth: 0` 
 
 ### Autonumber
 
-**Mermaid input:**
+**Mermaid diagram:**
 
 ```mermaid
+sequenceDiagram
+    autonumber
+    participant A
+    participant B
+    participant C
+    A->>B: First message
+    B->>C: Second message
+    C-->>A: Third message
+```
+
+**Mermaid source:**
+
+```text
 sequenceDiagram
     autonumber
     participant A
@@ -725,9 +822,29 @@ The `autonumber` directive sets the root-level `autonumber: true` property.
 
 ### Box Grouping
 
-**Mermaid input:**
+**Mermaid diagram:**
 
 ```mermaid
+sequenceDiagram
+    box rgb(200,220,255) Frontend
+        participant UI
+        participant API
+    end
+    box rgb(255,220,200) Backend
+        participant Svc
+        participant DB
+    end
+    UI->>API: Request
+    API->>Svc: Forward
+    Svc->>DB: Query
+    DB-->>Svc: Result
+    Svc-->>API: Response
+    API-->>UI: Display
+```
+
+**Mermaid source:**
+
+```text
 sequenceDiagram
     box rgb(200,220,255) Frontend
         participant UI
@@ -777,9 +894,23 @@ Mermaid `box` regions become `actorGroups` entries with a `title`, `bgColour`, a
 
 Mermaid supports specialised actor types using JSON configuration syntax.
 
-**Mermaid input:**
+**Mermaid diagram:**
 
 ```mermaid
+sequenceDiagram
+    participant UI as User Interface
+    actor User as Human User
+    participant API as {"type":"boundary","name":"API Gateway"}
+    participant Svc as {"type":"control","name":"Service Controller"}
+    participant Data as {"type":"entity","name":"Data Model"}
+    participant DB as {"type":"database","name":"Database"}
+    participant Items as {"type":"collections","name":"Item Collection"}
+    participant Jobs as {"type":"queue","name":"Job Queue"}
+```
+
+**Mermaid source:**
+
+```text
 sequenceDiagram
     participant UI as User Interface
     actor User as Human User
