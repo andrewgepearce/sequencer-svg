@@ -2,6 +2,8 @@
 
 A standalone Node.js tool for building UML-style sequence diagrams from JSON, YAML, or Mermaid input and outputting SVG.
 
+![Example sequence diagram](examples/Example_3.1.1.svg)
+
 ## Quick Start
 
 The simplest way to use sequencer-svg is the opinionated mode — pass a single filename:
@@ -106,6 +108,10 @@ lines:
     to: A
     text: Hi there!
 ```
+
+**Rendered output:**
+
+![Minimal example](examples/minimal.svg)
 
 ### Root Properties
 
@@ -341,6 +347,10 @@ Fragments represent control structures like loops, conditions, and parallel exec
 | `break` | Break/exception handling |
 | `rect` | Highlight region (no structural meaning) |
 
+**Example: Nested fragments with loop, alt, else, and opt:**
+
+![Fragment example](test/mermaid-features/06-fragments/expected.svg)
+
 ### condition — Fragment Divider
 
 Divides a fragment into sections (e.g., else branches):
@@ -408,6 +418,10 @@ sequenceDiagram
     collections Queue as Job Queue
 ```
 
+**Rendered output showing all actor types:**
+
+![Actor types](test/mermaid-features/01-participants-and-aliases/expected.svg)
+
 #### Messages and Arrows
 
 | Mermaid | Description |
@@ -420,6 +434,10 @@ sequenceDiagram
 | `A--xB: text` | Dashed line, cross |
 | `A-)B: text` | Solid line, open arrow (async) |
 | `A--)B: text` | Dashed line, open arrow |
+
+**Rendered output showing arrow variants:**
+
+![Arrow variants](test/mermaid-features/02-basic-messages-and-arrows/expected.svg)
 
 #### Activations
 
@@ -439,6 +457,10 @@ sequenceDiagram
     B-->>-A: response
 ```
 
+**Rendered output showing activations:**
+
+![Activations](test/mermaid-features/05-activations/expected.svg)
+
 #### Notes
 
 ```mermaid
@@ -448,6 +470,10 @@ sequenceDiagram
     Note right of A: Right-side note
     Note left of B: Left-side note
 ```
+
+**Rendered output showing notes:**
+
+![Notes](test/mermaid-features/03-notes/expected.svg)
 
 #### Fragments
 
@@ -484,6 +510,10 @@ sequenceDiagram
     end
 ```
 
+**Rendered output showing parallel execution:**
+
+![Parallel fragments](test/mermaid-features/10-parallel/expected.svg)
+
 #### Rect Highlighting
 
 ```mermaid
@@ -511,6 +541,10 @@ sequenceDiagram
     A->>B: First message
     B->>C: Second message
 ```
+
+**Rendered output with autonumbering:**
+
+![Autonumber](test/mermaid-features/07-autonumber/expected.svg)
 
 #### Actor Links
 
@@ -670,6 +704,10 @@ Example error box content:
 ```
 Error: Unknown actor alias "X" at line 23
 ```
+
+**Example showing rendered error boxes:**
+
+![Error handling](examples/Example_5.1.0.svg)
 
 ---
 

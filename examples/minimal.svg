@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="332" height="366" viewBox="0 0 332 366">
+  <title>Hello World</title>
+  <rect width="100%" height="100%" fill="white"/>
+  <path d="M 0 0 L 0 356 L 322 356 L 322 0 L 0 0" fill="rgb(255, 255, 255)" stroke="none"/>
+  <path d="M 30 30 L 30 57 L 151 57 L 151 30 L 30 30" fill="rgba(0,0,0,0)" stroke="none"/>
+  <text x="35" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Title:</text>
+  <text x="68.44" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
+  <text x="72.33" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Hello World</text>
+  <path d="M 30 57 L 30 84 L 120 84 L 120 57 L 30 57" fill="rgba(0,0,0,0)" stroke="none"/>
+  <text x="35" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Version:</text>
+  <text x="91.01" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
+  <text x="94.9" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1.0</text>
+  <path d="M 33 122 L 33 150 L 33 150 A 5 5 0 0 0 38 155 L 86 155 L 86 155 A 5 5 0 0 0 91 150 L 91 122 L 91 122 A 5 5 0 0 0 86 117 L 38 117 L 38 117 A 5 5 0 0 0 33 122" fill="rgb(210,210,210)" stroke="none"/>
+  <path d="M 30 119 L 30 147 L 30 147 A 5 5 0 0 0 35 152 L 83 152 L 83 152 A 5 5 0 0 0 88 147 L 88 119 L 88 119 A 5 5 0 0 0 83 114 L 35 114 L 35 114 A 5 5 0 0 0 30 119" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 30 119 L 30 147 L 30 147 A 5 5 0 0 0 35 152 L 83 152 L 83 152 A 5 5 0 0 0 88 147 L 88 119 L 88 119 A 5 5 0 0 0 83 114 L 35 114 L 35 114 A 5 5 0 0 0 30 119" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="39" y="141" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Alice</text>
+  <path d="M 241 122 L 241 150 L 241 150 A 5 5 0 0 0 246 155 L 287 155 L 287 155 A 5 5 0 0 0 292 150 L 292 122 L 292 122 A 5 5 0 0 0 287 117 L 246 117 L 246 117 A 5 5 0 0 0 241 122" fill="rgb(210,210,210)" stroke="none"/>
+  <path d="M 238 119 L 238 147 L 238 147 A 5 5 0 0 0 243 152 L 284 152 L 284 152 A 5 5 0 0 0 289 147 L 289 119 L 289 119 A 5 5 0 0 0 284 114 L 243 114 L 243 114 A 5 5 0 0 0 238 119" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 238 119 L 238 147 L 238 147 A 5 5 0 0 0 243 152 L 284 152 L 284 152 A 5 5 0 0 0 289 147 L 289 119 L 289 119 A 5 5 0 0 0 284 114 L 243 114 L 243 114 A 5 5 0 0 0 238 119" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="247" y="141" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Bob</text>
+  <path d="M 59 152 L 59 236" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 56.5 216 L 56.5 236 L 61.5 236 L 61.5 216 L 56.5 216" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 56.5 216 L 56.5 236 M 61.5 236 L 61.5 216 L 56.5 216" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 263.5 152 L 263.5 236" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 261 216 L 261 236 L 266 236 L 266 216 L 261 216" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 261 216 L 261 236 M 266 236 L 266 216 L 261 216" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="101.5" y="206" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Hello!</text>
+  <path d="M 61.5 216 L 261 216" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 251 211 L 251 221 L 261 216" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 59 236 L 59 302" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 56.5 236 L 56.5 302 L 61.5 302 L 61.5 236 L 56.5 236" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 56.5 236 L 56.5 302 M 61.5 302 L 61.5 236 M 56.5 236" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 263.5 236 L 263.5 302" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 261 236 L 261 300 L 266 300 L 266 236 L 261 236" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 261 236 L 261 300 L 266 300 L 266 236 M 261 236" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="109" y="287.5" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Hi there!</text>
+  <path d="M 261 295 L 61.5 295" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="6,3"/>
+  <path d="M 71.5 295 L 61.5 295 M 71.5 290 L 61.5 295 L 71.5 300" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 59 302 L 59 326" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 56.5 302 L 61.5 302" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 263.5 302 L 263.5 326" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+</svg>

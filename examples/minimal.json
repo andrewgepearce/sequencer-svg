@@ -1,0 +1,28 @@
+{
+   "title": "Hello World",
+   "version": "1.0",
+   "actors": [
+      {
+         "name": "Alice",
+         "alias": "A"
+      },
+      {
+         "name": "Bob",
+         "alias": "B"
+      }
+   ],
+   "lines": [
+      {
+         "type": "call",
+         "from": "A",
+         "to": "B",
+         "text": "Hello!"
+      },
+      {
+         "type": "return",
+         "from": "B",
+         "to": "A",
+         "text": "Hi there!"
+      }
+   ]
+}
