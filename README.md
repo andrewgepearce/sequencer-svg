@@ -775,21 +775,44 @@ Mermaid `box` regions become `actorGroups` entries with a `title`, `bgColour`, a
 
 ### Actor Types
 
-Mermaid supports specialised actor types that are preserved in the transform:
+Mermaid supports specialised actor types using JSON configuration syntax.
+
+**Mermaid input:**
 
 ```mermaid
 sequenceDiagram
     participant UI as User Interface
     actor User as Human User
-    boundary API as API Gateway
-    control Svc as Service Controller
-    entity Data as Data Model
-    database DB as Database
-    collections Items as Item Collection
-    queue Jobs as Job Queue
+    participant API as {"type":"boundary","name":"API Gateway"}
+    participant Svc as {"type":"control","name":"Service Controller"}
+    participant Data as {"type":"entity","name":"Data Model"}
+    participant DB as {"type":"database","name":"Database"}
+    participant Items as {"type":"collections","name":"Item Collection"}
+    participant Jobs as {"type":"queue","name":"Job Queue"}
 ```
 
-These become actors with the corresponding `actorType` value. See the Actor Types section above for rendered examples.
+**Transformed sequencer YAML:**
+
+```yaml
+title: Actor Types
+version: '1.0'
+actors:
+  - {name: User Interface, alias: UI, actorType: participant}
+  - {name: Human User, alias: User, actorType: actor, bgColour: 'rgb(255,232,204)'}
+  - {name: API Gateway, alias: API, actorType: boundary, bgColour: 'rgb(196,232,255)'}
+  - {name: Service Controller, alias: Svc, actorType: control, bgColour: 'rgb(255,244,179)'}
+  - {name: Data Model, alias: Data, actorType: entity, bgColour: 'rgb(220,255,214)'}
+  - {name: Database, alias: DB, actorType: database, bgColour: 'rgb(255,221,234)'}
+  - {name: Item Collection, alias: Items, actorType: collections, bgColour: 'rgb(226,220,255)'}
+  - {name: Job Queue, alias: Jobs, actorType: queue, bgColour: 'rgb(255,235,186)'}
+lines: []
+```
+
+**Rendered output:**
+
+![Actor types](examples/readme/actor-types.svg)
+
+Specialised types use the JSON syntax `{"type":"typename","name":"Display Name"}`. The `actor` keyword produces `actorType: actor` (stick figure). Default background colours are applied per type.
 
 ### Additional Mermaid Features
 

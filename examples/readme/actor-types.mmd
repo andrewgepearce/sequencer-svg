@@ -1,0 +1,9 @@
+sequenceDiagram
+    participant UI as User Interface
+    actor User as Human User
+    participant API as {"type":"boundary","name":"API Gateway"}
+    participant Svc as {"type":"control","name":"Service Controller"}
+    participant Data as {"type":"entity","name":"Data Model"}
+    participant DB as {"type":"database","name":"Database"}
+    participant Items as {"type":"collections","name":"Item Collection"}
+    participant Jobs as {"type":"queue","name":"Job Queue"}
