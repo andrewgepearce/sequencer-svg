@@ -10,7 +10,7 @@ Keep this summary list in sync whenever any bug below is added, removed, reopene
 - 2 - **Fixed in working tree** - Y accumulation drift between old and new
 - 3 - **Open, lower priority** - new tool runs extra mimic/resize passes
 - 4 - **Resolved** - fragment borders cut across activation bars
-- 5 - **Open** - activation continuation geometry around nested fragments
+- 5 - **Resolved** - activation continuation geometry around nested fragments
 - 6 - **Fixed** - mimic passes emit measurement-only paths into the SVG
 - 7 - **Fixed** - zero-height activation rectangle emitted at the final tail
 - 8 - **Fixed** - timelines are over-drawn multiple times within a single transition region
@@ -46,6 +46,7 @@ Useful generated artefacts under `/tmp/seq-compare/`:
 - Bug 1 appears resolved in the current renderer after the Bug 6 and Bug 8 cleanup work.
 - Bug 2 is now fixed in the current renderer after the blank-note spacing correction.
 - Bug 4 no longer appears independently reproducible after the Bug 2 fix.
+- Bug 5 no longer appears independently reproducible after the Bug 2 fix.
 - Bug 7 is now fixed in the working tree: zero-height activation tail rectangles are no longer emitted.
 - The current working tree keeps two renderer changes:
   - [Fragment.js](/Users/andrewpearce/dev/github/sequencer-svg/Fragment.js) now redraws structural fragment end-band borders before the end-band timeline/activation pass.
@@ -239,13 +240,23 @@ If a future fragment-edge crossing artefact is found, treat it first as a regres
 
 ### Status
 
-Still open. No dedicated fix yet.
+Resolved in current `main` as of 2026-04-21.
 
-### Current view
+### Why this is now closed
 
-Do not treat this as separate from Bug 1/4 until the basic fragment-end comparison is truly correct.
+This bug was always suspected to overlap with the fragment-end issues rather than stand fully alone.
 
-Once Bug 1 is visually matched, re-check the nested `opt` region to see whether Bug 5 still exists independently.
+After the Bug 2 fix, the nested `opt` region was re-checked against the old PNG baseline using a fresh current rasterized build:
+
+- the nested `opt` body geometry aligned with the old baseline
+- the activation continuation below the nested fragment no longer showed a distinct mismatch
+- the note/call transition below the nested `opt` also aligned after the blank-note spacing correction
+
+At this point there is no separate live repro that justifies keeping Bug 5 open as its own issue.
+
+### Follow-on note
+
+If a future nested-fragment activation mismatch is found, treat it as a new specific repro or as a regression of the fragment parity fixes, rather than reopening this placeholder bug by default.
 
 ## Bug 6 — mimic passes emit measurement-only paths into the SVG
 
