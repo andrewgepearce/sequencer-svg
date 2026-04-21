@@ -231,15 +231,7 @@ node sequencer.js --mermaid -i test/mermaid-features/11-critical-regions/input.m
   <path d="M 762 883 L 762 943 L 767 943 L 767 883 L 762 883" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 762 883 L 762 943 M 767 943 L 767 883 M 762 883" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 123 943 L 123 967" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 120.5 943 L 120.5 943 L 125.5 943 L 125.5 943 L 120.5 943" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 120.5 943 L 120.5 943 L 125.5 943 L 125.5 943 M 120.5 943" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 345.5 943 L 345.5 967" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 343 943 L 343 943 L 348 943 L 348 943 L 343 943" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 343 943 L 343 943 L 348 943 L 348 943 M 343 943" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 557 943 L 557 967" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 554.5 943 L 554.5 943 L 559.5 943 L 559.5 943 L 554.5 943" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 554.5 943 L 554.5 943 L 559.5 943 L 559.5 943 M 554.5 943" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 764.5 943 L 764.5 967" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 762 943 L 762 943 L 767 943 L 767 943 L 762 943" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 762 943 L 762 943 L 767 943 L 767 943 M 762 943" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
 </svg>

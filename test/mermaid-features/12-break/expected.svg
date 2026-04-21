@@ -121,12 +121,6 @@ node sequencer.js --mermaid -i test/mermaid-features/12-break/input.mmd -o -f -t
   <path d="M 95.5 673 L 313 673" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 303 668 L 303 678 L 313 673" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 93 693 L 93 717" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 90.5 693 L 90.5 693 L 95.5 693 L 95.5 693 L 90.5 693" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 90.5 693 L 90.5 693 L 95.5 693 L 95.5 693 M 90.5 693" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 315.5 693 L 315.5 717" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 313 693 L 313 693 L 318 693 L 318 693 L 313 693" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 313 693 L 313 693 L 318 693 L 318 693 M 313 693" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 527 693 L 527 717" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 524.5 693 L 524.5 693 L 529.5 693 L 529.5 693 L 524.5 693" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 524.5 693 L 524.5 693 L 529.5 693 L 529.5 693 M 524.5 693" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
 </svg>

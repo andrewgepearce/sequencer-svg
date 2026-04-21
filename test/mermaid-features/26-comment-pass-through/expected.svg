@@ -47,7 +47,5 @@ node sequencer.js --mermaid -i test/mermaid-features/26-comment-pass-through/inp
   <path d="M 247.5 356 L 56.5 356" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
   <path d="M 56.5 356 L 66.5 351 L 66.5 361 L 56.5 356" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 54 363 L 54 387" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 51.5 363 L 51.5 363 L 56.5 363 L 56.5 363 L 51.5 363" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 51.5 363 L 51.5 363 L 56.5 363 L 56.5 363 M 51.5 363" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 250 363 L 250 387" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
 </svg>

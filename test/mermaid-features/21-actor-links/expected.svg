@@ -58,14 +58,8 @@ node sequencer.js --mermaid -i test/mermaid-features/21-actor-links/input.mmd -o
   <path d="M 71.5 361 L 471 361" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 461 356 L 461 366 L 471 361" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 69 381 L 69 405" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 66.5 381 L 66.5 381 L 71.5 381 L 71.5 381 L 66.5 381" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 66.5 381 L 66.5 381 L 71.5 381 L 71.5 381 M 66.5 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 265 381 L 265 405" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 262.5 381 L 262.5 381 L 267.5 381 L 267.5 381 L 262.5 381" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 262.5 381 L 262.5 381 L 267.5 381 L 267.5 381 M 262.5 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 473.5 381 L 473.5 405" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 471 381 L 471 381 L 476 381 L 476 381 L 471 381" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 471 381 L 471 381 L 476 381 L 476 381 M 471 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="30" y="449" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Links</text>
   <text x="30" y="469" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" xml:space="preserve" font-weight="bold" dominant-baseline="auto">API:</text>
   <a href="https://status.example.test/api" target="_blank">

@@ -47,7 +47,5 @@ node sequencer.js --mermaid -i test/mermaid-features/18-create-header-placement/
   <path d="M 281.5 422 L 65.5 422" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
   <path d="M 65.5 422 L 75.5 417 L 75.5 427 L 65.5 422" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 63 429 L 63 453" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 60.5 429 L 60.5 429 L 65.5 429 L 65.5 429 L 60.5 429" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 60.5 429 L 60.5 429 L 65.5 429 L 65.5 429 M 60.5 429" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 284 429 L 284 453" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
 </svg>

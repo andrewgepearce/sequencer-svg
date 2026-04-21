@@ -168,24 +168,10 @@ node sequencer.js --mermaid -i test/mermaid-features/20-specialised-participants
   <path d="M 782 697 L 1995.5 697" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 1985.5 692 L 1985.5 702 L 1995.5 697" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 118 717 L 118 741" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 115.5 717 L 115.5 717 L 120.5 717 L 120.5 717 L 115.5 717" fill="rgb(255,232,204)" stroke="none"/>
-  <path d="M 115.5 717 L 115.5 717 L 120.5 717 L 120.5 717 M 115.5 717" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 452 717 L 452 741" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 449.5 717 L 449.5 717 L 454.5 717 L 454.5 717 L 449.5 717" fill="rgb(196,232,255)" stroke="none"/>
-  <path d="M 449.5 717 L 449.5 717 L 454.5 717 L 454.5 717 M 449.5 717" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 779.5 717 L 779.5 741" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 777 717 L 777 717 L 782 717 L 782 717 L 777 717" fill="rgb(255,244,179)" stroke="none"/>
-  <path d="M 777 717 L 777 717 L 782 717 L 782 717 M 777 717" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 1081 717 L 1081 741" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1078.5 717 L 1078.5 717 L 1083.5 717 L 1083.5 717 L 1078.5 717" fill="rgb(220,255,214)" stroke="none"/>
-  <path d="M 1078.5 717 L 1078.5 717 L 1083.5 717 L 1083.5 717 M 1078.5 717" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 1377.5 717 L 1377.5 741" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1375 717 L 1375 717 L 1380 717 L 1380 717 L 1375 717" fill="rgb(255,221,234)" stroke="none"/>
-  <path d="M 1375 717 L 1375 717 L 1380 717 L 1380 717 M 1375 717" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 1693.5 717 L 1693.5 741" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1691 717 L 1691 717 L 1696 717 L 1696 717 L 1691 717" fill="rgb(226,220,255)" stroke="none"/>
-  <path d="M 1691 717 L 1691 717 L 1696 717 L 1696 717 M 1691 717" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 1998 717 L 1998 741" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1995.5 717 L 1995.5 717 L 2000.5 717 L 2000.5 717 L 1995.5 717" fill="rgb(255,235,186)" stroke="none"/>
-  <path d="M 1995.5 717 L 1995.5 717 L 2000.5 717 L 2000.5 717 M 1995.5 717" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
 </svg>

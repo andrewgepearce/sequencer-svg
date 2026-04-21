@@ -28,18 +28,12 @@ Useful generated artefacts under `/tmp/seq-compare/`:
 ## Current state
 
 - Bug 1 appears resolved in the current renderer after the Bug 6 and Bug 8 cleanup work.
+- Bug 7 is now fixed in the working tree: zero-height activation tail rectangles are no longer emitted.
 - The current working tree keeps two renderer changes:
   - [Fragment.js](/Users/andrewpearce/dev/github/sequencer-svg/Fragment.js) now redraws structural fragment end-band borders before the end-band timeline/activation pass.
   - [Fragment.js](/Users/andrewpearce/dev/github/sequencer-svg/Fragment.js) again returns the `Actor.drawTimelines(...)` Y from fragment end-bands, matching [scratch/sequencer/Fragment.js](/Users/andrewpearce/dev/github/sequencer-svg/scratch/sequencer/Fragment.js).
-- The fragment-related Mermaid SVG fixtures were regenerated from the current renderer for:
-  - `06-fragments`
-  - `10-parallel`
-  - `11-critical-regions`
-  - `12-break`
-  - `15-rect-nesting-and-fragments`
-- Targeted Jest verification passes for those slices plus:
-  - `13-activation-flow-defaults`
-  - `14-rect-highlighting`
+- Mermaid `expected.svg` fixtures were regenerated for all affected slices after the Bug 7 cleanup.
+- `npx jest --runInBand test/mermaid-features` passes with 27 suites and 57 tests.
 
 The important caveat is: passing snapshots only proves the fixtures match the current renderer. It does **not** prove visual parity with the old PNG baseline on every renderer bug, but Bug 1 was rechecked visually against a fresh rasterized current build before being downgraded.
 
@@ -243,7 +237,7 @@ Two concrete sources have been identified:
 
 ### Status
 
-Open. Newly identified.
+Fixed in the working tree on 2026-04-21.
 
 ### Symptom
 
@@ -260,13 +254,17 @@ Example from `06-fragments`:
 
 This comes from the “we have a start and an end” branch in [Actor.js](/Users/andrewpearce/dev/github/sequencer-svg/Actor.js) when `flowEndYPos === flowStartYPos`.
 
-### Current suspicion
+### Implemented fix
 
-The likely trigger is [Actor.clearAllFlows](/Users/andrewpearce/dev/github/sequencer-svg/Actor.js), which sets `flowEndYPos = starty` for actors marked continue, allowing the later tail draw to re-enter a branch that constructs a zero-length activation rectangle.
+- [Actor.js](/Users/andrewpearce/dev/github/sequencer-svg/Actor.js) now routes activation/flow rectangle emission through a small helper that skips zero-area rectangles.
+- This keeps the fix local to flow geometry in `drawTimelinesWithBreak` without changing the general semantics of [Utilities.drawRectangle](/Users/andrewpearce/dev/github/sequencer-svg/Utilities.js).
+- The dashed tail remains, but the empty activation box at the same Y is no longer emitted.
 
-### Expected fix
+### Verification
 
-Guard against zero-height activation-rectangle emission in `drawTimelinesWithBreak`, or prevent `clearAllFlows` from creating a same-start same-end rectangle state for continuation tails.
+- Fresh `06-fragments` output no longer emits the zero-height tail rectangle paths at the final `1100` Y.
+- Mermaid `expected.svg` fixtures were regenerated for the affected slices.
+- `npx jest --runInBand test/mermaid-features` passes with 27 suites and 57 tests.
 
 ## Bug 8 — timelines are over-drawn multiple times within a single transition region
 

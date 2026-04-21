@@ -127,7 +127,5 @@ node sequencer.js --mermaid -i test/mermaid-features/09-advanced-arrows/input.mm
   <path d="M 283 956 L 65.5 956" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
   <path d="M 273 956 L 283 956 M 273 961 L 283 956" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 63 963 L 63 987" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 60.5 963 L 60.5 963 L 65.5 963 L 65.5 963 L 60.5 963" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 60.5 963 L 60.5 963 L 65.5 963 L 65.5 963 M 60.5 963" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 285.5 963 L 285.5 987" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
 </svg>

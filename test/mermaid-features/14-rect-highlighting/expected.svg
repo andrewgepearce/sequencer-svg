@@ -163,11 +163,7 @@ node sequencer.js --mermaid -i test/mermaid-features/14-rect-highlighting/input.
   <path d="M 283 740 L 65.5 740" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
   <path d="M 65.5 740 L 75.5 735 L 75.5 745 L 65.5 740" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 63 747 L 63 771" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 60.5 747 L 60.5 747 L 65.5 747 L 65.5 747 L 60.5 747" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 60.5 747 L 60.5 747 L 65.5 747 L 65.5 747 M 60.5 747" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 285.5 747 L 285.5 771" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 497 747 L 497 771" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 704.5 747 L 704.5 771" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 702 747 L 702 747 L 707 747 L 707 747 L 702 747" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 702 747 L 702 747 L 707 747 L 707 747 M 702 747" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
 </svg>

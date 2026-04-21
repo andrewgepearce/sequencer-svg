@@ -183,10 +183,6 @@ node sequencer.js --mermaid -i test/mermaid-features/05-activations/input.mmd -o
   <path d="M 494.5 868 L 494.5 873 L 499.5 873 L 499.5 868 L 494.5 868" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 494.5 868 L 494.5 873 L 499.5 873 L 499.5 868 M 494.5 868" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 63 879 L 63 903" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 60.5 879 L 60.5 879 L 65.5 879 L 65.5 879 L 60.5 879" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 60.5 879 L 60.5 879 L 65.5 879 L 65.5 879 M 60.5 879" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 285.5 879 L 285.5 903" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 283 879 L 283 879 L 288 879 L 288 879 L 283 879" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 283 879 L 283 879 L 288 879 L 288 879 M 283 879" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 497 879 L 497 903" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
 </svg>

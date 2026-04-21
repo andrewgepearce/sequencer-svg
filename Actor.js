@@ -1211,6 +1211,50 @@ module.exports = class Actor {
 
 	///////////////////////////////////////////////////////////////////////////////
 	/**
+	 * Draw an activation/flow rectangle only when it has visible area.
+	 *
+	 * @param {*} ctx Parameter derived from ctx.
+	 * @param {*} fillColour Parameter derived from fillColour.
+	 * @param {*} top Parameter derived from top.
+	 * @param {*} left Parameter derived from left.
+	 * @param {*} width Parameter derived from width.
+	 * @param {*} height Parameter derived from height.
+	 * @param {*} radius Parameter derived from radius.
+	 * @param {*} topBorder Parameter derived from topBorder.
+	 * @param {*} rightBorder Parameter derived from rightBorder.
+	 * @param {*} bottomBorder Parameter derived from bottomBorder.
+	 * @param {*} leftBorder Parameter derived from leftBorder.
+	 * @param {*} mimic Parameter derived from mimic.
+	 * @returns {void} Nothing.
+	 * @example
+	 * Actor.drawFlowRectangle(ctx, fillColour, top, left, width, height, radius, topBorder, rightBorder, bottomBorder, leftBorder, mimic);
+	 */
+	static drawFlowRectangle(ctx, fillColour, top, left, width, height, radius, topBorder, rightBorder, bottomBorder, leftBorder, mimic) {
+		if (!Utilities.isNumber(width) || !Utilities.isNumber(height) || width <= 0 || height <= 0) {
+			return;
+		}
+
+		Utilities.drawRectangle(
+			ctx,
+			1,
+			"rgb(0, 0, 0)",
+			[],
+			fillColour,
+			top,
+			left,
+			width,
+			height,
+			radius,
+			topBorder,
+			rightBorder,
+			bottomBorder,
+			leftBorder,
+			mimic
+		);
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+	/**
 	 * Handle draw timelines with break.
 	 *
 	 * @param {*} working Parameter derived from working.
@@ -1302,11 +1346,8 @@ module.exports = class Actor {
 					let heightBlock1 = breakAtYPosStart - topBlock1;
 					let topBorder = actorcl.isFlowStateContinue() ? false : true;
 					let bottomBorder = true;
-					Utilities.drawRectangle(
+					Actor.drawFlowRectangle(
 						ctx,
-						1,
-						"rgb(0, 0, 0)",
-						[],
 						actorcl.actorTmd.bgColour,
 						topBlock1,
 						leftBlock,
@@ -1323,11 +1364,8 @@ module.exports = class Actor {
 					let heightBlock2 = actorcl.flowEndYPos - breakAtYPosEnd;
 					topBorder = true;
 					bottomBorder = true;
-					Utilities.drawRectangle(
+					Actor.drawFlowRectangle(
 						ctx,
-						1,
-						"rgb(0, 0, 0)",
-						[],
 						actorcl.actorTmd.bgColour,
 						topBlock2,
 						leftBlock,
@@ -1346,11 +1384,8 @@ module.exports = class Actor {
 					let topBorder = actorcl.isFlowStateContinue() ? false : true;
 					let bottomBorder = true;
 					let height = actorcl.isFlowStateContinue() ? actualHeight : actualHeight - (actorcl.flowStartYPos - starty);
-					Utilities.drawRectangle(
+					Actor.drawFlowRectangle(
 						ctx,
-						1,
-						"rgb(0, 0, 0)",
-						[],
 						actorcl.actorTmd.bgColour,
 						topBlock,
 						leftBlock,
@@ -1378,11 +1413,8 @@ module.exports = class Actor {
 				let rightBorder = true;
 				let bottomBorder = true;
 				let leftBorder = true;
-				Utilities.drawRectangle(
+				Actor.drawFlowRectangle(
 					ctx,
-					1,
-					"rgb(0, 0, 0)",
-					[],
 					actorcl.actorTmd.bgColour,
 					topBlock,
 					leftBlock,
@@ -1417,11 +1449,8 @@ module.exports = class Actor {
 					let heightBlock1 = breakAtYPosStart - topBlock;
 					let topBorder = actorcl.isFlowStateContinue() ? false : true;
 					let bottomBorder = true;
-					Utilities.drawRectangle(
+					Actor.drawFlowRectangle(
 						ctx,
-						1,
-						"rgb(0, 0, 0)",
-						[],
 						actorcl.actorTmd.bgColour,
 						topBlock,
 						leftBlock,
@@ -1438,11 +1467,8 @@ module.exports = class Actor {
 					let heightBlock2 = starty + actualHeight - breakAtYPosEnd;
 					topBorder = true;
 					bottomBorder = false;
-					Utilities.drawRectangle(
+					Actor.drawFlowRectangle(
 						ctx,
-						1,
-						"rgb(0, 0, 0)",
-						[],
 						actorcl.actorTmd.bgColour,
 						topBlock2,
 						leftBlock,
@@ -1460,11 +1486,8 @@ module.exports = class Actor {
 					let topBorder = actorcl.isFlowStateContinue() ? false : true;
 					let bottomBorder = false;
 					let height = actorcl.isFlowStateContinue() ? actualHeight : actualHeight - (actorcl.flowStartYPos - starty);
-					Utilities.drawRectangle(
+					Actor.drawFlowRectangle(
 						ctx,
-						1,
-						"rgb(0, 0, 0)",
-						[],
 						actorcl.actorTmd.bgColour,
 						topBlock,
 						leftBlock,
@@ -1492,11 +1515,8 @@ module.exports = class Actor {
 				let rightBorder = true;
 				let bottomBorder = false;
 				let leftBorder = true;
-				Utilities.drawRectangle(
+				Actor.drawFlowRectangle(
 					ctx,
-					1,
-					"rgb(0, 0, 0)",
-					[],
 					actorcl.actorTmd.bgColour,
 					topBlock,
 					leftBlock,
@@ -1529,11 +1549,8 @@ module.exports = class Actor {
 					let heightBlock1 = breakAtYPosStart - topBlock;
 					let topBorder = actorcl.isFlowStateContinue() ? false : true;
 					let bottomBorder = true;
-					Utilities.drawRectangle(
+					Actor.drawFlowRectangle(
 						ctx,
-						1,
-						"rgb(0, 0, 0)",
-						[],
 						actorcl.actorTmd.bgColour,
 						topBlock,
 						leftBlock,
@@ -1550,11 +1567,8 @@ module.exports = class Actor {
 					let heightBlock2 = actorcl.flowEndYPos - breakAtYPosEnd;
 					topBorder = true;
 					bottomBorder = true;
-					Utilities.drawRectangle(
+					Actor.drawFlowRectangle(
 						ctx,
-						1,
-						"rgb(0, 0, 0)",
-						[],
 						actorcl.actorTmd.bgColour,
 						topBlock2,
 						leftBlock,
@@ -1572,11 +1586,8 @@ module.exports = class Actor {
 					let topBorder = actorcl.isFlowStateContinue() ? false : true;
 					let bottomBorder = true;
 					let height = actualHeight - (actualHeight - (actorcl.flowEndYPos - starty));
-					Utilities.drawRectangle(
+					Actor.drawFlowRectangle(
 						ctx,
-						1,
-						"rgb(0, 0, 0)",
-						[],
 						actorcl.actorTmd.bgColour,
 						topBlock,
 						leftBlock,
@@ -1604,11 +1615,8 @@ module.exports = class Actor {
 				let rightBorder = true;
 				let bottomBorder = true;
 				let leftBorder = true;
-				Utilities.drawRectangle(
+				Actor.drawFlowRectangle(
 					ctx,
-					1,
-					"rgb(0, 0, 0)",
-					[],
 					actorcl.actorTmd.bgColour,
 					topBlock,
 					leftBlock,
@@ -1626,16 +1634,13 @@ module.exports = class Actor {
 			/////////////////////////////////////////////////////////////////////////////
 			// We are marked to continue and have no number for either flowStartYPos or flowEndYPos
 			else if (actorcl.isFlowStateContinue()) {
-				Utilities.drawRectangle(
+				Actor.drawFlowRectangle(
 					ctx,
-					1,
-					"rgb(0, 0, 0)",
-					[],
 					actorcl.actorTmd.bgColour,
-					starty, //top
-					actorcl.middle - actorcl.flowWidth / 2, //left
-					actorcl.flowWidth, // width
-					actualHeight, // height
+					starty,
+					actorcl.middle - actorcl.flowWidth / 2,
+					actorcl.flowWidth,
+					actualHeight,
 					0,
 					false,
 					true,

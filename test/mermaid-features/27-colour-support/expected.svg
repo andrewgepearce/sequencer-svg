@@ -75,12 +75,6 @@ node sequencer.js --mermaid -i test/mermaid-features/27-colour-support/input.mmd
   <path d="M 624 411 L 624 423 L 629 423 L 629 411 L 624 411" fill="#FFF3BF" stroke="none"/>
   <path d="M 624 411 L 624 423 M 629 423 L 629 411 M 624 411" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 91 423 L 91 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 88.5 423 L 88.5 423 L 93.5 423 L 93.5 423 L 88.5 423" fill="#D0EBFF" stroke="none"/>
-  <path d="M 88.5 423 L 88.5 423 L 93.5 423 L 93.5 423 M 88.5 423" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 353.5 423 L 353.5 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 351 423 L 351 423 L 356 423 L 356 423 L 351 423" fill="rgba(255, 244, 179, 0.8)" stroke="none"/>
-  <path d="M 351 423 L 351 423 L 356 423 L 356 423 M 351 423" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 626.5 423 L 626.5 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 624 423 L 624 423 L 629 423 L 629 423 L 624 423" fill="#FFF3BF" stroke="none"/>
-  <path d="M 624 423 L 624 423 L 629 423 L 629 423 M 624 423" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
 </svg>

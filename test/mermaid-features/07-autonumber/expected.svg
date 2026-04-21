@@ -47,9 +47,5 @@ From the project root, regenerate this Mermaid transform and SVG with:
   <path d="M 283 361 L 65.5 361" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 75.5 356 L 75.5 366 L 65.5 361" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 63 381 L 63 405" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 60.5 381 L 60.5 381 L 65.5 381 L 65.5 381 L 60.5 381" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 60.5 381 L 60.5 381 L 65.5 381 L 65.5 381 M 60.5 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 285.5 381 L 285.5 405" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 283 381 L 283 381 L 288 381 L 288 381 L 283 381" fill="rgb(95,183,224)" stroke="none"/>
-  <path d="M 283 381 L 283 381 L 288 381 L 288 381 M 283 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
 </svg>
