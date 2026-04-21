@@ -2,6 +2,22 @@
 
 This file is the renderer-comparison handoff for the SVG port.
 
+## Bug summary
+
+Keep this summary list in sync whenever any bug below is added, removed, reopened, fixed, or reclassified.
+
+- 1 - **Resolved** - fragment-end activation/timeline mismatch against old PNG
+- 2 - **Fixed in working tree** - Y accumulation drift between old and new
+- 3 - **Open, lower priority** - new tool runs extra mimic/resize passes
+- 4 - **Resolved** - fragment borders cut across activation bars
+- 5 - **Open** - activation continuation geometry around nested fragments
+- 6 - **Fixed** - mimic passes emit measurement-only paths into the SVG
+- 7 - **Fixed** - zero-height activation rectangle emitted at the final tail
+- 8 - **Fixed** - timelines are over-drawn multiple times within a single transition region
+- 9 - **Open** - fragment closing-band stroke path semantics are awkward for SVG
+- 10 - **Open, non-blocking** - width mismatch against old PNG is primarily font-driven
+- 11 - **Fixed** - activation bar stroke paths omit the bottom closing edge
+
 The canonical comparison fixture is [test/mermaid-features/06-fragments/](/Users/andrewpearce/dev/github/sequencer-svg/test/mermaid-features/06-fragments/), with:
 
 - Old tool (canvas/PNG): `/Users/andrewpearce/dev/github/sequencer/sequencer.js`
@@ -28,6 +44,8 @@ Useful generated artefacts under `/tmp/seq-compare/`:
 ## Current state
 
 - Bug 1 appears resolved in the current renderer after the Bug 6 and Bug 8 cleanup work.
+- Bug 2 is now fixed in the current renderer after the blank-note spacing correction.
+- Bug 4 no longer appears independently reproducible after the Bug 2 fix.
 - Bug 7 is now fixed in the working tree: zero-height activation tail rectangles are no longer emitted.
 - The current working tree keeps two renderer changes:
   - [Fragment.js](/Users/andrewpearce/dev/github/sequencer-svg/Fragment.js) now redraws structural fragment end-band borders before the end-band timeline/activation pass.
@@ -178,35 +196,44 @@ So the visible `opt` and `alt` fragment-end deltas were downstream effects of th
 
 ### Status
 
-Still open. Lower priority.
+Still open, but reduced and clearly lower priority.
 
 ### Known state
 
 - Old tool: 2 passes for the fragment repro
-- New tool: 5 passes for the fragment repro
-- The measured fragment end-line tops were stable across those new-tool passes, so this is waste rather than instability
+- Current new tool: 3 passes total for the fragment repro
+  - 1 initial render
+  - 2 re-render iterations logged by [SvgStart.js](/Users/andrewpearce/dev/github/sequencer-svg/SvgStart.js)
+- This is an improvement over the earlier 5-pass state recorded during the investigation.
+- The measured fragment end-line tops remained stable across those current SVG passes, so this still looks like waste rather than instability.
 
 ### Next step
 
-Instrument the resize loop and log measured width/height per pass. Do this only after Bug 1 and Bug 2 are in better shape.
+If further cleanup is wanted, instrument the resize loop and record the width/height deltas per pass so the second re-render can be eliminated if possible.
+
+Do this only after any remaining visible parity issues are either fixed or ruled out.
 
 ## Bug 4 — fragment borders cut across activation bars
 
 ### Status
 
-Still open, but partly overlaps with Bug 1.
+Resolved in current `main` as of 2026-04-21.
 
-### What changed
+### Why this is now closed
 
-The current working tree moved fragment **end-band** border redraw below the activation/timeline pass by drawing those borders earlier in [Fragment.js](/Users/andrewpearce/dev/github/sequencer-svg/Fragment.js).
+This bug overlapped heavily with Bug 1 and Bug 2:
 
-### What is still unknown
+- Bug 1 covered the fragment-end activation/timeline join itself
+- Bug 2 covered the Y drift that changed where the join landed
+- the retained end-band border ordering change in [Fragment.js](/Users/andrewpearce/dev/github/sequencer-svg/Fragment.js) addressed the main stroke-order concern
 
-Whether all remaining “line crossing the activation bar” problems are now reduced to:
+After the Bug 2 fix, a fresh rasterized crop of the current `06-fragments` output no longer showed a distinct “fragment border cutting across the activation bar” artefact relative to the old PNG baseline.
 
-- incorrect end-band border layering
-- incorrect activation bottom-cap stroke
-- or a wrong Y alignment caused by Bug 2
+At this point there is no separate live repro that justifies keeping Bug 4 open as its own issue.
+
+### Follow-on note
+
+If a future fragment-edge crossing artefact is found, treat it first as a regression of Bug 1 or as a new specific repro, rather than reopening this broad placeholder bug by default.
 
 ## Bug 5 — activation continuation geometry around nested fragments
 
