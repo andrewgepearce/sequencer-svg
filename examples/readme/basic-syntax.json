@@ -1,0 +1,38 @@
+{
+   "title": "Basic Syntax",
+   "version": "1.0",
+   "actors": [
+      {
+         "name": "Alice",
+         "alias": "A",
+         "actorType": "participant"
+      },
+      {
+         "name": "Bob",
+         "alias": "B",
+         "actorType": "participant"
+      }
+   ],
+   "lines": [
+      {
+         "type": "call",
+         "from": "A",
+         "to": "B",
+         "text": "Hello Bob!",
+         "toArrow": "fill",
+         "arrow": "fill"
+      },
+      {
+         "type": "return",
+         "from": "B",
+         "to": "A",
+         "text": "Hi Alice!",
+         "lineDash": [
+            4,
+            2
+         ],
+         "toArrow": "fill",
+         "arrow": "fill"
+      }
+   ]
+}

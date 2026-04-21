@@ -1,0 +1,19 @@
+title: Rect Highlight
+version: '1.0'
+actors:
+  - {name: A, alias: A, actorType: participant}
+  - {name: B, alias: B, actorType: participant}
+lines:
+  - {type: call, from: A, to: B, text: Before highlight, toArrow: fill, arrow: fill}
+  - type: fragment
+    fragmentType: rect
+    title: ''
+    condition: ''
+    bgColour: 'rgb(200, 220, 255)'
+    borderWidth: 0
+    lines:
+      - {type: call, from: A, to: B, text: Inside highlight, toArrow: fill, arrow: fill}
+      - {type: return, from: B, to: A, text: Response, continueFromFlow: true, lineDash: [4, 2], toArrow: fill, arrow: fill}
+    startActor: A
+    endActor: B
+  - {type: call, from: A, to: B, text: After highlight, toArrow: fill, arrow: fill}

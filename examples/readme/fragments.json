@@ -1,0 +1,83 @@
+{
+   "title": "Fragments",
+   "version": "1.0",
+   "actors": [
+      {
+         "name": "A",
+         "alias": "A",
+         "actorType": "participant"
+      },
+      {
+         "name": "B",
+         "alias": "B",
+         "actorType": "participant"
+      },
+      {
+         "name": "C",
+         "alias": "C",
+         "actorType": "participant"
+      }
+   ],
+   "lines": [
+      {
+         "type": "fragment",
+         "fragmentType": "loop",
+         "title": "",
+         "condition": "Every minute",
+         "lines": [
+            {
+               "type": "call",
+               "from": "A",
+               "to": "B",
+               "text": "ping",
+               "toArrow": "fill",
+               "arrow": "fill"
+            }
+         ]
+      },
+      {
+         "type": "fragment",
+         "fragmentType": "alt",
+         "title": "",
+         "condition": "Success",
+         "lines": [
+            {
+               "type": "call",
+               "from": "A",
+               "to": "B",
+               "text": "process",
+               "toArrow": "fill",
+               "arrow": "fill"
+            },
+            {
+               "type": "condition",
+               "condition": "Failure"
+            },
+            {
+               "type": "call",
+               "from": "A",
+               "to": "C",
+               "text": "handleError",
+               "toArrow": "fill",
+               "arrow": "fill"
+            }
+         ]
+      },
+      {
+         "type": "fragment",
+         "fragmentType": "opt",
+         "title": "",
+         "condition": "Optional step",
+         "lines": [
+            {
+               "type": "call",
+               "from": "A",
+               "to": "B",
+               "text": "optional()",
+               "toArrow": "fill",
+               "arrow": "fill"
+            }
+         ]
+      }
+   ]
+}

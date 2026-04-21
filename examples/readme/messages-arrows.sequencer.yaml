@@ -1,0 +1,13 @@
+title: Messages Arrows
+version: '1.0'
+actors:
+  - {name: A, alias: A, actorType: participant}
+  - {name: B, alias: B, actorType: participant}
+lines:
+  - {type: call, from: A, to: B, text: Sync call (filled arrow), toArrow: fill, arrow: fill}
+  - {type: return, from: B, to: A, text: 'Return (dashed, filled)', lineDash: [4, 2], toArrow: fill, arrow: fill}
+  - {type: call, from: A, to: B, text: Async (open arrow), toArrow: open, arrow: open, async: true}
+  - {type: return, from: B, to: A, text: 'Async return (dashed, open)', lineDash: [4, 2], toArrow: open, arrow: open}
+  - {type: call, from: A, to: B, text: Lost message (cross), toArrow: cross, arrow: cross}
+  - {type: call, from: A, to: B, text: 'Solid line, no arrow', arrow: none}
+  - {type: return, from: A, to: B, text: 'Dashed line, no arrow', lineDash: [4, 2], arrow: none}

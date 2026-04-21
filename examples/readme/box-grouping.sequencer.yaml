@@ -1,0 +1,17 @@
+title: Box Grouping
+version: '1.0'
+actors:
+  - {name: UI, alias: UI, actorType: participant}
+  - {name: API, alias: API, actorType: participant}
+  - {name: Svc, alias: Svc, actorType: participant}
+  - {name: DB, alias: DB, actorType: participant}
+actorGroups:
+  - {title: Frontend, bgColour: 'rgb(200,220,255)', actors: [UI, API]}
+  - {title: Backend, bgColour: 'rgb(255,220,200)', actors: [Svc, DB]}
+lines:
+  - {type: call, from: UI, to: API, text: Request, toArrow: fill, arrow: fill}
+  - {type: call, from: API, to: Svc, text: Forward, toArrow: fill, arrow: fill}
+  - {type: call, from: Svc, to: DB, text: Query, toArrow: fill, arrow: fill}
+  - {type: return, from: DB, to: Svc, text: Result, lineDash: [4, 2], toArrow: fill, arrow: fill}
+  - {type: return, from: Svc, to: API, text: Response, lineDash: [4, 2], toArrow: fill, arrow: fill}
+  - {type: return, from: API, to: UI, text: Display, lineDash: [4, 2], toArrow: fill, arrow: fill}

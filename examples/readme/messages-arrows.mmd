@@ -1,0 +1,10 @@
+sequenceDiagram
+    participant A
+    participant B
+    A->>B: Sync call (filled arrow)
+    B-->>A: Return (dashed, filled)
+    A-)B: Async (open arrow)
+    B--)A: Async return (dashed, open)
+    A-xB: Lost message (cross)
+    A->B: Solid line, no arrow
+    A-->B: Dashed line, no arrow

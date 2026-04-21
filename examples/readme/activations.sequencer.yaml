@@ -1,0 +1,16 @@
+title: Activations
+version: '1.0'
+actors:
+  - {name: A, alias: A, actorType: participant}
+  - {name: B, alias: B, actorType: participant}
+lines:
+  - {type: call, from: A, to: B, text: Request (activates B), toArrow: fill, arrow: fill}
+  - type: return
+    from: B
+    to: A
+    text: Response (deactivates B)
+    continueFromFlow: true
+    breakToFlow: true
+    lineDash: [4, 2]
+    toArrow: fill
+    arrow: fill

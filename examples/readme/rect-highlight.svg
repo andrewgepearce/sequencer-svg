@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="298" height="576" viewBox="0 0 298 576">
+  <title>Rect Highlight</title>
+  <rect width="100%" height="100%" fill="white"/>
+  <path d="M 0 0 L 0 566 L 288 566 L 288 0 L 0 0" fill="rgb(255, 255, 255)" stroke="none"/>
+  <path d="M 30 30 L 30 57 L 166 57 L 166 30 L 30 30" fill="rgba(0,0,0,0)" stroke="none"/>
+  <text x="35" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Title:</text>
+  <text x="68.44" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
+  <text x="72.33" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Rect Highlight</text>
+  <path d="M 30 57 L 30 84 L 120 84 L 120 57 L 30 57" fill="rgba(0,0,0,0)" stroke="none"/>
+  <text x="35" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Version:</text>
+  <text x="91.01" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
+  <text x="94.9" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1.0</text>
+  <path d="M 33 122 L 33 150 L 33 150 A 5 5 0 0 0 38 155 L 59 155 L 59 155 A 5 5 0 0 0 64 150 L 64 122 L 64 122 A 5 5 0 0 0 59 117 L 38 117 L 38 117 A 5 5 0 0 0 33 122" fill="rgb(210,210,210)" stroke="none"/>
+  <path d="M 30 119 L 30 147 L 30 147 A 5 5 0 0 0 35 152 L 56 152 L 56 152 A 5 5 0 0 0 61 147 L 61 119 L 61 119 A 5 5 0 0 0 56 114 L 35 114 L 35 114 A 5 5 0 0 0 30 119" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 30 119 L 30 147 L 30 147 A 5 5 0 0 0 35 152 L 56 152 L 56 152 A 5 5 0 0 0 61 147 L 61 119 L 61 119 A 5 5 0 0 0 56 114 L 35 114 L 35 114 A 5 5 0 0 0 30 119" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="39" y="141" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">A</text>
+  <path d="M 214 122 L 214 150 L 214 150 A 5 5 0 0 0 219 155 L 240 155 L 240 155 A 5 5 0 0 0 245 150 L 245 122 L 245 122 A 5 5 0 0 0 240 117 L 219 117 L 219 117 A 5 5 0 0 0 214 122" fill="rgb(210,210,210)" stroke="none"/>
+  <path d="M 211 119 L 211 147 L 211 147 A 5 5 0 0 0 216 152 L 237 152 L 237 152 A 5 5 0 0 0 242 147 L 242 119 L 242 119 A 5 5 0 0 0 237 114 L 216 114 L 216 114 A 5 5 0 0 0 211 119" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 211 119 L 211 147 L 211 147 A 5 5 0 0 0 216 152 L 237 152 L 237 152 A 5 5 0 0 0 242 147 L 242 119 L 242 119 A 5 5 0 0 0 237 114 L 216 114 L 216 114 A 5 5 0 0 0 211 119" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="220" y="141" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">B</text>
+  <path d="M 45.5 152 L 45.5 236" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 43 216 L 43 236 L 48 236 L 48 216 L 43 216" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 43 216 L 43 236 M 48 236 L 48 216 L 43 216" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 226.5 152 L 226.5 236" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 224 216 L 224 236 L 229 236 L 229 216 L 224 216" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 224 216 L 224 236 M 229 236 L 229 216 L 224 216" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="88" y="206" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Before highlight</text>
+  <path d="M 48 216 L 224 216" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 214 211 L 214 221 L 224 216" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 30 266 L 30 266 L 257 266 L 257 266 L 30 266" fill="rgb(200, 220, 255)" stroke="none"/>
+  <path d="M 45.5 236 L 45.5 266" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 43 236 L 43 266 L 48 266 L 48 236 L 43 236" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 43 236 L 43 266 M 48 266 L 48 236 M 43 236" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 226.5 236 L 226.5 266" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 224 236 L 224 266 L 229 266 L 229 236 L 224 236" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 224 236 L 224 266 M 229 266 L 229 236 M 224 236" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 30 266 L 30 350 L 257 350 L 257 266 L 30 266" fill="rgb(200, 220, 255)" stroke="none"/>
+  <path d="M 45.5 266 L 45.5 350" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 43 266 L 43 350 L 48 350 L 48 266 L 43 266" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 43 266 L 43 350 M 48 350 L 48 266 M 43 266" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 226.5 266 L 226.5 350" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 224 266 L 224 350 L 229 350 L 229 266 L 224 266" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 224 266 L 224 350 M 229 350 L 229 266 M 224 266" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="88" y="320" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Inside highlight</text>
+  <path d="M 48 330 L 224 330" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 214 325 L 214 335 L 224 330" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 30 350 L 30 416 L 257 416 L 257 350 L 30 350" fill="rgb(200, 220, 255)" stroke="none"/>
+  <path d="M 45.5 350 L 45.5 416" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 43 350 L 43 416 L 48 416 L 48 350 L 43 350" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 43 350 L 43 416 M 48 416 L 48 350 M 43 350" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 226.5 350 L 226.5 416" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 224 350 L 224 416 L 229 416 L 229 350 L 224 350" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 224 350 L 224 416 M 229 416 L 229 350 M 224 350" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="95.5" y="401.5" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">3. Response</text>
+  <path d="M 224 409 L 48 409" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
+  <path d="M 48 409 L 58 404 L 58 414 L 48 409" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 30 416 L 30 428 L 257 428 L 257 416 L 30 416" fill="rgb(200, 220, 255)" stroke="none"/>
+  <path d="M 45.5 416 L 45.5 428" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 43 416 L 43 428 L 48 428 L 48 416 L 43 416" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 43 416 L 43 428 M 48 428 L 48 416 M 43 416" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 226.5 416 L 226.5 428" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 224 416 L 224 428 L 229 428 L 229 416 L 224 416" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 224 416 L 224 428 M 229 428 L 229 416 M 224 416" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 45.5 428 L 45.5 512" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 43 428 L 43 512 L 48 512 L 48 428 L 43 428" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 43 428 L 43 512 M 48 512 L 48 428 M 43 428" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 226.5 428 L 226.5 512" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 224 428 L 224 512 L 229 512 L 229 428 L 224 428" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 224 428 L 224 512 M 229 512 L 229 428 M 224 428" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <text x="88" y="482" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">4. After highlight</text>
+  <path d="M 48 492 L 224 492" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 214 487 L 214 497 L 224 492" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 45.5 512 L 45.5 536" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 43 512 L 48 512" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 226.5 512 L 226.5 536" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 224 512 L 229 512" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+</svg>

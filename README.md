@@ -420,9 +420,11 @@ Divides a fragment into sections (e.g., else branches):
 
 ## Mermaid Support
 
-sequencer-svg can transform Mermaid sequence diagram syntax into its native format.
+sequencer-svg transforms Mermaid sequence diagram syntax into its native format. Each example below shows the Mermaid input, the transformed sequencer YAML, and the rendered SVG.
 
 ### Basic Syntax
+
+**Mermaid input:**
 
 ```mermaid
 sequenceDiagram
@@ -432,96 +434,159 @@ sequenceDiagram
     B-->>A: Hi Alice!
 ```
 
-Transform with:
+**Transformed sequencer YAML:**
 
-```bash
-node sequencer.js diagram.mmd
+```yaml
+title: Basic Syntax
+version: '1.0'
+actors:
+  - {name: Alice, alias: A, actorType: participant}
+  - {name: Bob, alias: B, actorType: participant}
+lines:
+  - {type: call, from: A, to: B, text: Hello Bob!, toArrow: fill, arrow: fill}
+  - {type: return, from: B, to: A, text: Hi Alice!, lineDash: [4, 2], toArrow: fill, arrow: fill}
 ```
 
-### Supported Mermaid Features
+**Rendered output:**
 
-#### Participants and Actors
+![Basic syntax](examples/readme/basic-syntax.svg)
+
+### Messages and Arrows
+
+**Mermaid input:**
 
 ```mermaid
 sequenceDiagram
-    participant A as Alice
-    actor B as Bob
-    participant C as Charlie
+    participant A
+    participant B
+    A->>B: Sync call (filled arrow)
+    B-->>A: Return (dashed, filled)
+    A-)B: Async (open arrow)
+    B--)A: Async return (dashed, open)
+    A-xB: Lost message (cross)
+    A->B: Solid line, no arrow
+    A-->B: Dashed line, no arrow
 ```
 
-Actor types are preserved:
+**Transformed sequencer YAML:**
+
+```yaml
+title: Messages Arrows
+version: '1.0'
+actors:
+  - {name: A, alias: A, actorType: participant}
+  - {name: B, alias: B, actorType: participant}
+lines:
+  - {type: call, from: A, to: B, text: Sync call (filled arrow), toArrow: fill, arrow: fill}
+  - {type: return, from: B, to: A, text: 'Return (dashed, filled)', lineDash: [4, 2], toArrow: fill, arrow: fill}
+  - {type: call, from: A, to: B, text: Async (open arrow), toArrow: open, arrow: open, async: true}
+  - {type: return, from: B, to: A, text: 'Async return (dashed, open)', lineDash: [4, 2], toArrow: open, arrow: open}
+  - {type: call, from: A, to: B, text: Lost message (cross), toArrow: cross, arrow: cross}
+  - {type: call, from: A, to: B, text: 'Solid line, no arrow', arrow: none}
+  - {type: return, from: A, to: B, text: 'Dashed line, no arrow', lineDash: [4, 2], arrow: none}
+```
+
+**Rendered output:**
+
+![Messages and arrows](examples/readme/messages-arrows.svg)
+
+**Arrow syntax reference:**
+
+| Mermaid | Description | Sequencer `arrow` |
+|---------|-------------|-------------------|
+| `A->>B` | Solid line, filled arrow (sync call) | `fill` |
+| `A-->>B` | Dashed line, filled arrow (return) | `fill` + `lineDash` |
+| `A-)B` | Solid line, open arrow (async) | `open` |
+| `A--)B` | Dashed line, open arrow | `open` + `lineDash` |
+| `A-xB` | Solid line, cross (lost message) | `cross` |
+| `A--xB` | Dashed line, cross | `cross` + `lineDash` |
+| `A->B` | Solid line, no arrow | `none` |
+| `A-->B` | Dashed line, no arrow | `none` + `lineDash` |
+
+### Activations
+
+**Mermaid input:**
 
 ```mermaid
 sequenceDiagram
-    participant UI as User Interface
-    boundary API as API Gateway
-    control Svc as Service
-    entity DB as Database
-    database Cache as Redis
-    collections Queue as Job Queue
+    participant A
+    participant B
+    A->>+B: Request (activates B)
+    B-->>-A: Response (deactivates B)
 ```
 
-**Rendered output showing all actor types:**
+**Transformed sequencer YAML:**
 
-![Actor types](test/mermaid-features/01-participants-and-aliases/expected.svg)
+```yaml
+title: Activations
+version: '1.0'
+actors:
+  - {name: A, alias: A, actorType: participant}
+  - {name: B, alias: B, actorType: participant}
+lines:
+  - {type: call, from: A, to: B, text: Request (activates B), toArrow: fill, arrow: fill}
+  - type: return
+    from: B
+    to: A
+    text: Response (deactivates B)
+    continueFromFlow: true
+    breakToFlow: true
+    lineDash: [4, 2]
+    toArrow: fill
+    arrow: fill
+```
 
-#### Messages and Arrows
+**Rendered output:**
 
-| Mermaid | Description |
-|---------|-------------|
-| `A->B: text` | Solid line, no arrow |
-| `A-->B: text` | Dashed line, no arrow |
-| `A->>B: text` | Solid line, filled arrow (sync call) |
-| `A-->>B: text` | Dashed line, filled arrow (return) |
-| `A-xB: text` | Solid line, cross (lost message) |
-| `A--xB: text` | Dashed line, cross |
-| `A-)B: text` | Solid line, open arrow (async) |
-| `A--)B: text` | Dashed line, open arrow |
+![Activations](examples/readme/activations.svg)
 
-**Rendered output showing arrow variants:**
+The `+` suffix activates the target; the `-` suffix deactivates it. You can also use explicit `activate`/`deactivate` statements.
 
-![Arrow variants](test/mermaid-features/02-basic-messages-and-arrows/expected.svg)
+### Notes
 
-#### Activations
+**Mermaid input:**
 
 ```mermaid
 sequenceDiagram
-    A->>B: request
-    activate B
-    B-->>A: response
-    deactivate B
-```
-
-Or using `+` and `-` shortcuts:
-
-```mermaid
-sequenceDiagram
-    A->>+B: request
-    B-->>-A: response
-```
-
-**Rendered output showing activations:**
-
-![Activations](test/mermaid-features/05-activations/expected.svg)
-
-#### Notes
-
-```mermaid
-sequenceDiagram
+    participant A
+    participant B
     Note over A: Single actor note
     Note over A,B: Spanning note
     Note right of A: Right-side note
     Note left of B: Left-side note
 ```
 
-**Rendered output showing notes:**
+**Transformed sequencer YAML:**
 
-![Notes](test/mermaid-features/03-notes/expected.svg)
+```yaml
+title: Notes
+version: '1.0'
+actors:
+  - {name: A, alias: A, actorType: participant}
+  - {name: B, alias: B, actorType: participant}
+lines:
+  - {type: blank, height: 0, comment: Single actor note, actor: A}
+  - {type: blank, height: 0, comment: Spanning note, actors: [A, B]}
+  - {type: blank, height: 0, comment: Right-side note, actor: A}
+  - {type: blank, height: 0, comment: Left-side note, actor: B}
+```
 
-#### Fragments
+**Rendered output:**
+
+![Notes](examples/readme/notes.svg)
+
+Notes transform to `blank` lines with a `comment` property. Use `actor` for single-actor notes or `actors` array for spanning notes.
+
+### Fragments
+
+**Mermaid input:**
 
 ```mermaid
 sequenceDiagram
+    participant A
+    participant B
+    participant C
+
     loop Every minute
         A->>B: ping
     end
@@ -535,104 +600,205 @@ sequenceDiagram
     opt Optional step
         A->>B: optional()
     end
-
-    par Parallel A
-        A->>B: task1
-    and Parallel B
-        A->>C: task2
-    end
-
-    critical Critical section
-        A->>B: critical()
-    option Fallback
-        A->>C: fallback()
-    end
-
-    break On error
-        A->>B: cleanup()
-    end
 ```
 
-**Rendered output showing parallel execution:**
+**Transformed sequencer YAML:**
 
-![Parallel fragments](test/mermaid-features/10-parallel/expected.svg)
+```yaml
+title: Fragments
+version: '1.0'
+actors:
+  - {name: A, alias: A, actorType: participant}
+  - {name: B, alias: B, actorType: participant}
+  - {name: C, alias: C, actorType: participant}
+lines:
+  - type: fragment
+    fragmentType: loop
+    title: ''
+    condition: Every minute
+    lines:
+      - {type: call, from: A, to: B, text: ping, toArrow: fill, arrow: fill}
+  - type: fragment
+    fragmentType: alt
+    title: ''
+    condition: Success
+    lines:
+      - {type: call, from: A, to: B, text: process, toArrow: fill, arrow: fill}
+      - {type: condition, condition: Failure}
+      - {type: call, from: A, to: C, text: handleError, toArrow: fill, arrow: fill}
+  - type: fragment
+    fragmentType: opt
+    title: ''
+    condition: Optional step
+    lines:
+      - {type: call, from: A, to: B, text: optional(), toArrow: fill, arrow: fill}
+```
 
-#### Rect Highlighting
+**Rendered output:**
+
+![Fragments](examples/readme/fragments.svg)
+
+The `else` keyword becomes a `condition` line inside the fragment. Additional fragment types include `par`/`and`, `critical`/`option`, and `break`.
+
+### Rect Highlighting
+
+**Mermaid input:**
 
 ```mermaid
 sequenceDiagram
+    participant A
+    participant B
+    A->>B: Before highlight
     rect rgb(200, 220, 255)
-        A->>B: highlighted region
-        B-->>A: response
+        A->>B: Inside highlight
+        B-->>A: Response
     end
+    A->>B: After highlight
 ```
 
-#### Create and Destroy
+**Transformed sequencer YAML:**
 
-```mermaid
-sequenceDiagram
-    create participant C as Charlie
-    A->>C: new instance
-    A-xC: destroy
+```yaml
+title: Rect Highlight
+version: '1.0'
+actors:
+  - {name: A, alias: A, actorType: participant}
+  - {name: B, alias: B, actorType: participant}
+lines:
+  - {type: call, from: A, to: B, text: Before highlight, toArrow: fill, arrow: fill}
+  - type: fragment
+    fragmentType: rect
+    title: ''
+    condition: ''
+    bgColour: 'rgb(200, 220, 255)'
+    borderWidth: 0
+    lines:
+      - {type: call, from: A, to: B, text: Inside highlight, toArrow: fill, arrow: fill}
+      - {type: return, from: B, to: A, text: Response, continueFromFlow: true, lineDash: [4, 2], toArrow: fill, arrow: fill}
+    startActor: A
+    endActor: B
+  - {type: call, from: A, to: B, text: After highlight, toArrow: fill, arrow: fill}
 ```
 
-#### Autonumber
+**Rendered output:**
+
+![Rect highlighting](examples/readme/rect-highlight.svg)
+
+Rect regions become `fragmentType: rect` with a `bgColour` and `borderWidth: 0` for no border.
+
+### Autonumber
+
+**Mermaid input:**
 
 ```mermaid
 sequenceDiagram
     autonumber
+    participant A
+    participant B
+    participant C
     A->>B: First message
     B->>C: Second message
+    C-->>A: Third message
 ```
 
-**Rendered output with autonumbering:**
+**Transformed sequencer YAML:**
 
-![Autonumber](test/mermaid-features/07-autonumber/expected.svg)
+```yaml
+title: Autonumber
+version: '1.0'
+actors:
+  - {name: A, alias: A, actorType: participant}
+  - {name: B, alias: B, actorType: participant}
+  - {name: C, alias: C, actorType: participant}
+lines:
+  - {type: call, from: A, to: B, text: First message, toArrow: fill, arrow: fill}
+  - {type: call, from: B, to: C, text: Second message, toArrow: fill, arrow: fill}
+  - {type: return, from: C, to: A, text: Third message, lineDash: [4, 2], toArrow: fill, arrow: fill}
+autonumber: true
+```
 
-#### Actor Links
+**Rendered output:**
+
+![Autonumber](examples/readme/autonumber.svg)
+
+The `autonumber` directive sets the root-level `autonumber: true` property.
+
+### Box Grouping
+
+**Mermaid input:**
 
 ```mermaid
 sequenceDiagram
-    participant A as Alice
-    link A: Dashboard @ https://example.com/dashboard
-    links A: {"Docs": "https://docs.example.com", "API": "https://api.example.com"}
-```
-
-#### Accessibility
-
-```mermaid
-sequenceDiagram
-    accTitle: Login Flow
-    accDescr: Shows the authentication sequence between user and server
-
-    A->>B: authenticate
-```
-
-#### Box Grouping
-
-```mermaid
-sequenceDiagram
-    box Frontend
+    box rgb(200,220,255) Frontend
         participant UI
         participant API
     end
-    box Backend
+    box rgb(255,220,200) Backend
         participant Svc
         participant DB
     end
+    UI->>API: Request
+    API->>Svc: Forward
+    Svc->>DB: Query
+    DB-->>Svc: Result
+    Svc-->>API: Response
+    API-->>UI: Display
 ```
 
-### Mermaid Colour Support
+**Transformed sequencer YAML:**
 
-Colours can be specified in several places:
+```yaml
+title: Box Grouping
+version: '1.0'
+actors:
+  - {name: UI, alias: UI, actorType: participant}
+  - {name: API, alias: API, actorType: participant}
+  - {name: Svc, alias: Svc, actorType: participant}
+  - {name: DB, alias: DB, actorType: participant}
+actorGroups:
+  - {title: Frontend, bgColour: 'rgb(200,220,255)', actors: [UI, API]}
+  - {title: Backend, bgColour: 'rgb(255,220,200)', actors: [Svc, DB]}
+lines:
+  - {type: call, from: UI, to: API, text: Request, toArrow: fill, arrow: fill}
+  - {type: call, from: API, to: Svc, text: Forward, toArrow: fill, arrow: fill}
+  - {type: call, from: Svc, to: DB, text: Query, toArrow: fill, arrow: fill}
+  - {type: return, from: DB, to: Svc, text: Result, lineDash: [4, 2], toArrow: fill, arrow: fill}
+  - {type: return, from: Svc, to: API, text: Response, lineDash: [4, 2], toArrow: fill, arrow: fill}
+  - {type: return, from: API, to: UI, text: Display, lineDash: [4, 2], toArrow: fill, arrow: fill}
+```
+
+**Rendered output:**
+
+![Box grouping](examples/readme/box-grouping.svg)
+
+Mermaid `box` regions become `actorGroups` entries with a `title`, `bgColour`, and `actors` list.
+
+### Actor Types
+
+Mermaid supports specialised actor types that are preserved in the transform:
 
 ```mermaid
 sequenceDiagram
-    participant A as Alice #lightblue
-    rect rgba(255, 200, 200, 0.5)
-        A->>B: coloured region
-    end
+    participant UI as User Interface
+    actor User as Human User
+    boundary API as API Gateway
+    control Svc as Service Controller
+    entity Data as Data Model
+    database DB as Database
+    collections Items as Item Collection
+    queue Jobs as Job Queue
 ```
+
+These become actors with the corresponding `actorType` value. See the Actor Types section above for rendered examples.
+
+### Additional Mermaid Features
+
+The transformer also supports:
+
+- **Actor links**: `link A: Label @ URL` and `links A: {"Label": "URL"}`
+- **Accessibility**: `accTitle` and `accDescr` become `title` and `description`
+- **Create/destroy**: `create participant` and destroy markers
+- **Colours**: Participant colours (`#colour`), rect colours, box colours
 
 ---
 

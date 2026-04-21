@@ -1,0 +1,45 @@
+{
+   "title": "Notes",
+   "version": "1.0",
+   "actors": [
+      {
+         "name": "A",
+         "alias": "A",
+         "actorType": "participant"
+      },
+      {
+         "name": "B",
+         "alias": "B",
+         "actorType": "participant"
+      }
+   ],
+   "lines": [
+      {
+         "type": "blank",
+         "height": 0,
+         "comment": "Single actor note",
+         "actor": "A"
+      },
+      {
+         "type": "blank",
+         "height": 0,
+         "comment": "Spanning note",
+         "actors": [
+            "A",
+            "B"
+         ]
+      },
+      {
+         "type": "blank",
+         "height": 0,
+         "comment": "Right-side note",
+         "actor": "A"
+      },
+      {
+         "type": "blank",
+         "height": 0,
+         "comment": "Left-side note",
+         "actor": "B"
+      }
+   ]
+}

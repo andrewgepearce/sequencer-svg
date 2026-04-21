@@ -1,0 +1,15 @@
+sequenceDiagram
+    box rgb(200,220,255) Frontend
+        participant UI
+        participant API
+    end
+    box rgb(255,220,200) Backend
+        participant Svc
+        participant DB
+    end
+    UI->>API: Request
+    API->>Svc: Forward
+    Svc->>DB: Query
+    DB-->>Svc: Result
+    Svc-->>API: Response
+    API-->>UI: Display

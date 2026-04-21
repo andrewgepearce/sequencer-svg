@@ -1,0 +1,11 @@
+title: Autonumber
+version: '1.0'
+actors:
+  - {name: A, alias: A, actorType: participant}
+  - {name: B, alias: B, actorType: participant}
+  - {name: C, alias: C, actorType: participant}
+lines:
+  - {type: call, from: A, to: B, text: First message, toArrow: fill, arrow: fill}
+  - {type: call, from: B, to: C, text: Second message, toArrow: fill, arrow: fill}
+  - {type: return, from: C, to: A, text: Third message, lineDash: [4, 2], toArrow: fill, arrow: fill}
+autonumber: true

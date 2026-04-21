@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant A
+    participant B
+    participant C
+
+    loop Every minute
+        A->>B: ping
+    end
+
+    alt Success
+        A->>B: process
+    else Failure
+        A->>C: handleError
+    end
+
+    opt Optional step
+        A->>B: optional()
+    end

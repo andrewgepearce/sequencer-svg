@@ -1,0 +1,9 @@
+sequenceDiagram
+    participant A
+    participant B
+    A->>B: Before highlight
+    rect rgb(200, 220, 255)
+        A->>B: Inside highlight
+        B-->>A: Response
+    end
+    A->>B: After highlight
