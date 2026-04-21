@@ -35,8 +35,6 @@ node sequencer.js --mermaid -i test/mermaid-features/24-completion-review/input.
   <path d="M 87 266 M 328 266 M 336 274 M 336 298 M 87 298 M 87 266" fill="rgb(210,210,210)" stroke="none"/>
   <path d="M 84 263 M 325 263 M 325 271 M 333 271 M 333 295 M 84 295 M 84 263" fill="rgb(0,253,144)" stroke="none"/>
   <path d="M 84 263 M 325 263 M 325 271 M 333 271 M 325 263 M 333 271 M 333 295 M 84 295 M 84 263" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 75 233 M 75 299" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 342 233 M 342 299" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 75 233 L 75 299" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 342 233 L 342 299" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 87 266 L 328 266 L 336 274 L 336 298 L 87 298 L 87 266" fill="rgb(210,210,210)" stroke="none"/>
@@ -44,8 +42,6 @@ node sequencer.js --mermaid -i test/mermaid-features/24-completion-review/input.
   <path d="M 84 263 L 325 263 L 325 271 L 333 271 M 325 263 L 333 271 L 333 295 L 84 295 L 84 263" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 84 263 M 84 295 M 333 295 M 333 263 M 84 263" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="91.5" y="284.5" fill="rgb(0, 0, 0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Escaped # and ; plus &amp; name support</text>
-  <path d="M 75 299 M 75 383" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 342 299 M 342 383" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 75 299 L 75 383" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 72.5 363 L 72.5 383 L 77.5 383 L 77.5 363 L 72.5 363" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 72.5 363 L 72.5 383 M 77.5 383 L 77.5 363 L 72.5 363" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -55,8 +51,6 @@ node sequencer.js --mermaid -i test/mermaid-features/24-completion-review/input.
   <text x="117.5" y="353" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Query #42; status &amp; health [Mermaid: API-&gt;&gt;DB: Query #42; status &amp; health]</text>
   <path d="M 77.5 363 L 339.5 363" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 329.5 358 L 329.5 368 L 339.5 363" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 75 383 M 75 449" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 342 383 M 342 449" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 75 383 L 75 449" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 72.5 383 L 72.5 449 L 77.5 449 L 77.5 383 L 72.5 383" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 72.5 383 L 72.5 449 M 77.5 449 L 77.5 383 M 72.5 383" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>

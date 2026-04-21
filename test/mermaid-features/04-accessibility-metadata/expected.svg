@@ -32,8 +32,6 @@ Second description line remains multiline in sequencer.</desc>
   <path d="M 48 229 M 644 229 M 652 237 M 652 261 M 48 261 M 48 229" fill="rgb(210,210,210)" stroke="none"/>
   <path d="M 45 226 M 641 226 M 641 234 M 649 234 M 649 258 M 45 258 M 45 226" fill="rgb(0,253,144)" stroke="none"/>
   <path d="M 45 226 M 641 226 M 641 234 M 649 234 M 641 226 M 649 234 M 649 258 M 45 258 M 45 226" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 235.75 196 M 235.75 262" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 458.25 196 M 458.25 262" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 235.75 196 L 235.75 262" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 458.25 196 L 458.25 262" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 48 229 L 644 229 L 652 237 L 652 261 L 48 261 L 48 229" fill="rgb(210,210,210)" stroke="none"/>
@@ -41,8 +39,6 @@ Second description line remains multiline in sequencer.</desc>
   <path d="M 45 226 L 641 226 L 641 234 L 649 234 M 641 226 L 649 234 L 649 258 L 45 258 L 45 226" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 45 226 M 45 258 M 649 258 M 649 226 M 45 226" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="52.5" y="247.5" fill="rgb(0, 0, 0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Accessibility metadata demo [Mermaid: Note over Caller,Service: Accessibility metadata demo]</text>
-  <path d="M 235.75 262 M 235.75 346" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 458.25 262 M 458.25 346" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 235.75 262 L 235.75 346" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 233.25 326 L 233.25 346 L 238.25 346 L 238.25 326 L 233.25 326" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 233.25 326 L 233.25 346 M 238.25 346 L 238.25 326 L 233.25 326" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>

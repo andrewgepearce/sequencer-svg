@@ -28,8 +28,6 @@ node sequencer.js --mermaid -i test/mermaid-features/17-create-destroy/input.mmd
   <path d="M 299 180 L 299 208 L 299 208 A 5 5 0 0 0 304 213 L 370 213 L 370 213 A 5 5 0 0 0 375 208 L 375 180 L 375 180 A 5 5 0 0 0 370 175 L 304 175 L 304 175 A 5 5 0 0 0 299 180" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 299 180 L 299 208 L 299 208 A 5 5 0 0 0 304 213 L 370 213 L 370 213 A 5 5 0 0 0 375 208 L 375 180 L 375 180 A 5 5 0 0 0 370 175 L 304 175 L 304 175 A 5 5 0 0 0 299 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="308" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Worker</text>
-  <path d="M 89.5 213 M 89.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 337 213 M 337 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 89.5 213 L 89.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 87 277 L 87 297 L 92 297 L 92 277 L 87 277" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 87 277 L 87 297 M 92 297 L 92 277 L 87 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -40,7 +38,6 @@ node sequencer.js --mermaid -i test/mermaid-features/17-create-destroy/input.mmd
   <text x="132" y="267" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Stop inherited worker [Mermaid: Orchestrator-xWorker: Stop inherited worker]</text>
   <path d="M 92 277 L 334.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 324.5 272 L 334.5 282 M 324.5 282 L 334.5 272" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2"/>
-  <path d="M 89.5 297 M 89.5 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 302 335 L 302 363 L 302 363 A 5 5 0 0 0 307 368 L 373 368 L 373 368 A 5 5 0 0 0 378 363 L 378 335 L 378 335 A 5 5 0 0 0 373 330 L 307 330 L 307 330 A 5 5 0 0 0 302 335" fill="rgb(210,210,210)" stroke="none"/>
   <path d="M 299 332 L 299 360 L 299 360 A 5 5 0 0 0 304 365 L 370 365 L 370 365 A 5 5 0 0 0 375 360 L 375 332 L 375 332 A 5 5 0 0 0 370 327 L 304 327 L 304 327 A 5 5 0 0 0 299 332" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 299 332 L 299 360 L 299 360 A 5 5 0 0 0 304 365 L 370 365 L 370 365 A 5 5 0 0 0 375 360 L 375 332 L 375 332 A 5 5 0 0 0 370 327 L 304 327 L 304 327 A 5 5 0 0 0 299 332" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -54,8 +51,6 @@ node sequencer.js --mermaid -i test/mermaid-features/17-create-destroy/input.mmd
   <text x="132" y="419" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Create worker [Mermaid: Orchestrator-&gt;&gt;Worker: Create worker]</text>
   <path d="M 92 429 L 334.5 429" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 324.5 424 L 324.5 434 L 334.5 429" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 89.5 447 M 89.5 513" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 337 447 M 337 513" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 89.5 447 L 89.5 513" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 87 447 L 87 513 L 92 513 L 92 447 L 87 447" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 87 447 L 87 513 M 92 513 L 92 447 M 87 447" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -65,8 +60,6 @@ node sequencer.js --mermaid -i test/mermaid-features/17-create-destroy/input.mmd
   <text x="139.5" y="498.5" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">3. Ready [Mermaid: Worker--&gt;&gt;Orchestrator: Ready]</text>
   <path d="M 334.5 506 L 92 506" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
   <path d="M 92 506 L 102 501 L 102 511 L 92 506" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 89.5 513 M 89.5 597" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 337 513 M 337 597" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 89.5 513 L 89.5 597" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 87 513 L 87 597 L 92 597 L 92 513 L 87 513" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 87 513 L 87 597 M 92 597 L 92 513 M 87 513" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -77,7 +70,6 @@ node sequencer.js --mermaid -i test/mermaid-features/17-create-destroy/input.mmd
   <text x="132" y="567" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">4. Stop worker [Mermaid: Orchestrator-xWorker: Stop worker]</text>
   <path d="M 92 577 L 334.5 577" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 324.5 572 L 334.5 582 M 324.5 582 L 334.5 572" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2"/>
-  <path d="M 89.5 597 M 89.5 747" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 302 635 L 302 663 L 302 663 A 5 5 0 0 0 307 668 L 373 668 L 373 668 A 5 5 0 0 0 378 663 L 378 635 L 378 635 A 5 5 0 0 0 373 630 L 307 630 L 307 630 A 5 5 0 0 0 302 635" fill="rgb(210,210,210)" stroke="none"/>
   <path d="M 299 632 L 299 660 L 299 660 A 5 5 0 0 0 304 665 L 370 665 L 370 665 A 5 5 0 0 0 375 660 L 375 632 L 375 632 A 5 5 0 0 0 370 627 L 304 627 L 304 627 A 5 5 0 0 0 299 632" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 299 632 L 299 660 L 299 660 A 5 5 0 0 0 304 665 L 370 665 L 370 665 A 5 5 0 0 0 375 660 L 375 632 L 375 632 A 5 5 0 0 0 370 627 L 304 627 L 304 627 A 5 5 0 0 0 299 632" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -91,8 +83,6 @@ node sequencer.js --mermaid -i test/mermaid-features/17-create-destroy/input.mmd
   <text x="132" y="719" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">5. Recreate worker [Mermaid: Orchestrator-&gt;&gt;Worker: Recreate worker]</text>
   <path d="M 92 729 L 334.5 729" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 324.5 724 L 324.5 734 L 334.5 729" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 89.5 747 M 89.5 831" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 337 747 M 337 831" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 89.5 747 L 89.5 831" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 87 747 L 87 831 L 92 831 L 92 747 L 87 747" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 87 747 L 87 831 M 92 831 L 92 747 M 87 747" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>

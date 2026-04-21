@@ -672,6 +672,13 @@ module.exports = class Utilities {
 			return "undefined";
 		}
 
+		if (mimic) {
+			return {
+				x: left + width,
+				y: top + height,
+			};
+		}
+
 		//////////////////////////////////////////////////////////////////////////////
 		// if (top < 0) {
 		//////////////////////////////////////////////////////////////////////////////
@@ -699,58 +706,54 @@ module.exports = class Utilities {
 			ctx.arcTo(left + width, top, left + width - cornerRadius, top, cornerRadius);
 			ctx.lineTo(left + cornerRadius, top);
 			ctx.arcTo(left, top, left, top + cornerRadius, cornerRadius);
-			if (!mimic) {
-				if (Utilities.validColour(fillColour)) {
-					ctx.fillStyle = fillColour;
-					ctx.fill();
-				}
-				if (Utilities.isNumber(borderWidth) && borderWidth > 0 && borderColour != undefined) {
-					if (!Array.isArray(borderDash)) borderDash = [];
-					let oldStrokeStyle = ctx.strokeStyle;
-					let oldLineDash = ctx.getLineDash();
-					let oldLineWidth = ctx.lineWidth;
-					ctx.strokeStyle = borderColour;
-					ctx.setLineDash(borderDash);
-					ctx.lineWidth = borderWidth;
-					ctx.stroke();
-					ctx.strokeStyle = oldStrokeStyle;
-					ctx.setLineDash(oldLineDash);
-					ctx.lineWidth = oldLineWidth;
-				}
+			if (Utilities.validColour(fillColour)) {
+				ctx.fillStyle = fillColour;
+				ctx.fill();
+			}
+			if (Utilities.isNumber(borderWidth) && borderWidth > 0 && borderColour != undefined) {
+				if (!Array.isArray(borderDash)) borderDash = [];
+				let oldStrokeStyle = ctx.strokeStyle;
+				let oldLineDash = ctx.getLineDash();
+				let oldLineWidth = ctx.lineWidth;
+				ctx.strokeStyle = borderColour;
+				ctx.setLineDash(borderDash);
+				ctx.lineWidth = borderWidth;
+				ctx.stroke();
+				ctx.strokeStyle = oldStrokeStyle;
+				ctx.setLineDash(oldLineDash);
+				ctx.lineWidth = oldLineWidth;
 			}
 		} else {
 			ctx.beginPath();
 			ctx.moveTo(left, top);
-			mimic ? ctx.moveTo(left, top + height) : ctx.lineTo(left, top + height);
-			mimic ? ctx.moveTo(left + width, top + height) : ctx.lineTo(left + width, top + height);
-			mimic ? ctx.moveTo(left + width, top) : ctx.lineTo(left + width, top);
-			mimic ? ctx.moveTo(left, top) : ctx.lineTo(left, top);
-			if (!mimic) {
-				if (Utilities.validColour(fillColour)) {
-					ctx.fillStyle = fillColour;
-					ctx.fill();
+			ctx.lineTo(left, top + height);
+			ctx.lineTo(left + width, top + height);
+			ctx.lineTo(left + width, top);
+			ctx.lineTo(left, top);
+			if (Utilities.validColour(fillColour)) {
+				ctx.fillStyle = fillColour;
+				ctx.fill();
+			}
+			if (Utilities.isNumber(borderWidth) && borderWidth > 0 && borderColour != undefined) {
+				if (!Array.isArray(borderDash)) borderDash = [];
+				let oldStrokeStyle = ctx.strokeStyle;
+				let oldLineDash = ctx.getLineDash();
+				let oldLineWidth = ctx.lineWidth;
+				ctx.strokeStyle = borderColour;
+				ctx.setLineDash(borderDash);
+				ctx.lineWidth = borderWidth;
+				ctx.beginPath();
+				ctx.moveTo(left, top);
+				!drawLeftBorder ? ctx.moveTo(left, top + height) : ctx.lineTo(left, top + height);
+				!drawBottomBorder ? ctx.moveTo(left + width, top + height) : ctx.lineTo(left + width, top + height);
+				!drawRightBorder ? ctx.moveTo(left + width, top) : ctx.lineTo(left + width, top);
+				!drawTopBorder ? ctx.moveTo(left, top) : ctx.lineTo(left, top);
+				if (Utilities.validColour(borderColour)) {
+					ctx.stroke();
 				}
-				if (Utilities.isNumber(borderWidth) && borderWidth > 0 && borderColour != undefined) {
-					if (!Array.isArray(borderDash)) borderDash = [];
-					let oldStrokeStyle = ctx.strokeStyle;
-					let oldLineDash = ctx.getLineDash();
-					let oldLineWidth = ctx.lineWidth;
-					ctx.strokeStyle = borderColour;
-					ctx.setLineDash(borderDash);
-					ctx.lineWidth = borderWidth;
-					ctx.beginPath();
-					ctx.moveTo(left, top);
-					!drawLeftBorder ? ctx.moveTo(left, top + height) : ctx.lineTo(left, top + height);
-					!drawBottomBorder ? ctx.moveTo(left + width, top + height) : ctx.lineTo(left + width, top + height);
-					!drawRightBorder ? ctx.moveTo(left + width, top) : ctx.lineTo(left + width, top);
-					!drawTopBorder ? ctx.moveTo(left, top) : ctx.lineTo(left, top);
-					if (Utilities.validColour(borderColour)) {
-						ctx.stroke();
-					}
-					ctx.strokeStyle = oldStrokeStyle;
-					ctx.setLineDash(oldLineDash);
-					ctx.lineWidth = oldLineWidth;
-				}
+				ctx.strokeStyle = oldStrokeStyle;
+				ctx.setLineDash(oldLineDash);
+				ctx.lineWidth = oldLineWidth;
 			}
 		}
 		//////////////////////////////////////////////////////////////////////////////

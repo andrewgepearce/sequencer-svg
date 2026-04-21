@@ -32,17 +32,11 @@ node sequencer.js --mermaid -i test/mermaid-features/05-activations/input.mmd -o
   <path d="M 475 180 L 475 208 L 475 208 A 5 5 0 0 0 480 213 L 514 213 L 514 213 A 5 5 0 0 0 519 208 L 519 180 L 519 180 A 5 5 0 0 0 514 175 L 480 175 L 480 175 A 5 5 0 0 0 475 180" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 475 180 L 475 208 L 475 208 A 5 5 0 0 0 480 213 L 514 213 L 514 213 A 5 5 0 0 0 519 208 L 519 180 L 519 180 A 5 5 0 0 0 514 175 L 480 175 L 480 175 A 5 5 0 0 0 475 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="484" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">DB</text>
-  <path d="M 63 213 M 63 224" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 213 M 285.5 224" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 497 213 M 497 224" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 213 L 63 225" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 285.5 213 L 285.5 225" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 497 213 L 497 225" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 494.5 213 L 494.5 225 L 499.5 225 L 499.5 213 L 494.5 213" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 494.5 213 L 494.5 225 M 499.5 225 L 499.5 213 L 494.5 213" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 63 224 M 63 235" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 224 M 285.5 235" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 497 224 M 497 235" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 224 L 63 236" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 285.5 224 L 285.5 236" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 497 224 L 497 236" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
@@ -54,9 +48,6 @@ node sequencer.js --mermaid -i test/mermaid-features/05-activations/input.mmd -o
   <path d="M 48 268 M 611 268 M 619 276 M 619 300 M 48 300 M 48 268" fill="rgb(210,210,210)" stroke="none"/>
   <path d="M 45 265 M 608 265 M 608 273 M 616 273 M 616 297 M 45 297 M 45 265" fill="rgb(0,253,144)" stroke="none"/>
   <path d="M 45 265 M 608 265 M 608 273 M 616 273 M 608 265 M 616 273 M 616 297 M 45 297 M 45 265" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 63 235 M 63 301" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 235 M 285.5 301" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 497 235 M 497 301" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 235 L 63 301" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 285.5 235 L 285.5 301" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 497 235 L 497 301" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
@@ -65,17 +56,11 @@ node sequencer.js --mermaid -i test/mermaid-features/05-activations/input.mmd -o
   <path d="M 45 265 L 608 265 L 608 273 L 616 273 M 608 265 L 616 273 L 616 297 L 45 297 L 45 265" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 45 265 M 45 297 M 616 297 M 616 265 M 45 265" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="52.5" y="286.5" fill="rgb(0, 0, 0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Note beside explicit activate [Mermaid: Note right of Service: Note beside explicit activate]</text>
-  <path d="M 63 301 M 63 312" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 301 M 285.5 312" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 497 301 M 497 312" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 301 L 63 313" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 285.5 301 L 285.5 313" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 283 301 L 283 313 L 288 313 L 288 301 L 283 301" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 283 301 L 283 313 M 288 313 L 288 301 L 283 301" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 497 301 L 497 313" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 63 312 M 63 396" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 312 M 285.5 396" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 497 312 M 497 396" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 312 L 63 396" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 376 L 60.5 396 L 65.5 396 L 65.5 376 L 60.5 376" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 376 L 60.5 396 M 65.5 396 L 65.5 376 L 60.5 376" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -86,9 +71,6 @@ node sequencer.js --mermaid -i test/mermaid-features/05-activations/input.mmd -o
   <text x="105.5" y="366" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Service already active [Mermaid context: activate Service]</text>
   <path d="M 65.5 376 L 283 376" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 273 371 L 273 381 L 283 376" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 63 396 M 63 407" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 396 M 285.5 407" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 497 396 M 497 407" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 396 L 63 408" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 396 L 60.5 408 L 65.5 408 L 65.5 396 L 60.5 396" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 396 L 60.5 408 M 65.5 408 L 65.5 396 M 60.5 396" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -102,9 +84,6 @@ node sequencer.js --mermaid -i test/mermaid-features/05-activations/input.mmd -o
   <path d="M 48 440 M 600 440 M 608 448 M 608 472 M 48 472 M 48 440" fill="rgb(210,210,210)" stroke="none"/>
   <path d="M 45 437 M 597 437 M 597 445 M 605 445 M 605 469 M 45 469 M 45 437" fill="rgb(0,253,144)" stroke="none"/>
   <path d="M 45 437 M 597 437 M 597 445 M 605 445 M 597 437 M 605 445 M 605 469 M 45 469 M 45 437" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 63 407 M 63 473" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 407 M 285.5 473" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 497 407 M 497 473" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 407 L 63 473" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 407 L 60.5 473 L 65.5 473 L 65.5 407 L 60.5 407" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 407 L 60.5 473 M 65.5 473 L 65.5 407 M 60.5 407" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -115,9 +94,6 @@ node sequencer.js --mermaid -i test/mermaid-features/05-activations/input.mmd -o
   <path d="M 45 437 L 597 437 L 597 445 L 605 445 M 597 437 L 605 445 L 605 469 L 45 469 L 45 437" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 45 437 M 45 469 M 605 469 M 605 437 M 45 437" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="52.5" y="458.5" fill="rgb(0, 0, 0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Note after explicit deactivate [Mermaid: Note over Service: Note after explicit deactivate]</text>
-  <path d="M 63 473 M 63 557" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 473 M 285.5 557" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 497 473 M 497 557" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 473 L 63 557" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 473 L 60.5 557 L 65.5 557 L 65.5 473 L 60.5 473" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 473 L 60.5 557 M 65.5 557 L 65.5 473 M 60.5 473" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -128,9 +104,6 @@ node sequencer.js --mermaid -i test/mermaid-features/05-activations/input.mmd -o
   <text x="105.5" y="527" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Activate target via suffix [Mermaid: Caller-&gt;&gt;+Service]</text>
   <path d="M 65.5 537 L 283 537" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 273 532 L 273 542 L 283 537" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 63 557 M 63 641" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 557 M 285.5 641" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 497 557 M 497 641" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 557 L 63 641" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 557 L 60.5 641 L 65.5 641 L 65.5 557 L 60.5 557" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 557 L 60.5 641 M 65.5 641 L 65.5 557 M 60.5 557" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -147,9 +120,6 @@ node sequencer.js --mermaid -i test/mermaid-features/05-activations/input.mmd -o
   <path d="M 203 674 M 789 674 M 797 682 M 797 706 M 203 706 M 203 674" fill="rgb(210,210,210)" stroke="none"/>
   <path d="M 200 671 M 786 671 M 786 679 M 794 679 M 794 703 M 200 703 M 200 671" fill="rgb(0,253,144)" stroke="none"/>
   <path d="M 200 671 M 786 671 M 786 679 M 794 679 M 786 671 M 794 679 M 794 703 M 200 703 M 200 671" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 63 641 M 63 707" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 641 M 285.5 707" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 497 641 M 497 707" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 641 L 63 707" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 641 L 60.5 707 L 65.5 707 L 65.5 641 L 60.5 641" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 641 L 60.5 707 M 65.5 707 L 65.5 641 M 60.5 641" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -162,9 +132,6 @@ node sequencer.js --mermaid -i test/mermaid-features/05-activations/input.mmd -o
   <path d="M 200 671 L 786 671 L 786 679 L 794 679 M 786 671 L 794 679 L 794 703 L 200 703 L 200 671" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 200 671 M 200 703 M 794 703 M 794 671 M 200 671" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="207.5" y="692.5" fill="rgb(0, 0, 0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Note before explicit DB activation [Mermaid: Note over DB: Note before explicit DB activation]</text>
-  <path d="M 63 707 M 63 718" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 707 M 285.5 718" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 497 707 M 497 718" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 707 L 63 719" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 707 L 60.5 719 L 65.5 719 L 65.5 707 L 60.5 707" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 707 L 60.5 719 M 65.5 719 L 65.5 707 M 60.5 707" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -174,9 +141,6 @@ node sequencer.js --mermaid -i test/mermaid-features/05-activations/input.mmd -o
   <path d="M 497 707 L 497 719" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 494.5 707 L 494.5 719 L 499.5 719 L 499.5 707 L 494.5 707" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 494.5 707 L 494.5 719 M 499.5 719 L 499.5 707 L 494.5 707" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 63 718 M 63 802" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 718 M 285.5 802" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 497 718 M 497 802" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 718 L 63 802" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 718 L 60.5 802 L 65.5 802 L 65.5 718 L 60.5 718" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 718 L 60.5 802 M 65.5 802 L 65.5 718 M 60.5 718" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -195,9 +159,6 @@ node sequencer.js --mermaid -i test/mermaid-features/05-activations/input.mmd -o
   <path d="M 184 835 M 808 835 M 816 843 M 816 867 M 184 867 M 184 835" fill="rgb(210,210,210)" stroke="none"/>
   <path d="M 181 832 M 805 832 M 805 840 M 813 840 M 813 864 M 181 864 M 181 832" fill="rgb(0,253,144)" stroke="none"/>
   <path d="M 181 832 M 805 832 M 805 840 M 813 840 M 805 832 M 813 840 M 813 864 M 181 864 M 181 832" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 63 802 M 63 868" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 802 M 285.5 868" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 497 802 M 497 868" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 802 L 63 868" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 802 L 60.5 868 L 65.5 868 L 65.5 802 L 60.5 802" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 802 L 60.5 868 M 65.5 868 L 65.5 802 M 60.5 802" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -212,9 +173,6 @@ node sequencer.js --mermaid -i test/mermaid-features/05-activations/input.mmd -o
   <path d="M 181 832 L 805 832 L 805 840 L 813 840 M 805 832 L 813 840 L 813 864 L 181 864 L 181 832" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 181 832 M 181 864 M 813 864 M 813 832 M 181 832" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="188.5" y="853.5" fill="rgb(0, 0, 0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Note before explicit DB deactivation [Mermaid: Note left of DB: Note before explicit DB deactivation]</text>
-  <path d="M 63 868 M 63 879" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 868 M 285.5 879" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 497 868 M 497 879" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 868 L 63 880" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 868 L 60.5 880 L 65.5 880 L 65.5 868 L 60.5 868" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 868 L 60.5 880 M 65.5 880 L 65.5 868 M 60.5 868" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>

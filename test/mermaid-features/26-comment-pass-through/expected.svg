@@ -28,8 +28,6 @@ node sequencer.js --mermaid -i test/mermaid-features/26-comment-pass-through/inp
   <path d="M 228 180 L 228 208 L 228 208 A 5 5 0 0 0 233 213 L 267 213 L 267 213 A 5 5 0 0 0 272 208 L 272 180 L 272 180 A 5 5 0 0 0 267 175 L 233 175 L 233 175 A 5 5 0 0 0 228 180" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 228 180 L 228 208 L 228 208 A 5 5 0 0 0 233 213 L 267 213 L 267 213 A 5 5 0 0 0 272 208 L 272 180 L 272 180 A 5 5 0 0 0 267 175 L 233 175 L 233 175 A 5 5 0 0 0 228 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="237" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">DB</text>
-  <path d="M 54 213 M 54 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 250 213 M 250 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 54 213 L 54 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 51.5 277 L 51.5 297 L 56.5 297 L 56.5 277 L 51.5 277" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 51.5 277 L 51.5 297 M 56.5 297 L 56.5 277 L 51.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -39,8 +37,6 @@ node sequencer.js --mermaid -i test/mermaid-features/26-comment-pass-through/inp
   <text x="96.5" y="267" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Fetch</text>
   <path d="M 56.5 277 L 247.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 237.5 272 L 237.5 282 L 247.5 277" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 54 297 M 54 363" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 250 297 M 250 363" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 54 297 L 54 363" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 51.5 297 L 51.5 363 L 56.5 363 L 56.5 297 L 51.5 297" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 51.5 297 L 51.5 363 M 56.5 363 L 56.5 297 M 51.5 297" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>

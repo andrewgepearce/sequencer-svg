@@ -39,10 +39,6 @@ node sequencer.js --mermaid -i test/mermaid-features/23-actor-link-visuals/input
   <path d="M 645 180 L 645 208 L 645 208 A 5 5 0 0 0 650 213 L 700 213 L 700 213 A 5 5 0 0 0 705 208 L 705 180 L 705 180 A 5 5 0 0 0 700 175 L 650 175 L 650 175 A 5 5 0 0 0 645 180" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 645 180 L 645 208 L 645 208 A 5 5 0 0 0 650 213 L 700 213 L 700 213 A 5 5 0 0 0 705 208 L 705 180 L 705 180 A 5 5 0 0 0 700 175 L 650 175 L 650 175 A 5 5 0 0 0 645 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="654" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Audit</text>
-  <path d="M 69 213 M 69 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 265 213 M 265 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 473.5 213 M 473.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 675 213 M 675 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 69 213 L 69 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 66.5 277 L 66.5 297 L 71.5 297 L 71.5 277 L 66.5 277" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 66.5 277 L 66.5 297 M 71.5 297 L 71.5 277 L 66.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -54,10 +50,6 @@ node sequencer.js --mermaid -i test/mermaid-features/23-actor-link-visuals/input
   <text x="111.5" y="267" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Read persistence [Mermaid: API-&gt;&gt;DB: Read persistence]</text>
   <path d="M 71.5 277 L 262.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 252.5 272 L 252.5 282 L 262.5 277" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 69 297 M 69 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 265 297 M 265 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 473.5 297 M 473.5 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 675 297 M 675 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 69 297 L 69 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 66.5 297 L 66.5 381 L 71.5 381 L 71.5 297 L 66.5 297" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 66.5 297 L 66.5 381 M 71.5 381 L 71.5 297 M 66.5 297" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -71,10 +63,6 @@ node sequencer.js --mermaid -i test/mermaid-features/23-actor-link-visuals/input
   <text x="111.5" y="351" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Enqueue follow-up [Mermaid: API-&gt;&gt;Queue: Enqueue follow-up]</text>
   <path d="M 71.5 361 L 471 361" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 461 356 L 461 366 L 471 361" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 69 381 M 69 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 265 381 M 265 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 473.5 381 M 473.5 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 675 381 M 675 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 69 381 L 69 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 66.5 381 L 66.5 447 L 71.5 447 L 71.5 381 L 66.5 381" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 66.5 381 L 66.5 447 M 71.5 447 L 71.5 381 M 66.5 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -88,10 +76,6 @@ node sequencer.js --mermaid -i test/mermaid-features/23-actor-link-visuals/input
   <text x="119" y="432.5" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">3. Accepted [Mermaid: Queue--&gt;&gt;API: Accepted]</text>
   <path d="M 471 440 L 71.5 440" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
   <path d="M 71.5 440 L 81.5 435 L 81.5 445 L 71.5 440" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 69 447 M 69 531" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 265 447 M 265 531" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 473.5 447 M 473.5 531" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 675 447 M 675 531" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 69 447 L 69 531" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 66.5 447 L 66.5 531 L 71.5 531 L 71.5 447 L 66.5 447" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 66.5 447 L 66.5 531 M 71.5 531 L 71.5 447 M 66.5 447" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>

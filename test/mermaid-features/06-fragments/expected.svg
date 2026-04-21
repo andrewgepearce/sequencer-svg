@@ -39,8 +39,6 @@ node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -
   <path d="M 30 243 L 30 267 L 71 267 L 81 257 L 81 243 L 30 243" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="35" y="262" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">loop </text>
   <text x="35" y="284" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" xml:space="preserve" dominant-baseline="auto">Retry while pending [Mermaid: loop Retry while pending]</text>
-  <path d="M 178.75 291 M 178.75 375" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 401.25 291 M 401.25 375" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 291 L 30 375 L 1060 375 L 1060 291 L 30 291" fill="rgb(184,184,184)" stroke="none"/>
   <path d="M 178.75 291 L 178.75 375" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 176.25 355 L 176.25 375 L 181.25 375 L 181.25 355 L 176.25 355" fill="rgb(95,183,224)" stroke="none"/>
@@ -53,8 +51,6 @@ node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -
   <path d="M 388.75 350 L 388.75 360 L 398.75 355" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 30 291 L 30 375 L 1060 375 L 1060 291 L 30 291" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 291 L 30 375 M 1060 375 L 1060 291 M 30 291" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 178.75 375 M 178.75 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 401.25 375 M 401.25 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 375 L 30 381 L 1060 381 L 1060 375 L 30 375" fill="rgb(184,184,184)" stroke="none"/>
   <path d="M 178.75 375 L 178.75 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 176.25 375 L 176.25 381 L 181.25 381 L 181.25 375 L 176.25 375" fill="rgb(95,183,224)" stroke="none"/>
@@ -64,8 +60,6 @@ node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -
   <path d="M 398.75 375 L 398.75 381 M 403.75 381 L 403.75 375 M 398.75 375" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 30 375 L 30 381 L 1060 381 L 1060 375 L 30 375" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 375 L 30 381 M 1060 381 L 1060 375 M 30 375" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 178.75 381 M 178.75 441" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 401.25 381 M 401.25 441" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 381 L 30 411 L 1060 411 L 1060 381 L 30 381" fill="rgb(184,184,184)" stroke="none"/>
   <path d="M 30 381 L 30 411 L 1060 411 L 1060 381 L 30 381" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 381 L 30 411 L 1060 411 L 1060 381 M 30 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -94,8 +88,6 @@ node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -
   <path d="M 30 471 L 30 495 L 59 495 L 69 485 L 69 471 L 30 471" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="35" y="490" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">alt </text>
   <text x="35" y="512" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" xml:space="preserve" dominant-baseline="auto">Success branch [Mermaid: alt Success branch]</text>
-  <path d="M 178.75 519 M 178.75 603" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 401.25 519 M 401.25 603" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 519 L 30 603 L 1060 603 L 1060 519 L 30 519" fill="rgb(184,184,184)" stroke="none"/>
   <path d="M 178.75 519 L 178.75 603" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 176.25 519 L 176.25 603 L 181.25 603 L 181.25 519 L 176.25 519" fill="rgb(95,183,224)" stroke="none"/>
@@ -108,8 +100,6 @@ node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -
   <path d="M 388.75 578 L 388.75 588 L 398.75 583" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 30 519 L 30 603 L 1060 603 L 1060 519 L 30 519" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 519 L 30 603 M 1060 603 L 1060 519 M 30 519" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 178.75 603 M 178.75 657" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 401.25 603 M 401.25 657" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 603 L 30 657 L 1060 657 L 1060 603 L 30 603" fill="rgb(184,184,184)" stroke="none"/>
   <path d="M 178.75 603 L 178.75 657" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 176.25 603 L 176.25 657 L 181.25 657 L 181.25 603 L 176.25 603" fill="rgb(95,183,224)" stroke="none"/>
@@ -143,8 +133,6 @@ node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -
   <path d="M 60 686 L 60 710 L 94 710 L 104 700 L 104 686 L 60 686" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="65" y="705" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">opt </text>
   <text x="65" y="727" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="12" xml:space="preserve" dominant-baseline="auto">Audit branch [Mermaid: opt Audit branch]</text>
-  <path d="M 178.75 734 M 178.75 818" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 401.25 734 M 401.25 818" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 734 L 30 818 L 1060 818 L 1060 734 L 30 734" fill="rgb(184,184,184)" stroke="none"/>
   <path d="M 60 734 L 60 818 L 1030 818 L 1030 734 L 60 734" fill="rgb(255,182,196)" stroke="none"/>
   <path d="M 178.75 734 L 178.75 818" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
@@ -160,8 +148,6 @@ node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -
   <path d="M 30 734 L 30 818 M 1060 818 L 1060 734 M 30 734" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 60 734 L 60 818 L 1030 818 L 1030 734 L 60 734" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 60 734 L 60 818 M 1030 818 L 1030 734 M 60 734" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 178.75 818 M 178.75 824" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 401.25 818 M 401.25 824" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 818 L 30 824 L 1060 824 L 1060 818 L 30 818" fill="rgb(184,184,184)" stroke="none"/>
   <path d="M 60 818 L 60 824 L 1030 824 L 1030 818 L 60 818" fill="rgb(255,182,196)" stroke="none"/>
   <path d="M 178.75 818 L 178.75 824" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
@@ -174,8 +160,6 @@ node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -
   <path d="M 30 818 L 30 824 M 1060 824 L 1060 818 M 30 818" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 60 818 L 60 824 L 1030 824 L 1030 818 L 60 818" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 60 818 L 60 824 M 1030 824 L 1030 818 M 60 818" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 178.75 824 M 178.75 884" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 401.25 824 M 401.25 884" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 824 L 30 884 L 1060 884 L 1060 824 L 30 824" fill="rgb(184,184,184)" stroke="none"/>
   <path d="M 60 824 L 60 854 L 1030 854 L 1030 824 L 60 824" fill="rgb(255,182,196)" stroke="none"/>
   <path d="M 30 824 L 30 884 L 1060 884 L 1060 824 L 30 824" fill="rgba(255,255,255,0)" stroke="none"/>
@@ -194,8 +178,6 @@ node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -
   <path d="M 48 917 M 530 917 M 538 925 M 538 949 M 48 949 M 48 917" fill="rgb(210,210,210)" stroke="none"/>
   <path d="M 45 914 M 527 914 M 527 922 M 535 922 M 535 946 M 45 946 M 45 914" fill="rgb(0,253,144)" stroke="none"/>
   <path d="M 45 914 M 527 914 M 527 922 M 535 922 M 527 914 M 535 922 M 535 946 M 45 946 M 45 914" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 178.75 884 M 178.75 950" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 401.25 884 M 401.25 950" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 884 L 30 950 L 1060 950 L 1060 884 L 30 884" fill="rgb(184,184,184)" stroke="none"/>
   <path d="M 178.75 884 L 178.75 950" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 176.25 884 L 176.25 950 L 181.25 950 L 181.25 884 L 176.25 884" fill="rgb(95,183,224)" stroke="none"/>
@@ -210,8 +192,6 @@ node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -
   <text x="52.5" y="935.5" fill="rgb(0, 0, 0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Failure branch note [Mermaid: Note over Caller,Service: Failure branch note]</text>
   <path d="M 30 884 L 30 950 L 1060 950 L 1060 884 L 30 884" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 884 L 30 950 M 1060 950 L 1060 884 M 30 884" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 178.75 950 M 178.75 1034" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 401.25 950 M 401.25 1034" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 950 L 30 1034 L 1060 1034 L 1060 950 L 30 950" fill="rgb(184,184,184)" stroke="none"/>
   <path d="M 178.75 950 L 178.75 1034" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 176.25 950 L 176.25 1034 L 181.25 1034 L 181.25 950 L 176.25 950" fill="rgb(95,183,224)" stroke="none"/>
@@ -224,8 +204,6 @@ node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -
   <path d="M 388.75 1009 L 388.75 1019 L 398.75 1014" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 30 950 L 30 1034 L 1060 1034 L 1060 950 L 30 950" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 950 L 30 1034 M 1060 1034 L 1060 950 M 30 950" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 178.75 1034 M 178.75 1040" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 401.25 1034 M 401.25 1040" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 1034 L 30 1040 L 1060 1040 L 1060 1034 L 30 1034" fill="rgb(184,184,184)" stroke="none"/>
   <path d="M 178.75 1034 L 178.75 1040" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 176.25 1034 L 176.25 1040 L 181.25 1040 L 181.25 1034 L 176.25 1034" fill="rgb(95,183,224)" stroke="none"/>
@@ -235,8 +213,6 @@ node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -
   <path d="M 398.75 1034 L 398.75 1040 M 403.75 1040 L 403.75 1034 M 398.75 1034" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 30 1034 L 30 1040 L 1060 1040 L 1060 1034 L 30 1034" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 1034 L 30 1040 M 1060 1040 L 1060 1034 M 30 1034" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 178.75 1040 M 178.75 1100" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 401.25 1040 M 401.25 1100" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 1040 L 30 1070 L 1060 1070 L 1060 1040 L 30 1040" fill="rgb(184,184,184)" stroke="none"/>
   <path d="M 30 1040 L 30 1070 L 1060 1070 L 1060 1040 L 30 1040" fill="rgba(255,255,255,0)" stroke="none"/>
   <path d="M 30 1040 L 30 1070 L 1060 1070 L 1060 1040 M 30 1040" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>

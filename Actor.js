@@ -1255,13 +1255,15 @@ module.exports = class Actor {
 				timelineEnd = lifecycleEndYPos != null ? Math.min(starty + actualHeight, lifecycleEndYPos) : starty + actualHeight;
 			}
 			if (timelineStart != null && timelineEnd != null && timelineEnd > timelineStart) {
-				ctx.lineWidth = actorcl.timelineWidth;
-				ctx.setLineDash(actorcl.timelineDash);
-				ctx.strokeStyle = "rgb(0,0,0)";
-				ctx.beginPath();
-				ctx.moveTo(actorcl.middle, timelineStart);
-				mimic ? ctx.moveTo(actorcl.middle, timelineEnd) : ctx.lineTo(actorcl.middle, timelineEnd);
-				ctx.stroke();
+				if (!mimic) {
+					ctx.lineWidth = actorcl.timelineWidth;
+					ctx.setLineDash(actorcl.timelineDash);
+					ctx.strokeStyle = "rgb(0,0,0)";
+					ctx.beginPath();
+					ctx.moveTo(actorcl.middle, timelineStart);
+					ctx.lineTo(actorcl.middle, timelineEnd);
+					ctx.stroke();
+				}
 			}
 			if (actorcl.middle > maxx) maxx = actorcl.middle;
 			if (starty + actualHeight > maxy) maxy = starty + actualHeight;
@@ -1643,20 +1645,18 @@ module.exports = class Actor {
 				);
 			}
 			if (Utilities.isNumber(actorcl.lifecycleEndYPos)) {
-				const markerSize = Math.max(6, actorcl.flowWidth / 2);
-				ctx.lineWidth = 2;
-				ctx.setLineDash([]);
-				ctx.strokeStyle = "rgb(0,0,0)";
-				ctx.beginPath();
-				ctx.moveTo(actorcl.middle - markerSize / 2, actorcl.lifecycleEndYPos - markerSize / 2);
-				mimic
-					? ctx.moveTo(actorcl.middle + markerSize / 2, actorcl.lifecycleEndYPos + markerSize / 2)
-					: ctx.lineTo(actorcl.middle + markerSize / 2, actorcl.lifecycleEndYPos + markerSize / 2);
-				ctx.moveTo(actorcl.middle - markerSize / 2, actorcl.lifecycleEndYPos + markerSize / 2);
-				mimic
-					? ctx.moveTo(actorcl.middle + markerSize / 2, actorcl.lifecycleEndYPos - markerSize / 2)
-					: ctx.lineTo(actorcl.middle + markerSize / 2, actorcl.lifecycleEndYPos - markerSize / 2);
-				ctx.stroke();
+				if (!mimic) {
+					const markerSize = Math.max(6, actorcl.flowWidth / 2);
+					ctx.lineWidth = 2;
+					ctx.setLineDash([]);
+					ctx.strokeStyle = "rgb(0,0,0)";
+					ctx.beginPath();
+					ctx.moveTo(actorcl.middle - markerSize / 2, actorcl.lifecycleEndYPos - markerSize / 2);
+					ctx.lineTo(actorcl.middle + markerSize / 2, actorcl.lifecycleEndYPos + markerSize / 2);
+					ctx.moveTo(actorcl.middle - markerSize / 2, actorcl.lifecycleEndYPos + markerSize / 2);
+					ctx.lineTo(actorcl.middle + markerSize / 2, actorcl.lifecycleEndYPos - markerSize / 2);
+					ctx.stroke();
+				}
 			}
 			actorcl.flowStartYPos = null;
 			actorcl.flowEndYPos = null;

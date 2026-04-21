@@ -28,8 +28,6 @@ node sequencer.js --mermaid -i test/mermaid-features/09-advanced-arrows/input.mm
   <path d="M 246 180 L 246 208 L 246 208 A 5 5 0 0 0 251 213 L 320 213 L 320 213 A 5 5 0 0 0 325 208 L 325 180 L 325 180 A 5 5 0 0 0 320 175 L 251 175 L 251 175 A 5 5 0 0 0 246 180" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 246 180 L 246 208 L 246 208 A 5 5 0 0 0 251 213 L 320 213 L 320 213 A 5 5 0 0 0 325 208 L 325 180 L 325 180 A 5 5 0 0 0 320 175 L 251 175 L 251 175 A 5 5 0 0 0 246 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="255" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Service</text>
-  <path d="M 63 213 M 63 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 213 M 285.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 213 L 63 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 277 L 60.5 297 L 65.5 297 L 65.5 277 L 60.5 277" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 277 L 60.5 297 M 65.5 297 L 65.5 277 L 60.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -42,8 +40,6 @@ node sequencer.js --mermaid -i test/mermaid-features/09-advanced-arrows/input.mm
   <path d="M 65.5 277 L 283 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 273 272 L 273 282 L 283 277" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 75.5 272 L 75.5 282 L 65.5 277" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 63 297 M 63 363" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 297 M 285.5 363" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 297 L 63 363" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 297 L 60.5 363 L 65.5 363 L 65.5 297 L 60.5 297" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 297 L 60.5 363 M 65.5 363 L 65.5 297 M 60.5 297" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -56,8 +52,6 @@ node sequencer.js --mermaid -i test/mermaid-features/09-advanced-arrows/input.mm
   <path d="M 283 356 L 65.5 356" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
   <path d="M 65.5 356 L 75.5 351 L 75.5 361 L 65.5 356" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 283 356 L 273 351 L 273 361 L 283 356" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 63 363 M 63 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 363 M 285.5 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 363 L 63 447" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 363 L 60.5 447 L 65.5 447 L 65.5 363 L 60.5 363" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 363 L 60.5 447 M 65.5 447 L 65.5 363 M 60.5 363" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -67,8 +61,6 @@ node sequencer.js --mermaid -i test/mermaid-features/09-advanced-arrows/input.mm
   <text x="105.5" y="417" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">3. Top half end [Mermaid: Caller-|\Service]</text>
   <path d="M 65.5 427 L 283 427" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 273 422 L 283 427" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 63 447 M 63 513" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 447 M 285.5 513" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 447 L 63 513" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 447 L 60.5 513 L 65.5 513 L 65.5 447 L 60.5 447" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 447 L 60.5 513 M 65.5 513 L 65.5 447 M 60.5 447" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -78,8 +70,6 @@ node sequencer.js --mermaid -i test/mermaid-features/09-advanced-arrows/input.mm
   <text x="113" y="498.5" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">4. Dotted bottom half end [Mermaid: Service--|/Caller]</text>
   <path d="M 283 506 L 65.5 506" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
   <path d="M 75.5 511 L 65.5 506" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 63 513 M 63 597" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 513 M 285.5 597" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 513 L 63 597" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 513 L 60.5 597 L 65.5 597 L 65.5 513 L 60.5 513" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 513 L 60.5 597 M 65.5 597 L 65.5 513 M 60.5 513" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -90,8 +80,6 @@ node sequencer.js --mermaid -i test/mermaid-features/09-advanced-arrows/input.mm
   <path d="M 65.5 577 L 283 577" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 273 572 L 273 582 L 283 577" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 75.5 572 L 65.5 577" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 63 597 M 63 663" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 597 M 285.5 663" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 597 L 63 663" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 597 L 60.5 663 L 65.5 663 L 65.5 597 L 60.5 597" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 597 L 60.5 663 M 65.5 663 L 65.5 597 M 60.5 597" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -101,8 +89,6 @@ node sequencer.js --mermaid -i test/mermaid-features/09-advanced-arrows/input.mm
   <text x="113" y="648.5" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">6. Dotted reverse bottom half [Mermaid: Service\|--Caller]</text>
   <path d="M 283 656 L 65.5 656" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
   <path d="M 273 661 L 283 656" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 63 663 M 63 747" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 663 M 285.5 747" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 663 L 63 747" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 663 L 60.5 747 L 65.5 747 L 65.5 663 L 60.5 663" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 663 L 60.5 747 M 65.5 747 L 65.5 663 M 60.5 663" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -112,8 +98,6 @@ node sequencer.js --mermaid -i test/mermaid-features/09-advanced-arrows/input.mm
   <text x="105.5" y="717" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">7. Top stick end [Mermaid: Caller-\Service]</text>
   <path d="M 65.5 727 L 283 727" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 273 727 L 283 727 M 273 722 L 283 727" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 63 747 M 63 813" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 747 M 285.5 813" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 747 L 63 813" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 747 L 60.5 813 L 65.5 813 L 65.5 747 L 60.5 747" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 747 L 60.5 813 M 65.5 813 L 65.5 747 M 60.5 747" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -123,8 +107,6 @@ node sequencer.js --mermaid -i test/mermaid-features/09-advanced-arrows/input.mm
   <text x="113" y="798.5" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">8. Dotted bottom stick end [Mermaid: Service--//Caller]</text>
   <path d="M 283 806 L 65.5 806" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
   <path d="M 75.5 806 L 65.5 806 M 75.5 811 L 65.5 806" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 63 813 M 63 897" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 813 M 285.5 897" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 813 L 63 897" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 813 L 60.5 897 L 65.5 897 L 65.5 813 L 60.5 813" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 813 L 60.5 897 M 65.5 897 L 65.5 813 M 60.5 813" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -135,8 +117,6 @@ node sequencer.js --mermaid -i test/mermaid-features/09-advanced-arrows/input.mm
   <path d="M 65.5 877 L 283 877" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 273 872 L 273 882 L 283 877" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 75.5 877 L 65.5 877 M 75.5 872 L 65.5 877" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 63 897 M 63 963" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 285.5 897 M 285.5 963" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 63 897 L 63 963" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 897 L 60.5 963 L 65.5 963 L 65.5 897 L 60.5 897" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 60.5 897 L 60.5 963 M 65.5 963 L 65.5 897 M 60.5 897" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>

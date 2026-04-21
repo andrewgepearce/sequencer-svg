@@ -206,7 +206,7 @@ Once Bug 1 is visually matched, re-check the nested `opt` region to see whether 
 
 ### Status
 
-Open. Newly identified. Not represented in the earlier renderer notes.
+Fixed in the working tree on 2026-04-21.
 
 ### Symptom
 
@@ -230,14 +230,16 @@ Two concrete sources have been identified:
 - Pollutes manual diffing and visual inspection
 - Risks masking real path-order issues when reading the SVG by eye
 
-### Expected fix
+### Implemented fix
 
-Do not emit path commands to the SVG context in mimic mode for geometry that is measurement-only.
+- [Utilities.js](/Users/andrewpearce/dev/github/sequencer-svg/Utilities.js) now returns early from `drawRectangle(...)` in mimic mode, so measurement-only rectangle and rounded-rectangle passes no longer build SVG paths.
+- [Actor.js](/Users/andrewpearce/dev/github/sequencer-svg/Actor.js) now skips timeline-path emission entirely when `mimic === true`.
+- [Actor.js](/Users/andrewpearce/dev/github/sequencer-svg/Actor.js) now also skips lifecycle end-marker path emission in mimic mode, so the same bug does not persist there.
 
-Likely fix options:
+### Verification
 
-- short-circuit earlier in the callers when `mimic === true`
-- or make the SVG context ignore path-construction calls during mimic passes
+- Regenerated all Mermaid `expected.svg` fixtures from the current renderer.
+- `npx jest --runInBand test/mermaid-features` passes with 27 suites and 57 tests.
 
 ## Bug 7 — zero-height activation rectangle emitted at the final tail
 

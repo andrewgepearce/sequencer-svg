@@ -43,9 +43,6 @@ node sequencer.js --mermaid -i test/mermaid-features/27-colour-support/input.mmd
   <path d="M 91 213 L 91 243" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 353.5 213 L 353.5 243" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 626.5 213 L 626.5 243" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 91 243 M 91 327" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 353.5 243 M 353.5 327" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 626.5 243 M 626.5 327" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 243 L 30 327 L 713 327 L 713 243 L 30 243" fill="#E7F5FF" stroke="none"/>
   <path d="M 91 243 L 91 327" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 88.5 307 L 88.5 327 L 93.5 327 L 93.5 307 L 88.5 307" fill="#D0EBFF" stroke="none"/>
@@ -57,9 +54,6 @@ node sequencer.js --mermaid -i test/mermaid-features/27-colour-support/input.mmd
   <text x="133.5" y="297" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Start coloured flow [Mermaid: API-&gt;&gt;Worker: Start coloured flow]</text>
   <path d="M 93.5 307 L 351 307" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 341 302 L 341 312 L 351 307" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 91 327 M 91 411" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 353.5 327 M 353.5 411" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 626.5 327 M 626.5 411" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 327 L 30 411 L 713 411 L 713 327 L 30 327" fill="#E7F5FF" stroke="none"/>
   <path d="M 91 327 L 91 411" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 88.5 327 L 88.5 411 L 93.5 411 L 93.5 327 L 88.5 327" fill="#D0EBFF" stroke="none"/>
@@ -73,9 +67,6 @@ node sequencer.js --mermaid -i test/mermaid-features/27-colour-support/input.mmd
   <text x="396" y="381" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Warm cache [Mermaid: Worker-&gt;&gt;Cache: Warm cache]</text>
   <path d="M 356 391 L 624 391" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 614 386 L 614 396 L 624 391" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 91 411 M 91 423" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 353.5 411 M 353.5 423" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 626.5 411 M 626.5 423" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 30 411 L 30 423 L 713 423 L 713 411 L 30 411" fill="#E7F5FF" stroke="none"/>
   <path d="M 91 411 L 91 423" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 88.5 411 L 88.5 423 L 93.5 423 L 93.5 411 L 88.5 411" fill="#D0EBFF" stroke="none"/>

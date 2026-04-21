@@ -53,13 +53,6 @@ node sequencer.js --mermaid -i test/mermaid-features/20-specialised-participants
   <path d="M 1940.36 188 L 1948.52 188 M 1940.36 194 L 1948.52 194 M 1940.36 200 L 1948.52 200 M 1945.24 194 L 1951.24 194 M 1947.24 190 L 1951.24 194 L 1947.24 198" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.5"/>
   <path d="M 1960 180 L 1960 208 L 1960 208 A 5 5 0 0 0 1965 213 L 2058 213 L 2058 213 A 5 5 0 0 0 2063 208 L 2063 180 L 2063 180 A 5 5 0 0 0 2058 175 L 1965 175 L 1965 175 A 5 5 0 0 0 1960 180" fill="rgba(0,0,0,0)" stroke="none"/>
   <text x="1969" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Job queue</text>
-  <path d="M 118 213 M 118 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 452 213 M 452 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 779.5 213 M 779.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1081 213 M 1081 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1377.5 213 M 1377.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1693.5 213 M 1693.5 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1998 213 M 1998 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 118 213 L 118 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 115.5 277 L 115.5 297 L 120.5 297 L 120.5 277 L 115.5 277" fill="rgb(255,232,204)" stroke="none"/>
   <path d="M 115.5 277 L 115.5 297 M 120.5 297 L 120.5 277 L 115.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -74,13 +67,6 @@ node sequencer.js --mermaid -i test/mermaid-features/20-specialised-participants
   <text x="160.5" y="267" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Start request [Mermaid: User-&gt;&gt;Edge: Start request]</text>
   <path d="M 120.5 277 L 449.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 439.5 272 L 439.5 282 L 449.5 277" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 118 297 M 118 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 452 297 M 452 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 779.5 297 M 779.5 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1081 297 M 1081 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1377.5 297 M 1377.5 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1693.5 297 M 1693.5 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1998 297 M 1998 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 118 297 L 118 381" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 115.5 297 L 115.5 381 L 120.5 381 L 120.5 297 L 115.5 297" fill="rgb(255,232,204)" stroke="none"/>
   <path d="M 115.5 297 L 115.5 381 M 120.5 381 L 120.5 297 M 115.5 297" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -97,13 +83,6 @@ node sequencer.js --mermaid -i test/mermaid-features/20-specialised-participants
   <text x="494.5" y="351" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Route request [Mermaid: Edge-&gt;&gt;FlowController: Route request]</text>
   <path d="M 454.5 361 L 777 361" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 767 356 L 767 366 L 777 361" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 118 381 M 118 465" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 452 381 M 452 465" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 779.5 381 M 779.5 465" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1081 381 M 1081 465" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1377.5 381 M 1377.5 465" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1693.5 381 M 1693.5 465" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1998 381 M 1998 465" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 118 381 L 118 465" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 115.5 381 L 115.5 465 L 120.5 465 L 120.5 381 L 115.5 381" fill="rgb(255,232,204)" stroke="none"/>
   <path d="M 115.5 381 L 115.5 465 M 120.5 465 L 120.5 381 M 115.5 381" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -122,13 +101,6 @@ node sequencer.js --mermaid -i test/mermaid-features/20-specialised-participants
   <text x="822" y="435" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">3. Load aggregate [Mermaid: FlowController-&gt;&gt;OrderEntity: Load aggregate]</text>
   <path d="M 782 445 L 1078.5 445" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 1068.5 440 L 1068.5 450 L 1078.5 445" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 118 465 M 118 549" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 452 465 M 452 549" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 779.5 465 M 779.5 549" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1081 465 M 1081 549" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1377.5 465 M 1377.5 549" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1693.5 465 M 1693.5 549" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1998 465 M 1998 549" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 118 465 L 118 549" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 115.5 465 L 115.5 549 L 120.5 549 L 120.5 465 L 115.5 465" fill="rgb(255,232,204)" stroke="none"/>
   <path d="M 115.5 465 L 115.5 549 M 120.5 549 L 120.5 465 M 115.5 465" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -149,13 +121,6 @@ node sequencer.js --mermaid -i test/mermaid-features/20-specialised-participants
   <text x="822" y="519" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">4. Read persistence [Mermaid: FlowController-&gt;&gt;DB: Read persistence]</text>
   <path d="M 782 529 L 1375 529" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 1365 524 L 1365 534 L 1375 529" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 118 549 M 118 633" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 452 549 M 452 633" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 779.5 549 M 779.5 633" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1081 549 M 1081 633" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1377.5 549 M 1377.5 633" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1693.5 549 M 1693.5 633" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1998 549 M 1998 633" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 118 549 L 118 633" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 115.5 549 L 115.5 633 L 120.5 633 L 120.5 549 L 115.5 549" fill="rgb(255,232,204)" stroke="none"/>
   <path d="M 115.5 549 L 115.5 633 M 120.5 633 L 120.5 549 M 115.5 549" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
@@ -178,13 +143,6 @@ node sequencer.js --mermaid -i test/mermaid-features/20-specialised-participants
   <text x="822" y="603" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">5. Gather related rows [Mermaid: FlowController-&gt;&gt;CollectionsNode: Gather related rows]</text>
   <path d="M 782 613 L 1691 613" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 1681 608 L 1681 618 L 1691 613" fill="rgb(0, 0, 0)" stroke="none"/>
-  <path d="M 118 633 M 118 717" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 452 633 M 452 717" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 779.5 633 M 779.5 717" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1081 633 M 1081 717" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1377.5 633 M 1377.5 717" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1693.5 633 M 1693.5 717" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 1998 633 M 1998 717" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 118 633 L 118 717" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 115.5 633 L 115.5 717 L 120.5 717 L 120.5 633 L 115.5 633" fill="rgb(255,232,204)" stroke="none"/>
   <path d="M 115.5 633 L 115.5 717 M 120.5 717 L 120.5 633 M 115.5 633" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
