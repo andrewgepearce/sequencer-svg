@@ -14,7 +14,7 @@ Keep this summary list in sync whenever any bug below is added, removed, reopene
 - 6 - **Fixed** - mimic passes emit measurement-only paths into the SVG
 - 7 - **Fixed** - zero-height activation rectangle emitted at the final tail
 - 8 - **Fixed** - timelines are over-drawn multiple times within a single transition region
-- 9 - **Open** - fragment closing-band stroke path semantics are awkward for SVG
+- 9 - **Closed, won't fix** - fragment closing-band stroke path semantics are theoretical only
 - 10 - **Open, non-blocking** - width mismatch against old PNG is primarily font-driven
 - 11 - **Fixed** - activation bar stroke paths omit the bottom closing edge
 
@@ -387,31 +387,32 @@ The net effect is repeated dashed timeline paths at identical coordinates in the
 
 ### Status
 
-Open. Newly identified. Related to Bug 4, but more specific.
+Closed as "won't fix" on 2026-04-21.
 
-### Symptom
+### Original concern
 
-Some fragment closing-band border paths are intentionally “partial rectangles” with only selected sides, but the current path-construction pattern uses move/line alternation that is canvas-tolerant and SVG-awkward.
+Some fragment closing-band border paths are intentionally "partial rectangles" with only selected sides, but the current path-construction pattern uses move/line alternation that is canvas-tolerant and SVG-awkward.
 
-This can produce edge-order and dash-phase asymmetry that is hard to reason about in the emitted SVG.
+The concern was that this could produce edge-order and dash-phase asymmetry that is hard to reason about in the emitted SVG.
 
-### Evidence
+### Investigation findings
 
-Closing-band border paths of the form:
+1. **Fragment borders always use solid strokes** — The schema defaults to `borderDash: []` and no fragment border path in any test fixture uses `stroke-dasharray`. The only dashed strokes in the SVG output are simple single-line paths (timelines, condition separators).
 
-- `M left top L left bottom M right bottom L right top M left top`
+2. **The dash-phase concern is purely theoretical** — Since fragments don't use dashed borders, the potential "asymmetry" issue cannot manifest in practice.
 
-are valid for the intended border selection, but the path-construction style in [Utilities.js](/Users/andrewpearce/dev/github/sequencer-svg/Utilities.js) makes the right edge effectively traverse in the opposite direction from the left edge.
+3. **The pattern is intentional and correct** — When drawing partial borders (e.g., left+right+top without bottom), using `moveTo` to skip edges is the standard canvas/SVG approach. The code in [Utilities.js](/Users/andrewpearce/dev/github/sequencer-svg/Utilities.js) `drawRectangle` is straightforward conditional path construction.
 
-### Why it matters
+4. **Visual output is correct** — The current paths render correctly. Opposite edge directions don't affect solid strokes.
 
-- Makes SVG output harder to inspect
-- Can create subtle dashed-stroke inconsistencies if dashed borders are ever used here
-- Overlaps with the visual “line crossing the activation bar” investigations in Bugs 1 and 4
+5. **Inspection difficulty is subjective** — The paths accurately represent partial borders; they're not malformed or harder to understand than alternatives.
 
-### Expected fix
+### Why this is closed without a fix
 
-Refactor rectangle-border path construction for partial-border cases so the SVG path semantics are explicit and stable, rather than relying on canvas-style move/line alternation.
+- No visible artefact exists
+- Fragment borders never use dashed strokes in practice
+- Changing this would risk regressions for zero tangible benefit
+- The code matches the legacy canvas renderer behaviour
 
 ## Bug 10 — width mismatch against old PNG is primarily font-driven
 

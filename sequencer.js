@@ -48,6 +48,7 @@ let yamlstr = undefined;
  * @type {Array<object>}
  */
 const optionDefinitions = [
+	{ name: "file", type: String, defaultOption: true, multiple: false },
 	{ name: "id", type: String, alias: "I", multiple: false },
 	{ name: "inputFile", type: String, alias: "i", multiple: false },
 	{ name: "outputFile", type: String, alias: "o", multiple: false },
@@ -74,6 +75,21 @@ const sections = [
 		header: "sequencer-svg",
 		content:
 			"Reads JSON, YAML, or Mermaid sequence-diagram input from <stdin> or a file and generates sequencer-svg YAML and optional SVG output.",
+	},
+	{
+		header: "Synopsis",
+		content: [
+			"$ node sequencer.js {underline file}",
+			"$ node sequencer.js [options]",
+		],
+	},
+	{
+		header: "Opinionated Mode",
+		content:
+			"Pass a single filename to auto-detect the format, rebuild in place, and write all artefacts (SVG, JSON, YAML) to the same directory:\n\n" +
+			"  $ node sequencer.js diagram.mmd\n" +
+			"  $ node sequencer.js diagram.yaml\n" +
+			"  $ node sequencer.js diagram.json",
 	},
 	{
 		header: "Options",
@@ -174,6 +190,29 @@ function normaliseOptions(parsedOptions) {
 	if (normalisedOptions.transformOnly == undefined) normalisedOptions.transformOnly = false;
 	if (normalisedOptions.force == undefined) normalisedOptions.force = false;
 	if (normalisedOptions.nocovertext == undefined) normalisedOptions.nocovertext = false;
+
+	///////////////////////////////////////////////////////////////////////////////
+	// Opinionated mode: when a bare filename is passed as the only argument,
+	// auto-detect format, write all artefacts to the same directory, and
+	// overwrite existing files.
+	if (typeof normalisedOptions.file === "string" && normalisedOptions.file.length > 0) {
+		normalisedOptions.inputFile = normalisedOptions.file;
+		normalisedOptions.targetDir = path.dirname(normalisedOptions.file);
+		normalisedOptions.outputFile = null; // Derive from input stem
+		normalisedOptions.force = true;
+		normalisedOptions.outjson = true;
+		normalisedOptions.outyaml = true;
+
+		const ext = path.extname(normalisedOptions.file).toLowerCase();
+		if (!normalisedOptions.mermaid && !normalisedOptions.yaml) {
+			if (ext === ".mmd" || ext === ".mermaid") {
+				normalisedOptions.mermaid = true;
+			} else if (ext === ".yaml" || ext === ".yml") {
+				normalisedOptions.yaml = true;
+			}
+			// .json or unknown extensions default to JSON mode (no flag needed)
+		}
+	}
 
 	if (normalisedOptions.mermaid === true && normalisedOptions.yaml === true) {
 		console.error("Cannot use --mermaid and --yaml together");

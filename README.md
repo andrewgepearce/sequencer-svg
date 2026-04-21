@@ -131,6 +131,19 @@ Read JSON from stdin and write SVG to stdout:
 cat input.json | node sequencer.js
 ```
 
+Opinionated mode — pass a single filename to auto-detect format and rebuild in place:
+
+```bash
+# From Mermaid: writes diagram.sequencer.yaml, diagram.json, diagram.svg
+node sequencer.js diagram.mmd
+
+# From YAML: writes diagram.json, diagram.svg (and regenerates diagram.yaml)
+node sequencer.js diagram.yaml
+
+# From JSON: writes diagram.yaml, diagram.svg (and regenerates diagram.json)
+node sequencer.js diagram.json
+```
+
 Show help:
 
 ```bash
