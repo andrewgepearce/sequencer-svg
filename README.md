@@ -177,31 +177,52 @@ The `actorType` property controls the visual representation:
 | `collections` | Stacked boxes (collection/array) |
 | `queue` | Queue symbol |
 
-**All actor types rendered:**
+```yaml
+actors:
+  - {name: Caller Service, alias: Caller, actorType: participant}
+  - {name: Human operator, alias: User, actorType: actor, bgColour: 'rgb(255,232,204)'}
+  - {name: External boundary, alias: Edge, actorType: boundary, bgColour: 'rgb(196,232,255)'}
+  - {name: Flow controller, alias: Control, actorType: control, bgColour: 'rgb(255,244,179)'}
+  - {name: Order entity, alias: Entity, actorType: entity, bgColour: 'rgb(220,255,214)'}
+  - {name: Database Layer, alias: DB, actorType: database, bgColour: 'rgb(255,221,234)'}
+  - {name: Collections store, alias: Collections, actorType: collections, bgColour: 'rgb(226,220,255)'}
+  - {name: Job queue, alias: Queue, actorType: queue, bgColour: 'rgb(255,235,186)'}
+  - {name: API, alias: API, actorType: participant}
+```
+
+**Rendered output:**
 
 ![Actor types](test/mermaid-features/01-participants-and-aliases/expected.svg)
 
 ### Actor Groups
 
-Group actors visually with a labelled box:
+Group actors visually with a labelled box. You can specify groups by actor list:
+
+```yaml
+actors:
+  - {name: Caller, alias: Caller}
+  - {name: Browser, alias: Browser}
+  - {name: DB, alias: DB}
+  - {name: Cache, alias: Cache}
+  - {name: Service, alias: Service}
+  - {name: Audit, alias: Audit}
+actorGroups:
+  - {title: Client tier, bgColour: Aqua, actors: [Caller, Browser]}
+  - {title: Data tier, bgColour: 'rgba(255, 230, 200, 0.55)', actors: [DB, Cache]}
+  - {title: Data tier, bgColour: 'rgba(255, 230, 200, 0.55)', actors: [Audit]}
+```
+
+Or by start/end actor range:
 
 ```yaml
 actorGroups:
-  - title: Frontend Services
-    bgColour: "rgba(200,200,255,0.3)"
-    startActor: UI
-    endActor: API
+  - title: Client tier
+    bgColour: Aqua
+    startActor: Caller
+    endActor: Browser
 ```
 
-Or by explicit list:
-
-```yaml
-actorGroups:
-  - title: Backend
-    actors: [DB, Cache, Queue]
-```
-
-**Example with multiple actor groups:**
+**Rendered output:**
 
 ![Actor groups](test/mermaid-features/19-box-actor-groups/expected.svg)
 
