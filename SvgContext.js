@@ -486,6 +486,7 @@ class SvgContext {
 				d,
 				fill: this._fillStyle,
 				stroke: "none",
+				"shape-rendering": "crispEdges",
 			},
 			linkHref: this._currentLinkHref,
 		});

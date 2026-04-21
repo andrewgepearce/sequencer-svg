@@ -5,47 +5,47 @@
 From the project root, regenerate this Mermaid transform and SVG with:
 node sequencer.js --mermaid -i test/mermaid-features/18-create-header-placement/input.mmd -o -f -t test/mermaid-features/18-create-header-placement</desc>
   <rect width="100%" height="100%" fill="white"/>
-  <path d="M 0 0 L 0 483 L 1102 483 L 1102 0 L 0 0" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 30 30 L 30 57 L 292 57 L 292 30 L 30 30" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 0 0 L 0 483 L 1102 483 L 1102 0 L 0 0" fill="rgb(255, 255, 255)" stroke="none" shape-rendering="crispEdges"/>
+  <path d="M 30 30 L 30 57 L 292 57 L 292 30 L 30 30" fill="rgba(0,0,0,0)" stroke="none" shape-rendering="crispEdges"/>
   <text x="35" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Title:</text>
   <text x="68.44" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
   <text x="72.33" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Mermaid create header placement</text>
-  <path d="M 30 57 L 30 84 L 120 84 L 120 57 L 30 57" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 30 57 L 30 84 L 120 84 L 120 57 L 30 57" fill="rgba(0,0,0,0)" stroke="none" shape-rendering="crispEdges"/>
   <text x="35" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Version:</text>
   <text x="91.01" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
   <text x="94.9" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1.0</text>
-  <path d="M 30 84 L 30 145 L 1072 145 L 1072 84 L 30 84" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 30 84 L 30 145 L 1072 145 L 1072 84 L 30 84" fill="rgba(0,0,0,0)" stroke="none" shape-rendering="crispEdges"/>
   <text x="35" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Description:</text>
   <text x="116.68" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
   <text x="120.57" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Demonstrates delayed actor header placement when the first lifecycle event is create.</text>
   <text x="120.57" y="119.8" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">From the project root, regenerate this Mermaid transform and SVG with:</text>
   <text x="120.57" y="136.6" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">node sequencer.js --mermaid -i test/mermaid-features/18-create-header-placement/input.mmd -o -f -t test/mermaid-features/18-create-header-placement</text>
-  <path d="M 33 183 L 33 211 L 33 211 A 5 5 0 0 0 38 216 L 94 216 L 94 216 A 5 5 0 0 0 99 211 L 99 183 L 99 183 A 5 5 0 0 0 94 178 L 38 178 L 38 178 A 5 5 0 0 0 33 183" fill="rgb(210,210,210)" stroke="none"/>
-  <path d="M 30 180 L 30 208 L 30 208 A 5 5 0 0 0 35 213 L 91 213 L 91 213 A 5 5 0 0 0 96 208 L 96 180 L 96 180 A 5 5 0 0 0 91 175 L 35 175 L 35 175 A 5 5 0 0 0 30 180" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 33 183 L 33 211 L 33 211 A 5 5 0 0 0 38 216 L 94 216 L 94 216 A 5 5 0 0 0 99 211 L 99 183 L 99 183 A 5 5 0 0 0 94 178 L 38 178 L 38 178 A 5 5 0 0 0 33 183" fill="rgb(210,210,210)" stroke="none" shape-rendering="crispEdges"/>
+  <path d="M 30 180 L 30 208 L 30 208 A 5 5 0 0 0 35 213 L 91 213 L 91 213 A 5 5 0 0 0 96 208 L 96 180 L 96 180 A 5 5 0 0 0 91 175 L 35 175 L 35 175 A 5 5 0 0 0 30 180" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 30 180 L 30 208 L 30 208 A 5 5 0 0 0 35 213 L 91 213 L 91 213 A 5 5 0 0 0 96 208 L 96 180 L 96 180 A 5 5 0 0 0 91 175 L 35 175 L 35 175 A 5 5 0 0 0 30 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="39" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Caller</text>
-  <path d="M 249 251 L 249 279 L 249 279 A 5 5 0 0 0 254 284 L 320 284 L 320 284 A 5 5 0 0 0 325 279 L 325 251 L 325 251 A 5 5 0 0 0 320 246 L 254 246 L 254 246 A 5 5 0 0 0 249 251" fill="rgb(210,210,210)" stroke="none"/>
-  <path d="M 246 248 L 246 276 L 246 276 A 5 5 0 0 0 251 281 L 317 281 L 317 281 A 5 5 0 0 0 322 276 L 322 248 L 322 248 A 5 5 0 0 0 317 243 L 251 243 L 251 243 A 5 5 0 0 0 246 248" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 249 251 L 249 279 L 249 279 A 5 5 0 0 0 254 284 L 320 284 L 320 284 A 5 5 0 0 0 325 279 L 325 251 L 325 251 A 5 5 0 0 0 320 246 L 254 246 L 254 246 A 5 5 0 0 0 249 251" fill="rgb(210,210,210)" stroke="none" shape-rendering="crispEdges"/>
+  <path d="M 246 248 L 246 276 L 246 276 A 5 5 0 0 0 251 281 L 317 281 L 317 281 A 5 5 0 0 0 322 276 L 322 248 L 322 248 A 5 5 0 0 0 317 243 L 251 243 L 251 243 A 5 5 0 0 0 246 248" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 246 248 L 246 276 L 246 276 A 5 5 0 0 0 251 281 L 317 281 L 317 281 A 5 5 0 0 0 322 276 L 322 248 L 322 248 A 5 5 0 0 0 317 243 L 251 243 L 251 243 A 5 5 0 0 0 246 248" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="255" y="270" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Worker</text>
   <path d="M 63 213 L 63 363" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 60.5 345 L 60.5 363 L 65.5 363 L 65.5 345 L 60.5 345" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 60.5 345 L 60.5 363 L 65.5 363 L 65.5 345 L 60.5 345" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 60.5 345 L 60.5 363 M 65.5 363 L 65.5 345 L 60.5 345" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 284 281 L 284 363" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 281.5 345 L 281.5 363 L 286.5 363 L 286.5 345 L 281.5 345" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 281.5 345 L 281.5 363 L 286.5 363 L 286.5 345 L 281.5 345" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 281.5 345 L 281.5 363 M 286.5 363 L 286.5 345 L 281.5 345" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="105.5" y="335" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Create worker [Mermaid: Caller-&gt;&gt;Worker: Create worker]</text>
   <path d="M 65.5 345 L 281.5 345" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 271.5 340 L 271.5 350 L 281.5 345" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 271.5 340 L 271.5 350 L 281.5 345" fill="rgb(0, 0, 0)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 63 363 L 63 429" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 60.5 363 L 60.5 429 L 65.5 429 L 65.5 363 L 60.5 363" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 60.5 363 L 60.5 429 L 65.5 429 L 65.5 363 L 60.5 363" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 60.5 363 L 60.5 429 M 65.5 429 L 65.5 363 M 60.5 363" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 284 363 L 284 429" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 281.5 363 L 281.5 427 L 286.5 427 L 286.5 363 L 281.5 363" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 281.5 363 L 281.5 427 L 286.5 427 L 286.5 363 L 281.5 363" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 281.5 363 L 281.5 427 L 286.5 427 L 286.5 363 M 281.5 363" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="113" y="414.5" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">2. Ready [Mermaid: Worker--&gt;&gt;Caller: Ready]</text>
   <path d="M 281.5 422 L 65.5 422" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
-  <path d="M 65.5 422 L 75.5 417 L 75.5 427 L 65.5 422" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 65.5 422 L 75.5 417 L 75.5 427 L 65.5 422" fill="rgb(0, 0, 0)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 63 429 L 63 453" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 60.5 429 L 65.5 429" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 284 429 L 284 453" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>

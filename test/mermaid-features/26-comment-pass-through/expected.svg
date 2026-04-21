@@ -5,47 +5,47 @@
 From the project root, regenerate this Mermaid transform and SVG with:
 node sequencer.js --mermaid -i test/mermaid-features/26-comment-pass-through/input.mmd -o -f -t test/mermaid-features/26-comment-pass-through</desc>
   <rect width="100%" height="100%" fill="white"/>
-  <path d="M 0 0 L 0 417 L 1077 417 L 1077 0 L 0 0" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 30 30 L 30 57 L 279 57 L 279 30 L 30 30" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 0 0 L 0 417 L 1077 417 L 1077 0 L 0 0" fill="rgb(255, 255, 255)" stroke="none" shape-rendering="crispEdges"/>
+  <path d="M 30 30 L 30 57 L 279 57 L 279 30 L 30 30" fill="rgba(0,0,0,0)" stroke="none" shape-rendering="crispEdges"/>
   <text x="35" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Title:</text>
   <text x="68.44" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
   <text x="72.33" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Mermaid comment pass through</text>
-  <path d="M 30 57 L 30 84 L 120 84 L 120 57 L 30 57" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 30 57 L 30 84 L 120 84 L 120 57 L 30 57" fill="rgba(0,0,0,0)" stroke="none" shape-rendering="crispEdges"/>
   <text x="35" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Version:</text>
   <text x="91.01" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
   <text x="94.9" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1.0</text>
-  <path d="M 30 84 L 30 145 L 1047 145 L 1047 84 L 30 84" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 30 84 L 30 145 L 1047 145 L 1047 84 L 30 84" fill="rgba(0,0,0,0)" stroke="none" shape-rendering="crispEdges"/>
   <text x="35" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Description:</text>
   <text x="116.68" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
   <text x="120.57" y="103" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Demonstrates Mermaid %% comments preserved in generated sequencer YAML.</text>
   <text x="120.57" y="119.8" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">From the project root, regenerate this Mermaid transform and SVG with:</text>
   <text x="120.57" y="136.6" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">node sequencer.js --mermaid -i test/mermaid-features/26-comment-pass-through/input.mmd -o -f -t test/mermaid-features/26-comment-pass-through</text>
-  <path d="M 33 183 L 33 211 L 33 211 A 5 5 0 0 0 38 216 L 76 216 L 76 216 A 5 5 0 0 0 81 211 L 81 183 L 81 183 A 5 5 0 0 0 76 178 L 38 178 L 38 178 A 5 5 0 0 0 33 183" fill="rgb(210,210,210)" stroke="none"/>
-  <path d="M 30 180 L 30 208 L 30 208 A 5 5 0 0 0 35 213 L 73 213 L 73 213 A 5 5 0 0 0 78 208 L 78 180 L 78 180 A 5 5 0 0 0 73 175 L 35 175 L 35 175 A 5 5 0 0 0 30 180" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 33 183 L 33 211 L 33 211 A 5 5 0 0 0 38 216 L 76 216 L 76 216 A 5 5 0 0 0 81 211 L 81 183 L 81 183 A 5 5 0 0 0 76 178 L 38 178 L 38 178 A 5 5 0 0 0 33 183" fill="rgb(210,210,210)" stroke="none" shape-rendering="crispEdges"/>
+  <path d="M 30 180 L 30 208 L 30 208 A 5 5 0 0 0 35 213 L 73 213 L 73 213 A 5 5 0 0 0 78 208 L 78 180 L 78 180 A 5 5 0 0 0 73 175 L 35 175 L 35 175 A 5 5 0 0 0 30 180" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 30 180 L 30 208 L 30 208 A 5 5 0 0 0 35 213 L 73 213 L 73 213 A 5 5 0 0 0 78 208 L 78 180 L 78 180 A 5 5 0 0 0 73 175 L 35 175 L 35 175 A 5 5 0 0 0 30 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="39" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">API</text>
-  <path d="M 231 183 L 231 211 L 231 211 A 5 5 0 0 0 236 216 L 270 216 L 270 216 A 5 5 0 0 0 275 211 L 275 183 L 275 183 A 5 5 0 0 0 270 178 L 236 178 L 236 178 A 5 5 0 0 0 231 183" fill="rgb(210,210,210)" stroke="none"/>
-  <path d="M 228 180 L 228 208 L 228 208 A 5 5 0 0 0 233 213 L 267 213 L 267 213 A 5 5 0 0 0 272 208 L 272 180 L 272 180 A 5 5 0 0 0 267 175 L 233 175 L 233 175 A 5 5 0 0 0 228 180" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 231 183 L 231 211 L 231 211 A 5 5 0 0 0 236 216 L 270 216 L 270 216 A 5 5 0 0 0 275 211 L 275 183 L 275 183 A 5 5 0 0 0 270 178 L 236 178 L 236 178 A 5 5 0 0 0 231 183" fill="rgb(210,210,210)" stroke="none" shape-rendering="crispEdges"/>
+  <path d="M 228 180 L 228 208 L 228 208 A 5 5 0 0 0 233 213 L 267 213 L 267 213 A 5 5 0 0 0 272 208 L 272 180 L 272 180 A 5 5 0 0 0 267 175 L 233 175 L 233 175 A 5 5 0 0 0 228 180" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 228 180 L 228 208 L 228 208 A 5 5 0 0 0 233 213 L 267 213 L 267 213 A 5 5 0 0 0 272 208 L 272 180 L 272 180 A 5 5 0 0 0 267 175 L 233 175 L 233 175 A 5 5 0 0 0 228 180" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="237" y="202" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">DB</text>
   <path d="M 54 213 L 54 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 51.5 277 L 51.5 297 L 56.5 297 L 56.5 277 L 51.5 277" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 51.5 277 L 51.5 297 L 56.5 297 L 56.5 277 L 51.5 277" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 51.5 277 L 51.5 297 M 56.5 297 L 56.5 277 L 51.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 250 213 L 250 297" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 247.5 277 L 247.5 297 L 252.5 297 L 252.5 277 L 247.5 277" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 247.5 277 L 247.5 297 L 252.5 297 L 252.5 277 L 247.5 277" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 247.5 277 L 247.5 297 M 252.5 297 L 252.5 277 L 247.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="96.5" y="267" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">1. Fetch</text>
   <path d="M 56.5 277 L 247.5 277" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
-  <path d="M 237.5 272 L 237.5 282 L 247.5 277" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 237.5 272 L 237.5 282 L 247.5 277" fill="rgb(0, 0, 0)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 54 297 L 54 363" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 51.5 297 L 51.5 363 L 56.5 363 L 56.5 297 L 51.5 297" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 51.5 297 L 51.5 363 L 56.5 363 L 56.5 297 L 51.5 297" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 51.5 297 L 51.5 363 M 56.5 363 L 56.5 297 M 51.5 297" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 250 297 L 250 363" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 247.5 297 L 247.5 361 L 252.5 361 L 252.5 297 L 247.5 297" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 247.5 297 L 247.5 361 L 252.5 361 L 252.5 297 L 247.5 297" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 247.5 297 L 247.5 361 L 252.5 361 L 252.5 297 M 247.5 297" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="104" y="348.5" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">2. OK</text>
   <path d="M 247.5 356 L 56.5 356" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
-  <path d="M 56.5 356 L 66.5 351 L 66.5 361 L 56.5 356" fill="rgb(0, 0, 0)" stroke="none"/>
+  <path d="M 56.5 356 L 66.5 351 L 66.5 361 L 56.5 356" fill="rgb(0, 0, 0)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 54 363 L 54 387" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 51.5 363 L 56.5 363" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 250 363 L 250 387" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>

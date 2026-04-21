@@ -2,54 +2,54 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2605" height="216" viewBox="0 0 2605 216">
   <title>Input</title>
   <rect width="100%" height="100%" fill="white"/>
-  <path d="M 0 0 L 0 206 L 2595 206 L 2595 0 L 0 0" fill="rgb(255, 255, 255)" stroke="none"/>
-  <path d="M 30 30 L 30 57 L 110 57 L 110 30 L 30 30" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 0 0 L 0 206 L 2595 206 L 2595 0 L 0 0" fill="rgb(255, 255, 255)" stroke="none" shape-rendering="crispEdges"/>
+  <path d="M 30 30 L 30 57 L 110 57 L 110 30 L 30 30" fill="rgba(0,0,0,0)" stroke="none" shape-rendering="crispEdges"/>
   <text x="35" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Title:</text>
   <text x="68.44" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
   <text x="72.33" y="49" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">Input</text>
-  <path d="M 30 57 L 30 84 L 120 84 L 120 57 L 30 57" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 30 57 L 30 84 L 120 84 L 120 57 L 30 57" fill="rgba(0,0,0,0)" stroke="none" shape-rendering="crispEdges"/>
   <text x="35" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Version:</text>
   <text x="91.01" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto"> </text>
   <text x="94.9" y="76" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" dominant-baseline="auto">1.0</text>
-  <path d="M 33 122 L 33 150 L 33 150 A 5 5 0 0 0 38 155 L 159 155 L 159 155 A 5 5 0 0 0 164 150 L 164 122 L 164 122 A 5 5 0 0 0 159 117 L 38 117 L 38 117 A 5 5 0 0 0 33 122" fill="rgb(210,210,210)" stroke="none"/>
-  <path d="M 30 119 L 30 147 L 30 147 A 5 5 0 0 0 35 152 L 156 152 L 156 152 A 5 5 0 0 0 161 147 L 161 119 L 161 119 A 5 5 0 0 0 156 114 L 35 114 L 35 114 A 5 5 0 0 0 30 119" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 33 122 L 33 150 L 33 150 A 5 5 0 0 0 38 155 L 159 155 L 159 155 A 5 5 0 0 0 164 150 L 164 122 L 164 122 A 5 5 0 0 0 159 117 L 38 117 L 38 117 A 5 5 0 0 0 33 122" fill="rgb(210,210,210)" stroke="none" shape-rendering="crispEdges"/>
+  <path d="M 30 119 L 30 147 L 30 147 A 5 5 0 0 0 35 152 L 156 152 L 156 152 A 5 5 0 0 0 161 147 L 161 119 L 161 119 A 5 5 0 0 0 156 114 L 35 114 L 35 114 A 5 5 0 0 0 30 119" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 30 119 L 30 147 L 30 147 A 5 5 0 0 0 35 152 L 156 152 L 156 152 A 5 5 0 0 0 161 147 L 161 119 L 161 119 A 5 5 0 0 0 156 114 L 35 114 L 35 114 A 5 5 0 0 0 30 119" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="39" y="141" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Caller Service</text>
-  <path d="M 314 122 L 314 150 L 314 150 A 5 5 0 0 0 319 155 L 485 155 L 485 155 A 5 5 0 0 0 490 150 L 490 122 L 490 122 A 5 5 0 0 0 485 117 L 319 117 L 319 117 A 5 5 0 0 0 314 122" fill="rgb(255,232,204)" stroke="none"/>
+  <path d="M 314 122 L 314 150 L 314 150 A 5 5 0 0 0 319 155 L 485 155 L 485 155 A 5 5 0 0 0 490 150 L 490 122 L 490 122 A 5 5 0 0 0 485 117 L 319 117 L 319 117 A 5 5 0 0 0 314 122" fill="rgb(255,232,204)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 326.8 126.4 A 3 3 0 0 1 320.8 126.4 A 3 3 0 0 1 326.8 126.4 M 323.8 131.4 L 323.8 138.4 M 320.06 133.4 L 327.54 133.4 M 323.8 138.4 L 320.74 146 M 323.8 138.4 L 326.86 146" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.5"/>
-  <path d="M 338 119 L 338 147 L 338 147 A 5 5 0 0 0 343 152 L 482 152 L 482 152 A 5 5 0 0 0 487 147 L 487 119 L 487 119 A 5 5 0 0 0 482 114 L 343 114 L 343 114 A 5 5 0 0 0 338 119" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 338 119 L 338 147 L 338 147 A 5 5 0 0 0 343 152 L 482 152 L 482 152 A 5 5 0 0 0 487 147 L 487 119 L 487 119 A 5 5 0 0 0 482 114 L 343 114 L 343 114 A 5 5 0 0 0 338 119" fill="rgba(0,0,0,0)" stroke="none" shape-rendering="crispEdges"/>
   <text x="347" y="141" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Human operator</text>
-  <path d="M 640 122 L 640 150 L 640 150 A 5 5 0 0 0 645 155 L 827 155 L 827 155 A 5 5 0 0 0 832 150 L 832 122 L 832 122 A 5 5 0 0 0 827 117 L 645 117 L 645 117 A 5 5 0 0 0 640 122" fill="rgb(196,232,255)" stroke="none"/>
+  <path d="M 640 122 L 640 150 L 640 150 A 5 5 0 0 0 645 155 L 827 155 L 827 155 A 5 5 0 0 0 832 150 L 832 122 L 832 122 A 5 5 0 0 0 827 117 L 645 117 L 645 117 A 5 5 0 0 0 640 122" fill="rgb(196,232,255)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 646.06 121 L 646.06 145 M 653.54 121 L 653.54 145 M 646.06 121 L 653.54 121 M 646.06 145 L 653.54 145" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.5"/>
-  <path d="M 664 119 L 664 147 L 664 147 A 5 5 0 0 0 669 152 L 824 152 L 824 152 A 5 5 0 0 0 829 147 L 829 119 L 829 119 A 5 5 0 0 0 824 114 L 669 114 L 669 114 A 5 5 0 0 0 664 119" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 664 119 L 664 147 L 664 147 A 5 5 0 0 0 669 152 L 824 152 L 824 152 A 5 5 0 0 0 829 147 L 829 119 L 829 119 A 5 5 0 0 0 824 114 L 669 114 L 669 114 A 5 5 0 0 0 664 119" fill="rgba(0,0,0,0)" stroke="none" shape-rendering="crispEdges"/>
   <text x="673" y="141" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">External boundary</text>
-  <path d="M 982 122 L 982 150 L 982 150 A 5 5 0 0 0 987 155 L 1140 155 L 1140 155 A 5 5 0 0 0 1145 150 L 1145 122 L 1145 122 A 5 5 0 0 0 1140 117 L 987 117 L 987 117 A 5 5 0 0 0 982 122" fill="rgb(255,244,179)" stroke="none"/>
+  <path d="M 982 122 L 982 150 L 982 150 A 5 5 0 0 0 987 155 L 1140 155 L 1140 155 A 5 5 0 0 0 1145 150 L 1145 122 L 1145 122 A 5 5 0 0 0 1140 117 L 987 117 L 987 117 A 5 5 0 0 0 982 122" fill="rgb(255,244,179)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 996.8 133.6 A 5 5 0 0 1 986.8 133.6 A 5 5 0 0 1 996.8 133.6 M 986.8 133.6 L 996.8 133.6 M 991.8 128.6 L 991.8 138.6" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.5"/>
-  <path d="M 1006 119 L 1006 147 L 1006 147 A 5 5 0 0 0 1011 152 L 1137 152 L 1137 152 A 5 5 0 0 0 1142 147 L 1142 119 L 1142 119 A 5 5 0 0 0 1137 114 L 1011 114 L 1011 114 A 5 5 0 0 0 1006 119" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 1006 119 L 1006 147 L 1006 147 A 5 5 0 0 0 1011 152 L 1137 152 L 1137 152 A 5 5 0 0 0 1142 147 L 1142 119 L 1142 119 A 5 5 0 0 0 1137 114 L 1011 114 L 1011 114 A 5 5 0 0 0 1006 119" fill="rgba(0,0,0,0)" stroke="none" shape-rendering="crispEdges"/>
   <text x="1015" y="141" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Flow controller</text>
-  <path d="M 1295 122 L 1295 150 L 1295 150 A 5 5 0 0 0 1300 155 L 1430 155 L 1430 155 A 5 5 0 0 0 1435 150 L 1435 122 L 1435 122 A 5 5 0 0 0 1430 117 L 1300 117 L 1300 117 A 5 5 0 0 0 1295 122" fill="rgb(220,255,214)" stroke="none"/>
+  <path d="M 1295 122 L 1295 150 L 1295 150 A 5 5 0 0 0 1300 155 L 1430 155 L 1430 155 A 5 5 0 0 0 1435 150 L 1435 122 L 1435 122 A 5 5 0 0 0 1430 117 L 1300 117 L 1300 117 A 5 5 0 0 0 1295 122" fill="rgb(220,255,214)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 1300.04 121 L 1305.56 121 L 1309.56 125 L 1309.56 145 L 1300.04 145 L 1300.04 121 M 1305.56 121 L 1305.56 125 L 1309.56 125" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.5"/>
-  <path d="M 1319 119 L 1319 147 L 1319 147 A 5 5 0 0 0 1324 152 L 1427 152 L 1427 152 A 5 5 0 0 0 1432 147 L 1432 119 L 1432 119 A 5 5 0 0 0 1427 114 L 1324 114 L 1324 114 A 5 5 0 0 0 1319 119" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 1319 119 L 1319 147 L 1319 147 A 5 5 0 0 0 1324 152 L 1427 152 L 1427 152 A 5 5 0 0 0 1432 147 L 1432 119 L 1432 119 A 5 5 0 0 0 1427 114 L 1324 114 L 1324 114 A 5 5 0 0 0 1319 119" fill="rgba(0,0,0,0)" stroke="none" shape-rendering="crispEdges"/>
   <text x="1328" y="141" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Order entity</text>
-  <path d="M 1585 122 L 1585 150 L 1585 150 A 5 5 0 0 0 1590 155 L 1753 155 L 1753 155 A 5 5 0 0 0 1758 150 L 1758 122 L 1758 122 A 5 5 0 0 0 1753 117 L 1590 117 L 1590 117 A 5 5 0 0 0 1585 122" fill="rgb(255,221,234)" stroke="none"/>
+  <path d="M 1585 122 L 1585 150 L 1585 150 A 5 5 0 0 0 1590 155 L 1753 155 L 1753 155 A 5 5 0 0 0 1758 150 L 1758 122 L 1758 122 A 5 5 0 0 0 1753 117 L 1590 117 L 1590 117 A 5 5 0 0 0 1585 122" fill="rgb(255,221,234)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 1589.7 124.4 L 1589.7 141.6 M 1599.9 124.4 L 1599.9 141.6" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.5"/>
   <path d="M 1589.7 124.4 A 5.1 5.1 0 0 1 1599.9 124.4" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.5"/>
   <path d="M 1599.9 124.4 A 5.1 5.1 0 0 1 1589.7 124.4" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.5"/>
   <path d="M 1599.9 141.6 A 5.1 5.1 0 0 1 1589.7 141.6" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.5"/>
   <path d="M 1589.7 141.6 A 5.1 5.1 0 0 1 1599.9 141.6" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.5"/>
-  <path d="M 1609 119 L 1609 147 L 1609 147 A 5 5 0 0 0 1614 152 L 1750 152 L 1750 152 A 5 5 0 0 0 1755 147 L 1755 119 L 1755 119 A 5 5 0 0 0 1750 114 L 1614 114 L 1614 114 A 5 5 0 0 0 1609 119" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 1609 119 L 1609 147 L 1609 147 A 5 5 0 0 0 1614 152 L 1750 152 L 1750 152 A 5 5 0 0 0 1755 147 L 1755 119 L 1755 119 A 5 5 0 0 0 1750 114 L 1614 114 L 1614 114 A 5 5 0 0 0 1609 119" fill="rgba(0,0,0,0)" stroke="none" shape-rendering="crispEdges"/>
   <text x="1618" y="141" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Database Layer</text>
-  <path d="M 1908 122 L 1908 150 L 1908 150 A 5 5 0 0 0 1913 155 L 2082 155 L 2082 155 A 5 5 0 0 0 2087 150 L 2087 122 L 2087 122 A 5 5 0 0 0 2082 117 L 1913 117 L 1913 117 A 5 5 0 0 0 1908 122" fill="rgb(226,220,255)" stroke="none"/>
+  <path d="M 1908 122 L 1908 150 L 1908 150 A 5 5 0 0 0 1913 155 L 2082 155 L 2082 155 A 5 5 0 0 0 2087 150 L 2087 122 L 2087 122 A 5 5 0 0 0 2082 117 L 1913 117 L 1913 117 A 5 5 0 0 0 1908 122" fill="rgb(226,220,255)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 1914.06 121 L 1914.06 141 L 1922.9 141 L 1922.9 121 L 1914.06 121" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.5"/>
   <path d="M 1912.36 125 L 1912.36 145 L 1921.2 145 L 1921.2 125 L 1912.36 125" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.5"/>
-  <path d="M 1932 119 L 1932 147 L 1932 147 A 5 5 0 0 0 1937 152 L 2079 152 L 2079 152 A 5 5 0 0 0 2084 147 L 2084 119 L 2084 119 A 5 5 0 0 0 2079 114 L 1937 114 L 1937 114 A 5 5 0 0 0 1932 119" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 1932 119 L 1932 147 L 1932 147 A 5 5 0 0 0 1937 152 L 2079 152 L 2079 152 A 5 5 0 0 0 2084 147 L 2084 119 L 2084 119 A 5 5 0 0 0 2079 114 L 1937 114 L 1937 114 A 5 5 0 0 0 1932 119" fill="rgba(0,0,0,0)" stroke="none" shape-rendering="crispEdges"/>
   <text x="1941" y="141" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Collections store</text>
-  <path d="M 2237 122 L 2237 150 L 2237 150 A 5 5 0 0 0 2242 155 L 2362 155 L 2362 155 A 5 5 0 0 0 2367 150 L 2367 122 L 2367 122 A 5 5 0 0 0 2362 117 L 2242 117 L 2242 117 A 5 5 0 0 0 2237 122" fill="rgb(255,235,186)" stroke="none"/>
+  <path d="M 2237 122 L 2237 150 L 2237 150 A 5 5 0 0 0 2242 155 L 2362 155 L 2362 155 A 5 5 0 0 0 2367 150 L 2367 122 L 2367 122 A 5 5 0 0 0 2362 117 L 2242 117 L 2242 117 A 5 5 0 0 0 2237 122" fill="rgb(255,235,186)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 2241.36 127 L 2249.52 127 M 2241.36 133 L 2249.52 133 M 2241.36 139 L 2249.52 139 M 2246.24 133 L 2252.24 133 M 2248.24 129 L 2252.24 133 L 2248.24 137" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.5"/>
-  <path d="M 2261 119 L 2261 147 L 2261 147 A 5 5 0 0 0 2266 152 L 2359 152 L 2359 152 A 5 5 0 0 0 2364 147 L 2364 119 L 2364 119 A 5 5 0 0 0 2359 114 L 2266 114 L 2266 114 A 5 5 0 0 0 2261 119" fill="rgba(0,0,0,0)" stroke="none"/>
+  <path d="M 2261 119 L 2261 147 L 2261 147 A 5 5 0 0 0 2266 152 L 2359 152 L 2359 152 A 5 5 0 0 0 2364 147 L 2364 119 L 2364 119 A 5 5 0 0 0 2359 114 L 2266 114 L 2266 114 A 5 5 0 0 0 2261 119" fill="rgba(0,0,0,0)" stroke="none" shape-rendering="crispEdges"/>
   <text x="2270" y="141" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">Job queue</text>
-  <path d="M 2517 122 L 2517 150 L 2517 150 A 5 5 0 0 0 2522 155 L 2560 155 L 2560 155 A 5 5 0 0 0 2565 150 L 2565 122 L 2565 122 A 5 5 0 0 0 2560 117 L 2522 117 L 2522 117 A 5 5 0 0 0 2517 122" fill="rgb(210,210,210)" stroke="none"/>
-  <path d="M 2514 119 L 2514 147 L 2514 147 A 5 5 0 0 0 2519 152 L 2557 152 L 2557 152 A 5 5 0 0 0 2562 147 L 2562 119 L 2562 119 A 5 5 0 0 0 2557 114 L 2519 114 L 2519 114 A 5 5 0 0 0 2514 119" fill="rgb(95,183,224)" stroke="none"/>
+  <path d="M 2517 122 L 2517 150 L 2517 150 A 5 5 0 0 0 2522 155 L 2560 155 L 2560 155 A 5 5 0 0 0 2565 150 L 2565 122 L 2565 122 A 5 5 0 0 0 2560 117 L 2522 117 L 2522 117 A 5 5 0 0 0 2517 122" fill="rgb(210,210,210)" stroke="none" shape-rendering="crispEdges"/>
+  <path d="M 2514 119 L 2514 147 L 2514 147 A 5 5 0 0 0 2519 152 L 2557 152 L 2557 152 A 5 5 0 0 0 2562 147 L 2562 119 L 2562 119 A 5 5 0 0 0 2557 114 L 2519 114 L 2519 114 A 5 5 0 0 0 2514 119" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 2514 119 L 2514 147 L 2514 147 A 5 5 0 0 0 2519 152 L 2557 152 L 2557 152 A 5 5 0 0 0 2562 147 L 2562 119 L 2562 119 A 5 5 0 0 0 2557 114 L 2519 114 L 2519 114 A 5 5 0 0 0 2514 119" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="2523" y="141" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="18" xml:space="preserve" dominant-baseline="auto">API</text>
   <path d="M 95.5 152 L 95.5 176" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
