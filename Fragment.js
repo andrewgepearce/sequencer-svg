@@ -862,10 +862,10 @@ module.exports = class Fragment {
 		Utilities.drawActiveRectHighlights(working, this._ctx, endLineTop, finalHeightOfEndLine, mimic);
 
 		//////////////////////////////////////////////////////////////////////////////
-		// Draw the timelines for this fragment
-		xy = Actor.drawTimelines(working, ctx, endLineTop, finalHeightOfEndLine, mimic);
+		// Draw the structural borders before the timelines so activation bars can
+		// visually cap the fragment end as they did in the legacy renderer.
 		Utilities.drawActiveStructuralFragmentBorders(working, this._ctx, endLineTop, finalHeightOfEndLine, mimic);
-		xy = Utilities.drawRectangle(
+		const endRectangleXy = Utilities.drawRectangle(
 			this._ctx,
 			this._borderWidth,
 			this._borderColour,
@@ -882,6 +882,10 @@ module.exports = class Fragment {
 			true,
 			mimic
 		);
+
+		//////////////////////////////////////////////////////////////////////////////
+		// Draw the timelines for this fragment
+		xy = Actor.drawTimelines(working, ctx, endLineTop, finalHeightOfEndLine, mimic);
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Do not manage max width HERE!!
