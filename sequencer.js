@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // Copyright (C) 2019 Mark The Page
 //
 // This program is free software: you can redistribute it and/or modify

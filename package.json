@@ -3,6 +3,9 @@
 	"version": "2.0.0",
 	"description": "A Node JS tool for building UML sequence diagrams from a JSON or YAML definition, outputting SVG",
 	"main": "sequencer.js",
+	"bin": {
+		"sequencer-svg": "./sequencer.js"
+	},
 	"scripts": {
 		"test": "jest --runInBand",
 		"examples": "node sequencer.js -y -i ./examples/Example_1.1.0.yaml -o -f -t ./examples; node sequencer.js -y -i ./examples/Example_2.1.0.yaml -o -f -t ./examples; node sequencer.js -y -i ./examples/Example_3.1.1.yaml -o -f -t ./examples; node sequencer.js -y -i ./examples/Example_4.1.0.yaml -o -f -t ./examples; node sequencer.js -y -i ./examples/Example_5.1.0.yaml -o -f -t ./examples"
