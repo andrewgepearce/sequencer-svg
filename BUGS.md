@@ -366,6 +366,51 @@ Decide whether this should be treated as:
 
 For now, do not mix this with Bug 1 or Bug 2. It should stay isolated as a font-measurement compatibility question.
 
+## Bug 11 — activation bar stroke paths omit the bottom closing edge
+
+### Status
+
+Fixed in the working tree on 2026-04-21.
+
+### Symptom
+
+Activation bars can render without the terminating horizontal stroke at the bottom of the bar outline.
+
+This is visible outside fragment handling, so it is not just a fragment-end layering problem.
+
+### Evidence
+
+In [test/mermaid-features/07-autonumber/expected.svg](/Users/andrewpearce/dev/github/sequencer-svg/test/mermaid-features/07-autonumber/expected.svg), activation-bar outline paths such as:
+
+- `M 60.5 297 L 60.5 381 M 65.5 381 L 65.5 297 M 60.5 297`
+- `M 283 297 L 283 381 M 288 381 L 288 297 M 283 297`
+
+draw the two vertical sides, but do not draw the bottom edge from left-bottom to right-bottom.
+
+The fill path is still a full rectangle, so the bug is specifically in the emitted stroke geometry.
+
+### Why it matters
+
+- visible activation-bar outline defect in normal SVG output
+- weakens confidence in the current activation path-construction logic
+- may be related to the same canvas-oriented stroke construction style noted in Bug 9
+
+### Expected fix
+
+Inspect the activation-bar stroke path generation in [Actor.js](/Users/andrewpearce/dev/github/sequencer-svg/Actor.js) and any shared rectangle helpers in [Utilities.js](/Users/andrewpearce/dev/github/sequencer-svg/Utilities.js), then make the stroke path explicitly include the bottom closing segment when activation rectangles are drawn.
+
+### Implemented fix
+
+- [Actor.js](/Users/andrewpearce/dev/github/sequencer-svg/Actor.js) now treats zero-height flow rectangles as a visible termination-cap case instead of dropping them completely.
+- When a zero-height activation tail still needs a top or bottom border, the renderer now emits a single explicit horizontal stroke across the bar width.
+- This preserves the Bug 7 cleanup that removed zero-area rectangle noise, while restoring the missing bottom cap line at final activation tails.
+
+### Verification
+
+- [test/mermaid-features/07-autonumber/expected.svg](/Users/andrewpearce/dev/github/sequencer-svg/test/mermaid-features/07-autonumber/expected.svg) now contains explicit cap lines at the activation-tail end.
+- Mermaid `expected.svg` fixtures were regenerated for all affected slices.
+- `npx jest --runInBand test/mermaid-features` passes with 27 suites and 57 tests.
+
 ## Trace-revert checklist
 
 Older investigation notes referred to temporary stderr traces in:

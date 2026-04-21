@@ -387,7 +387,11 @@ node sequencer.js --mermaid -i test/mermaid-features/15-rect-nesting-and-fragmen
   <path d="M 947.5 1203 L 947.5 1215 M 952.5 1215 L 952.5 1203 M 947.5 1203" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 93 1215 L 93 1239" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 315.5 1215 L 315.5 1239" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 313 1215 L 318 1215" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 527 1215 L 527 1239" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 524.5 1215 L 529.5 1215" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 734.5 1215 L 734.5 1239" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 732 1215 L 737 1215" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 950 1215 L 950 1239" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 947.5 1215 L 952.5 1215" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
 </svg>

@@ -94,4 +94,5 @@ node sequencer.js --mermaid -i test/mermaid-features/17-create-destroy/input.mmd
   <path d="M 92 811 L 334.5 811" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 324.5 806 L 334.5 816 M 324.5 816 L 334.5 806" fill="none" stroke="rgb(0, 0, 0)" stroke-width="2"/>
   <path d="M 89.5 831 L 89.5 855" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 87 831 L 92 831" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
 </svg>

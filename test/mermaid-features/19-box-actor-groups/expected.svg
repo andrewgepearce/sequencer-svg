@@ -118,9 +118,14 @@ node sequencer.js --mermaid -i test/mermaid-features/19-box-actor-groups/input.m
   <path d="M 938 529 L 1152.5 529" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 1142.5 524 L 1142.5 534 L 1152.5 529" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 63 549 L 63 573" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 60.5 549 L 65.5 549" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 288.5 549 L 288.5 573" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 503 549 L 503 573" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 500.5 549 L 505.5 549" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 710.5 549 L 710.5 573" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 708 549 L 713 549" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 935.5 549 L 935.5 573" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 933 549 L 938 549" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 1155 549 L 1155 573" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 1152.5 549 L 1157.5 549" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
 </svg>

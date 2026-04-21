@@ -49,5 +49,7 @@ Second description line remains multiline in sequencer.</desc>
   <path d="M 238.25 326 L 455.75 326" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 445.75 321 L 445.75 331 L 455.75 326" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 235.75 346 L 235.75 370" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 233.25 346 L 238.25 346" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 458.25 346 L 458.25 370" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 455.75 346 L 460.75 346" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
 </svg>

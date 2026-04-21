@@ -168,10 +168,17 @@ node sequencer.js --mermaid -i test/mermaid-features/22-specialised-participant-
   <path d="M 782 697 L 1995.5 697" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 1985.5 692 L 1985.5 702 L 1995.5 697" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 118 717 L 118 741" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 115.5 717 L 120.5 717" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 452 717 L 452 741" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 449.5 717 L 454.5 717" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 779.5 717 L 779.5 741" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 777 717 L 782 717" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 1081 717 L 1081 741" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 1078.5 717 L 1083.5 717" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 1377.5 717 L 1377.5 741" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 1375 717 L 1380 717" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 1693.5 717 L 1693.5 741" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 1691 717 L 1696 717" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 1998 717 L 1998 741" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 1995.5 717 L 2000.5 717" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
 </svg>

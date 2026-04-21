@@ -90,9 +90,12 @@ node sequencer.js --mermaid -i test/mermaid-features/23-actor-link-visuals/input
   <path d="M 71.5 511 L 672.5 511" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 662.5 506 L 662.5 516 L 672.5 511" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 69 531 L 69 555" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 66.5 531 L 71.5 531" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 265 531 L 265 555" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 262.5 531 L 267.5 531" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 473.5 531 L 473.5 555" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
   <path d="M 675 531 L 675 555" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 672.5 531 L 677.5 531" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="30" y="599" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="14" xml:space="preserve" font-weight="bold" dominant-baseline="auto">Links</text>
   <text x="30" y="619" fill="rgb(0,0,0)" font-family="Liberation Sans, Arial, Helvetica, sans-serif" font-size="13" xml:space="preserve" font-weight="bold" dominant-baseline="auto">API:</text>
   <a href="https://status.example.test/api" target="_blank">

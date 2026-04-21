@@ -214,7 +214,11 @@ node sequencer.js --mermaid -i test/mermaid-features/10-parallel/input.mmd -o -f
   <path d="M 756.5 811 L 756.5 871 L 761.5 871 L 761.5 811 L 756.5 811" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 756.5 811 L 756.5 871 M 761.5 871 L 761.5 811 M 756.5 811" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 123 871 L 123 895" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 120.5 871 L 125.5 871" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 345.5 871 L 345.5 895" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 343 871 L 348 871" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 557 871 L 557 895" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 554.5 871 L 559.5 871" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 759 871 L 759 895" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 756.5 871 L 761.5 871" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
 </svg>

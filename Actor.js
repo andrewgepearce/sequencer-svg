@@ -1230,7 +1230,27 @@ module.exports = class Actor {
 	 * Actor.drawFlowRectangle(ctx, fillColour, top, left, width, height, radius, topBorder, rightBorder, bottomBorder, leftBorder, mimic);
 	 */
 	static drawFlowRectangle(ctx, fillColour, top, left, width, height, radius, topBorder, rightBorder, bottomBorder, leftBorder, mimic) {
-		if (!Utilities.isNumber(width) || !Utilities.isNumber(height) || width <= 0 || height <= 0) {
+		if (!Utilities.isNumber(width) || !Utilities.isNumber(height) || width <= 0 || height < 0) {
+			return;
+		}
+
+		// Zero-height flow rectangles only need the visible termination cap.
+		if (height === 0) {
+			if (!mimic && (topBorder === true || bottomBorder === true)) {
+				let oldStrokeStyle = ctx.strokeStyle;
+				let oldLineDash = ctx.getLineDash();
+				let oldLineWidth = ctx.lineWidth;
+				ctx.strokeStyle = "rgb(0, 0, 0)";
+				ctx.setLineDash([]);
+				ctx.lineWidth = 1;
+				ctx.beginPath();
+				ctx.moveTo(left, top);
+				ctx.lineTo(left + width, top);
+				ctx.stroke();
+				ctx.strokeStyle = oldStrokeStyle;
+				ctx.setLineDash(oldLineDash);
+				ctx.lineWidth = oldLineWidth;
+			}
 			return;
 		}
 

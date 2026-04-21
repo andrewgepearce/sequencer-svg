@@ -65,5 +65,6 @@ node sequencer.js --mermaid -i test/mermaid-features/24-completion-review/input.
   <path d="M 339.5 442 L 77.5 442" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
   <path d="M 77.5 442 L 87.5 437 L 87.5 447 L 77.5 442" fill="rgb(0, 0, 0)" stroke="none"/>
   <path d="M 75 449 L 75 473" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 72.5 449 L 77.5 449" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 342 449 L 342 473" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
 </svg>

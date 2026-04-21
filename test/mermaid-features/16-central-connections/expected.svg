@@ -85,6 +85,9 @@ node sequencer.js --mermaid -i test/mermaid-features/16-central-connections/inpu
   <path d="M 501 511 A 4 4 0 0 1 493 511 A 4 4 0 0 1 501 511" fill="rgb(255,255,255)" stroke="none"/>
   <path d="M 501 511 A 4 4 0 0 1 493 511 A 4 4 0 0 1 501 511" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 63 531 L 63 555" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 60.5 531 L 65.5 531" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 285.5 531 L 285.5 555" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 283 531 L 288 531" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 497 531 L 497 555" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 494.5 531 L 499.5 531" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
 </svg>

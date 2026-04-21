@@ -209,5 +209,7 @@ node sequencer.js --mermaid -i test/mermaid-features/06-fragments/input.mmd -o -
   <path d="M 398.75 1040 L 398.75 1100 L 403.75 1100 L 403.75 1040 L 398.75 1040" fill="rgb(95,183,224)" stroke="none"/>
   <path d="M 398.75 1040 L 398.75 1100 M 403.75 1100 L 403.75 1040 M 398.75 1040" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 178.75 1100 L 178.75 1124" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 176.25 1100 L 181.25 1100" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 401.25 1100 L 401.25 1124" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 398.75 1100 L 403.75 1100" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
 </svg>

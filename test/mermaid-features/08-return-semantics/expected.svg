@@ -73,5 +73,6 @@ node sequencer.js --mermaid -i test/mermaid-features/08-return-semantics/input.m
   <text x="113" y="546.5" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">5. Completion without arrow [Mermaid: Service--&gt;Caller: Completion without arrow]</text>
   <path d="M 283 554 L 65.5 554" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
   <path d="M 63 561 L 63 585" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
+  <path d="M 60.5 561 L 65.5 561" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 285.5 561 L 285.5 585" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
 </svg>
