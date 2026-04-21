@@ -8,7 +8,7 @@ Keep this summary list in sync whenever any bug below is added, removed, reopene
 
 - 1 - **Resolved** - fragment-end activation/timeline mismatch against old PNG
 - 2 - **Fixed in working tree** - Y accumulation drift between old and new
-- 3 - **Open, lower priority** - new tool runs extra mimic/resize passes
+- 3 - **Fixed in working tree** - new tool runs extra mimic/resize passes
 - 4 - **Resolved** - fragment borders cut across activation bars
 - 5 - **Resolved** - activation continuation geometry around nested fragments
 - 6 - **Fixed** - mimic passes emit measurement-only paths into the SVG
@@ -45,6 +45,7 @@ Useful generated artefacts under `/tmp/seq-compare/`:
 
 - Bug 1 appears resolved in the current renderer after the Bug 6 and Bug 8 cleanup work.
 - Bug 2 is now fixed in the current renderer after the blank-note spacing correction.
+- Bug 3 is now fixed in the current renderer after the blank-note negative-X correction.
 - Bug 4 no longer appears independently reproducible after the Bug 2 fix.
 - Bug 5 no longer appears independently reproducible after the Bug 2 fix.
 - Bug 7 is now fixed in the working tree: zero-height activation tail rectangles are no longer emitted.
@@ -197,22 +198,36 @@ So the visible `opt` and `alt` fragment-end deltas were downstream effects of th
 
 ### Status
 
-Still open, but reduced and clearly lower priority.
+Fixed in the working tree on 2026-04-21.
 
-### Known state
+### Root cause
 
-- Old tool: 2 passes for the fragment repro
-- Current new tool: 3 passes total for the fragment repro
-  - 1 initial render
-  - 2 re-render iterations logged by [SvgStart.js](/Users/andrewpearce/dev/github/sequencer-svg/SvgStart.js)
-- This is an improvement over the earlier 5-pass state recorded during the investigation.
-- The measured fragment end-line tops remained stable across those current SVG passes, so this still looks like waste rather than instability.
+The extra render pass was not primarily a generic `SvgStart.js` resize-loop problem.
 
-### Next step
+It came from [Blank.js](/Users/andrewpearce/dev/github/sequencer-svg/Blank.js) recording `working.negativeX` for blank-line comments before the final left-edge clamp was applied:
 
-If further cleanup is wanted, instrument the resize loop and record the width/height deltas per pass so the second re-render can be eliminated if possible.
+- the current SVG port captured the raw centred note left edge
+- if that raw left edge was off-canvas, `Working.init()` shifted `startX` right on the next pass
+- that wider actor layout then forced one more width growth pass
 
-Do this only after any remaining visible parity issues are either fixed or ruled out.
+The copied legacy renderer in [scratch/sequencer/Blank.js](/Users/andrewpearce/dev/github/sequencer-svg/scratch/sequencer/Blank.js) does **not** update `negativeX` for blank-line comments, so this was an SVG-port drift rather than an intentional optimisation gap.
+
+### Implemented fix
+
+- [Blank.js](/Users/andrewpearce/dev/github/sequencer-svg/Blank.js) no longer updates `working.negativeX` from blank-line comment placement.
+- The rejected temporary `SvgStart.js` width-projection experiment was removed; the final fix is local to blank-note layout rather than the global resize loop.
+
+### Verification
+
+- The fragment repro now matches the old pass count:
+  - old tool baseline artifact: `test/mermaid-features/06-fragments/Mermaid_fragments.1.0.png` is `973x940`
+  - current SVG render of `/tmp/seq-compare/fragments.yml` now stabilises in `2` total passes and rasterizes to the matching `974x940` content box plus the normal SVG margin
+- The accessibility-metadata repro also drops from `3` total passes to `2`.
+- Mermaid `expected.svg` fixtures were regenerated for the affected note-driven slices:
+  - `03-notes`
+  - `04-accessibility-metadata`
+  - `06-fragments`
+- `npx jest --runInBand test/mermaid-features` passes with 27 suites and 57 tests.
 
 ## Bug 4 — fragment borders cut across activation bars
 

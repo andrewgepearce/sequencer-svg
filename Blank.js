@@ -100,9 +100,6 @@ module.exports = class Blank {
 			comment = new Comment(ctx, this._line.comment);
 			let commentwidth = comment.draw(working, blankleft + 2 * working.globalSpacing, blankTop + working.globalSpacing, 0, 0, true, true);
 			commentleft = this._resolveCommentLeft(working, commentwidth, blankleft);
-			if (Utilities.isNumber(commentleft) && commentleft < working.negativeX) {
-				working.negativeX = commentleft - working.globalSpacing / 2;
-			}
 			if (commentleft == null) {
 				commentleft = blankleft + 2 * working.globalSpacing;
 			} else if (commentleft <= working.globalSpacing) {
