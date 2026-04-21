@@ -115,16 +115,16 @@ lines:
 
 ### Root Properties
 
-| Property | Type | Required | Description |
-|----------|------|----------|-------------|
-| `title` | string | Yes | Document title (rendered at top) |
-| `version` | string | Yes | Version string (e.g. "1.0", "2.1.3") |
-| `description` | string or string[] | No | Multi-line description |
-| `actors` | array | Yes | Actor definitions |
-| `actorGroups` | array | No | Visual groupings of actors |
-| `lines` | array | Yes | Diagram content (messages, fragments, etc.) |
-| `autonumber` | boolean | No | Enable automatic message numbering |
-| `params` | object | No | Document-wide styling defaults |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `title` | string | Yes | — | Document title (rendered at top) |
+| `version` | string | Yes | — | Version string (e.g. "1.0", "2.1.3") |
+| `description` | string or string[] | No | — | Multi-line description |
+| `actors` | array | Yes | — | Actor definitions |
+| `actorGroups` | array | No | — | Visual groupings of actors |
+| `lines` | array | Yes | — | Diagram content (messages, fragments, etc.) |
+| `autonumber` | boolean | No | `false` | Enable automatic message numbering |
+| `params` | object | No | — | Document-wide styling defaults |
 
 ---
 
@@ -148,19 +148,19 @@ actors:
 
 ### Actor Properties
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `name` | string or string[] | Required | Display name (array for multi-line) |
-| `alias` | string | Required | Short identifier used in `from`/`to` |
-| `actorType` | string | "participant" | Visual style (see Actor Types) |
-| `gapToNext` | number | 150 | Pixels to next actor |
-| `links` | array | — | Clickable links rendered below actor |
-| `bgColour` | colour | — | Background colour |
-| `borderColour` | colour | — | Border colour |
-| `fgColour` | colour | — | Text colour |
-| `fontFamily` | string | — | Font family |
-| `fontSizePx` | number | — | Font size in pixels |
-| `radius` | number | — | Corner radius |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `name` | string or string[] | Yes | — | Display name (array for multi-line) |
+| `alias` | string | Yes | — | Short identifier used in `from`/`to` |
+| `actorType` | string | No | `"participant"` | Visual style (see Actor Types) |
+| `gapToNext` | number | No | `150` | Pixels to next actor |
+| `links` | array | No | — | Clickable links rendered below actor |
+| `bgColour` | colour | No | `"rgb(95,183,224)"` | Background colour |
+| `borderColour` | colour | No | `"rgb(0,0,0)"` | Border colour |
+| `fgColour` | colour | No | `"rgb(0,0,0)"` | Text colour |
+| `fontFamily` | string | No | `"sans-serif"` | Font family |
+| `fontSizePx` | number | No | `18` | Font size in pixels |
+| `radius` | number | No | `5` | Corner radius |
 
 ### Actor Types
 
@@ -196,7 +196,21 @@ actors:
 
 ### Actor Groups
 
-Group actors visually with a labelled box. You can specify groups by actor list:
+Group actors visually with a labelled box.
+
+#### Actor Group Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `title` | string | No | `""` | Label displayed on the group box |
+| `bgColour` | colour | No | `"rgba(220,220,220,0.35)"` | Background colour |
+| `actors` | string[] | One of | — | Explicit list of actor aliases |
+| `startActor` | string | One of | — | First actor in range |
+| `endActor` | string | One of | — | Last actor in range |
+
+You must specify either `actors` or both `startActor` and `endActor`.
+
+**Example using actor list:**
 
 ```yaml
 actors:
@@ -212,7 +226,7 @@ actorGroups:
   - {title: Data tier, bgColour: 'rgba(255, 230, 200, 0.55)', actors: [Audit]}
 ```
 
-Or by start/end actor range:
+**Example using start/end range:**
 
 ```yaml
 actorGroups:
@@ -245,22 +259,22 @@ A solid arrow from one actor to another:
 
 #### Call Properties
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `from` | string | Source actor alias |
-| `to` | string | Target actor alias |
-| `text` | string or string[] | Message label |
-| `arrow` | string | Arrow style at target (default: "fill") |
-| `fromArrow` | string | Arrow style at source |
-| `toArrow` | string | Arrow style at target |
-| `fromAnchor` | string | Connection point: "edge" or "central" |
-| `toAnchor` | string | Connection point: "edge" or "central" |
-| `async` | boolean | Render as async (open arrow, no wait) |
-| `breakFromFlow` | boolean | Deactivate source after this call |
-| `breakToFlow` | boolean | Don't activate target |
-| `destroyFrom` | boolean | Terminate source actor lifecycle |
-| `destroyTo` | boolean | Terminate target actor lifecycle |
-| `comment` | object | Attached comment block |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `from` | string | Yes | — | Source actor alias |
+| `to` | string | Yes | — | Target actor alias |
+| `text` | string or string[] | Yes | — | Message label |
+| `arrow` | string | No | `"fill"` | Arrow style at target |
+| `fromArrow` | string | No | — | Arrow style at source |
+| `toArrow` | string | No | — | Arrow style at target |
+| `fromAnchor` | string | No | `"edge"` | Connection point: "edge" or "central" |
+| `toAnchor` | string | No | `"edge"` | Connection point: "edge" or "central" |
+| `async` | boolean | No | `false` | Render as async (open arrow, no wait) |
+| `breakFromFlow` | boolean | No | `false` | Deactivate source after this call |
+| `breakToFlow` | boolean | No | `false` | Don't activate target |
+| `destroyFrom` | boolean | No | `false` | Terminate source actor lifecycle |
+| `destroyTo` | boolean | No | `false` | Terminate target actor lifecycle |
+| `comment` | object | No | — | Attached comment block |
 
 #### Arrow Styles
 
@@ -326,14 +340,14 @@ Add vertical spacing, optionally with activation changes or comments:
 
 #### Blank Properties
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `height` | number | Vertical space in pixels |
-| `actor` | string | Single actor for attached comment |
-| `actors` | string[] | Actor range for spanning comment |
-| `activate` | string[] | Actors to activate |
-| `deactivate` | string[] | Actors to deactivate |
-| `comment` | object | Note/comment block |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `height` | number | Yes | — | Vertical space in pixels |
+| `actor` | string | No | — | Single actor for attached comment |
+| `actors` | string[] | No | — | Actor range for spanning comment |
+| `activate` | string[] | No | — | Actors to activate |
+| `deactivate` | string[] | No | — | Actors to deactivate |
+| `comment` | object | No | — | Note/comment block |
 
 ### fragment — Control Structure
 
@@ -353,16 +367,16 @@ Fragments represent control structures like loops, conditions, and parallel exec
 
 #### Fragment Properties
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `fragmentType` | string | Type of fragment (see below) |
-| `title` | string | Label in fragment header |
-| `condition` | string | Condition text (shown below title) |
-| `lines` | array | Nested content |
-| `startActor` | string | Left boundary actor |
-| `endActor` | string | Right boundary actor |
-| `bgColour` | colour | Background colour |
-| `borderColour` | colour | Border colour |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `fragmentType` | string | Yes | — | Type of fragment (see below) |
+| `title` | string | Yes | — | Label in fragment header |
+| `condition` | string | Yes | — | Condition text (shown below title) |
+| `lines` | array | Yes | — | Nested content |
+| `startActor` | string | No | — | Left boundary actor |
+| `endActor` | string | No | — | Right boundary actor |
+| `bgColour` | colour | No | `"rgb(255,255,255)"` | Background colour |
+| `borderColour` | colour | No | `"rgb(0,0,0)"` | Border colour |
 
 #### Fragment Types
 
