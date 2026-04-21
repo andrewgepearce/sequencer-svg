@@ -7,8 +7,8 @@ This file is the renderer-comparison handoff for the SVG port.
 Keep this summary list in sync whenever any bug below is added, removed, reopened, fixed, or reclassified.
 
 - 1 - **Resolved** - fragment-end activation/timeline mismatch against old PNG
-- 2 - **Fixed in working tree** - Y accumulation drift between old and new
-- 3 - **Fixed in working tree** - new tool runs extra mimic/resize passes
+- 2 - **Fixed** - Y accumulation drift between old and new
+- 3 - **Fixed** - new tool runs extra mimic/resize passes
 - 4 - **Resolved** - fragment borders cut across activation bars
 - 5 - **Resolved** - activation continuation geometry around nested fragments
 - 6 - **Fixed** - mimic passes emit measurement-only paths into the SVG
@@ -48,11 +48,11 @@ Useful generated artefacts under `/tmp/seq-compare/`:
 - Bug 3 is now fixed in the current renderer after the blank-note negative-X correction.
 - Bug 4 no longer appears independently reproducible after the Bug 2 fix.
 - Bug 5 no longer appears independently reproducible after the Bug 2 fix.
-- Bug 7 is now fixed in the working tree: zero-height activation tail rectangles are no longer emitted.
+- Bug 7 is fixed in current `main`: zero-height activation tail rectangles are no longer emitted.
 - The current working tree keeps two renderer changes:
   - [Fragment.js](/Users/andrewpearce/dev/github/sequencer-svg/Fragment.js) now redraws structural fragment end-band borders before the end-band timeline/activation pass.
   - [Fragment.js](/Users/andrewpearce/dev/github/sequencer-svg/Fragment.js) again returns the `Actor.drawTimelines(...)` Y from fragment end-bands, matching [scratch/sequencer/Fragment.js](/Users/andrewpearce/dev/github/sequencer-svg/scratch/sequencer/Fragment.js).
-- Mermaid `expected.svg` fixtures were regenerated for all affected slices after the Bug 7 cleanup.
+- Mermaid `expected.svg` fixtures have been regenerated for all affected slices through the Bug 3 cleanup.
 - `npx jest --runInBand test/mermaid-features` passes with 27 suites and 57 tests.
 
 The important caveat is: passing snapshots only proves the fixtures match the current renderer. It does **not** prove visual parity with the old PNG baseline on every renderer bug, but Bug 1 was rechecked visually against a fresh rasterized current build before being downgraded.
@@ -142,7 +142,7 @@ This means the old Bug 1 lesson still stands: do not reintroduce the activation-
 
 ### Status
 
-Fixed in the working tree on 2026-04-21.
+Fixed in current `main` as of 2026-04-21.
 
 ### Earlier evidence
 
@@ -198,7 +198,7 @@ So the visible `opt` and `alt` fragment-end deltas were downstream effects of th
 
 ### Status
 
-Fixed in the working tree on 2026-04-21.
+Fixed in current `main` as of 2026-04-21.
 
 ### Root cause
 
