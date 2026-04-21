@@ -122,7 +122,7 @@ This means the old Bug 1 lesson still stands: do not reintroduce the activation-
 
 ### Status
 
-Still open. Not yet addressed after the Bug 1 work.
+Fixed in the working tree on 2026-04-21.
 
 ### Earlier evidence
 
@@ -136,17 +136,43 @@ At each fragment `drawEndLine` entry on the same input:
 
 The first delta is exactly one `globalSpacing`. The second adds another 14 px.
 
-### Current suspicion
+### Root cause
 
-Still most likely one of:
+The first mismatching Y advance was not in the fragment wrapper itself.
 
-- [Blank.js](/Users/andrewpearce/dev/github/sequencer-svg/Blank.js) flow-state capture/restore
-- lifecycle-aware branches in [Actor.js](/Users/andrewpearce/dev/github/sequencer-svg/Actor.js)
-- different line-height accumulation inside fragment inner lines
+Tracing `Fragment.drawLines(...)` line-by-line against the old renderer showed that both renderers stayed aligned through:
 
-### Next step
+- the outer `loop`
+- the first `alt` call
+- the `else` condition line
+- the nested `opt`
 
-Trace `Fragment.drawLines` / `Fragment.drawInnerLines` line-by-line for the `alt` body and compare to the old renderer to find the first mismatching Y advance.
+The first drift appeared on the note-style `blank` line inside the `alt` body:
+
+- old blank-note end Y: `799`
+- new blank-note end Y: `805`
+
+That drift came from [Blank.js](/Users/andrewpearce/dev/github/sequencer-svg/Blank.js):
+
+- blank-line comments were adding a small bottom gap below the note box
+- the added gap increased the blank-line minimum height
+- timeline dash alignment then rounded that extra height up again, amplifying the drift
+
+So the visible `opt` and `alt` fragment-end deltas were downstream effects of the blank-note spacing, not a fragment-end-band calculation bug.
+
+### Implemented fix
+
+- [Blank.js](/Users/andrewpearce/dev/github/sequencer-svg/Blank.js) now returns `0` from `_getCommentBottomGap(...)`, restoring the legacy blank-note spacing behaviour.
+- [Comment.js](/Users/andrewpearce/dev/github/sequencer-svg/Comment.js) comment-spacing defaults were also realigned with the published schema and legacy default value of `1`.
+
+### Verification
+
+- A fresh line-by-line trace of `06-fragments` now matches the old renderer through the full `alt` body:
+  - nested `opt` still ends at `739`
+  - the blank note now ends at `799`, matching old
+  - the following `Failure path` call now starts at `799` and the enclosing `alt` now ends at `949`, matching old
+- Mermaid `expected.svg` fixtures were regenerated for all affected slices.
+- `npx jest --runInBand test/mermaid-features` passes with 27 suites and 57 tests.
 
 ## Bug 3 — new tool runs extra mimic/resize passes
 

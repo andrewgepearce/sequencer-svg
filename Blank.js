@@ -332,7 +332,7 @@ module.exports = class Blank {
 	 * const gap = instance._getCommentBottomGap(working);
 	 */
 	_getCommentBottomGap(working) {
-		return Math.max(2, Math.round(working.globalSpacing / 10));
+		return 0;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////

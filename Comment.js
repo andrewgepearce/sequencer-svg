@@ -225,7 +225,7 @@ module.exports = class Comment {
 				  Utilities.isNumber(working.postdata.params.comment.spacing) &&
 				  working.postdata.params.comment.spacing >= 0
 				? working.postdata.params.comment.spacing
-				: 1.2;
+				: 1;
 
 		//////////////////////////////////////////////////////////////////////////////
 		// Get the fold size
@@ -393,7 +393,7 @@ module.exports = class Comment {
 			fgColour: "rgb(0,0,0)",
 			bgColour: "rgb(0,253,144)",
 			padding: 10,
-			spacing: 1.2,
+			spacing: 1,
 			align: "left",
 			borderColour: "rgb(0,0,0)",
 			borderWidth: 1,
