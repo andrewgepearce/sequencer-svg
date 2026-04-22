@@ -5,13 +5,13 @@ Demonstrates specialised Mermaid participant kinds rendered with distinct header
 From the project root, regenerate this Mermaid transform and SVG with:
 node sequencer.js --mermaid -i test/mermaid-features/22-specialised-participant-visuals/input.mmd -o -f -t test/mermaid-features/22-specialised-participant-visuals
 }
-actor {"alias":"User","name":"Human operator"}
-participant Edge as {"type":"boundary","name":"External boundary"}
-participant {"type":"control","alias":"FlowController","name":"Flow controller"}
-participant {"type":"entity","alias":"OrderEntity","label":"Order entity"}
-participant DB as {"type":"database","alias":"IgnoredInternalDb","name":"Primary store"}
-participant {"type":"collections","alias":"CollectionsNode","label":"Collections store"}
-participant {"type":"queue","alias":"JobQueue","label":"Job queue"}
+actor User as Human operator
+participant Edge@{"type":"boundary"} as External boundary
+participant FlowController@{"type":"control","alias":"FlowController"} as Flow controller
+participant OrderEntity@{"type":"entity","alias":"OrderEntity","label":"Order entity"}
+participant DB@{"type":"database","alias":"IgnoredInternalDb","name":"Primary store"}
+participant CollectionsNode@{"type":"collections","alias":"CollectionsNode","label":"Collections store"}
+participant JobQueue@{"type":"queue","alias":"JobQueue","label":"Job queue"}
 User->>Edge: Start request [Mermaid: User->>Edge: Start request]
 Edge->>FlowController: Route request [Mermaid: Edge->>FlowController: Route request]
 FlowController->>OrderEntity: Load aggregate [Mermaid: FlowController->>OrderEntity: Load aggregate]

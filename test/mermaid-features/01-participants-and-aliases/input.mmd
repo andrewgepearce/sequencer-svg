@@ -1,10 +1,10 @@
 sequenceDiagram
 participant Caller as "Caller Service"
 actor User as "Human operator"
-participant Edge as {"type":"boundary","name":"External boundary"}
-participant Control as {"type":"control","name":"Flow controller"}
-participant Entity as {"type":"entity","name":"Order entity"}
-participant DB as {"type":"database","name":"Database Layer"}
-participant Collections as {"type":"collections","name":"Collections store"}
-participant Queue as {"type":"queue","name":"Job queue"}
+participant Edge@{"type":"boundary"} as External boundary
+participant Control@{"type":"control"} as Flow controller
+participant Entity@{"type":"entity"} as Order entity
+participant DB@{"type":"database"} as Database Layer
+participant Collections@{"type":"collections"} as Collections store
+participant Queue@{"type":"queue"} as Job queue
 participant API

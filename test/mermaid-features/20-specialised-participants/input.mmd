@@ -5,7 +5,7 @@ Demonstrates Mermaid specialised participant declarations mapped onto sequencer 
 From the project root, regenerate this Mermaid transform and SVG with:
 node sequencer.js --mermaid -i test/mermaid-features/20-specialised-participants/input.mmd -o -f -t test/mermaid-features/20-specialised-participants
 }
-actor {"alias":"User","name":"Human operator"}
+actor User as Human operator
 participant Edge@{"type":"boundary"} as External boundary
 participant FlowController@{"type":"control","alias":"Flow controller"}
 participant OrderEntity@{"type":"entity","label":"Order entity"}

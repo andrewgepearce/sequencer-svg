@@ -5,10 +5,10 @@ Demonstrates Mermaid colour hints mapped onto sequencer colour properties.
 From the project root, regenerate this Mermaid transform and SVG with:
 node sequencer.js --mermaid -i test/mermaid-features/27-colour-support/input.mmd -o -f -t test/mermaid-features/27-colour-support
 }
-participant API as {"type":"boundary","name":"Edge API","backgroundColor":"#D0EBFF","textColor":"#0B7285","lineColor":"#1971C2"}
-participant Worker as {"type":"control","name":"Worker","bgColour":"rgba(255, 244, 179, 0.8)","fgColour":"rgb(102, 60, 0)","borderColour":"#B08900"}
+participant API@{"type":"boundary","backgroundColor":"#D0EBFF","textColor":"#0B7285","lineColor":"#1971C2"} as Edge API
+participant Worker@{"type":"control","bgColour":"rgba(255, 244, 179, 0.8)","fgColour":"rgb(102, 60, 0)","borderColour":"#B08900"}
 box #FFE8CC Cache tier
-  participant Cache as {"type":"collections","label":"Cache node","color":"#FFF3BF","textColor":"#7A4F01","lineColor":"#F08C00"}
+  participant Cache@{"type":"collections","color":"#FFF3BF","textColor":"#7A4F01","lineColor":"#F08C00"} as Cache node
 end
 rect #E7F5FF
 API->>Worker: Start coloured flow [Mermaid: API->>Worker: Start coloured flow]

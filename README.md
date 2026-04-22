@@ -63,10 +63,22 @@ node sequencer.js -y -i diagram.yaml -o -f -t ./output
 cat diagram.json | node sequencer.js > diagram.svg
 ```
 
+### Mermaid Compatibility
+
+When you want the Mermaid input to remain portable to tools such as mermaid.live or `mmdc`, prefer Mermaid's documented configured participant syntax:
+
+```text
+participant API@{"type":"boundary"} as Public API
+```
+
+Avoid transformer-only compatibility forms such as `participant API as {...}` and bare `participant {...}` or `actor {...}` in checked-in `.mmd` files. The transformer still accepts them for compatibility, but Mermaid itself does not treat them as standard sequence-diagram syntax.
+
+For the full configured-participant field rules, including which JSON fields Mermaid itself uses versus which are only interpreted by `sequencer-svg`, see [Actor Types](#actor-types) under [Mermaid Support](#mermaid-support).
+
 ### Command-Line Options
 
 | Flag | Alias | Description |
-|------|-------|-------------|
+| ------ | ------- | ------------- |
 | `file` | (positional) | Input file — triggers opinionated mode with auto-detection |
 | `-i` | `--inputFile` | Read input from file instead of stdin |
 | `-o` | `--outputFile` | Write primary output to file (derives name if value omitted) |
@@ -116,7 +128,7 @@ lines:
 ### Root Properties
 
 | Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
+| ---------- | ------ | ---------- | --------- | ------------- |
 | `title` | string | Yes | — | Document title rendered at the top of the diagram |
 | `version` | string | Yes | — | Version string displayed below the title (e.g. "1.0", "2.1.3") |
 | `description` | string or string[] | No | — | Description text rendered below the version; use an array for multiple lines |
@@ -149,7 +161,7 @@ actors:
 ### Actor Properties
 
 | Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
+| ---------- | ------ | ---------- | --------- | ------------- |
 | `name` | string or string[] | Yes | — | Display name shown in the actor header; use an array for multiple lines |
 | `alias` | string | Yes | — | Short identifier used to reference this actor in `from`/`to` fields |
 | `actorType` | string | No | `"participant"` | Visual style of the actor header icon (see Actor Types below) |
@@ -162,12 +174,12 @@ actors:
 | `fontSizePx` | number | No | `18` | Font size in pixels for the actor name text |
 | `radius` | number | No | `5` | Corner radius in pixels for the actor header box |
 
-### Actor Types
+### Mermaid Actor Types
 
 The `actorType` property controls the visual representation of the actor header:
 
 | Type | Description |
-|------|-------------|
+| ------ | ------------- |
 | `participant` | Standard rectangular box; the default when no type is specified |
 | `actor` | Stick figure icon representing a human user or external agent |
 | `boundary` | Circle with vertical line; represents a UI or external system interface |
@@ -201,7 +213,7 @@ Group actors visually with a labelled box.
 #### Actor Group Properties
 
 | Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
+| ---------- | ------ | ---------- | --------- | ------------- |
 | `title` | string | No | `""` | Label displayed at the top of the group box; empty string shows no label |
 | `bgColour` | colour | No | `"rgba(220,220,220,0.35)"` | Fill colour of the group box background |
 | `actors` | string[] | One of | — | Explicit list of actor aliases to include in this group |
@@ -260,7 +272,7 @@ A solid arrow from one actor to another:
 #### Call Properties
 
 | Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
+| ---------- | ------ | ---------- | --------- | ------------- |
 | `from` | string | Yes | — | Alias of the source actor sending the message |
 | `to` | string | Yes | — | Alias of the target actor receiving the message |
 | `text` | string or string[] | Yes | — | Message label displayed on the arrow; use an array for multiple lines |
@@ -279,7 +291,7 @@ A solid arrow from one actor to another:
 #### Arrow Styles
 
 | Style | Description |
-|-------|-------------|
+| ------- | ------------- |
 | `fill` | Solid filled triangular arrowhead; typically indicates synchronous call |
 | `open` | Open (unfilled) arrowhead; typically indicates asynchronous message |
 | `cross` | X mark at the line end; indicates a lost or failed message |
@@ -341,7 +353,7 @@ Add vertical spacing, optionally with activation changes or comments:
 #### Blank Properties
 
 | Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
+| ---------- | ------ | ---------- | --------- | ------------- |
 | `height` | number | Yes | — | Vertical space in pixels added to the diagram at this point |
 | `actor` | string | No | — | Alias of the actor to anchor a comment to; comment appears beside this actor's timeline |
 | `actors` | string[] | No | — | Array of two actor aliases; comment spans horizontally between these actors |
@@ -368,7 +380,7 @@ Fragments represent control structures like loops, conditions, and parallel exec
 #### Fragment Properties
 
 | Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
+| ---------- | ------ | ---------- | --------- | ------------- |
 | `fragmentType` | string | Yes | — | Type of fragment controlling its semantics and header label (see Fragment Types below) |
 | `title` | string | Yes | — | Label displayed in the fragment header tab (e.g. "Retry logic") |
 | `condition` | string | Yes | — | Condition text displayed in brackets below the title (e.g. "while x < 3"); use empty string if none |
@@ -381,7 +393,7 @@ Fragments represent control structures like loops, conditions, and parallel exec
 #### Fragment Types
 
 | Type | Description |
-|------|-------------|
+| ------ | ------------- |
 | `loop` | Iteration/repetition block; condition specifies the loop guard (e.g. "while x < 3") |
 | `alt` | Alternative paths (if/else); use nested `condition` lines to define else branches |
 | `opt` | Optional block; contents execute only if condition is met |
@@ -518,7 +530,7 @@ lines:
 **Arrow syntax reference:**
 
 | Mermaid | Description | Sequencer `arrow` |
-|---------|-------------|-------------------|
+| --------- | ------------- | ------------------- |
 | `A->>B` | Solid line, filled arrow (sync call) | `fill` |
 | `A-->>B` | Dashed line, filled arrow (return) | `fill` + `lineDash` |
 | `A-)B` | Solid line, open arrow (async) | `open` |
@@ -900,12 +912,12 @@ Mermaid supports specialised actor types using JSON configuration syntax.
 sequenceDiagram
     participant UI as User Interface
     actor User as Human User
-    participant API as {"type":"boundary","name":"API Gateway"}
-    participant Svc as {"type":"control","name":"Service Controller"}
-    participant Data as {"type":"entity","name":"Data Model"}
-    participant DB as {"type":"database","name":"Database"}
-    participant Items as {"type":"collections","name":"Item Collection"}
-    participant Jobs as {"type":"queue","name":"Job Queue"}
+    participant API@{"type":"boundary"} as API Gateway
+    participant Svc@{"type":"control","alias":"Service Controller"}
+    participant Data@{"type":"entity","label":"Data Model"}
+    participant DB@{"type":"database","name":"Database"}
+    participant Items@{"type":"collections","label":"Item Collection"}
+    participant Jobs@{"type":"queue","alias":"Job Queue"}
 ```
 
 **Mermaid source:**
@@ -914,12 +926,12 @@ sequenceDiagram
 sequenceDiagram
     participant UI as User Interface
     actor User as Human User
-    participant API as {"type":"boundary","name":"API Gateway"}
-    participant Svc as {"type":"control","name":"Service Controller"}
-    participant Data as {"type":"entity","name":"Data Model"}
-    participant DB as {"type":"database","name":"Database"}
-    participant Items as {"type":"collections","name":"Item Collection"}
-    participant Jobs as {"type":"queue","name":"Job Queue"}
+    participant API@{"type":"boundary"} as API Gateway
+    participant Svc@{"type":"control","alias":"Service Controller"}
+    participant Data@{"type":"entity","label":"Data Model"}
+    participant DB@{"type":"database","name":"Database"}
+    participant Items@{"type":"collections","label":"Item Collection"}
+    participant Jobs@{"type":"queue","alias":"Job Queue"}
 ```
 
 **Transformed sequencer YAML:**
@@ -943,7 +955,45 @@ lines: []
 
 ![Actor types](examples/readme/actor-types.svg)
 
-Specialised types use the JSON syntax `{"type":"typename","name":"Display Name"}`. The `actor` keyword produces `actorType: actor` (stick figure). Default background colours are applied per type.
+Use Mermaid's configured participant syntax: `participant Alias@{"type":"typename"} as Display Name`. The `actor` keyword produces `actorType: actor` (stick figure). Default background colours are applied per type.
+
+#### Configured Participant Fields
+
+The configured participant JSON has two layers of behaviour:
+
+- Mermaid-native behaviour: fields that Mermaid itself documents and uses when rendering on mermaid.live or via `mmdc`
+- Transformer-only behaviour: extra fields that `sequencer-svg` reads when building sequencer actor data, even though Mermaid itself does not use them for display
+
+| Field or syntax | Mermaid-valid syntax | Used by Mermaid renderer | Used by transformer | Notes |
+| ------ | ------ | ------ | ------ | ------ |
+| `Alias@{...}` | Yes | Yes | Yes | Preferred declaration form for specialised participants |
+| trailing `as Display Name` | Yes | Yes | Yes | Mermaid display label; also highest-precedence source for sequencer `name` |
+| `type` | Yes | Yes | Yes | Mermaid uses this for specialised visuals such as `boundary`, `control`, `entity`, `database`, `collections`, and `queue` |
+| `alias` inside `@{...}` | Yes | Yes | Yes | Mermaid treats this as an inline display alias; if both inline `alias` and trailing `as ...` are present, Mermaid gives precedence to trailing `as ...` |
+| `name` inside `@{...}` | Yes | No documented Mermaid effect | Yes | Transformer-only display-name source |
+| `label` inside `@{...}` | Yes | No documented Mermaid effect | Yes | Transformer-only fallback display-name source |
+| `bgColour` / `bgColor` / `backgroundColor` | Yes | No documented Mermaid effect on participant headers | Yes | Transformer maps these to sequencer actor colours |
+| `fgColour` / `fgColor` / `textColor` | Yes | No documented Mermaid effect on participant headers | Yes | Transformer maps these to sequencer text colours |
+| `borderColour` / `borderColor` / `lineColor` | Yes | No documented Mermaid effect on participant headers | Yes | Transformer maps these to sequencer border colours |
+
+The transformer still accepts older compatibility forms such as `participant Alias as {...}` and bare `participant {...}` or `actor {...}`, but those are not standard Mermaid sequence syntax and should not be used in checked-in `.mmd` files.
+
+#### Sequencer Actor Name Precedence
+
+For a plain Mermaid declaration such as `participant API as Public API`, the transformer sets sequencer `name` from:
+
+1. trailing `as Display Name`
+2. otherwise the participant alias token
+
+For a configured participant such as `participant API@{"type":"boundary"} as Public API`, the transformer sets sequencer `name` from:
+
+1. trailing `as Display Name`
+2. `config.name`
+3. `config.label`
+4. `config.alias` when there is an explicit alias token before `@` and no higher-precedence display source is present
+5. otherwise the resolved actor alias
+
+If an actor is created implicitly first from a message, activation, or link, it starts with `name == alias`. A later explicit declaration overwrites that implicit name.
 
 ### Additional Mermaid Features
 
@@ -963,7 +1013,7 @@ The transformer also supports:
 The renderer supports built-in text markup tags:
 
 | Tag | Effect |
-|-----|--------|
+| ----- | -------- |
 | `<code>...</code>` | Blue monospace text |
 | `<comment>...</comment>` | Dark italic text |
 | `<emph>...</emph>` | Bold italic text |
@@ -996,7 +1046,7 @@ params:
 Within text values, you can use:
 
 | Tag | Effect |
-|-----|--------|
+| ----- | -------- |
 | `<b>`, `</b>` | Bold |
 | `<i>`, `</i>` | Italic |
 | `<rgb(r,g,b)>`, `</rgb>` | Text colour |
@@ -1050,7 +1100,7 @@ params:
 
 Invalid YAML or JSON syntax is reported to stderr and stops processing:
 
-```
+```text
 Error whilst parsing YAML: bad indentation at line 15
 ```
 
@@ -1064,7 +1114,7 @@ If the document structure is valid but contains semantic errors (unknown actors,
 
 Example error box content:
 
-```
+```text
 Error: Unknown actor alias "X" at line 23
 ```
 
@@ -1095,7 +1145,7 @@ This runs the Mermaid feature-slice Jest tests.
 ### Example Files
 
 | File | Description |
-|------|-------------|
+| ------ | ------------- |
 | `examples/Example_1.1.0.yaml` | Basic sequence with styling |
 | `examples/Example_2.1.0.yaml` | Custom tag overrides |
 | `examples/Example_3.1.1.yaml` | Fragment nesting |
@@ -1111,7 +1161,7 @@ This codebase preserves much of the original drawing model using a Canvas-like s
 
 ### Repository Structure
 
-```
+```text
 sequencer.js          CLI entrypoint
 SvgStart.js           Render initialisation
 SvgContext.js         Canvas-like drawing API
