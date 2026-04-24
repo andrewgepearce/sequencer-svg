@@ -87,7 +87,6 @@ const sections = [
 		content:
 			'Pass a single filename to auto-detect the format, rebuild in place, and write all artefacts (SVG, PNG, JSON, YAML) to the same directory:\n\n' +
 			'  $ node sequencer.js diagram.mmd\n' +
-			'  $ node sequencer.js diagram.mmd --outpng\n' +
 			'  $ node sequencer.js diagram.yaml\n' +
 			'  $ node sequencer.js diagram.json',
 	},
