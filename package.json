@@ -13,6 +13,7 @@
 	"author": "markthepage",
 	"license": "AGPL-3.0-only",
 	"dependencies": {
+		"@resvg/resvg-js": "^2.6.2",
 		"command-line-args": "^5.2.1",
 		"command-line-usage": "^6.1.3",
 		"js-yaml": "^3.14.1",

@@ -19,7 +19,7 @@ node sequencer.js diagram.yaml
 node sequencer.js diagram.json
 ```
 
-This auto-detects the input format and writes all output artefacts (SVG, JSON, YAML) to the same directory.
+This auto-detects the input format and writes all output artefacts (SVG, PNG, JSON, YAML) to the same directory.
 
 ## Installation
 
@@ -34,9 +34,10 @@ npm install
 Pass a single filename to auto-detect format and rebuild in place:
 
 ```bash
-node sequencer.js diagram.mmd    # writes .sequencer.yaml, .json, .svg
-node sequencer.js diagram.yaml   # writes .json, .svg, .yaml
-node sequencer.js diagram.json   # writes .yaml, .svg, .json
+node sequencer.js diagram.mmd    # writes .sequencer.yaml, .json, .svg, .png
+node sequencer.js diagram.mmd --outpng   # explicit but redundant in opinionated mode
+node sequencer.js diagram.yaml   # writes .json, .svg, .png, .yaml
+node sequencer.js diagram.json   # writes .yaml, .svg, .png, .json
 ```
 
 ### Standard Mode
@@ -53,6 +54,9 @@ node sequencer.js -i diagram.json -o -f
 # Mermaid input to SVG (also writes .sequencer.yaml sidecar)
 node sequencer.js --mermaid -i diagram.mmd -o -f
 
+# Mermaid input to SVG + PNG (also writes .sequencer.yaml sidecar)
+node sequencer.js --mermaid --outpng -i diagram.mmd -o -f
+
 # Mermaid transform only (no SVG)
 node sequencer.js --mermaid --transformOnly -i diagram.mmd
 
@@ -62,6 +66,8 @@ node sequencer.js -y -i diagram.yaml -o -f -t ./output
 # Stdin to stdout
 cat diagram.json | node sequencer.js > diagram.svg
 ```
+
+Opinionated mode writes a PNG beside the SVG using the same file stem by default. In standard mode, `--outpng` enables the same sidecar behaviour. Because the CLI cannot send both SVG and PNG to stdout in one stream, PNG output requires a file-based SVG output path such as opinionated mode or `-o`.
 
 ### Mermaid Compatibility
 
@@ -88,6 +94,7 @@ For the full configured-participant field rules, including which JSON fields Mer
 | `-T` | `--transformOnly` | Stop after writing transformed YAML (Mermaid only) |
 | `-f` | `--force` | Overwrite existing output files |
 | `-J` | `--outjson` | Also write formatted JSON file |
+| `-P` | `--outpng` | Also write a PNG beside the SVG using the same file stem |
 | `-Y` | `--outyaml` | Also write formatted YAML file |
 | `-c` | `--nocovertext` | Skip title/version/description cover text |
 | `-v` | `--verbose` | Emit debug messages to stderr |
