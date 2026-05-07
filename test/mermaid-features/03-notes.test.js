@@ -56,6 +56,56 @@ describe("Mermaid feature slice 3: notes", () => {
 		expect(ReadableYamlFormatter.format(transformed)).toBe(expectedYaml);
 	});
 
+	test("attaches an immediately preceding Note over source,target to the next message", () => {
+		const transformed = MermaidSequenceTransformer.transform(
+			[
+				"sequenceDiagram",
+				"participant A",
+				"participant B",
+				"Note over A,B: Request context",
+				"A->>B: Request",
+			].join("\n"),
+			{ sourceName: "attached-note.mmd" }
+		);
+
+		expect(transformed.lines).toHaveLength(1);
+		expect(transformed.lines[0]).toMatchObject({
+			type: "call",
+			from: "A",
+			to: "B",
+			text: "Request",
+			comment: "Request context",
+		});
+	});
+
+	test("leaves a Note over with reversed actors as a standalone blank comment", () => {
+		const transformed = MermaidSequenceTransformer.transform(
+			[
+				"sequenceDiagram",
+				"participant A",
+				"participant B",
+				"Note over B,A: Not attached",
+				"A->>B: Request",
+			].join("\n"),
+			{ sourceName: "standalone-note.mmd" }
+		);
+
+		expect(transformed.lines).toHaveLength(2);
+		expect(transformed.lines[0]).toMatchObject({
+			type: "blank",
+			height: 0,
+			comment: "Not attached",
+			actors: ["B", "A"],
+		});
+		expect(transformed.lines[1]).toMatchObject({
+			type: "call",
+			from: "A",
+			to: "B",
+			text: "Request",
+		});
+		expect(transformed.lines[1].comment).toBeUndefined();
+	});
+
 	test("renders SVG from Mermaid note input and writes the transformed sequencer YAML sidecar", () => {
 		const tempDir = createTempDir();
 		const inputFile = getFixturePath("input.mmd");

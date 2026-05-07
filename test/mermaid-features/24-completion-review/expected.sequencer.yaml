@@ -4,8 +4,13 @@ actors:
   - {name: [API, Gateway], alias: API, actorType: participant}
   - {name: 'Primary # Store', alias: DB, actorType: participant}
 lines:
-  - {type: blank, height: 0, comment: 'Escaped # and ; plus & name support', actors: [API, DB]}
-  - {type: call, from: API, to: DB, text: 'Query #42; status & health [Mermaid: API->>DB: Query #42; status & health]', toArrow: fill, arrow: fill}
+  - type: call
+    from: API
+    to: DB
+    text: 'Query #42; status & health [Mermaid: API->>DB: Query #42; status & health]'
+    toArrow: fill
+    arrow: fill
+    comment: 'Escaped # and ; plus & name support'
   - {type: return, from: DB, to: API, text: 'OK <done> [Mermaid: DB-->>API: OK <done>]', lineDash: [4, 2], toArrow: fill, arrow: fill}
 description:
   - Demonstrates Mermaid entity-code escapes and actor-name line breaks.

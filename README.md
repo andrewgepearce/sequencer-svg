@@ -318,7 +318,7 @@ A dashed arrow typically representing a response:
   text: Response data
 ```
 
-Return lines use the same properties as `call` but render with a dashed line.
+Return lines use the same properties as `call` but render with a dashed line. They terminate the source actor's active flow by default; set `continueFromFlow: true` to keep the source flow active across the return.
 
 ### create — Actor Creation
 
@@ -579,15 +579,7 @@ actors:
   - {name: B, alias: B, actorType: participant}
 lines:
   - {type: call, from: A, to: B, text: Request (activates B), toArrow: fill, arrow: fill}
-  - type: return
-    from: B
-    to: A
-    text: Response (deactivates B)
-    continueFromFlow: true
-    breakToFlow: true
-    lineDash: [4, 2]
-    toArrow: fill
-    arrow: fill
+  - {type: return, from: B, to: A, text: Response (deactivates B), breakToFlow: true, lineDash: [4, 2], toArrow: fill, arrow: fill}
 ```
 
 **Rendered output:**
@@ -608,6 +600,8 @@ sequenceDiagram
     Note over A,B: Spanning note
     Note right of A: Right-side note
     Note left of B: Left-side note
+    Note over A,B: Attached note rule: Note over A,B immediately before an A to B message becomes that message's sequencer comment
+    A->>B: Call with attached note
 ```
 
 **Mermaid source:**
@@ -620,6 +614,8 @@ sequenceDiagram
     Note over A,B: Spanning note
     Note right of A: Right-side note
     Note left of B: Left-side note
+    Note over A,B: Attached note rule: Note over A,B immediately before an A to B message becomes that message's sequencer comment
+    A->>B: Call with attached note
 ```
 
 **Transformed sequencer YAML:**
@@ -635,13 +631,20 @@ lines:
   - {type: blank, height: 0, comment: Spanning note, actors: [A, B]}
   - {type: blank, height: 0, comment: Right-side note, actor: A}
   - {type: blank, height: 0, comment: Left-side note, actor: B}
+  - type: call
+    from: A
+    to: B
+    text: Call with attached note
+    toArrow: fill
+    arrow: fill
+    comment: 'Attached note rule: Note over A,B immediately before an A to B message becomes that message''s sequencer comment'
 ```
 
 **Rendered output:**
 
 ![Notes](examples/readme/notes.svg)
 
-Notes transform to `blank` lines with a `comment` property. Use `actor` for single-actor notes or `actors` array for spanning notes.
+Notes usually transform to `blank` lines with a `comment` property. Use `actor` for single-actor notes or `actors` array for spanning notes. A `Note over A,B` immediately before an `A` to `B` message attaches to that message as its `comment`.
 
 ### Fragments
 
@@ -777,7 +780,7 @@ lines:
     borderWidth: 0
     lines:
       - {type: call, from: A, to: B, text: Inside highlight, toArrow: fill, arrow: fill}
-      - {type: return, from: B, to: A, text: Response, continueFromFlow: true, lineDash: [4, 2], toArrow: fill, arrow: fill}
+      - {type: return, from: B, to: A, text: Response, lineDash: [4, 2], toArrow: fill, arrow: fill}
     startActor: A
     endActor: B
   - {type: call, from: A, to: B, text: After highlight, toArrow: fill, arrow: fill}

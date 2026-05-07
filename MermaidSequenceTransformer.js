@@ -443,6 +443,22 @@ class MermaidSequenceTransformer {
 			}
 
 			if (this._isNoteLine(statement.trimmed)) {
+				const nextStatement = statements[index + 1];
+				const attachedMessageLine = this._parseLeadingNoteAttachedMessage(
+					statement,
+					nextStatement,
+					actors,
+					activationState,
+					lifecycleDirectiveState
+				);
+				if (attachedMessageLine != null) {
+					this._attachYamlLeadingComments(attachedMessageLine, statement.leadingComments);
+					this._attachYamlLeadingComments(attachedMessageLine, nextStatement.leadingComments);
+					lines.push(attachedMessageLine);
+					index += 2;
+					continue;
+				}
+
 				const line = this._parseNoteLine(statement.trimmed, actors, statement.lineNumber, statement.sourceLine);
 				this._attachYamlLeadingComments(line, statement.leadingComments);
 				lines.push(line);
@@ -1649,6 +1665,52 @@ class MermaidSequenceTransformer {
 
 	////////////////////////////////////////////////////////////////////////////
 	/**
+	 * Parse the source and target aliases from a Mermaid message line without
+	 * mutating actor, activation, or lifecycle state.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {{ fromAlias: string, toAlias: string }} Parsed message aliases.
+	 * @throws {MermaidTransformError} If the message line is malformed or unsupported.
+	 * @example
+	 * const aliases = MermaidSequenceTransformer._parseMessageEndpointAliases("A->>+B: Ping", 4, "A->>+B: Ping");
+	 */
+	static _parseMessageEndpointAliases(trimmed, lineNumber, sourceLine) {
+		const arrowDefinitions = this._getSupportedArrowDefinitions();
+		const arrowTokens = arrowDefinitions.map((definition) => definition.token).sort((left, right) => right.length - left.length);
+		let matchedArrowToken = null;
+		let matchedArrowIndex = -1;
+
+		for (const arrowToken of arrowTokens) {
+			const arrowIndex = trimmed.indexOf(arrowToken);
+			if (arrowIndex !== -1) {
+				matchedArrowToken = arrowToken;
+				matchedArrowIndex = arrowIndex;
+				break;
+			}
+		}
+
+		if (matchedArrowToken == null) {
+			throw new MermaidTransformError("Unsupported Mermaid message syntax", lineNumber, sourceLine);
+		}
+
+		const leftSide = trimmed.slice(0, matchedArrowIndex).trim();
+		const rightSide = trimmed.slice(matchedArrowIndex + matchedArrowToken.length).trim();
+		const colonIndex = rightSide.indexOf(":");
+		const toToken = (colonIndex === -1 ? rightSide : rightSide.slice(0, colonIndex)).trim();
+		const fromEndpoint = this._parseMessageSourceEndpoint(leftSide, lineNumber, sourceLine);
+		const toEndpoint = this._parseMessageTargetEndpoint(toToken, lineNumber, sourceLine);
+		const activationShortcut = this._parseActivationShortcut(toEndpoint.aliasToken);
+
+		return {
+			fromAlias: fromEndpoint.alias,
+			toAlias: activationShortcut.alias,
+		};
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
 	 * Parse a Mermaid message line into a sequencer call line.
 	 *
 	 * @param {string} trimmed Trimmed Mermaid source line.
@@ -1730,7 +1792,6 @@ class MermaidSequenceTransformer {
 		if (toEndpoint.anchor === "central") {
 			line.toAnchor = "central";
 		}
-		const preSourceActivationCount = this._getActivationCount(activationState, fromAlias);
 		const activationOutcome = isReturnMessage
 			? this._applyReturnActivationPolicy(activationState, fromAlias, toAlias, activationShortcut.operation)
 			: this._applyCallActivationPolicy(
@@ -1744,9 +1805,6 @@ class MermaidSequenceTransformer {
 		const postTargetActivationCount = activationOutcome.targetCount;
 
 		if (isReturnMessage) {
-			if (postSourceActivationCount > 0) {
-				line.continueFromFlow = true;
-			}
 			if (postTargetActivationCount === 0) {
 				line.breakToFlow = true;
 			}
@@ -2249,6 +2307,37 @@ class MermaidSequenceTransformer {
 	 * const line = MermaidSequenceTransformer._parseNoteLine("Note over A,B: Shared context", [], 6, "Note over A,B: Shared context");
 	 */
 	static _parseNoteLine(trimmed, actors, lineNumber, sourceLine) {
+		const note = this._parseNoteMetadata(trimmed, actors, lineNumber, sourceLine);
+
+		const line = {
+			type: "blank",
+			height: 0,
+			comment: note.comment,
+		};
+
+		if (note.targetAliases.length === 1) {
+			line.actor = note.targetAliases[0];
+		} else {
+			line.actors = note.targetAliases;
+		}
+
+		return line;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a Mermaid note statement into reusable metadata.
+	 *
+	 * @param {string} trimmed Trimmed Mermaid source line.
+	 * @param {object[]} actors Current actor array.
+	 * @param {number} lineNumber 1-based source line number.
+	 * @param {string} sourceLine Original Mermaid source line.
+	 * @returns {{ position: string, targetAliases: string[], comment: string|string[] }} Parsed note metadata.
+	 * @throws {MermaidTransformError} If the note syntax is malformed.
+	 * @example
+	 * const note = MermaidSequenceTransformer._parseNoteMetadata("Note over A,B: Shared context", [], 6, "Note over A,B: Shared context");
+	 */
+	static _parseNoteMetadata(trimmed, actors, lineNumber, sourceLine) {
 		const match = trimmed.match(/^note\s+(right of|left of|over)\s+([^:]+)\s*:\s*(.+)$/i);
 		if (!match) {
 			throw new MermaidTransformError("Unsupported Mermaid note syntax", lineNumber, sourceLine);
@@ -2277,18 +2366,51 @@ class MermaidSequenceTransformer {
 			throw new MermaidTransformError("Mermaid left/right notes support exactly one actor", lineNumber, sourceLine);
 		}
 
-		const line = {
-			type: "blank",
-			height: 0,
+		return {
+			position: position,
+			targetAliases: targetAliases,
 			comment: comment,
 		};
+	}
 
-		if (targetAliases.length === 1) {
-			line.actor = targetAliases[0];
-		} else {
-			line.actors = targetAliases;
+	////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Parse a leading Mermaid note as a comment attached to the immediately
+	 * following message when it is exactly `Note over From,To`.
+	 *
+	 * @param {{ trimmed: string, sourceLine: string, lineNumber: number }} noteStatement Note statement.
+	 * @param {{ trimmed: string, sourceLine: string, lineNumber: number }|undefined} messageStatement Candidate next statement.
+	 * @param {object[]} actors Current actor array.
+	 * @param {object} activationState Current Mermaid activation counters by alias.
+	 * @param {object} lifecycleDirectiveState Pending lifecycle directives.
+	 * @returns {object|null} Message line with attached comment, or null.
+	 * @example
+	 * const line = MermaidSequenceTransformer._parseLeadingNoteAttachedMessage(note, message, actors, state, lifecycle);
+	 */
+	static _parseLeadingNoteAttachedMessage(noteStatement, messageStatement, actors, activationState, lifecycleDirectiveState) {
+		if (!messageStatement || !this._looksLikeMessageLine(messageStatement.trimmed)) {
+			return null;
 		}
 
+		const note = this._parseNoteMetadata(noteStatement.trimmed, actors, noteStatement.lineNumber, noteStatement.sourceLine);
+		if (note.position !== "over" || note.targetAliases.length !== 2) {
+			return null;
+		}
+
+		const messageAliases = this._parseMessageEndpointAliases(messageStatement.trimmed, messageStatement.lineNumber, messageStatement.sourceLine);
+		if (note.targetAliases[0] !== messageAliases.fromAlias || note.targetAliases[1] !== messageAliases.toAlias) {
+			return null;
+		}
+
+		const line = this._parseMessageLine(
+			messageStatement.trimmed,
+			actors,
+			activationState,
+			lifecycleDirectiveState,
+			messageStatement.lineNumber,
+			messageStatement.sourceLine
+		);
+		line.comment = note.comment;
 		return line;
 	}
 
@@ -2424,6 +2546,8 @@ class MermaidSequenceTransformer {
 	////////////////////////////////////////////////////////////////////////////
 	/**
 	 * Apply the default Mermaid return-activation policy to the transform state.
+	 * Return messages terminate the source actor's flow unless the generated
+	 * sequencer line explicitly carries `continueFromFlow`.
 	 *
 	 * @param {object} activationState Current Mermaid activation counters by alias.
 	 * @param {string} fromAlias Source actor alias.
@@ -2434,7 +2558,7 @@ class MermaidSequenceTransformer {
 	 * const outcome = MermaidSequenceTransformer._applyReturnActivationPolicy({}, "Service", "Caller", null);
 	 */
 	static _applyReturnActivationPolicy(activationState, fromAlias, toAlias, operation) {
-		const sourceCount = Math.max(this._getActivationCount(activationState, fromAlias) - 1, 0);
+		const sourceCount = 0;
 		const targetCount = this._applyActivationOperation(this._getActivationCount(activationState, toAlias), operation);
 		this._setActivationCount(activationState, fromAlias, sourceCount);
 		this._setActivationCount(activationState, toAlias, targetCount);

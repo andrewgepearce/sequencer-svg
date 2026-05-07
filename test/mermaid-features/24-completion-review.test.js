@@ -31,8 +31,8 @@ describe("Mermaid feature slice 24: completion review", () => {
 		expect(transformed.actors[0].name).toEqual(["API", "Gateway"]);
 		expect(transformed.actors[1].name).toBe("Primary # Store");
 		expect(transformed.lines[0].comment).toBe("Escaped # and ; plus & name support");
-		expect(transformed.lines[1].text).toBe("Query #42; status & health [Mermaid: API->>DB: Query #42; status & health]");
-		expect(transformed.lines[2].text).toBe("OK <done> [Mermaid: DB-->>API: OK <done>]");
+		expect(transformed.lines[0].text).toBe("Query #42; status & health [Mermaid: API->>DB: Query #42; status & health]");
+		expect(transformed.lines[1].text).toBe("OK <done> [Mermaid: DB-->>API: OK <done>]");
 	});
 
 	test("renders SVG from the completion-review Mermaid input and writes the transformed sequencer YAML sidecar", () => {

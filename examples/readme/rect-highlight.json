@@ -43,7 +43,6 @@
                "from": "B",
                "to": "A",
                "text": "Response",
-               "continueFromFlow": true,
                "lineDash": [
                   4,
                   2

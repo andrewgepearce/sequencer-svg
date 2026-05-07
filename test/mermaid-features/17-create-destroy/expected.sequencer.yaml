@@ -13,14 +13,7 @@ lines:
     destroyTo: true
     breakToFlow: true
   - {type: create, from: Orchestrator, to: Worker, text: 'Create worker [Mermaid: Orchestrator->>Worker: Create worker]', toArrow: fill, arrow: fill}
-  - type: return
-    from: Worker
-    to: Orchestrator
-    text: 'Ready [Mermaid: Worker-->>Orchestrator: Ready]'
-    continueFromFlow: true
-    lineDash: [4, 2]
-    toArrow: fill
-    arrow: fill
+  - {type: return, from: Worker, to: Orchestrator, text: 'Ready [Mermaid: Worker-->>Orchestrator: Ready]', lineDash: [4, 2], toArrow: fill, arrow: fill}
   - type: call
     from: Orchestrator
     to: Worker

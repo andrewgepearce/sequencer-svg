@@ -55,8 +55,8 @@ node sequencer.js --mermaid -i test/mermaid-features/17-create-destroy/input.mmd
   <path d="M 87 447 L 87 513 L 92 513 L 92 447 L 87 447" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 87 447 L 87 513 M 92 513 L 92 447 M 87 447" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 337 447 L 337 513" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 334.5 447 L 334.5 513 L 339.5 513 L 339.5 447 L 334.5 447" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
-  <path d="M 334.5 447 L 334.5 513 M 339.5 513 L 339.5 447 M 334.5 447" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 334.5 447 L 334.5 511 L 339.5 511 L 339.5 447 L 334.5 447" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
+  <path d="M 334.5 447 L 334.5 511 L 339.5 511 L 339.5 447 M 334.5 447" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <text x="139.5" y="498.5" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">3. Ready [Mermaid: Worker--&gt;&gt;Orchestrator: Ready]</text>
   <path d="M 334.5 506 L 92 506" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-dasharray="4,2"/>
   <path d="M 92 506 L 102 501 L 102 511 L 92 506" fill="rgb(0, 0, 0)" stroke="none" shape-rendering="crispEdges"/>
@@ -64,8 +64,8 @@ node sequencer.js --mermaid -i test/mermaid-features/17-create-destroy/input.mmd
   <path d="M 87 513 L 87 597 L 92 597 L 92 513 L 87 513" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
   <path d="M 87 513 L 87 597 M 92 597 L 92 513 M 87 513" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 337 513 L 337 577" fill="none" stroke="rgb(0,0,0)" stroke-width="1" stroke-dasharray="3,3"/>
-  <path d="M 334.5 513 L 334.5 587 L 339.5 587 L 339.5 513 L 334.5 513" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
-  <path d="M 334.5 513 L 334.5 587 L 339.5 587 L 339.5 513 M 334.5 513" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
+  <path d="M 334.5 577 L 334.5 587 L 339.5 587 L 339.5 577 L 334.5 577" fill="rgb(95,183,224)" stroke="none" shape-rendering="crispEdges"/>
+  <path d="M 334.5 577 L 334.5 587 L 339.5 587 L 339.5 577 L 334.5 577" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>
   <path d="M 334 574 L 340 580 M 334 580 L 340 574" fill="none" stroke="rgb(0,0,0)" stroke-width="2"/>
   <text x="132" y="567" fill="rgb(0,0,0)" font-family="Liberation Mono, Courier New, Courier, monospace" font-size="14" xml:space="preserve" dominant-baseline="auto">4. Stop worker [Mermaid: Orchestrator-xWorker: Stop worker]</text>
   <path d="M 92 577 L 334.5 577" fill="none" stroke="rgb(0, 0, 0)" stroke-width="1"/>

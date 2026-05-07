@@ -23,8 +23,13 @@ lines:
         condition: 'Audit branch [Mermaid: opt Audit branch]'
         lines:
           - {type: call, from: Service, to: Caller, text: 'Emit audit event [Mermaid: Service->>Caller: Emit audit event]', toArrow: fill, arrow: fill}
-      - {type: blank, height: 0, comment: 'Failure branch note [Mermaid: Note over Caller,Service: Failure branch note]', actors: [Caller, Service]}
-      - {type: call, from: Caller, to: Service, text: 'Failure path [Mermaid: Caller->>Service: Failure path]', toArrow: fill, arrow: fill}
+      - type: call
+        from: Caller
+        to: Service
+        text: 'Failure path [Mermaid: Caller->>Service: Failure path]'
+        toArrow: fill
+        arrow: fill
+        comment: 'Failure branch note [Mermaid: Note over Caller,Service: Failure branch note]'
 description:
   - 'Demonstrates Mermaid loop, alt, else, and opt fragment transforms.'
   - 'From the project root, regenerate this Mermaid transform and SVG with:'

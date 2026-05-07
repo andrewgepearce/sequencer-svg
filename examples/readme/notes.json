@@ -40,6 +40,15 @@
          "height": 0,
          "comment": "Left-side note",
          "actor": "B"
+      },
+      {
+         "type": "call",
+         "from": "A",
+         "to": "B",
+         "text": "Call with attached note",
+         "toArrow": "fill",
+         "arrow": "fill",
+         "comment": "Attached note rule: Note over A,B immediately before an A to B message becomes that message's sequencer comment"
       }
    ]
 }

@@ -47,7 +47,7 @@ function createTempDir() {
 }
 
 describe("Mermaid feature slice 13: activation-flow defaults", () => {
-	test("transforms Mermaid calls and returns with persistent default activation flow", () => {
+	test("transforms Mermaid calls and returns with source-terminating return flow", () => {
 		const source = readFixture("input.mmd");
 		const expectedYaml = readFixture("expected.sequencer.yaml");
 
@@ -61,6 +61,22 @@ describe("Mermaid feature slice 13: activation-flow defaults", () => {
 		expect(transformed.lines[2].continueFromFlow).toBeUndefined();
 		expect(transformed.lines[2].breakToFlow).toBeUndefined();
 		expect(transformed.lines[3].breakToFlow).toBeUndefined();
+	});
+
+	test("does not auto-continue a return source after target activation shortcuts", () => {
+		const transformed = MermaidSequenceTransformer.transform(
+			[
+				"sequenceDiagram",
+				"participant A",
+				"participant B",
+				"A->>+B: Request",
+				"B-->>A: Response",
+			].join("\n"),
+			{ sourceName: "return-source-flow.mmd" }
+		);
+
+		expect(transformed.lines[1].type).toBe("return");
+		expect(transformed.lines[1].continueFromFlow).toBeUndefined();
 	});
 
 	test("renders SVG from Mermaid activation-flow input and writes the transformed sequencer YAML sidecar", () => {
